@@ -1,0 +1,36 @@
+%--------------------PREAMBLE-------------------------
+\documentclass[a4paper,11 pt,twoside, BCOR11mm]{scrbook}
+%--------------------Packages-------------------------
+\input{preamble/packages}
+%----------------------Data---------------------------
+\input{preamble/referencedata}
+%--------------------Commands-------------------------
+\input{preamble/commands}
+%--------------------Glossary-------------------------
+\input{preamble/glossary}
+%----------------------Style--------------------------
+\input{preamble/style}
+%------------------END PREAMBLE-----------------------
+
+%--------------------DOCUMENT-------------------------
+\begin{document}
+%-------------------Frontmatter-----------------------
+\include{frontmatter/titlepage}
+\include{frontmatter/acknowledgement}
+\include{frontmatter/abstract}
+\include{frontmatter/toc}
+%--------------------Chapters-------------------------
+\include{chapters/introduction}
+%------------------Bibliography-----------------------
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{abbrv}
+\nocite{*}
+\bibliography{literature/literature.bib}
+%-------------------Backmatter------------------------
+\input{backmatter/lists}
+\input{backmatter/declaration}
+%-----------------------------------------------------
+\end{document}
+%------------------END DOCUMENT-----------------------
