@@ -8,3 +8,10 @@
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
 % Command for dots in quotes
 \newcommand*\elide{\textup{[\dots]\,}}
+
+\newtheorem{theorem}[equation]{Theorem}
+\newtheorem{cor}[equation]{Corollary}
+\newtheorem{lemma}[equation]{Lemma}
+\theoremstyle{definition}
+\newtheorem{defn}[equation]{Definition}
+\AfterEndEnvironment{defn}{\noindent\ignorespaces}
