@@ -10,7 +10,7 @@ Autonomous driving is currently a major research topic, since a fully autonomous
 On the road to fully automated driving, several \ac{ADAS} have been developed during the last decade and thus made a huge jump by incrementally increasing complexity and therefor the level of autonomy. 
 From the first grand \cite{Thrun2006} and urban challenges \cite{Urmson.2008}, organized by the \ac{DARPA}, to recent experiments of Google\footnote{\url{https://www.google.com/selfdrivingcar}} in the field of autonomous driving, \ac{ADAS} have made their way into series-production vehicles bringing the potential to increase comfort and safety in road traffic in the long run. 
 There exists a large variety of commercial systems, like e.g. \ac{ACC} or intelligent parking assistance systems, modern vehicles are already equipped with.\\
-As this thesis focuses on environmental modelling in context of autonomous driving, this section presents research from this field like road detection and modelling (Sec. \ref{subsec:lane}), object detection (Sec. \ref{subsec:obj_detect}) and tracking (Sec. \ref{subsec:obj_track}) as well as sensor fusion (Sec. \ref{subsec:sensor_fusion}) while other aspects like localization \cite{Levinson2010}, path planning (\todo{citation}) and motion control (\todo{citation}) are neglected.
+As this thesis focuses on environmental modelling in context of autonomous driving, this section presents research from this field like road detection and modelling (Sec. \ref{subsec:lane}), object detection (Sec. \ref{subsec:obj_detect}) and tracking (Sec. \ref{subsec:obj_track}) as well as sensor fusion (Sec. \ref{subsec:sensor_fusion}) while other aspects like localization \cite{Levinson2010, Thrun2005}, path planning (\todo{citation}) and motion control (\todo{citation}) are neglected.
 \subsection{Road Lane Detection and Modelling}
 \label{subsec:lane}
 \subsection{Object Detection and Classification}
@@ -23,18 +23,47 @@ As this thesis focuses on environmental modelling in context of autonomous drivi
 \section{Machine Learning}
 Machine learning is the science of constructing computer programs, which improve with experience. 
 This is attractive if manually programming a desired functionality is not cost-efficient, intractable or simply impossible.  
-The overall goal of machine learning is to generalize beyond examples, i.e. to generate models that describe the presented input sufficiently well to make the best possible prediction when confronted with previously unseen data.
+The overall goal of machine learning algorithms is to generalize beyond examples, i.e. to generate models that describe the presented input sufficiently well to make the best possible prediction when confronted with previously unseen data.
 A formal, widely cited definition of machine learning has been presented by Thomas M. Mitchell in \cite{Mitchell1997}:
 
 \begin{defn}
 A computer program is said to \textbf{learn} from experience $E$ with respect to some class of tasks $T$ and performance measure $P$ if its performance at tasks in $T$, as measured by $P$, improves with experience $E$.
 \end{defn}
-
-A large body of research has focused on machine learning last two decades
-Through availability of bigger datasets and increased computational power, machine learning has seen significant progress in recent years.
-
-
-There are several methods 
-\section{Neural Modelling}
+A large body of research has focused on machine learning during the last decades.
+From the first theoretical considerations concerning artificial neural networks by McCulloc and Pitts(\todo{Citation}) in the 1940s and the first Multilayer-Perceptrons by Rosenblatt (\todo{Citation}) about a decade later, machine learning algorithms started to receive widespread attention with the rediscovery (\todo{citation Rumelhart}) of the well-known backpropagation algorithm (\todo{citation werbos}).
+Since then, several approaches to machine learning, apart from artificial neural networks, like AdaBoost (\todo{Citation}), Decision Trees (\todo{citation}), Bayesian Networks (\todo{citation}) or \ac{SVM} (\todo{citation Vapnik, V. (1995), The Nature of Statistical Learning Theory. Springer Verlag, Cristianini, N. and Shawe-Taylor, J. (2000). An Introduction to Support Vector Machines and Other Kernel-Based Learning Methods. Cambridge University Press, Cambridge}) have been proposed.
+These methods vary in representation of the data, the evaluation (or objective) function, the optimization technique and the learning paradigm.
+Through availability of larger datasets and increased computational power, machine learning has seen significant progress in recent years.
+The use of deep neural networks \cite{Schmidhuber2015}, enabled through modern, powerful computing hardware like \ac{GPU}, yielded a significant performance boost in several classification tasks. 
+Today, modern deep learning algorithms can even rival human performance on different visual classification tasks like traffic sign \cite{Ciresan2012} or digit recognition \cite{Ciresan2012a}.
+\subsection{Logical Learning}
+\subsection{Statistical Learning}
+\subsection{Instance-based Learning}
+\subsection{Boosting}
+\subsection{Support Vector Machines}
+\subsection{Artificial Neural Networks}
+\label{subsec:ML_ANN}
+So-called second generation \ac{ANN} introduced continuous (e.g. sigmoid or hyperbolic) instead of step- or threshold-functions (\todo{Citation}) as activation functions, which made them universal approximators for continuous functions (\todo{Citation Cibenko}).
 \section{Neuromorphic Systems}
+The term "neuromorphic" was first introduced by Carver Mead in \cite{Mead90}, when describing one of the first silicon retinas.
+For clarity, a first broad definition is provided, which will need some refinement while proceeding in this section:
+\begin{defn}
+\label{def:neuromorph}
+Artificial systems, that share organization principles with biological nervous systems are called \textbf{neuromorphic}.
+\end{defn} 
+Biologically inspired systems and algorithms have seen significant progress and achieved remarkable results, e.g. in the field of machine learning, despite some simplifications in terms of biological accuracy.
+So-called first and second generation \ac{ANN} described in \ref{subsec:ML_ANN} are also covered by definition \ref{def:neuromorph} as neuromorphic systems, although they neglect some biological details.
+\subsection{Spiking Neural Networks}
+Biological neurons exchange information by sending short and sudden increases in their membrane voltage, so-called action potentials or spikes.
+Recent neurological research suggests that the exact timing of those spikes encodes information rather than just average firing rates (\todo{Citation}).
+While \ac{ANN} of the first two generations neglect these biological details, recent neural networks structures, so-called \ac{SNN} \cite{Paugam2009}, embody these spike times and are therefor often referred to as the third generation of neural networks . 
+
+
+
+\label{subsec:spiking_neural_nets}
+
+\subsection{Neural Modelling}
+\subsection{Neuromorphic Hardware}
+The field of neuromorphic computing achieved several significant advances in recent years, massively increasing the number of neurons simultaneously available in complex models and achieving real-time (less than $\SI{100}{\milli\second}$) execution through hardware implementation. 
+This basic research is resulting in semiconductor implementations becoming available on a wider scale, such as University of Manchester's \ac{SpiNNaker} Chip \cite{Furber2014} or IBM’s recently announced True North \cite{Akopyan2015} architecture.
 \section{Traditional Computing}
