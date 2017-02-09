@@ -8,7 +8,15 @@
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
 % Command for dots in quotes
 \newcommand*\elide{\textup{[\dots]\,}}
-
+\makeatletter
+\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
 \newcommand{\abbil}[3]{#1:  #2  \longrightarrow  #3 }
 \newcommand{\ts}{\textsuperscript}
 
