@@ -18,11 +18,20 @@
   {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
 \makeatother
 \newcommand{\abbil}[3]{#1:  #2  \longrightarrow  #3 }
+\newcommand{\abb}[5]{#1:  #2  \longrightarrow  #3, #4 \longmapsto #5 }
 \newcommand{\ts}{\textsuperscript}
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+\newcommand{\acfl}[1]{\aclp{#1} (\acsp{#1})}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
 
 \newtheorem{theorem}[equation]{Theorem}
+\AfterEndEnvironment{theorem}{\noindent\ignorespaces}
 \newtheorem{cor}[equation]{Corollary}
+\AfterEndEnvironment{cor}{\noindent\ignorespaces}
 \newtheorem{lemma}[equation]{Lemma}
+\AfterEndEnvironment{lemma}{\noindent\ignorespaces}
+\newtheorem{ex}[equation]{Example}
+\AfterEndEnvironment{ex}{\noindent\ignorespaces}
 \theoremstyle{definition}
 \newtheorem{defn}[equation]{Definition}
 \AfterEndEnvironment{defn}{\noindent\ignorespaces}
