@@ -26,14 +26,25 @@
 \usepackage{subcaption} 
 \usepackage{scrhack}
 \usepackage{epigraph}
-\usepackage{url}
 \usepackage[acronym, toc, shortcuts]{glossaries}
 \usepackage{nomencl}
+\usepackage[backend=biber,
+			style=alphabetic,
+			sorting=nyt,
+			firstinits=true,
+			maxbibnames=99,
+			maxcitenames=99]{biblatex} 
+\addbibresource{literature/literature.bib}
 \usepackage{stmaryrd} % for some symbols like \varoast (* within a circle)
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+\setcounter{biburlnumpenalty}{100}
+\setcounter{biburllcpenalty}{100}
+\setcounter{biburlucpenalty}{100}
 %\usepackage[sorting=none,firstinits=true]{biblatex} % to get this, do this when having internet access: sudo apt-get install texlive-bibtex-extra
 \usepackage[
-	colorlinks=true,
-	urlcolor=black,
+	colorlinks=true
+%	urlcolor=black,
 	linkcolor=black,
-	citecolor=black
+%	citecolor=black
 	]{hyperref}
