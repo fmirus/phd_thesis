@@ -2,7 +2,7 @@
 %--------------TRENNUNGSLISTE-------------------------
 \hyphenation{}
 %-----------------------------------------------------
-\allsectionsfont{\sffamily}
+%\allsectionsfont{\sffamily}
 \captionsetup{margin=1cm,font=small,labelfont=bf}
 
 \RequirePackage{tumcolor}
@@ -13,7 +13,9 @@
 \pagestyle{scrheadings}
 \clearscrheadfoot
 \setheadsepline{0.4pt}
+
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 \rehead{{\bfseries\leftmark}}
 \lohead{{\bfseries\rightmark}}
