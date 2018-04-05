@@ -1,33 +1,133 @@
-\chapter{Related Work}
-This chapter aims to briefly present the relevant work related to the thesis at hand.
-This thesis touches several diverse research disciplines like neuroscience, autonomous driving and robotics, machine learning and neuromorphic computing, which need to be reviewed.
+\chapter{Research Context}
+Highly automated driving is currently an immensely attractive field for both academic and industrial research groups. 
+A fully autonomous vehicle, which is able to tackle challenging driving situations without external input comparable to a human driver's performance, is yet to be build.
+In this thesis, we propose a novel approach to knowledge and information representation for automotive environment models using cognitive modelling techniques.
+More precisely, we adopt \acfp{VSA}, which are commonly used in tasks like cognitive modelling and natural language processing, for the specific application of automotive environment modelling.
+To our knowledge, \acp{VSA} have not been applied in this particular context. 
+In order to put our work in context of the current research landscape and to circumscribe this thesis, we need to review related work from several different areas like automated driving and mobile robotics, computational neuroscience, artificial intelligence and neuromorphic engineering.
+A comprehensive overview for all of these research areas is out of scope of a single thesis.
+However, we aim to cover the most significant results from all areas at least briefly, whereas we present an in-depth review of relevant work related to the thesis at hand, where necessary.
 
-\section{Autonomous Driving and Mobile Robotics}
-In order to navigate safely to a desired goal, a mobile agent needs to solve several problems like localization ("where am I?"), path planning ("which way do I want to go?"), environment perception ("what is around me?"), knowledge representation and reasoning ("which decisions to infer from available information?") as well as motion control ("how to move my actuators?").
-Mobile robotics is the science of building computer-controlled mechanical devises, which are able to tackle these issues autonomously.\\
-Autonomous driving in automotive context is a subfield of this area, since an autonomous vehicle is nothing more than a wheeled mobile robot, which is able to fulfil the transportation capabilities of a traditional car without human input. 
-Autonomous driving is currently a major research topic, since a fully autonomous vehicle, which is able to tackle challenging driving situations without external input and to rival human performance, is yet to be build.\\
-On the road to fully automated driving, several \ac{ADAS} have been developed during the last decade and thus made a huge jump by incrementally increasing complexity and therefor the level of autonomy. 
-From the first grand \cite{Thrun2006} and urban challenges \cite{Urmson.2008}, organized by the \ac{DARPA}, to recent experiments of Google\footnote{\url{https://www.google.com/selfdrivingcar}} in the field of autonomous driving, \ac{ADAS} have made their way into series-production vehicles bringing the potential to increase comfort and safety in road traffic in the long run. 
-There exists a large variety of commercial systems, like e.g. \ac{ACC} or intelligent parking assistance systems, modern vehicles are already equipped with.\\
+\section{Automated Driving}
+"Robotics is the science of building computer-controlled mechanical devises, which are able to perceive and manipulate the physical world" \cite{Thrun2005}.
+Automated driving in automotive context is a special case of robotics, since an autonomous vehicle can be considered a wheeled mobile robot, which is able to fulfill the transportation capabilities of a traditional car without human input. 
+In order to navigate safely to a desired goal, a mobile robot needs to solve several problems like localization ("where am I?"), path planning ("how do I get from A to B?"), environment perception ("where is everyone else?"), knowledge representation and reasoning ("which decisions to infer from available information?") as well as motion control ("how to move my actuators?").
+In automotive context, an automated vehicle furthermore needs to detect the current state of the driver ("what is the driver up to") to ensure that he can take over control in safety-critical situations or in case of malfunctions.
+The human driver as a fallback option in such situations is of crucial importance, since the level of driving automation gradually increases instead of a hard transition to automated driving systems.
+In their J3016 standard \cite{SAE_J3016}, the \ac{SAE} delivers a classification system identifying six different levels of driving automation from "no automation" to "full automation".
+Table \ref{tab:autonomy_levels} gives an overview of the particular automation levels according to \cite{SAE_J3016} in more detail.\\
+On the road to fully automated driving, several \ac{ADAS} have been developed during the last decades and thus made a huge jump by incrementally increasing complexity and therefor the level of autonomy.
+The history of automated driving research goes back to the 1980's, when governmental institutions funded several explorative projects worldwide to research functionalities like automatic vehicle driving and intelligent route planning resulting in early prototypes.
+In 1986, several European research groups and vehicle manufacturers started the \ac{PROMETHEUS} project \cite{Dickmanns1990} and demonstrated a variety of different approaches to automated driving.
+Another research initiative established during that period is Carnegie Mellon University's Navlab \cite{Thorpe1988}, which achieved the first completely autonomous drive from Pittsburg to San Diego.
+After that first explorative phase, the US government established the \ac{NAHSC} in 1995 and shortly shortly followed by the foundation of the \ac{AHSRA} 1996 in Japan.
+The main contribution of this first phase was the identification and deep analysis of problems, that would need to be tackled by researchers, to understand requirements and possible effects of future automated vehicles.
+\cite{Bertozzi2000} gives an overview of the achievements and perspectives obtained in the projects during that period.\\
+\begin{center}
+	\begin{tabular}{|c | l | p{10cm}|}
+		\hline
+		\textbf{Level} & \textbf{Name} & \textbf{Narrative Definition}\\ \hline
+		0 & No Automation & the full-time performance by the human driver of all aspects of the dynamic driving task, even when enhanced by warning or intervention systems \\ \hline
+		1 & Driver Assistance & the driving mode-specific execution by a driver assistance system of either steering or acceleration/deceleration using information about the driving environment and with the expectation that the human driver perform all remaining aspects of the dynamic driving task \\ \hline
+		2 & Partial Automation & the driving mode-specific execution by one or more driver assistance systems of both steering and acceleration/deceleration using information	 about the driving environment and with the expectation that the human driver perform all remaining aspects of the dynamic driving task \\ \hline
+		3 & Conditional Automation &  the driving mode-specific performance by an automated driving system of all aspects of the dynamic driving task with the expectation that the human driver will respond appropriately to a request to intervene \\ \hline
+		4 & High Automation & the driving mode-specific performance by an automated driving system of all aspects of the dynamic driving task, even if a human driver does not respond appropriately to a request to intervene \\ \hline
+		5 & Full Automation & the full-time performance by an automated driving system of all aspects of the dynamic driving task under all roadway and environmental conditions that can be managed by a human driver \\ \hline
+	\end{tabular}
+	\label{tab:autonomy_levels}
+	\captionof{table}{Table depicting different levels of vehicle automation identified in \cite{SAE_J3016}}
+\end{center}
+A major milestone in the research field of automated driving was the first \ac{DARPA} Grand Challenge in 2004, where unmanned vehicles had to complete a \SI{240}{\kilo\meter}, unrehearsed off-road course autonomously through the Mojave Desert in Nevada to win the price money of \$1 million. 
+Although no participating vehicle successfully finished the race \cite{Bacha2004} in the first challenge, valuable insights have been gained.
+Using those insights to make significant progress, five teams (out of 23) were able to successfully complete the second \ac{DARPA} Grand Challenge in 2005 with Stanford's Stanley robot winning first place \cite{Thrun2006}.
+After the success of the second Grand Challenge, the \ac{DARPA} organized the Urban Challenge in 2007, switching the focus to automated driving in urban environments \cite{Buehler2009}.
+In this competition, vehicles had to complete a \SI{97}{\kilo\meter} urban area course autonomously in less than \SI{6}{\hour}, while obeying California state driving laws, avoiding other participating vehicles and other objects using only on-board sensors and \ac{GPS}.
+Six vehicles out of the 11 final participants successfully finished the competition, with Carnegie Mellon's Boss robot \cite{Urmson.2008} being named the winner finishing the course in little over \SI{4}{\hour} with an average speed of approximately \SI[per-mode=symbol]{22.5}{\kilo\meter\per\hour}.
+\\
+The technology developed for the \ac{DARPA} challenges formed the basis for commercial \ac{ADAS}, which have seen rapid progress since then and gradually made their way into series-production vehicles.
+There exists a large variety of commercial systems, like e.g. \ac{ACC} or intelligent parking assistance systems, modern vehicles are already equipped with.
+These systems have the potential to increase comfort and safety in road traffic and, in the long run enable fully autonomous driving (cf. Level 5 in Table \ref{tab:autonomy_levels}). 
+On the other hand, many research teams and initiative were spawned or inspired from \ac{DARPA} Challenges these competitions and continued their research work after the .
+\begin{figure}[t!]
+	\centering
+	\resizebox{.9\textwidth}{!}{%
+	\subfloat[\label{subfig:stanley}]{%
+		\includegraphics[height=3cm]{imgs/Stanley.eps}
+	}
+	\subfloat[\label{subfig:boss}]{%
+		\includegraphics[height=3cm]{imgs/Boss_DARPA_urban_challenge.eps}
+	}
+}
+	\caption{The winning robots from the 2005 \ac{DARPA} Grand Challenge and 2007 Urban Challenge. Fig. \ref{subfig:stanley} shows Stanford's Stanley at the 2005 \ac{DARPA} Grand Challenge (Image from \cite{Thrun2006}), Fig. \ref{subfig:boss} shows Carnegie Mellon's BOSS at the 2007 \ac{DARPA} Urban Challenge (Image from \cite{Urmson.2008}).}\label{fig:darpa_chal}
+\end{figure}
+Many researchers involved in the winning teams continued their research within Google's self-driving car project, which started in 2009 and evolved into the Spin-Off company Waymo \cite{Waymo} in 2016.
+Another research team continuing their efforts after the \ac{DARPA} challenges is the Annieway team \cite{Annieway}.
+One of their major contributions is the release and maintenance of the KITTI vision benchmark suite \cite{Geiger2013IJRR}, a publicly available data set containing data from various test drives in the city of Karlsruhe, rural areas as well as highways focusing on providing real world data for vision tasks like stereo, optical flow and 3D object detection and tracking.\\
+The main research goal after the \ac{DARPA} Challenges was to develop automated driving with off-the-shelf sensors \cite{Furgale2013}.
 As this thesis focuses on environmental modelling in context of autonomous driving, this section presents research from this field like road detection and modelling (Sec. \ref{subsec:lane}), object detection (Sec. \ref{subsec:obj_detect}) and tracking (Sec. \ref{subsec:obj_track}) as well as sensor fusion (Sec. \ref{subsec:sensor_fusion}) while other aspects like localization \cite{Levinson2010, Thrun2005}, path planning (\todo{citation}) and motion control (\todo{citation}) are neglected.
-\subsection{Road Lane Detection and Modelling}
-\label{subsec:lane}
 \subsection{Object Detection and Classification}
 \label{subsec:obj_detect}
-\subsection{Object Tracking}
-\label{subsec:obj_track}
-\subsection{Sensor Fusion}
-\label{subsec:sensor_fusion}
-\subsection{Low-Level Sensor Fusion}
-\section{Machine Learning}
+\subsection{Behaviour Analysis}
+\label{subsec:behav_analysis}
+\section{Neuromorphic Systems}
+To fully understand biological systems like the brain, which evolved over millions of years, is an ongoing yet unsolved challenge in biology and neuroscience.
+Even small animals like insects or rodents show remarkable behavioural flexibility and the ability to constantly adapt to a rapidly changing and noisy world, which is unmatched by modern computing machines.
+Mammals and primates are able to perform more sophisticated behaviours culminating in complex cognitive computations humans are capable of doing like thinking, problem solving, memory, reasoning, decision making, strategic planning, knowledge representation, learning etc.
+The "biological computer" enabling these behaviours and cognitive abilities is the brain consisting of large networks of neural cells (or neurons), which communicate by sending and receiving electric signals via synapses.
+At the same time, brains are comparably small and efficient: the human brain for example consumes only \SI{20}{\watt} of power (equivalent to a compact fluorescent light bulb) and comprises \SI{2}{\percent} of the body weight \cite[Chap. 2.1]{Eliasmith2013}. \\
+Several research fields like computational neuroscience, neuromorphic engineering and neurorobotics try to reverse engineer biological systems to achieve similar performance and computational power.
+During the last decades, researchers and engineers strived to close the gap in performance and efficiency between biological and artificial computing systems by mimicing neuro-biological architectures in hardware and implementing models of neural systems in software.
+This biologically inspired, \textit{neuromorphic} approach promises not only to perform computations in a more efficient way, but also to tackle problems unsolvable with current computing machines.
+\subsection{Historical remarks}
+\begin{figure*}[t!]
+	\centering
+	\includegraphics[width=0.95\textwidth,height=270px, natwidth=944,natheight=350]{imgs/Neuromorphic_Timeline_alpha.png}
+	\caption{Historical developments in computational neuroscience, neuromorphic engineering and machine learning.\todo{check and possibly update this figure}}
+	\label{fig:neuro_time}
+\end{figure*}
+
+The term neuromorphic itself was first introduced by Carver Mead in the late 1980s \cite{Mead90}, when describing one of the first silicon retinas.
+He called artificial systems that share organization principles with biological nervous systems neuromorphic.
+An interesting prototype of a silicon retina, which is now considered a milestone, was implemented by Misha Mahowald, a PhD student of Carver Mead. 
+Her thesis received Caltech's Milton and Francis Clauser Doctoral Prize for its originality and potential for opening up new avenues of human thought and endeavor.
+Since these early days of neuromorphic engineering, the term has widely been used to describe \ac{VLSI} systems \cite{Mead1989}, novel computing devices \cite{Schemmel2010}, sensory systems \cite{Lichtsteiner2008, Liu2010}, software \cite{Davison2008, Bekolay2014} and algorithms \cite{ReverterValeiras2016}.
+Considering the number of scientists, neuromorphic engineering is still a comparably young field of research but received an increased interest during the last decade from both academic and industrial research groups caused by the funding of large, ambitious projects.
+Although there have been several achievements in the field during the 1990s \cite{Mead1989, Mahowald1992, Indiveri1997, Cauwenberghs1998} and early 2000s \cite{Liu2002}, the \ac{FACETS} project \cite{FACETS-proj} and the \ac{BBP} \cite{BlueBrain-proj}, both starting in 2005 and mainly funded by the \ac{EU} under the FP6-\ac{FET} program, were among the first big-budget neuromorphic projects.
+The follow-up project \ac{BrainScaleS} \cite{BrainScaleS-proj, Schemmel2010} (2011-2015) built on and extended the research conducted during the \ac{FACETS} project. 
+The main developments of the \ac{FACETS} and \ac{BrainScaleS} projects are the \ac{HICANN} chip \cite{Schemmel2010} and the Python-based simulator-independant language \ac{PyNN} \cite{Davison2008} for building neural network models.
+Building on \ac{BBP} the \ac{BrainScaleS} hardware development is currently continued in the neuromorphic computing platform of \ac{HBP} \cite{HBP-proj, Calimera2013}, a large ten-year research project, which was selected as one of the two \ac{EU}-\ac{FET} flagships in 2013 and is granted around one billion euros funding.
+Another project starting in 2005, initially funded by the UK government until 2014 and now also part of the neuromorphic computing platform of \ac{HBP}, is the \ac{SpiNNaker} project \cite{Furber2014} during which the neuromorphic computing hardware of the same name was developed.
+The \ac{HBP} is organized in thirteen platforms in total, which focus on different research fields related to the brain like for example theoretical neuroscience, neurorobotics, cognitive architectures, high performance computing, brain simulation and the aforementioned neuromorphic computing platform (see \cite{HBP-proj} for details).\\
+Beside these research activities in Europe, the \ac{DARPA} funded another big-budget neuromorphic project: the \ac{SyNAPSE} program \cite{SYNAPSE-proj, Srinivasa2012}, which started in 2008 and is scheduled to run until 2016, has received 102.6 million US dollars in funding as of January 2013. 
+The program aims to build an electronic microprocessor system that matches a mammalian brain in function, size, and power consumption.
+Achievements during the \ac{SyNAPSE} program, which is primarily contracted to IBM Research and \acs{HRL}, so far are include brain simulations, design of brain-inspired neuromorphic achitectures \cite{Nere2012} and the development of a digital neurosynaptic core \cite{Merolla2011}, which is a building block of IBM's recently published TrueNorth chip \cite{Akopyan2015}.
+Further project results are the Corelet language \cite{Amir2013} and the simulator Compass \cite{Preissl2012}, which enable dedicated software development as well as simulation and testing of TrueNorth algorithms on standard hardware respectively.\\
+Beside these projects, the neuromorphic community is coming together at two annual (three- resp. two-week) workshops in Telluride and CapoCaccia, which have been established in 1994 and 2007 respectively, to discuss the current state of research in lectures and interactive talk sessions, to forge new ideas and to work on hands-on projects in small workgroups.\\
+The original definition of neuromorphic engineering also covers \acp{ANN} in general.
+This research field even goes back to the 1940s when McCulloch and Pitts introduced artificial neurons as computational units \cite{McCulloch1988}, which embody a simplified model of biological neurons.
+These first simple networks were able to calculate compositions of basic logic functions \cite{McCulloch1988, Rojas1996}.
+Rosenblatt \cite{Rosenblatt58} proposed the first neural network, which was capable of learning, by adding numerical weights to the connections of the network with threshold functions as activation functions: the \textit{perceptron}.
+Minsky and Papert \cite{Minsky1969} showed, that single-layer perceptrons are not able to calculate an XOR-function or, more generally, are only capable of learning linearly separable patterns.
+This caused a decreased interest in neural networks research until the rediscovery of the backpropagation algorithm \cite{Werbos1974} in the 1980s \cite{Rumelhart1988}, which introduced a practically feasible method to optimize the network weights using gradient descent and led to a resurgence of neural network research.
+%This gradient descent called for continuous activation functions (mostly sigmoid or hyperbolic) instead of threshold-functions as activation functions, which made the so-called second generation \ac{ANN} universal approximators for continuous functions \cite{Cybenko1989}.
+Since then, various different network architectures like feed-forward, \acp{CNN}, \acp{RNN}, \acp{RBF}, \acp{RBM}, \acp{SOM} and \ac{ART} just to name a few \cite{Schmidhuber2015} have been proposed for different learning paradigms.
+Although several simpler methods like Boosting \cite{Freund1997} or \acp{SVM} \cite{Vapnik1995} have been developed and achieved noteworthy results, the availability of powerful, parallelized computing hardware like \acp{GPU} as well as the advent and success  of deep learning (partly achieving better-than-human accuracy) made \acp{ANN} \cite{Rojas1996} and especially \acp{DNN} \cite{LeCun2015} the state-of-the-art for several machine learning tasks like visual digit \cite{Ciresan2012a} and traffic sign \cite{Ciresan2012} recognition in recent years.
+Another great achievement in the field of deep learning was the victory of AlphaGo \cite{Silver2016} over the world's best Go player Lee Sedol in March 2016, which was considered to be at least a decade away due to the complexity of Go.
+Compared to Deep Blue, the system that beat former chess world champion Garri Kasparov in 1997 \cite{Hsu2002} with sheer computational power by brute forcing through a large number of possible moves in advance to find the best one, this strategy is not feasible for Go due to its higher complexity (larger board, more options to consider per move).
+In contrast, modern \acp{DNN} trained by a combination of supervised learning from human expert games and reinforcement learning from self-play have been used for the evaluation of board positions and selection of moves to avoid expensive lookahead search \cite{Silver2016}.
+A comprehensive and historical overview of relevant literature concerning \acp{ANN} and especially \acp{DNN} can be found in \cite{Schmidhuber2015, LeCun2015}.
+
+%----------------------------------------------------------------------------------------------------------
+\subsection{\aclp{ANN}}
+\label{subsec:ML_ANN}
+%----------------------------------------------------------------------------------------------------------
 Machine learning is the science of constructing computer programs, which improve with experience. 
 This is attractive if manually programming a desired functionality is not cost-efficient, intractable or simply impossible.  
 The overall goal of machine learning algorithms is to generalize beyond examples, i.e. to generate models that describe the presented input sufficiently well to make the best possible prediction when confronted with previously unseen data.
 A formal, widely cited definition of machine learning has been presented by Thomas M. Mitchell in \cite{Mitchell1997}:
 
 \begin{defn}
-A computer program is said to \textbf{learn} from experience $E$ with respect to some class of tasks $T$ and performance measure $P$ if its performance at tasks in $T$, as measured by $P$, improves with experience $E$.
+	A computer program is said to \textbf{learn} from experience $E$ with respect to some class of tasks $T$ and performance measure $P$ if its performance at tasks in $T$, as measured by $P$, improves with experience $E$.
 \end{defn}
 A large body of research has focused on machine learning during the last decades.
 From the first theoretical considerations concerning artificial neural networks by McCulloc and Pitts(\todo{Citation}) in the 1940s and the first Multilayer-Perceptrons by Rosenblatt (\todo{Citation}) about a decade later, machine learning algorithms started to receive widespread attention with the rediscovery \cite{Rumelhart1988} of the well-known backpropagation algorithm \cite{Werbos1974}.
@@ -36,34 +136,329 @@ These methods vary in representation of the data, the evaluation (or objective) 
 Through availability of larger datasets and increased computational power, machine learning has seen significant progress in recent years.
 The use of deep neural networks \cite{Schmidhuber2015}, enabled through modern, powerful computing hardware like \ac{GPU}, yielded a significant performance boost in several classification tasks. 
 Today, modern deep learning algorithms can even rival human performance on different visual classification tasks like traffic sign \cite{Ciresan2012} or digit recognition \cite{Ciresan2012a}.
-\subsection{Logical Learning}
-\subsection{Statistical Learning}
-\subsection{Instance-based Learning}
-\subsection{Boosting}
-\subsection{Support Vector Machines}
-\subsection{Artificial Neural Networks}
-\label{subsec:ML_ANN}
+
 So-called second generation \ac{ANN} introduced continuous (e.g. sigmoid or hyperbolic) instead of step- or threshold-functions (\todo{Citation}) as activation functions, which made them universal approximators for continuous functions \cite{Cybenko1989}.
-\section{Neuromorphic Systems}
-The term "neuromorphic" was first introduced by Carver Mead in \cite{Mead90}, when describing one of the first silicon retinas.
-For clarity, a first broad definition is provided, which will need some refinement while proceeding in this section:
+
+%----------------------------------------------------------------------------------------------------------
+\subsection{\aclp{SNN}}
+\label{subsec:SNN}
+%----------------------------------------------------------------------------------------------------------
+\begin{figure}
+	\centering
+	\includegraphics[width=0.85\textwidth]{imgs/Neuron_model.eps}
+	\caption{Neuron visualization. Image source \cite{Gerstner2002}}
+	\label{fig:biological_neuron}
+\end{figure}
+Biological neurons exchange information by sending short and sudden pulses, so-called action potentials or spikes.
+Whenever the membrane potential of a neuron, which can be in- or decreased by incoming spikes depending on the synaptic weight, reaches a certain threshold, the neuron produces a spike itself and resets its membrane potential afterwards \cite{Gerstner2002, Paugam2009}.
+Recent neuroscientific research suggests that the exact timing of those spikes encodes information rather than just average firing rates \cite{Bohte2004}.
+While traditional \acp{ANN} used in machine learning neglect these biological details, \acp{SNN} embody these spike times and are therefore often referred to as the third generation of neural networks \cite{Maass1997, Paugam2009}.
+Maass showed in \cite{Maass1997}, that \acp{SNN} have at least the same computational power as threshold and sigmoidal neural networks of similar size.\\
+The simplest spiking neuron model is the \acf{LIF} model with 
+\begin{equation}
+\frac{\partial V}{\partial t}(t) = - \frac{1}{\tau_{m}} \left( V\left(t\right) - R \cdot I\left(t\right) \right)
+\label{eq:LIF}
+\end{equation}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.75\textwidth]{imgs/LIF_Neuron.eps}
+	\caption{Neuron visualization. Image source \cite{Masquelier2007}}
+	\label{fig:lif_neuron_model}
+\end{figure}
+describing the subthreshold behaviour of the neuron, where $V$ is the voltage across the membrane, $I(t)$ is the input current, $R$ is the passive membrane resistance and $\tau_{m}$ is the membrane time constant.
+Simply put, equation \ref{eq:LIF} states as follows: the membrane voltage increases in the presence of input current $I(t)$ depending on the membrane resistance $R$ while at the same time, especially in the absence of input current ($I(t)=0$), the voltage decreases or "leaks out" depending on the membrane time constant $\tau_{m}$.
+When the voltage $V(t)$ passes a certain threshold $\vartheta$, the neuron produces a spike and the voltage is reset to a resting state $c$ for a certain refractory time interval $\tau_{ref}$ during which incoming spikes have no impact on the membrane potential.
+The \ac{LIF} model, despite its biological simplifications, is maybe the most widely used neuron model for simulations due to its simplicity and comparably low computational complexity \cite{Izhikevich2004}, which allows simulations of large networks of neurons in reasonable time.
+In contrast, the famous Hodgin-Huxley-model \cite{Hodgkin1952} with its four differential equations and dozens of (biologically meaningful) parameters is the model of high biological plausibility but also computationally challenging regarding large simulations \cite{Izhikevich2004}.
+In 2003, Izhikevich proposed a neuron model \cite{Izhikevich2003} as compromise between biological plausibility and computational feasibility.
+He showed that this simple model, described by two differential equations with four parameters, is able to produce all known spiking behaviours observed in cortical neurons \cite{Izhikevich2004}. 
+\todo{include visualization of a membrane potential}\\
+One major hindrance for the widespread adoption of \acp{SNN} has been the problem, that standard learning algorithms for traditional \acp{ANN} like backpropagation \cite{Werbos1974} can not be directly applied to \acp{SNN}.
+Although an analogon, the so-called SpikeProp algorithm \cite{Bohte2002} for \acp{SNN} has been developed, the more natural approach is to transfer and mimic biologically inspired learning approaches like Hebbian learning \cite{Hebb1949} or \ac{STDP} \cite{Bi2001}.
+An overview of several learning approaches for \acp{SNN} possibly applied with neuromorphic hardware can be found in \cite{Walter2015}.
+Another possibility is to train a traditional \ac{ANN} and convert the resulting network into a \ac{SNN} \cite{Diehl2015, Hunsberger2015}.
+An example for this approach is the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DNN} consisting of four \ac{RBM} layers and converting this network using the principles of the \ac{NEF} \cite{Eliasmith2003}.
+Although theroretically superior \cite{Maass1997}, \acp{SNN} have not yet outperformed state-of-the-art \acp{DNN} in terms of accuracy in practical machine learning applications \cite{Schmidhuber2015}.\\
+Beside the aforementioned procedures to solve traditional machine learning tasks with \acp{SNN} and thereby encode artificial functions in spiking neurons, a different approach is to try to understand how complex cognitive behaviours and the underlying neural functions are performed in the brain.
+Therefore, the question how the brain encodes complex information and behaviour in trains of spikes and also how to decode these spike trains to reconstruct the encoded information needs to be answered. 
+Although modern research has shed some light on this question regarding the neural code, it is still mainly unanswered as we do not fully understand the anatomical and neurophysiological processes within the brain \cite{Stanley2013}.
+Currently, there exist several approaches to code information as spike trains, which can be summarized by the categories rate coding, temporal coding \cite[Chap. 7.6]{Gerstner2014}, population coding \cite[Chap. 1]{Gerstner2002}, \cite{Ponulak2011, Boerlin2011} or sparse coding \cite{Olshausen1996}.
+Except for the biologically unrealistic rate coding approach, there are cues for all of these coding schemes and even combinations \cite{Gupta2014} of them to appear in biological systems.
+
+%----------------------------------------------------------------------------------------------------------
+\subsection{Neural Engineering}
+\label{subsec:neural_eng}
+%----------------------------------------------------------------------------------------------------------
+In this section, we give a brief overview of the \acf{NEF}, as we will be making use of it in forthcoming chapters.
+The \ac{NEF} \cite{Eliasmith2003} is mathematical theory, which provides a set of methods to construct biologically plausible, large-scale neural models.
+\todo{formulate section about nengo and neural engineering principles}
+
+
+%The term "neuromorphic" was first introduced by Carver Mead in \cite{Mead90}, when describing one of the first silicon retinas.
+%For clarity, a first broad definition is provided, which will need some refinement while proceeding in this section:
+%\begin{defn}
+%\label{def:neuromorph}
+%Artificial systems, that share organization principles with biological nervous systems are called \textbf{neuromorphic}.
+%\end{defn} 
+%Biologically inspired systems and algorithms have seen significant progress and achieved remarkable results, e.g. in the field of machine learning, despite some simplifications in terms of biological accuracy.
+%So-called first and second generation \ac{ANN} described in \ref{subsec:ML_ANN} are also covered by definition \ref{def:neuromorph} as neuromorphic systems, although they neglect some biological details.
+%\subsection{Spiking Neural Networks}
+%Biological neurons exchange information by sending short and sudden increases in their membrane voltage, so-called action potentials or spikes.
+%Recent neurological research suggests that the exact timing of those spikes encodes information rather than just average firing rates (\todo{Citation}).
+%While \ac{ANN} of the first two generations neglect these biological details, recent neural networks structures, so-called \ac{SNN} \cite{Paugam2009}, embody these spike times and are therefor often referred to as the third generation of neural networks . 
+%
+%
+%
+%\label{subsec:spiking_neural_nets}
+%
+%\subsection{Neural Modelling}
+%\subsection{Neuromorphic Hardware}
+%The field of neuromorphic computing achieved several significant advances in recent years, massively increasing the number of neurons simultaneously available in complex models and achieving real-time (less than $\SI{100}{\milli\second}$) execution through hardware implementation. 
+%This basic research is resulting in semiconductor implementations becoming available on a wider scale, such as University of Manchester's \ac{SpiNNaker} Chip \cite{Furber2014} or IBM’s recently announced True North \cite{Akopyan2015} architecture.
+%\section{Traditional Computing}
+
+\section{\aclp{VSA}}
+The term \acfp{VSA} - first coined by Ross W. Gayler \cite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
+The basic idea behind all of those approaches is to represent structure (e.g. cognitive concepts, symbols or language) in a high-dimensional vector space by mapping each entity to be represented to a (possibly random) vector.
+One of the most important properties of high-dimensional vector spaces enabling this kind of representation is the fact, that two high-dimensional random vectors are likely to be dissimilar.
+In the following, we will show what we mean by fuzzy terms like \emph{dissimilar} or \emph{likely} and provide more precise statements.\\
+One main requirement in the context of cognitive modeling is the ability of the modeling framework to address the binding problem \cite{Treisman1999}.
+In \cite{Jackendoff2002}, Jackendoff phrases this as the problem of "combining independent bits into a single coherent percept". 
+One strength of \acp{VSA} is that they offer the possibility to manipulate their entities (i.e. vectors) through algebraic operations, usually at least one \emph{addition-like} and \emph{multiplication-like} operation each.
+Typically, the multiplication operation is used for binding different representations into a new vector.
+This operation, depending on the vector representation, is constructed with some desirable properties in mind (see Definition \ref{def:binding}).
+A first attempt on using a multiplication operation on vectors for binding was done by Smolensky \cite{Smolensky1990} using the tensor product.
+The major drawback of this approach is exploding dimensionality of the tensor product.
+For finite dimensional vector spaces  $V$ and $W$ of dimensions $n$ and $m$, the tensor space $V \otimes W$ is a vector space of dimension $n\cdot m$.
+As a consequence, each binding operation $v\otimes w$ for vectors $v \in V, w \in W$ would increase the dimension of the representational space, which is computationally infeasible and leads to poor scaling.
+This lead researchers to define several slightly different multiplication or binding operations, depending on the underlying numerical structure.
+The most prominent examples are elementwise multiplication in Gayler's \ac{MAP}-architecture \cite{Gayler1998}, the XOR-operation in Kanerva's \acp{BSC} \cite{Kanerva2000, Kanerva2009} as well as circular convolution in Plate's \acp{HRR} \cite{Plate1991, Plate1994}.
+
+\subsection{Mathematical properties of \aclp{VSA}}
+%Before we provide a formal definition for \acp{VSA}, we introduce some terms and auxiliary tools needed for later use.
+%\begin{defn}
+%	\label{def:metric}
+%	Let $M$ be a set. A function 
+%	\[
+%	\abb{d}{M \times M}{\mathbb{R}}{(x,y)}{d(x,y)} 
+%	\]
+%	is called a \emph{metric}, if and only if for any $x, y \in M$ the following conditions hold:
+%	\begin{enumerate}
+%		\item $d(x,y) \geq 0$ (non-negativity)
+%		\item $d(x,y) = 0 \Longleftrightarrow x = y$ (identity of indiscernibles)
+%		\item $d(x,y) = d(y,x)$ (symmetry)
+%		\item $d(x,z) \leq d(x,y) + d(y,z)$ (triangle inequality)
+%	\end{enumerate}
+%	We call the ordered pair $(M,d)$ a \emph{metric space}.
+%\end{defn}
+
+
 \begin{defn}
-\label{def:neuromorph}
-Artificial systems, that share organization principles with biological nervous systems are called \textbf{neuromorphic}.
-\end{defn} 
-Biologically inspired systems and algorithms have seen significant progress and achieved remarkable results, e.g. in the field of machine learning, despite some simplifications in terms of biological accuracy.
-So-called first and second generation \ac{ANN} described in \ref{subsec:ML_ANN} are also covered by definition \ref{def:neuromorph} as neuromorphic systems, although they neglect some biological details.
-\subsection{Spiking Neural Networks}
-Biological neurons exchange information by sending short and sudden increases in their membrane voltage, so-called action potentials or spikes.
-Recent neurological research suggests that the exact timing of those spikes encodes information rather than just average firing rates (\todo{Citation}).
-While \ac{ANN} of the first two generations neglect these biological details, recent neural networks structures, so-called \ac{SNN} \cite{Paugam2009}, embody these spike times and are therefor often referred to as the third generation of neural networks . 
+	\label{def:VSA}
+	Let $N \subseteq K$ be a subset of some number field $K$ (ie.e a set of numbers) and $D \in \mathbb{N}$ a natural number. 
+	Furthermore, let 
+	\[V_{D}(N)=\{\left(x_{0}, \cdots, x_{D-1}\right)  | x_{i} \in N\} \subseteq K^{D}\] 
+	be the set of all $D$-tuples with entries in $N$. 
+	Let
+	\begin{align*}
+	&\abb{\oplus}{V_{D}(N) \times V_{D}(N)}{K^{D}}{(v,w)}{\oplus(v,w) =: v\oplus w}, \\
+	&\abb{\varoast}{V_{D}(N) \times V_{D}(N)}{K^{D}}{(v,w)}{\varoast(v,w) =: v\varoast w}
+	\end{align*}
+	be functions with $\oplus$ following the rules of ordinary addition - namely commutativity, associativity, existence of a neutral element and existence of inverse elements - and for any elements $u,v,w \in V_{D}(N)$
+	\[u \varoast (v \oplus w) = u \varoast v \oplus u \varoast w.\]
+	If there is furthermore a distinct element $\pmb{1} \in V_{D}(N)$ with 
+	\[v \varoast \pmb{1} = \pmb{1} \varoast v = v\]
+	for any $v \in V_{D}(N)$ and a function $\abbil{\phi}{V_{D}(N) \times V_{D}(N)}{\left[-1,1\right]}$, we call $(V_{D}(N), \varoast, \oplus, \phi)$ a \emph{\acrfull{VSA}} of dimension $D$.
+	The function $\phi$ is called a \emph{measure of similarity}.
+	If $N$ is a subset of the real or complex numbers, i.e. $N \subset \mathbb{R}$ or $N \subseteq \mathbb{C}$, we call any \ac{VSA} $\left(V_{D}(N), \varoast, \oplus, \phi\right)$ \emph{continuous}.
+\end{defn}
+Although the set $V_{D}(N)$ might not be a vector space in the strict mathematical sense (in most cases it is at least a subset of a vector space), we will refer to its elements as \emph{vectors}.
+\todo{note that VSA in general must not be closed under its operations}
+%The metric in definition \ref{def:VSA} is needed as measure of similarity between vectors. 
+Before we proceed in deriving some important properties of \acp{VSA}, we present some of the most prominent examples.
 
+\begin{ex} \aclp{VSA}
+	\label{ex:VSAs}
+	\begin{enumerate}
+		\item The first example of a \ac{VSA} is Kanerva's \acfl{BSC} \cite{Kanerva2009}. 
+		He restricts the elements of his vectors to binary values, i.e. $N=\{0,1\}$
+		The operations $\varoast$ and $\oplus$ in this case are the XOR-function and a thresholded sum respectively.
+		With $v_{i} = \left(v_{i 0}, \cdots, v_{i D-1}\right) \in V_{D}(N)$ and  $i \in \{1, \cdots, n\}$, the operation $\oplus$ is usually defined in the following way
+		\begin{align*}
+		v_{1} \oplus \cdots \oplus v_{n} =: &x = \left(x_{0}, \cdots, x_{D-1}\right) \textrm{ with } \\
+		&x_{j}:= \begin{cases}
+		1 & \sum\limits_{i=1}^{n} v_{ij} \geq \frac{n}{2} \\
+		0 & \sum\limits_{i=1}^{n} v_{ij} < \frac{n}{2}
+		\end{cases}.
+		\end{align*}
+		This definition ensures, that the results of the addition operation $\oplus$ remain binary.
+		Usually, a normalized Hamming distance 
+		\[
+		\phi(v,w) := 1 - \frac{2}{D} \left| \{ v_{i} \neq w_{i} | i \in \{0, \cdots, D-1\} \} \right|
+		\]
+		is used as a measure of similarity in this architecture.
+		\acp{BSC} have some interesting properties compared to other \acp{VSA}: 
+		The neutral element for both operations $\varoast$ and $\oplus$ is the vector $\pmb{0} := \left(0, \cdots, 0\right)$, while all vectors are self-inverse regarding the multiplication operation $\varoast$, i.e. $v \varoast v = \pmb{0}$ for any $v \in V_{D}(N)$.
+		
+		\item The first example of \ac{VSA} in continuous space is Gayler's \acrfull{MAP} architecture \cite{Gayler1998} with $N \subseteq \mathbb{R}$ and the cosine simlarity as measure of similarity 
+		\[
+		\phi(v,w) = \frac{v \cdot w}{\norm{v}\norm{w}}=\cos(\theta),
+		\]
+		with $\theta$ being the angle between the vectors $v,w \in V_{D}(N)$.
+		The operations $\varoast$ and $\oplus$ are simply element-wise multiplication and addition with neutral elements $\pmb{1}=\left(1, \cdots, 1\right)$ and $\pmb{0} := \left(0, \cdots, 0\right)$ respectively.
+		
+		\item Another example of a \ac{VSA} in continuous space is Plate's \acfl{HRR} \cite{Plate1994, Plate1997}.
+		The main difference compared to the \ac{MAP} architecture is, that Plate in general allows complex vector values, i.e. $N \subseteq \mathbb{C}$ and uses a different multiplication operation $\varoast$ - namely circular convolution.
+		For any two vectors $x, y \in V_{D}(N)$, circular convolution $\varoast$ is defined as
+		\begin{align*}
+		z = v \varoast w \qquad \textrm{ with } z_{j} := \sum_{k=0}^{D-1} x_{k}y_{(j-k)\Mod{D}}.
+		\end{align*}
+		\begin{figure}
+			\centering
+			\includegraphics[width=0.85\textwidth]{imgs/circular_convolution_visualization_hor.eps}
+			\caption{Visualization of circular convolution as compressed outer product for $3$-dimensional vectors. Image source \cite{Plate1994a}}
+			\label{fig:circ_conv}
+		\end{figure}
+		The neutral element regarding circular convolution is $\pmb{1} = \left(1, 0, \cdots, 0\right)$. 
+		One important property of this operation is the fact, that circular convolution can efficiently be computed using the \ac{DFT}.
+		The \ac{DFT} is defined as the function
+		\[
+		\abb{\ac{DFT}}{\mathbb{C}^{D}}{\mathbb{C}^{D}}{x}{\left(\sum_{j=0}^{D-1} x_{j} \zeta_{D}^{-jk} \right)_{k=0}^{D-1}} \qquad \textrm{ with } \zeta_{D} = \exp\left( \frac{i 2 \pi}{D} \right).
+		\]
+		Similarly, the \ac{IDFT} is defined as the function 
+		\[
+		\abb{\ac{IDFT}}{\mathbb{C}^{D}}{\mathbb{C}^{D}}{x}{\left( \frac{1}{D} \sum_{j=0}^{D-1} x_{j} \zeta_{D}^{jk} \right)_{k=0}^{D-1}}.
+		\]
+		From the convolution theorem we know, that we can calculate the circular convolution of any two vectors $v, w \in V_{D}(N)$ by
+		\[
+		v \varoast w = \ac{IDFT}\left(\ac{DFT}(v) \odot \ac{DFT}(w) \right),
+		\]
+		with $\odot$ denoting element-wise multiplication in this case.
+		This induces that circular convolution obeys the same rules (commutativity and associativity) as element-wise multiplication, as both operations are the same except for a change of basis. 
+	\end{enumerate}
+\end{ex}
+As mentioned earlier, one of the most important features of (high-dimensional) \acp{VSA} is the fact that two random vectors are likely to be dissimilar.
+We will derive this result in the following Theorem.
+\begin{theorem}
+	\label{theorem:VSA_cossim_distribution}
+	Let $\left(V_{D}(N), \varoast, \oplus, \phi \right)$ a \acl{VSA}. 
+	For two randomly chosen vectors $v, w \in V_{D}(N)$, the distribution of the similarity $\phi\left(v,w\right)$ is a version of the beta-distribution $\beta\left(\frac{D-1}{2},\frac{D-1}{2}\right)$ scaled and shifted to the interval $\left[-1,1\right]$ with mean $\mu=0$ and variance $\sigma^2=\frac{c^2}{D}$ up to a constant $c$. The standardized distribution trends with growing $D$ to a normal distribution.
+\end{theorem}
+\begin{proof}
+	We will only give the proof of this Theorem for real valued \acp{VSA}, i.e. $N \subseteq \mathbb{R}$ and $\phi$ as the cosine similarity.
+	Without loss of generality, we assume the vectors $v,w$ picked randomly from the unit sphere $\mathbb{S}^{D-1} = \{ v \in \mathbb{R}^{D} | \norm{v} = 1 \}$, as we can simply normalize the vectors by $\frac{v}{\norm{v}}$.
+	Since binary \acp{VSA} can be associated with a euclidean sphere as well, the same result can be proven for those architectures with similar arguments (see \cite{Kanerva1988} for details).
+	Due to symmetry of the unit sphere $\mathbb{S}^{D-1}$, we can furthermore - again without loss of generality - choose one vector as a unit vector, i.e. $w=\left(1, 0 , \cdots, 0\right)$.
+	Thereby, the cosine similarity for $v=\left(v_{0}, \cdots, v_{D-1}\right)$ is given by $\phi\left(v,w\right) = v_{0}$
+	By fixing one coordinate, we get the constraint $\sum_{i=1}^{D-1} v_{i}^{2} = 1-v_{0}^{2}$ which is equivalent to a lower dimensional sphere $\mathbb{S}^{D-2}$ with radius $\sqrt{1-v_{0}^2}$.
+	Hence the cosine similarity $\phi\left(v,w\right)=:x$ is proportional to the surface of a conical frustum constructed from $\mathbb{S}^{D-2}$ with radius $\sqrt{1-x^{2}}$, slope $\frac{1}{\sqrt{1-x^{2}}}$ and some height $h$, i.e. the density function is proportional to
+	\[
+	f_{\phi(v,w)}(x) \propto \frac{\sqrt{1-x^{2}}^{(D-2)}}{\sqrt{1-x^{2}}} h \propto \left(1-x^{2}\right)^{\frac{D-3}{2}}.
+	\]
+	Substituting $x=2u-1$, we get 
+	\[
+	\left(1-\left(2u-1\right)^{2}\right)^{\frac{D-3}{2}} \propto \left(u-u^2\right)^{\frac{D-3}{2}} = \left(u \left(1-u\right)\right)^{\frac{D-3}{2}} = u^{\left(\frac{D-1}{2}-1\right)} \left(1-u\right)^{\left(\frac{D-1}{2}-1\right)},
+	\]
+	which is the density function of the beta distribution $\beta\left(\frac{D-1}{2},\frac{D-1}{2}\right)$.
+	Thus, the cosine similarity is also beta distributed, but scaled and shifted to the interval $\left[-1,1\right]$ by $x=2u-1$.\\
+	For $\alpha=\beta=\frac{D-1}{2}$, the mean of the beta distribution is $\tilde{\mu}=\frac{1}{2}$. Applying the substitution, we get the mean of the shifted distribution $\mu = 2\tilde{\mu }-1 = 0$.\\
+	Making use of the simplification that the distribution of similarity is the same as the distribution in the first coordinate, the variance is given by the expected value of the square value of the first coordinate, i.e. $\mathbb{E}(v_{0}^{2})$.
+	Since all coordinate are identically distributed, we get
+	\[
+	\mathbb{E}(v_{0}) = \frac{1}{D} \sum_{i=0}^{D-1} \mathbb{E}(v_{i}^2)= \frac{1}{D} \underbrace{\mathbb{E}\left(\sum_{i=0}^{D-1} v_{i}^2\right)}_{=:c^2}=\frac{c^2}{D}.
+	\]
+	Hence variance of the distribution of the cosine similarity is $\sigma^2=\frac{c^2}{D}$.
+	In the particular case of the unit sphere $\mathbb{S}^{D-1}$, we get $c^{2}=1$ and a variance of $\sigma^2=\frac{1}{D}$.\\
+	To see the convergence behaviour of the standardized distribution, we look at the logarithm of its density function %$f_{\phi(v,w)}\left(\frac{x}{\sqrt{D}}\right)$
+	\begin{equation}
+	\label{eq:log_dens}
+	\log\left(f_{\phi(v,w)}\left(\frac{x}{\sqrt{D}}\right)\right) = \frac{D-3}{2}\log\left(1-\frac{x^2}{D}\right) + C.
+	\end{equation}
+	Using the Tayler series approximation of the logarithm, equation \ref{eq:log_dens} transforms to
+	\begin{align*}
+	\log\left(f_{\phi(v,w)}\left(\frac{x}{\sqrt{D}}\right)\right) &= \frac{D-3}{2}\left(-\frac{x^2}{D} + \frac{x^4}{4D} \pm \ldots \right) + C = -\frac{1}{2}x^2 + \frac{3}{2D}x^2 + \mathcal{O}\left(\frac{x^4}{D}\right)  + C  \\
+	&\longrightarrow -\frac{1}{2}x^2 + C = \log\left(f_{\mathcal{N}}\left(x\right)\right) \textrm{ for } D \longrightarrow \infty.
+	\end{align*}
+	Hence, with growing $D$ the standardized distribution of the cosine similarity trends to a normal distribution. 
+\end{proof} 
+Theorem \ref{theorem:VSA_cossim_distribution} states, that the probability of finding two random, non-orthogonal vectors in a \ac{VSA} decreases with growing vector dimension.
+Fig. \ref{fig:cosine_dist}, which shows the probability distributions of cosine similarity for different vector dimensions, illustrates this result. 
+Furthermore, Theorem \ref{theorem:VSA_cossim_distribution} allows us to give a more formal definition of the term "dissimilar".
+\begin{defn}
+	\label{def:similar}
+	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$. We call any two vectors $v, w \in V_{D}(N)$ \emph{dissimilar}, if 
+	\[ 
+	\left| \phi(v,w) \right| \leq \epsilon, \textrm{ with } \epsilon:=\tfrac{3}{\sqrt{D}}.
+	\]
+	Analogously, we call any two vectors $v, w \in V_{D}(N)$ \emph{similar}, if	$\left| \phi(v,w) \right| > \epsilon$. 
+	If furthermore 	
+	\[
+	1-\epsilon < \left| \phi(v,w) \right| \leq 1,
+	\]
+	we call $v, w \in V_{D}(N)$ \emph{highly similar}, denoted by $v \approx w$.
+\end{defn}
+Definition \ref{def:similar} can also be stated as follows: we consider any two vectors similar, if their similarity is higher than what we would expect from two randomly chosen vectors.
+Therefore, we make use of the fact, that for growing dimension $D$, the cosine similarity follows approximately a normal distribution $\mathcal{N}\left(\mu, \sigma\right)$, with $\mu=0$ and $\sigma=\tfrac{1}{\sqrt{D}}$ and the so-called three-sigma-rule.
+This rule, which follows from Chebyshev's inequality, states that the probability $\mathbb{P}\left(\mu-3\sigma \leq X \leq \mu+3\sigma \right) \geq 0.95$ for any unimodal distributed random variable $X$.
+For normally distributed $X$, this probability is even approximately \SI{99.7}{\percent}.
+Given Definition \ref{def:similar}, the probability of two randomly chosen vectors being similar is below \SI{0.3}{\percent}, while the actual numerical interval $\left[-3\sigma, 3\sigma\right]$ only depends on the vector dimension $D$.\\
+Based on the definition of similarity, we derive criteria for "good" multiplication functions in \acp{VSA}.
+\begin{defn}
+	\label{def:binding}
+	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$. We call its multiplication function 
+	\[\abb{\varoast}{V_{D}(N) \times V_{D}(N)}{K^{D}}{(v,w)}{\varoast(v,w) =: v\varoast w}\]
+	a \emph{binding function} if 
+	\begin{enumerate}
+		\item for any two vectors $v, w \in V_{D}(N)$, the vector $v \varoast w$ is dissimilar to both $v$ and $w$, i.e.
+		\[
+		\left| \phi(v,v \varoast w) \right| \leq \epsilon \textrm{ and } \left| \phi(w,v \varoast w) \right| \leq \epsilon.
+		\]
+		\item for any vector $v \in V_{D}(N)$, there exists a vector $\bar{v} \in V_{D}(N)$ with $v \varoast \bar{v} \approx \bf{1}$. We call $\bar{v}$ a \emph{pseudo-inverse} element. 
+		If furthermore $v \varoast \bar{v} = \bf{1}$, we call the vector $\bar{v}$ \emph{exact inverse}.
+	\end{enumerate}
+\end{defn}
+It is worth noting, that all multiplication operations mentioned in example \ref{ex:VSAs} fulfill the criteria for binding functions as stated in Definition \ref{def:binding}. 
+\begin{figure}[t!]
+	\centering
+	\includegraphics[width=0.85\textwidth]{imgs/distributions_cosine_sims.eps}
+	\caption{Visualization of cosine similarity distributions for different vector dimensions \todo{remove figure title in python, make labels larger for better readability}}
+	\label{fig:cosine_dist}
+\end{figure}
+The first criteria is intended to allow structured representations in \acp{VSA}.
+Representations built solely upon an addition function lack a mechanism to impose structure, as the sum of vectors is similar to all summands.
+For continuous \acp{VSA}, this result is straightforward due to the linearity of the dot product, but it holds true for \acp{BSC} as well.
+Therefore, summing vectors only allows to encode unordered sets of entities.
+The property of binding functions to map two vectors to a vector dissimilar to both inputs enables structured representations.\\
+The second criteria of Definition \ref{def:binding} for binding functions is the basis to decode or recover the individual vector ingredients from structured representations.
+The existence of a (pseudo-) inverse element allows the retrieval of $v,w \in V_{D}(N)$ from $v \varoast w$ by
+\begin{equation}
+\label{eq:retrieval}
+\bar{v} \varoast \left(v \varoast w\right) = \underbrace{\bar{v} \varoast v}_{\approx \bf{1}} \varoast w = \tilde{w} \approx w.
+\end{equation}
+In case of exact inverse elements, the right hand side of equation \ref{eq:retrieval} becomes an exact equality $\tilde{w}=w$.
+In most cases, however, the result $\tilde{w}$ is not exactly equal to $w$, but highly similar.
+It is this inherent inexactness of most \acp{VSA} what makes them suitable candidates for cognitive modelling \cite{Eliasmith2013}.
+On the other hand, it imposes a functional demand for a clean-up memory.
+A clean-up memory is a mechanism, which maps noisy versions of vectors like $\tilde{w}$ to their exact counterparts, here $w$.
+Therefore, we need to have a set of vectors, which represent established concepts or symbols the system has knowledge of.
 
+\begin{defn}
+\label{def:clean-up-mem}
+	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$ with binding function $\varoast$.
+	We call a finite subset $\vartheta \subsetneq V_{D}(N)$ a \emph{vocabulary}.
+	A function $\abbil{\gamma}{K^{D}}{\vartheta}$ is called a \emph{clean-up memory}, if 
+	\begin{enumerate}
+		\item for any vector $v\in K^{D}$ we have
+		\[
+		\phi\left(v, \gamma(v)\right) > \phi\left(v, w\right), \textrm{ for any vector } w \in \vartheta, \gamma(v) \neq w.
+		\]
+		\item for any two highly similar vectors $ v \neq \tilde{v} \in K^{D}, v \in \vartheta$, i.e. $\tilde{v} \approx v$, we have $\gamma(\tilde{v})=v$.
+	\end{enumerate}
+\end{defn}
 
-\label{subsec:spiking_neural_nets}
+Definition \ref{def:clean-up-mem} states, that the cleaned-up version of a vector is more similar to the original (noisy) version than any other vector in the vocabulary.
 
-\subsection{Neural Modelling}
-\subsection{Neuromorphic Hardware}
-The field of neuromorphic computing achieved several significant advances in recent years, massively increasing the number of neurons simultaneously available in complex models and achieving real-time (less than $\SI{100}{\milli\second}$) execution through hardware implementation. 
-This basic research is resulting in semiconductor implementations becoming available on a wider scale, such as University of Manchester's \ac{SpiNNaker} Chip \cite{Furber2014} or IBM’s recently announced True North \cite{Akopyan2015} architecture.
-\section{Traditional Computing}
+\todo{focus on \acp{HRR} and \ac{SPA} from now on add properties of (pseudo-) inverses and unitary vectors}
+
+\subsection{Cognitive Modelling with \aclp{VSA}}
+\todo{explain how modelling with VSAs works referring to neural modelling section and explain implementation in SNNs}
