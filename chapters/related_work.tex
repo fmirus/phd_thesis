@@ -150,6 +150,7 @@ So-called second generation \ac{ANN} introduced continuous (e.g. sigmoid or hype
 	\label{fig:biological_neuron}
 \end{figure}
 Biological neurons exchange information by sending short and sudden pulses, so-called action potentials or spikes.
+\todo{include some text here referring to fig \ref{fig:biological_neuron}}
 Whenever the membrane potential of a neuron, which can be in- or decreased by incoming spikes depending on the synaptic weight, reaches a certain threshold, the neuron produces a spike itself and resets its membrane potential afterwards \cite{Gerstner2002, Paugam2009}.
 Recent neuroscientific research suggests that the exact timing of those spikes encodes information rather than just average firing rates \cite{Bohte2004}.
 While traditional \acp{ANN} used in machine learning neglect these biological details, \acp{SNN} embody these spike times and are therefore often referred to as the third generation of neural networks \cite{Maass1997, Paugam2009}.
@@ -168,11 +169,11 @@ The simplest spiking neuron model is the \acf{LIF} model with
 describing the subthreshold behaviour of the neuron, where $V$ is the voltage across the membrane, $I(t)$ is the input current, $R$ is the passive membrane resistance and $\tau_{m}$ is the membrane time constant.
 Simply put, equation \ref{eq:LIF} states as follows: the membrane voltage increases in the presence of input current $I(t)$ depending on the membrane resistance $R$ while at the same time, especially in the absence of input current ($I(t)=0$), the voltage decreases or "leaks out" depending on the membrane time constant $\tau_{m}$.
 When the voltage $V(t)$ passes a certain threshold $\vartheta$, the neuron produces a spike and the voltage is reset to a resting state $c$ for a certain refractory time interval $\tau_{ref}$ during which incoming spikes have no impact on the membrane potential.
+Figure \ref{fig:lif_neuron_model} shows an an example curve of the membrane potential of one \ac{LIF} neuron based on six incoming spikes and visualizes the previously described behaviour. \todo{wording?}
 The \ac{LIF} model, despite its biological simplifications, is maybe the most widely used neuron model for simulations due to its simplicity and comparably low computational complexity \cite{Izhikevich2004}, which allows simulations of large networks of neurons in reasonable time.
 In contrast, the famous Hodgin-Huxley-model \cite{Hodgkin1952} with its four differential equations and dozens of (biologically meaningful) parameters is the model of high biological plausibility but also computationally challenging regarding large simulations \cite{Izhikevich2004}.
 In 2003, Izhikevich proposed a neuron model \cite{Izhikevich2003} as compromise between biological plausibility and computational feasibility.
-He showed that this simple model, described by two differential equations with four parameters, is able to produce all known spiking behaviours observed in cortical neurons \cite{Izhikevich2004}. 
-\todo{include visualization of a membrane potential}\\
+He showed that this simple model, described by two differential equations with four parameters, is able to produce all known spiking behaviours observed in cortical neurons \cite{Izhikevich2004}. \\
 One major hindrance for the widespread adoption of \acp{SNN} has been the problem, that standard learning algorithms for traditional \acp{ANN} like backpropagation \cite{Werbos1974} can not be directly applied to \acp{SNN}.
 Although an analogon, the so-called SpikeProp algorithm \cite{Bohte2002} for \acp{SNN} has been developed, the more natural approach is to transfer and mimic biologically inspired learning approaches like Hebbian learning \cite{Hebb1949} or \ac{STDP} \cite{Bi2001}.
 An overview of several learning approaches for \acp{SNN} possibly applied with neuromorphic hardware can be found in \cite{Walter2015}.
@@ -190,10 +191,126 @@ Except for the biologically unrealistic rate coding approach, there are cues for
 \label{subsec:neural_eng}
 %----------------------------------------------------------------------------------------------------------
 In this section, we give a brief overview of the \acf{NEF}, as we will be making use of it in forthcoming chapters.
-The \ac{NEF} \cite{Eliasmith2003} is mathematical theory, which provides a set of methods to construct biologically plausible, large-scale neural models.
-\todo{formulate section about nengo and neural engineering principles}
+The \ac{NEF} \cite{Eliasmith2003} is a mathematical theory, which provides a set of methods to construct biologically plausible, large-scale neural models.
+These methods can be divided into the three main principles of the \ac{NEF}: \emph{representation}, \emph{transformation} and \emph{dynamics}.
+The \ac{Nengo} \cite{Bekolay2014, Nengo} software suite is a python library, which implements the \ac{NEF}'s principles.
+\ac{Nengo} has been used to build a variety of neural models, e.g. models of the basal ganglia system \cite{Stewart2010, Stewart2012} and \acf{Spaun} \cite{Eliasmith2012}, a large-scale, functional model of the brain, which is able to perform eight cognitive tasks.
+Furthermore, \ac{Nengo} has been used to interface neural models with physical, neuromorphic hardware systems and robots \cite{Conradt2014, Stewart2016, Mirus2018a}.
+Here, we give a brief introduction to the \ac{NEF}'s principles and refer to \cite{Eliasmith2003, Eliasmith2013, Bekolay2014} for more details.
+\subsubsection{Representation}
+\label{subsubsec:nef_representation}
+The first principle of the \ac{NEF}, representation, provides mathematical tools to encode information, namely time-varying real-valued vectors, in the activity of neural populations.
+It is based on the assumption, that neurons have a "preferred direction vector" in the represented space, each neuron responds most strongly to.
+This assumption is grounded by the findings of \cite{Georgopoulos1989} that each neuron in motor cortex of rhesus monkeys has a different preferred arm direction.
+The \ac{NEF} expands this idea to neural representations in general.
+\begin{figure}[t!]
+	\centering
+	\subfloat[Tuning curves \label{subfig:nef_rep_tuning_curves}]{%
+		\includegraphics[width=0.45\textwidth]{imgs/NEF_tuning_curves.eps}
+	}
+	\subfloat[Spike times\label{subfig:nef_rep_spike_raster}]{%
+		\includegraphics[width=0.45\textwidth]{imgs/NEF_spikes_raster.eps}
+	}\\
+	\vspace{-0.4cm}
+	\subfloat[Decoded output\label{subfig:nef_rep_decoded}]{%
+		\includegraphics[width=0.45\textwidth]{imgs/NEF_decoded_output.eps}
+	}
+	\subfloat[Filtered neural activity\label{subfig:nef_rep_spike_filtered}]{%
+		\includegraphics[width=0.45\textwidth]{imgs/NEF_spikes_filtered.eps}
+	}
+	\caption{The representation principle of the \ac{NEF}. Images adapted from \cite{Bekolay2014}}\label{fig:nef_representation}
+\end{figure}
+Let $A$ be a population of $N \in \mathbb{N}$ neurons encoding a subset $V$ of a real-valued vector space, i.e. $V\subseteq \mathbb{R}^{n}$.
+Given a function $\abbil{\mathbf{x}}{\mathbb{R}}{V}$, we can write the activity $a_{i}$ of the $i$-th neuron in a neural population encoding a time-varying vector $\mathbf{x}(t)$ as a spike train, i.e. a sum of delta functions
+\begin{equation}
+a_{i}\left(\mathbf{x}(t)\right) = \sum_{j=1}^{m_{i}} \delta(t - t_{j}) = G_{i}(\underbrace{\alpha_{i}\langle\mathbf{e}_{i},\mathbf{x}(t)\rangle + J_{i}}_{=:c}) \quad \textrm{ for } 1 \leq i \leq N, 
+\label{eq:nef_encoding}
+\end{equation}
+where $G_{i}$ is the spiking neural non-linearity, $\alpha_{i}$ is the gain of the neuron, $\mathbf{e}_{i}$ is the neuron's preferred direction or encoding vector and $J_{i}$ is a bias current to account for neural background activity and $t_{j}$ are the $m{i}$ spike-times of the $i$-th neuron.
+Notably, the current flowing into the cell is completely determined by $c$, whereas the spiking behaviour of the neuron model is represented by the non-linear function $G_{i}$.
+The input current $c$ and therefore the \ac{NEF}'s encoding process is independent of particular spiking neuron models.\\
+To decode the input values $\mathbf{x}(t)$ back out of the neural population $A$, the spike train is convolved with an exponentially decaying filter $\abbil{h}{\mathbb{R}}{\mathbb{R}}$ to simulate the process of neurons generating postsynaptic current after spiking (cf. fig. \ref{subfig:nef_rep_spike_filtered}) resulting in
+\begin{equation}
+\tilde{a}_{i}\left(\mathbf{x}(t)\right) = \sum_{j=1}^{m_{i}} h(t) \ast \delta(t - t_{j}) = \sum_{j=1}^{m_{i}} h(t - t_{j}).
+\label{eq:nef_filtered_activity}
+\end{equation}
+A simple model of an exponential decaying filter is the function $\abb{h}{\mathbb{R}}{\mathbb{R}}{t}{e^{\sfrac{-t}{\tau_{p}}}}$, where $\tau_{P}$ denotes the postsynaptic time constant.
+We obtain an estimation $\mathbf{\hat{x}}(t)$ of the original input $\mathbf{x}(t)$ as a weighted sum with some decoder values $\mathbf{d}_{i}$
+\begin{equation}
+\mathbf{\hat{x}}(t) = \sum_{i=1}^{N} \tilde{a}_{i}\left(\mathbf{x}(t)\right) \mathbf{d}_{i}.
+\label{eq:nef_decoding} 
+\end{equation} 
+To calculate the optimal decoders $\mathbf{d}_{i}$, we need to minimize the error between input $\mathbf{x}(t)$ and decoded output $\mathbf{\hat{x}}(t)$
+\begin{equation}
+E = \int \left( \mathbf{x}(t) - \sum_{i=1}^{N} \tilde{a}_{i}\left(\mathbf{x}(t)\right) \mathbf{d}_{i}\right)^{2} \diff \mathbf{x}(t).
+\label{eq:decoder_calculation}
+\end{equation}
+\ac{Nengo} solves for the decoders $\mathbf{d}_{i}$ by default using least squares optimization \cite{Eliasmith2013}[Appendix B1].
+Fig. \ref{fig:nef_representation} visualizes this encoding process for $V = \left[ -1, 1\right] \subset \mathbb{R}$ and a population of $8$ neurons.
+Fig. \ref{subfig:nef_rep_tuning_curves} shows the tuning curves of individual neurons, which define how these neurons respond to specific input values.
+Equation \ref{eq:nef_encoding} is depicted in fig. \ref{subfig:nef_rep_spike_raster}, which shows a raster plot of the neurons' spike times based on the input signal shown in fig. \ref{subfig:nef_rep_decoded}.
+Fig. \ref{subfig:nef_rep_spike_filtered}, which shows the filtered neural activity for each neuron, visualizes equation \ref{eq:nef_filtered_activity}.
+Finally, fig. \ref{subfig:nef_rep_decoded} depicts the original input value as well as the estimated output of the neural populations' activity (cf. equation \ref{eq:nef_decoding}).
+Note, that the neural population's decoded output is only a noisy approximation of the original input value, whose accuracy can be improved by increasing the number of neurons in the population.
+\subsubsection{Transformation}
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.85\textwidth]{imgs/NEF_transformation.eps}
+	\caption{The transformation principle of the \ac{NEF}.}
+	\label{fig:nef_transformation}
+\end{figure}
+The second main principle of the \ac{NEF}, \emph{transformation}, provides the mathematical tools to compute functions across conncetions between populations of neurons.
+Let $A$ resp. $B$ be populations of $N$ resp. $M$ neurons encoding a time-varying vector $\mathbf{x}(t) \in V \subset \mathbb{R}^{n}$ resp. $\mathbf{y}(t) \in W \subset \mathbb{R}^{m}$ according to the representation principle and a function $\abbil{f}{V}{W \subset \mathbb{R}^{m}}$.
+In order to approximate the funtion $f$ across a connection from population $A$ to population $B$, we use the tools of the representation principle, but we calculate a different set of decoder values $\mathbf{d}_{i}^{f}$ for population $A$ by minimizing the error
+\begin{equation}
+\label{eq:nef_transformation}
+E = \int \left( f(\mathbf{x}(t)) - \sum_{i=1}^{N} \tilde{a}_{i}\left(\mathbf{x}(t)\right) \mathbf{d}_{i}^{f}\right)^{2} \diff \mathbf{x}(t).
+\end{equation}
+Given encoders $\mathbf{e}_{j}^{B}$ and gain $\alpha_{j}^{B}$ for $1 \leq j \leq M$ of population $B$, we can derive a weight matrix for the connection from $A$ to $B$ approximating the function $f$ by
+\begin{equation}
+w_{ij} = \alpha_{j}^{B} \mathbf{d}_{i}^{f} L \mathbf{e}_{j}^{B} \quad \textrm{for } 1 \leq i \leq N \textrm{ and } 1 \leq j \leq M, 
+\end{equation}
+where $L$ is a $M \times N$ linear operator. 
+Here, the \ac{NEF} makes the assumption, that connection weights can be factored into encoders, decoders and a linear transform.
+Fig. \ref{fig:nef_transformation} visualizes this \ac{NEF}'s transformation principle for $V = W = \left[ -1, 1\right] \subset \mathbb{R}$, two neural populations $A$, $B$ containing $30$ neurons each.
+The left resp. right panel of plots shows the populations' decoded outputs resp. the neurons' spike times.
+Population $A$ uses the representation principle to encode a sine function, whereas the transformation principle was used to calculate the function $\abb{f}{V}{W}{x}{f(x)=x^{2}}$ across the connection from $A$ to $B$.
 
-
+\subsubsection{Dynamics}
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.85\textwidth]{imgs/NEF_recurrent.eps}
+	\caption{The dynamics principle of the \ac{NEF} for recurrent connections. \todo{make a better figure!}}
+	\label{fig:nef_dynamics}
+\end{figure}
+The third main principle of the \ac{NEF}, \emph{dynamics}, provides a set of mathematical tools to implement dynamical systems in neural populations through recurrent connections.
+Let $A$ be a population of neurons with an incoming connection approximating the function $\abbil{f}{V}{W \subset \mathbb{R}^{m}}$ and a recurrent connection approximating the function $\abbil{g}{W}{W}$ (cf. fig. \ref{fig:nef_dynamics}).
+Thus, the overall function the population is approximating is 
+\begin{equation}
+\mathbf{y}(t) = h(t) \ast \left(f(\mathbf{x}(t)) + g(\mathbf{y}(t))\right)
+\label{eq:nef_dyn}
+\end{equation}
+with exponential decaying filter function $\abb{h}{\mathbb{R}}{\mathbb{R}}{t}{e^{\sfrac{-t}{\tau}}}$.
+By applying the Laplace transform to equation \ref{eq:nef_dyn}, we get
+\begin{equation}
+\label{eq:nef_dyn_laplace}
+\mathbf{Y}(s) = \frac{1}{1 + s\tau}\left(F(\mathbf{X}(s)) + G(\mathbf{Y}(s))\right).
+\end{equation}
+We can rearrange equation \ref{eq:nef_dyn_laplace} to
+\begin{equation}
+s\mathbf{Y}(s) = \frac{G(\mathbf{Y}(s))-\mathbf{Y}}{\tau} + \frac{F(\mathbf{X}(s))}{\tau}.
+\end{equation}
+Transforming back leads to the differential equation
+\begin{equation}
+\frac{\partial \mathbf{y}(t)}{\partial t} = \frac{g(\mathbf{y}(t)-y)}{\tau} + \frac{f(\mathbf{x}(t))}{\tau}.
+\end{equation}
+Thus, to construct a neural model approximating a differential equation of the form 
+\begin{equation}
+\frac{\mathbf{y}(t)}{\partial t} = a(\mathbf{y}(t)) + b(\mathbf{x}(t))
+\label{eq:nef_dyn_diffeq}
+\end{equation}
+with functions $\abbil{a}{W}{W}$ and $\abbil{b}{V}{W}$, the first two principles of the \ac{NEF} can be used to create a neural population of the form as shown in fig. \ref{fig:nef_dynamics}.
+By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)$ and $f(\mathbf{x}(t))=\tau b(\mathbf{x}(t))$, we obtain a neural model approximating the desired dynamical system described by the differential equation \ref{eq:nef_dyn_diffeq}.
 %The term "neuromorphic" was first introduced by Carver Mead in \cite{Mead90}, when describing one of the first silicon retinas.
 %For clarity, a first broad definition is provided, which will need some refinement while proceeding in this section:
 %\begin{defn}
@@ -413,8 +530,8 @@ Based on the definition of similarity, we derive criteria for "good" multiplicat
 		\[
 		\left| \phi(v,v \varoast w) \right| \leq \epsilon \textrm{ and } \left| \phi(w,v \varoast w) \right| \leq \epsilon.
 		\]
-		\item for any vector $v \in V_{D}(N)$, there exists a vector $\bar{v} \in V_{D}(N)$ with $v \varoast \bar{v} \approx \bf{1}$. We call $\bar{v}$ a \emph{pseudo-inverse} element. 
-		If furthermore $v \varoast \bar{v} = \bf{1}$, we call the vector $\bar{v}$ \emph{exact inverse}.
+		\item for any vector $v \in V_{D}(N)$, there exists a vector $\bar{v} \in V_{D}(N)$ with $v \varoast \bar{v} \approx \mathbf{1}$. We call $\bar{v}$ a \emph{pseudo-inverse} element. 
+		If furthermore $v \varoast \bar{v} = \mathbf{1}$, we call the vector $\bar{v}$ \emph{exact inverse}.
 	\end{enumerate}
 \end{defn}
 It is worth noting, that all multiplication operations mentioned in example \ref{ex:VSAs} fulfill the criteria for binding functions as stated in Definition \ref{def:binding}. 
@@ -433,7 +550,7 @@ The second criteria of Definition \ref{def:binding} for binding functions is the
 The existence of a (pseudo-) inverse element allows the retrieval of $v,w \in V_{D}(N)$ from $v \varoast w$ by
 \begin{equation}
 \label{eq:retrieval}
-\bar{v} \varoast \left(v \varoast w\right) = \underbrace{\bar{v} \varoast v}_{\approx \bf{1}} \varoast w = \tilde{w} \approx w.
+\bar{v} \varoast \left(v \varoast w\right) = \underbrace{\bar{v} \varoast v}_{\approx \mathbf{1}} \varoast w = \tilde{w} \approx w.
 \end{equation}
 In case of exact inverse elements, the right hand side of equation \ref{eq:retrieval} becomes an exact equality $\tilde{w}=w$.
 In most cases, however, the result $\tilde{w}$ is not exactly equal to $w$, but highly similar.
