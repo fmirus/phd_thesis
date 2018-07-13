@@ -1,4 +1,6 @@
+%----------------------------------------------------------------------------------------------------------
 \chapter{Introduction to \aclp{VSA}}
+%----------------------------------------------------------------------------------------------------------
 The term \acfp{VSA} - first coined by Ross W. Gayler \cite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
 The basic idea behind all of those approaches is to represent structure (e.g. cognitive concepts, symbols or language) in a high-dimensional vector space by mapping each entity to be represented to a (possibly random) vector.
 One of the most important properties of high-dimensional vector spaces enabling this kind of representation is the fact, that two high-dimensional random vectors are likely to be dissimilar.
@@ -15,7 +17,10 @@ As a consequence, each binding operation $v\otimes w$ for vectors $v \in V, w \i
 This lead researchers to define several slightly different multiplication or binding operations, depending on the underlying numerical structure.
 The most prominent examples are elementwise multiplication in Gayler's \ac{MAP}-architecture \cite{Gayler1998}, the XOR-operation in Kanerva's \acp{BSC} \cite{Kanerva2000, Kanerva2009} as well as circular convolution in Plate's \acp{HRR} \cite{Plate1991, Plate1994}.
 
+%----------------------------------------------------------------------------------------------------------
 \section{Mathematical properties of \aclp{VSA}}
+\label{sec:math_prop_vsas}
+%----------------------------------------------------------------------------------------------------------
 %Before we provide a formal definition for \acp{VSA}, we introduce some terms and auxiliary tools needed for later use.
 %\begin{defn}
 %	\label{def:metric}
@@ -110,7 +115,7 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 		\[
 		\abb{\ac{IDFT}}{\mathbb{C}^{D}}{\mathbb{C}^{D}}{x}{\left( \frac{1}{D} \sum_{j=0}^{D-1} x_{j} \zeta_{D}^{jk} \right)_{k=0}^{D-1}}.
 		\]
-		From the convolution theorem (\todo{insert citation here!})we know, that we can calculate the circular convolution of any two vectors $v, w \in V_{D}(N)$ by
+		From the convolution theorem \cite[Chap. 6]{Bracewell2000} we know, that we can calculate the circular convolution of any two vectors $v, w \in V_{D}(N)$ by
 		\[
 		v \varoast w = \ac{IDFT}\left(\ac{DFT}(v) \odot \ac{DFT}(w) \right),
 		\]
@@ -178,7 +183,8 @@ Furthermore, Theorem \ref{theorem:VSA_cossim_distribution} allows us to give a m
 	\left| \phi(v,w) \right| \leq \epsilon, \textrm{ with } \epsilon:=\tfrac{c}{\sqrt{D}}.
 	\]
 	Analogously, we call any two vectors $v, w \in V_{D}(N)$ \emph{similar}, if	$\left| \phi(v,w) \right| > \epsilon$. 
-	Similar vectors are denoted by $v \approx w$.
+	Similar vectors are denoted by $v \approx w$. \\
+	\todo{maybe use two different $\epsilon$ for $2$ or $3$ for definition of similar and highly similar?}
 \end{defn}
 Definition \ref{def:similar} can also be stated as follows: we consider any two vectors similar, if their similarity is higher than what we would expect from two randomly chosen vectors.
 Therefore, we make use of the fact, that for growing dimension $D$, the cosine similarity follows approximately a normal distribution $\mathcal{N}\left(\mu, \sigma\right)$, with $\mu=0$ and $\sigma=\tfrac{1}{\sqrt{D}}$ and the so-called three-sigma-rule.
@@ -239,7 +245,11 @@ Therefore, we need to have a set of vectors, which represent established concept
 \end{defn}
 Definition \ref{def:clean-up-mem} states, that the cleaned-up version of a vector is more similar to the original (noisy) version than any other vector in the vocabulary.
 
+%----------------------------------------------------------------------------------------------------------
 \section{The \acl{SPA}}
+\label{sec:spa}
+%----------------------------------------------------------------------------------------------------------
+
 In this section, we focus on one particular \ac{VSA}, namely the \ac{SPA}, as we will be using it throughout this work.
 The \ac{SPA} is an adoption of Plate's previously mentioned \acp{HRR} (cf. example \ref{ex:VSAs}).
 Revisiting definition \ref{def:VSA}, the underlying number field of the \ac{SPA} is the field of real numbers, i.e. $N \subseteq \mathbb{R}$, the addition $\oplus$ resp. multiplication $\varoast$ operations are element-wise addition resp. circular convolution and the cosine similarity serves as measure of similarity $\phi$.
@@ -263,7 +273,7 @@ Therefore, we randomly chose $100$ sample vectors for various dimensions, convol
 We observe, that this similarity remains almost constant slightly above $0.7$ and already for low vector dimensions ($D > 20$) way above the strong similarity threshold of $\epsilon=\frac{3}{\sqrt{D}}$.\\
 Lemma \ref{lemma:spa_pseudo_inv} states that we can find a pseudo-inverse element $\bar{v}$ for any vector $v$ in a $D$-dimensional \ac{SPA} (given the dimension $D$ is sufficiently large).
 Although we can also find an exact inverse element $v^{-1}$ for most vectors $v$, it is often more useful to work with pseudo-inverses instead of exact inverse elements.
-We have already seen, that we can use the \acf{DFT} and \acf{IDFT} to calculate circular convolution efficiently by element-wise multiplication (this follows from the convolution theorem) in the frequency domain, i.e.
+We have already seen, that we can use the \acf{DFT} and \acf{IDFT} to calculate circular convolution efficiently by element-wise multiplication (this follows from the convolution theorem \cite[Chap. 6]{Bracewell2000}) in the frequency domain, i.e.
 \[
 	v \varoast w = \ac{IDFT}\left(\ac{DFT}(v) \odot \ac{DFT}(w) \right).
 \]
@@ -284,7 +294,7 @@ If we express $\ac{DFT}_{j}(v) \in \mathbb{C}$ in polar coordinates, i.e. $\ac{D
 By using the symmetry property of the real-valued \ac{DFT}, we can see that the transform $\ac{DFT}_j(\bar{v})$ of the pseudo-inverse element $\bar{v}$ from Lemma \ref{lemma:spa_pseudo_inv} is the complex conjugate of $\ac{DFT}_j(v)$, i.e. we can write $\ac{DFT}_j(\bar{v}) = r_j \exp\left(-i\varphi\right)$ in polar coordinates.
 From those equations, we can see that the pseudo-inverse $\bar{v}$ has the same norm as the original vector $v$, i.e. $\norm{v} = \norm{\bar{v}}$, whereas the norm of the exact inverse $v^{-1}$ can become significantly larger than the norm of $v$ in some cases.
 This is due to the fact, that elements of the transform of the pseudo-inverse have the same lengths $r_j$ as the original vector, whereas the transformed elements of the exact inverse have lengths $\frac{1}{r_j}$, which can become significantly large when $r_j$ is close to $0$.
-The relation between the vector norm and the magnitudes in the frequency domain is given by Parseval's theorem, which states
+The relation between the vector norm and the magnitudes in the frequency domain is given by Parseval's theorem (also known as Rayleigh's theorem) \cite[Chap. 6]{Bracewell2000}, which states
 \[
 \norm{v}^2 = \sum_{k=0}^{D-1} \left| v_{k} \right|^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|\ac{DFT}_{k}\left(v\right)\right|^{2} = \sum_{k=0}^{D-1} r_{k}^{2}.
 \]
@@ -346,8 +356,9 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
 
 %----------------------------------------------------------------------------------------------------------
 \section{The \acl{NEF}}
-\label{subsec:neural_eng}
+\label{sec:neural_eng}
 %----------------------------------------------------------------------------------------------------------
+
 In this section, we make a short excursion and give a brief overview of the \acf{NEF}, as we will be making use of it in forthcoming chapters.
 The \ac{NEF} \cite{Eliasmith2003} is a mathematical theory, which provides a set of methods to construct biologically plausible, large-scale neural models.
 These methods can be divided into the three main principles of the \ac{NEF}: \emph{representation}, \emph{transformation} and \emph{dynamics}.
@@ -356,7 +367,7 @@ The \ac{Nengo} \cite{Bekolay2014, Nengo} software suite is a python library, whi
 Furthermore, \ac{Nengo} has been used to interface neural models with physical, neuromorphic hardware systems and robots \cite{Conradt2014, Stewart2016, Mirus2018a}.
 Here, we give a brief introduction to the \ac{NEF}'s principles and refer to \cite{Eliasmith2003, Eliasmith2013, Bekolay2014} for more details.
 \subsection{Representation}
-\label{subsubsec:nef_representation}
+\label{subsec:nef_representation}
 The first principle of the \ac{NEF}, representation, provides mathematical tools to encode information, namely time-varying real-valued vectors, in the activity of neural populations.
 It is based on the assumption, that neurons have a "preferred direction vector" in the represented space, each neuron responds most strongly to.
 This assumption is grounded by the findings of \cite{Georgopoulos1989} that each neuron in motor cortex of rhesus monkeys has a different preferred arm direction.
@@ -472,6 +483,58 @@ By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)
 
 
 \section{Cognitive Modelling with \aclp{VSA}}
-\todo{explain how modelling with VSAs works referring to neural modelling section and explain implementation in SNNs}
-\section{Other Applications}
-\todo{briefly explain other applications like natural langua processing, word2vec etc.}
+In this section, we give a brief introduction of how we can use the theory of in \ref{sec:math_prop_vsas} and to \ref{sec:spa} to represent (structured) information using \acp{VSA}.
+We give a general overview of different ways to establish vocabularies containing atomic vectors and how we can build more complex representations from those elementary ingredients.
+Furthermore, we will see how these representations can be implemented in \acp{SNN} using the principles of the \ac{NEF} described in \ref{sec:neural_eng}.
+\subsection{Vocabularies}
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.55\textwidth]{imgs/conceptual_golfball.eps}
+	\caption{"Conceptual golfball" depicting the idea of semantic vectors. Image source \cite{Eliasmith2013}.}
+	\label{fig:conceptual_golfbal}
+\end{figure}
+Let $\vartheta \subset \mathcal{S}(D)$ be a vocabulary in the $D$-dimensional \ac{SPA}, where each vector $v \in \vartheta$ represents one item (i.e. a symbol, word or concept) in the representional space.
+The content and size, i.e. the items of interest to be represented in such a vocabulary and their number as well as the way the representing vectors are established is highly task-dependent.
+In its simplest form, all vectors in the vocabulary are chosen at random.
+This approach is feasible due to the properties of high-dimensional vector spaces (cf. Theorem \ref{theorem:VSA_cossim_distribution} in Sec. \ref{sec:math_prop_vsas}) that the probability of randomly chosen vectors being dissimilar grows with vector dimension.
+Therefore,  we have low probability of unintentionally confusing two different concept vectors.
+However, this approach does not capture any similarities between items being represented.
+Ideally, the goal is that the similarity between vectors in the vocabulary $\vartheta$ somewhat reflects the similarity between represented items.
+Figure \ref{fig:conceptual_golfbal} depicts this idea: one subset of the space is assigned to vectors representing letters whereas another subset contains vectors representing special characters.
+For a small number of items, the simplest way to create a vocabulary respecting some kind of similarity is to manually engineer the desired properties from randomly chosen vectors. 
+Let us assume we want to derive representative vectors for five different classes of traffic participants, namely \emph{pedestrian}, \emph{bicycle}, \emph{motorcycle},  and \emph{car}.
+A simple structured vocabulary could be constructed in the following way
+\begin{align*}
+\mathbf{PEDESTRIAN} &:= \mathbf{DRIVE} \varoast \mathbf{MUSCLE} + \mathbf{ACTUATOR} \varoast \mathbf{LEG} \varoast \mathbf{TWO} \\ 
+\mathbf{BICYCLE} &:= \mathbf{DRIVE} \varoast \mathbf{MUSCLE} + \mathbf{ACTUATOR} \varoast \mathbf{WHEEL} \varoast \mathbf{TWO}\\
+\mathbf{MOTORCYCLE} &:= \mathbf{DRIVE} \varoast \mathbf{MOTOR} + \mathbf{ACTUATOR} \varoast \mathbf{WHEEL} \varoast \mathbf{TWO}\\
+\mathbf{CAR} &:= \mathbf{DRIVE} \varoast \mathbf{MOTOR} + \mathbf{ACTUATOR} \varoast \mathbf{WHEEL} \varoast \mathbf{FOUR},
+\end{align*}
+with all atomic vectors on the right side of the equations being chosen at random from $\mathcal{S}(D)$.\\
+A more sophisticated way to create a vector vocabulary is to learn it automatically from data.
+In contrast to purely random vocabularies, the idea here is that the learning system is able to capture the intrinsic similarity between objects in the vector representation.
+Again, the choice of this learning paradigm (supervised vs. unsupervised) and architecture (e.g. \acp{CNN} or \acp{SOM}) depends not only on the given task, but also on the kind of similarity the vectors should encapsulate.
+This can be visual similarity (e.g. items or objects that "look" similar), auditory similarity (e.g. objects producing similar sound), semantic similarity (e.g. words with similar meaning) or similarity in characteristics (e.g. similar motion characteristics).
+
+A typical way of learning a vocabulary whose vectors conserve visual similarity in supervised fashion are \acp{CNN}.
+These network architectures are inspired by the human visual cortex and compress high-dimensional visual input to lower dimensional representations.
+They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf. fig. \ref{fig:CNN_arch}).
+The activity of the second-to-last layer (the last fully-connected one before the actual classification) for each known class in the data set can be considered a representational vector for the current visual input.
+A simple way of getting a representative vector for each class is simply calculating the element-wise, normalized mean over all examples in the test set.
+\todo{add reference to later chapter with traffic sign \ac{CNN}}
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.75\textwidth]{imgs/CNNArchitecture.jpg}
+	\caption{\todo{Adapt image such that the second-to-last layer is highlighted}. Image adapted from \cite{Peemen2011}.}
+	\label{fig:CNN_arch}
+\end{figure}
+A similar approach to derive vectors representing digits from $0$ to $9$ was used for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DNN} consisting of four \ac{RBM} layers.
+\todo{check this and reformulate}\\
+The aforementioned approach to create vector vocabularies encapsulating visual similarity is 
+\subsection{Encoding structure}
+\subsection{Implementation in \acp{SNN}}
+
+\todo{explain how modelling with VSAs works referring to neural modelling section and explain implementation in SNNs}\\
+\todo{use conceptual golfball metaphor here}
+\section{Summary}
+
