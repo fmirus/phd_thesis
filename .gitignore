@@ -3,3 +3,5 @@
 # ignore all files with name thesis except thesis.tex
 thesis.*
 !thesis.tex
+
+*-eps-converted-to.pdf
