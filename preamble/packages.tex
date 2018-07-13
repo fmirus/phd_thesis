@@ -24,7 +24,8 @@
 \usepackage{amsmath} % assumes amsmath package installed
 \usepackage{amssymb}  % assumes amsmath package installed
 \usepackage{inputenc}
-\usepackage{siunitx}
+\usepackage[binary-units=true]{siunitx}
+\DeclareSIUnit{\nothing}{\relax}
 \usepackage{xcolor}
 \usepackage{eqparbox}
 %\usepackage{subcaption} 
@@ -36,8 +37,8 @@
 \usepackage{tumcolor}
 %\usepackage[]{isodate}
 \usepackage[backend=biber,
-%			style=alphabetic,
-			style=numeric,
+			style=alphabetic,
+%			style=numeric,
 			sorting=nyt,
 			urldate=iso8601,
 			date=iso8601,
