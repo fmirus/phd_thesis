@@ -446,11 +446,47 @@ The left resp. right panel of plots shows the populations' decoded outputs resp.
 Population $A$ uses the representation principle to encode a sine function, whereas the transformation principle was used to calculate the function $\abb{f}{V}{W}{x}{f(x)=x^{2}}$ across the connection from $A$ to $B$.
 
 \subsection{Dynamics}
+
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.85\textwidth]{imgs/NEF_recurrent.eps}
-	\caption{The dynamics principle of the \ac{NEF} for recurrent connections. \todo{make a better figure!}}
-	\label{fig:nef_dynamics}
+\begin{tikzpicture}[%
+auto,
+%scale=3,
+block/.style={
+	rectangle,
+	draw=blue,
+	thick,
+	fill=blue!20,
+	text width=3em,
+	align=center,
+	rounded corners,
+	minimum height=4em,
+},
+circ/.style={
+	circle,
+	draw=orange,
+	thick,
+	fill=orange!20,
+	text width=3em,
+	align=center,
+	rounded corners,
+	minimum height=6em,
+}
+]
+\node[block] (X) at (1,1) {\Huge $\mathbf{x}$};
+\node[circ] (A) [right=2cm of X] {\Huge  $A$ \\ \vspace{0.5em} \Large $\ast h(t)$};
+\node[block] (Y) [right=2cm of A] {\Huge $\mathbf{y}$};
+\draw [thick,->] (X) -- (A) node [midway, below] {\Large $f\left(\mathbf{x}\left(t\right)\right)$};
+\draw [thick,->] (A) -- (Y);
+% Calculate branch point coordinates
+\path (A) -- coordinate (branch) (Y);
+\path (X) -- coordinate (branch_end) (A);
+\coordinate[above=2cm of branch] (branch_ab);
+\coordinate[above=2cm of branch_end] (branch_end_ab);
+\draw [thick,->] (branch) -- (branch_ab) -- (branch_end_ab) node [midway, above] {\Large $g\left(\mathbf{y}\left(t\right)\right)$} -- (branch_end);
+\end{tikzpicture}
+\caption{The dynamics principle of the \ac{NEF} for recurrent connections. \todo{check if this can be beautified}}
+\label{fig:nef_dynamics}
 \end{figure}
 The third main principle of the \ac{NEF}, \emph{dynamics}, provides a set of mathematical tools to implement dynamical systems in neural populations through recurrent connections.
 Let $A$ be a population of neurons with an incoming connection approximating the function $\abbil{f}{V}{W \subset \mathbb{R}^{m}}$ and a recurrent connection approximating the function $\abbil{g}{W}{W}$ (cf. fig. \ref{fig:nef_dynamics}).
