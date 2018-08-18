@@ -12,7 +12,7 @@
 \usepackage{xfrac}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-\usepackage[a4paper,lmargin={2.5cm},rmargin={2.5cm},tmargin={3cm},bmargin={2.5cm}]{geometry}
+\usepackage[a4paper,lmargin={2.5cm},rmargin={2.5cm},tmargin={3cm},bmargin={2.5cm},marginparwidth=40pt]{geometry}
 \usepackage{picinpar}
 \usepackage{enumitem}
 \usepackage{graphicx}
@@ -24,11 +24,13 @@
 \usepackage{amsmath} % assumes amsmath package installed
 \usepackage{amssymb}  % assumes amsmath package installed
 \usepackage{inputenc}
+\usepackage{todonotes}
+\usepackage{marginnote}
 \usepackage[binary-units=true]{siunitx}
 \DeclareSIUnit{\nothing}{\relax}
 \usepackage{xcolor}
 \usepackage{eqparbox}
-%\usepackage{subcaption} 
+%\usepackage{subcaption}
 \usepackage{scrhack}
 \usepackage{epigraph}
 \usepackage[caption=false,font=footnotesize]{subfig}
@@ -44,7 +46,7 @@
 			date=iso8601,
 			giveninits=true,
 			maxbibnames=99,
-			maxcitenames=99]{biblatex} 
+			maxcitenames=99]{biblatex}
 \addbibresource{../literature/literature.bib}
 \usepackage{stmaryrd} % for some symbols like \varoast (* within a circle)
 \usepackage{url}
