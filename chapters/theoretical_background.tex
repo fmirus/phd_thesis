@@ -485,12 +485,13 @@ circ/.style={
 \coordinate[above=2cm of branch_end] (branch_end_ab);
 \draw [thick,->] (branch) -- (branch_ab) -- (branch_end_ab) node [midway, above] {\Large $g\left(\mathbf{y}\left(t\right)\right)$} -- (branch_end);
 \end{tikzpicture}
-\caption{The dynamics principle of the \ac{NEF} for recurrent connections. \todo{check if this can be beautified}}
+\caption{The dynamics principle of the \ac{NEF} for recurrent connections.}
 \label{fig:nef_dynamics}
 \end{figure}
+\todo{check if fig. \ref{fig:nef_dynamics} can be beautified}
 The third main principle of the \ac{NEF}, \emph{dynamics}, provides a set of mathematical tools to implement dynamical systems in neural populations through recurrent connections.
 Let $A$ be a population of neurons with an incoming connection approximating the function $\abbil{f}{V}{W \subset \mathbb{R}^{m}}$ and a recurrent connection approximating the function $\abbil{g}{W}{W}$ (cf. fig. \ref{fig:nef_dynamics}).
-Thus, the overall function the population is approximating is 
+Thus, the overall function the population is approximating is
 \begin{equation}
 \mathbf{y}(t) = h(t) \ast \left(f(\mathbf{x}(t)) + g(\mathbf{y}(t))\right)
 \label{eq:nef_dyn}
@@ -560,9 +561,6 @@ A simple way of getting a representative vector for each class is simply calcula
 \todo{add reference to later chapter with traffic sign \ac{CNN}}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.75\textwidth]{imgs/CNNArchitecture.jpg}
-	\caption{\todo{Adapt image such that the second-to-last layer is highlighted}. Image adapted from \cite{Peemen2011}.}
-	\label{fig:CNN_arch}
 \end{figure}
 A similar approach to derive vectors representing digits from $0$ to $9$ was used for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DNN} consisting of four \ac{RBM} layers.
 \todo{check this and reformulate}\\
@@ -570,7 +568,6 @@ The aforementioned approach to create vector vocabularies encapsulating visual s
 \subsection{Encoding structure}
 \subsection{Implementation in \acp{SNN}}
 
-\todo{explain how modelling with VSAs works referring to neural modelling section and explain implementation in SNNs}\\
-\todo{use conceptual golfball metaphor here}
+\todo[inline]{explain how modelling with VSAs works referring to neural modelling section and explain implementation in SNNs}
 \section{Summary}
 
