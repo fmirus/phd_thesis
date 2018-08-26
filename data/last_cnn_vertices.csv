@@ -1,0 +1,5 @@
+id,x,y,size,shape,style,color,opacity,label,layer
+45,7.6,1.7,0.4,circle,,white,,0,7
+46,7.75,1.3,0.4,circle,,white,,1,7
+47,8.7,-1.3,0.4,circle,,white,,8,7
+48,8.85,-1.7,0.4,circle,,white,,9,7

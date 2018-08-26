@@ -6,7 +6,7 @@ The basic idea behind all of those approaches is to represent structure (e.g. co
 One of the most important properties of high-dimensional vector spaces enabling this kind of representation is the fact, that two high-dimensional random vectors are likely to be dissimilar.
 In the following, we will show what we mean by fuzzy terms like \emph{dissimilar} or \emph{likely} and provide more precise statements.\\
 One main requirement in the context of cognitive modeling is the ability of the modeling framework to address the binding problem \cite{Treisman1999}.
-In \cite{Jackendoff2002}, Jackendoff phrases this as the problem of "combining independent bits into a single coherent percept". 
+In \cite{Jackendoff2002}, Jackendoff phrases this as the problem of "combining independent bits into a single coherent percept".
 One strength of \acp{VSA} is that they offer the possibility to manipulate their entities (i.e. vectors) through algebraic operations, usually at least one \emph{addition-like} and \emph{multiplication-like} operation each.
 Typically, the multiplication operation is used for binding different representations into a new vector.
 This operation, depending on the vector representation, is constructed with some desirable properties in mind (see Definition \ref{def:binding}).
@@ -24,9 +24,9 @@ The most prominent examples are elementwise multiplication in Gayler's \ac{MAP}-
 %Before we provide a formal definition for \acp{VSA}, we introduce some terms and auxiliary tools needed for later use.
 %\begin{defn}
 %	\label{def:metric}
-%	Let $M$ be a set. A function 
+%	Let $M$ be a set. A function
 %	\[
-%	\abb{d}{M \times M}{\mathbb{R}}{(x,y)}{d(x,y)} 
+%	\abb{d}{M \times M}{\mathbb{R}}{(x,y)}{d(x,y)}
 %	\]
 %	is called a \emph{metric}, if and only if for any $x, y \in M$ the following conditions hold:
 %	\begin{enumerate}
@@ -41,10 +41,10 @@ The most prominent examples are elementwise multiplication in Gayler's \ac{MAP}-
 
 \begin{defn}
 	\label{def:VSA}
-	Let $N \subseteq K$ be a subset of some number field $K$ (i.e. a set of numbers) and $D \in \mathbb{N}$ a natural number. 
-	Furthermore, let 
-	\[V_{D}(N)=\{\left(x_{0}, \cdots, x_{D-1}\right)  | x_{i} \in N\} \subseteq K^{D}\] 
-	be the set of all $D$-tuples with entries in $N$. 
+	Let $N \subseteq K$ be a subset of some number field $K$ (i.e. a set of numbers) and $D \in \mathbb{N}$ a natural number.
+	Furthermore, let
+	\[V_{D}(N)=\{\left(x_{0}, \cdots, x_{D-1}\right)  | x_{i} \in N\} \subseteq K^{D}\]
+	be the set of all $D$-tuples with entries in $N$.
 	Let
 	\begin{align*}
 		&\abb{\oplus}{V_{D}(N) \times V_{D}(N)}{K^{D}}{(v,w)}{\oplus(v,w) =: v\oplus w}, \\
@@ -52,7 +52,7 @@ The most prominent examples are elementwise multiplication in Gayler's \ac{MAP}-
 	\end{align*}
 	be functions with $\oplus$ following the rules of ordinary addition - namely commutativity, associativity, existence of a neutral element and existence of inverse elements - and for any elements $u,v,w \in V_{D}(N)$
 	\[u \varoast (v \oplus w) = u \varoast v \oplus u \varoast w.\]
-	If there is furthermore a distinct element $\pmb{1} \in V_{D}(N)$ with 
+	If there is furthermore a distinct element $\pmb{1} \in V_{D}(N)$ with
 	\[v \varoast \pmb{1} = \pmb{1} \varoast v = v\]
 	for any $v \in V_{D}(N)$ and a function $\abbil{\phi}{V_{D}(N) \times V_{D}(N)}{\left[-1,1\right]}$, we call $(V_{D}(N), \varoast, \oplus, \phi)$ a \emph{\acrfull{VSA}} of dimension $D$.
 	The function $\phi$ is called a \emph{measure of similarity}.
@@ -60,13 +60,13 @@ The most prominent examples are elementwise multiplication in Gayler's \ac{MAP}-
 \end{defn}
 Although the set $V_{D}(N)$ might not be a vector space in the strict mathematical sense (in most cases it is at least a subset of a vector space), we will refer to its elements as \emph{vectors}.
 \todo{note that VSA in general must not be closed under its operations}
-%The metric in definition \ref{def:VSA} is needed as measure of similarity between vectors. 
+%The metric in definition \ref{def:VSA} is needed as measure of similarity between vectors.
 Before we proceed in deriving some important properties of \acp{VSA}, we present some of the most prominent examples.
 
 \begin{ex} \aclp{VSA}
 	\label{ex:VSAs}
 	\begin{enumerate}
-		\item The first example of a \ac{VSA} is Kanerva's \acfl{BSC} \cite{Kanerva2009}. 
+		\item The first example of a \ac{VSA} is Kanerva's \acfl{BSC} \cite{Kanerva2009}.
 		He restricts the elements of his vectors to binary values, i.e. $N=\{0,1\}$
 		The operations $\varoast$ and $\oplus$ in this case are the XOR-function and a thresholded sum respectively.
 		With $v_{i} = \left(v_{i 0}, \cdots, v_{i D-1}\right) \in V_{D}(N)$ and  $i \in \{1, \cdots, n\}$, the operation $\oplus$ is usually defined in the following way
@@ -78,21 +78,21 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 			\end{cases}.
 		\end{align*}
 		This definition ensures, that the results of the addition operation $\oplus$ remain binary.
-		Usually, a normalized Hamming distance 
+		Usually, a normalized Hamming distance
 		\[
 		\phi(v,w) := 1 - \frac{2}{D} \left| \{ v_{i} \neq w_{i} | i \in \{0, \cdots, D-1\} \} \right|
 		\]
 		is used as a measure of similarity in this architecture.
-		\acp{BSC} have some interesting properties compared to other \acp{VSA}: 
+		\acp{BSC} have some interesting properties compared to other \acp{VSA}:
 		The neutral element for both operations $\varoast$ and $\oplus$ is the vector $\pmb{0} := \left(0, \cdots, 0\right)$, while all vectors are self-inverse regarding the multiplication operation $\varoast$, i.e. $v \varoast v = \pmb{0}$ for any $v \in V_{D}(N)$.
-		
-		\item The first example of \ac{VSA} in continuous space is Gayler's \acrfull{MAP} architecture \cite{Gayler1998} with $N \subseteq \mathbb{R}$ and the cosine similarity as measure of similarity 
+
+		\item The first example of \ac{VSA} in continuous space is Gayler's \acrfull{MAP} architecture \cite{Gayler1998} with $N \subseteq \mathbb{R}$ and the cosine similarity as measure of similarity
 		\[
 		\phi(v,w) = \frac{v \cdot w}{\norm{v}\norm{w}}=\cos(\theta),
 		\]
 		with $\theta$ being the angle between the vectors $v,w \in V_{D}(N)$.
 		The operations $\varoast$ and $\oplus$ are simply element-wise multiplication and addition with neutral elements $\pmb{1}=\left(1, \cdots, 1\right)$ and $\pmb{0} := \left(0, \cdots, 0\right)$ respectively.
-		
+
 		\item Another example of a \ac{VSA} in continuous space is Plate's \acfl{HRR} \cite{Plate1994, Plate1997}.
 		The main difference compared to the \ac{MAP} architecture is, that Plate in general allows complex vector values, i.e. $N \subseteq \mathbb{C}$ and uses a different multiplication operation $\varoast$ - namely circular convolution.
 		For any two vectors $x, y \in V_{D}(N)$, circular convolution $\varoast$ is defined as
@@ -105,13 +105,13 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 			\caption{Visualization of circular convolution as compressed outer product for $3$-dimensional vectors. Image source \cite{Plate1994a}}
 			\label{fig:circ_conv}
 		\end{figure}
-		The neutral element regarding circular convolution is $\pmb{1} = \left(1, 0, \cdots, 0\right)$. 
+		The neutral element regarding circular convolution is $\pmb{1} = \left(1, 0, \cdots, 0\right)$.
 		One important property of this operation is the fact, that circular convolution can efficiently be computed using the \ac{DFT}.
 		The \ac{DFT} is defined as the function
 		\[
 		\abb{\ac{DFT}}{\mathbb{C}^{D}}{\mathbb{C}^{D}}{x}{\left(\sum_{j=0}^{D-1} x_{j} \zeta_{D}^{-jk} \right)_{k=0}^{D-1}} \qquad \textrm{ with } \zeta_{D} = \exp\left( \frac{i 2 \pi}{D} \right).
 		\]
-		Similarly, the \ac{IDFT} is defined as the function 
+		Similarly, the \ac{IDFT} is defined as the function
 		\[
 		\abb{\ac{IDFT}}{\mathbb{C}^{D}}{\mathbb{C}^{D}}{x}{\left( \frac{1}{D} \sum_{j=0}^{D-1} x_{j} \zeta_{D}^{jk} \right)_{k=0}^{D-1}}.
 		\]
@@ -120,14 +120,14 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 		v \varoast w = \ac{IDFT}\left(\ac{DFT}(v) \odot \ac{DFT}(w) \right),
 		\]
 		with $\odot$ denoting element-wise multiplication in this case.
-		This induces that circular convolution obeys the same rules (commutativity and associativity) as element-wise multiplication, as both operations are the same except for a change of basis. 
+		This induces that circular convolution obeys the same rules (commutativity and associativity) as element-wise multiplication, as both operations are the same except for a change of basis.
 	\end{enumerate}
 \end{ex}
 As mentioned earlier, one of the most important features of (high-dimensional) \acp{VSA} is the fact that two random vectors are likely to be dissimilar.
 We will derive this result in the following Theorem.
 \begin{theorem}
 	\label{theorem:VSA_cossim_distribution}
-	Let $\left(V_{D}(N), \varoast, \oplus, \phi \right)$ a \acl{VSA}. 
+	Let $\left(V_{D}(N), \varoast, \oplus, \phi \right)$ a \acl{VSA}.
 	For two randomly chosen vectors $v, w \in V_{D}(N)$, the distribution of the similarity $\phi\left(v,w\right)$ is a version of the beta-distribution $\beta\left(\frac{D-1}{2},\frac{D-1}{2}\right)$ scaled and shifted to the interval $\left[-1,1\right]$ with mean $\mu=0$ and variance $\sigma^2=\frac{c^2}{D}$ up to a constant $c$. The standardized distribution trends with growing $D$ to a normal distribution.
 \end{theorem}
 \begin{proof}
@@ -141,7 +141,7 @@ We will derive this result in the following Theorem.
 	\[
 	f_{\phi(v,w)}(x) \propto \frac{\sqrt{1-x^{2}}^{(D-2)}}{\sqrt{1-x^{2}}} h \propto \left(1-x^{2}\right)^{\frac{D-3}{2}}.
 	\]
-	Substituting $x=2u-1$, we get 
+	Substituting $x=2u-1$, we get
 	\[
 	\left(1-\left(2u-1\right)^{2}\right)^{\frac{D-3}{2}} \propto \left(u-u^2\right)^{\frac{D-3}{2}} = \left(u \left(1-u\right)\right)^{\frac{D-3}{2}} = u^{\left(\frac{D-1}{2}-1\right)} \left(1-u\right)^{\left(\frac{D-1}{2}-1\right)},
 	\]
@@ -165,26 +165,27 @@ We will derive this result in the following Theorem.
 		\log\left(f_{\phi(v,w)}\left(\frac{x}{\sqrt{D}}\right)\right) &= \frac{D-3}{2}\left(-\frac{x^2}{D} + \frac{x^4}{4D} \pm \ldots \right) + C = -\frac{1}{2}x^2 + \frac{3}{2D}x^2 + \mathcal{O}\left(\frac{x^4}{D}\right)  + C  \\
 		&\longrightarrow -\frac{1}{2}x^2 + C = \log\left(f_{\mathcal{N}}\left(x\right)\right) \textrm{ for } D \longrightarrow \infty.
 	\end{align*}
-	Hence, with growing $D$ the standardized distribution of the cosine similarity trends to a normal distribution. 
-\end{proof} 
+	Hence, with growing $D$ the standardized distribution of the cosine similarity trends to a normal distribution.
+\end{proof}
 Theorem \ref{theorem:VSA_cossim_distribution} states, that the probability of finding two random, non-orthogonal vectors in a \ac{VSA} decreases with growing vector dimension.
 \begin{figure}[t!]
 	\centering
 	\includegraphics[width=0.85\textwidth]{imgs/distributions_cosine_sims.eps}
-	\caption{Visualization of cosine similarity distributions for different vector dimensions \todo{remove figure title in python, make labels larger for better readability}}
+	\caption{Visualization of cosine similarity distributions for different vector dimensions.}
 	\label{fig:cosine_dist}
 \end{figure}
-Fig. \ref{fig:cosine_dist}, which shows the probability distributions of cosine similarity for different vector dimensions, illustrates this result. 
+\todo{in fig \ref{fig:cosine_dist} remove figure title in python, make labels larger for better readability}
+Fig. \ref{fig:cosine_dist}, which shows the probability distributions of cosine similarity for different vector dimensions, illustrates this result.
 Furthermore, Theorem \ref{theorem:VSA_cossim_distribution} allows us to give a more formal definition of the term "dissimilar".
 \begin{defn}
 	\label{def:similar}
-	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$ and $c \in \mathbb{N}$ a constant. We call any two vectors $v, w \in V_{D}(N)$ \emph{dissimilar}, if 
-	\[ 
+	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$ and $c \in \mathbb{N}$ a constant. We call any two vectors $v, w \in V_{D}(N)$ \emph{dissimilar}, if
+	\[
 	\left| \phi(v,w) \right| \leq \epsilon, \textrm{ with } \epsilon:=\tfrac{c}{\sqrt{D}}.
 	\]
-	Analogously, we call any two vectors $v, w \in V_{D}(N)$ \emph{similar}, if	$\left| \phi(v,w) \right| > \epsilon$. 
+	Analogously, we call any two vectors $v, w \in V_{D}(N)$ \emph{similar}, if	$\left| \phi(v,w) \right| > \epsilon$.
 	Similar vectors are denoted by $v \approx w$. \\
-	\todo{maybe use two different $\epsilon$ for $2$ or $3$ for definition of similar and highly similar?}
+	\todo[inline]{maybe use two different $\epsilon$ for $2$ or $3$ for definition of similar and highly similar?}
 \end{defn}
 Definition \ref{def:similar} can also be stated as follows: we consider any two vectors similar, if their similarity is higher than what we would expect from two randomly chosen vectors.
 Therefore, we make use of the fact, that for growing dimension $D$, the cosine similarity follows approximately a normal distribution $\mathcal{N}\left(\mu, \sigma\right)$, with $\mu=0$ and $\sigma=\tfrac{1}{\sqrt{D}}$ and the so-called three-sigma-rule.
@@ -199,19 +200,19 @@ For lower \ac{VSA} dimensions ($D \leq 50$), it can be beneficial to work with a
 Based on the definition of similarity, we derive criteria for "good" multiplication functions in \acp{VSA}.
 \begin{defn}
 	\label{def:binding}
-	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$. We call its multiplication function 
+	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$. We call its multiplication function
 	\[\abb{\varoast}{V_{D}(N) \times V_{D}(N)}{K^{D}}{(v,w)}{\varoast(v,w) =: v\varoast w}\]
-	a \emph{binding function} if 
+	a \emph{binding function} if
 	\begin{enumerate}
 		\item for any two vectors $v, w \in V_{D}(N)$, the vector $v \varoast w$ is dissimilar to both $v$ and $w$, i.e.
 		\[
 		\left| \phi(v,v \varoast w) \right| \leq \epsilon \textrm{ and } \left| \phi(w,v \varoast w) \right| \leq \epsilon.
 		\]
-		\item for any vector $v \in V_{D}(N)$, there exists a vector $\bar{v} \in V_{D}(N)$ with $v \varoast \bar{v} \approx \mathbf{1}$. We call $\bar{v}$ a \emph{pseudo-inverse} element. 
+		\item for any vector $v \in V_{D}(N)$, there exists a vector $\bar{v} \in V_{D}(N)$ with $v \varoast \bar{v} \approx \mathbf{1}$. We call $\bar{v}$ a \emph{pseudo-inverse} element.
 		If furthermore $v \varoast \bar{v} = \mathbf{1}$, we call the vector $\bar{v}$ \emph{exact inverse}.
 	\end{enumerate}
 \end{defn}
-It is worth noting, that all multiplication operations mentioned in example \ref{ex:VSAs} fulfill the criteria for binding functions as stated in Definition \ref{def:binding}. 
+It is worth noting, that all multiplication operations mentioned in example \ref{ex:VSAs} fulfill the criteria for binding functions as stated in Definition \ref{def:binding}.
 The first criteria is intended to allow structured representations in \acp{VSA}.
 Representations built solely upon an addition function lack a mechanism to impose structure, as the sum of vectors is similar to all summands.
 For continuous \acp{VSA}, this result is straightforward due to the linearity of the dot product, but it holds true for \acp{BSC} as well.
@@ -234,7 +235,7 @@ Therefore, we need to have a set of vectors, which represent established concept
 	\label{def:clean-up-mem}
 	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$ with binding function $\varoast$.
 	We call a finite subset $\vartheta \subsetneq V_{D}(N)$ a \emph{vocabulary}.
-	A function $\abbil{\gamma}{K^{D}}{\vartheta}$ is called a \emph{clean-up memory}, if 
+	A function $\abbil{\gamma}{K^{D}}{\vartheta}$ is called a \emph{clean-up memory}, if
 	\begin{enumerate}
 		\item for any vector $v\in K^{D}$ we have
 		\[
@@ -277,15 +278,15 @@ We have already seen, that we can use the \acf{DFT} and \acf{IDFT} to calculate 
 \[
 	v \varoast w = \ac{IDFT}\left(\ac{DFT}(v) \odot \ac{DFT}(w) \right).
 \]
-Furthermore, the \ac{DFT} of the convolutive neutral element $\mathbf{1} = \left(1, 0, \ldots, 0\right)$ is 
+Furthermore, the \ac{DFT} of the convolutive neutral element $\mathbf{1} = \left(1, 0, \ldots, 0\right)$ is
 \begin{equation}
 	\ac{DFT}(\mathbf{1}) = \left(\exp\left(i0\right), \ldots, \exp\left(i0\right)\right) = \left(1, 1, \ldots, 1\right).
 \end{equation}
-This gives us a way of finding an exact inverse element $v^{-1}$ by 
+This gives us a way of finding an exact inverse element $v^{-1}$ by
 \begin{equation}
 	\ac{DFT}(\mathbf{1}) = \ac{DFT}(v) \odot \ac{DFT}(v^{-1}).
 \end{equation}
-By denoting the $j$-th element of the Fourier Vector $\ac{DFT}(v)$ with $\ac{DFT}_{j}(v)$, we get 
+By denoting the $j$-th element of the Fourier Vector $\ac{DFT}(v)$ with $\ac{DFT}_{j}(v)$, we get
 \begin{equation}
 \label{eq:inv_elemtwise_fourier}
 	\ac{DFT}_{j}(v) \odot \ac{DFT}_{j}(v^{-1}) = 1 \quad \textrm{ for } j \in \left\{0, \ldots, D-1\right\}.
@@ -303,7 +304,7 @@ However, there is a certain class of vectors, for which the pseudo- and exact in
 \begin{defn}
 	\label{def:unitary_vec}
 	Let $v$ be a vector in a $D$-dimensional \ac{SPA} $\mathcal{S}(D)$ with exact and pseudo-inverse elements $v^{-1}$ and $\bar{v}$ respectively.
-	We call $v$ a \emph{unitary vector}, if and only if $v^{-1} = \bar{v}$. 
+	We call $v$ a \emph{unitary vector}, if and only if $v^{-1} = \bar{v}$.
 	We denote the set of unitary vectors by $\mathcal{U} \subset \mathcal{S}(D)$.
 \end{defn}
 \begin{defn}
@@ -342,8 +343,8 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
 	\ac{DFT}_j\left(u^{p}\right) = \ac{DFT}_j\left(u\right)^{p} = r_j^{p}\exp\left(ip\varphi\right) = 1^{p} \cdot \exp\left(ip\varphi\right),
 	\]
 	which makes $u^{p}$ itself a unitary vector, as all magnitudes are $1$.	\\
-	To proof that convolution with unitary vectors preserves the norm, we use Parseval's theorem again. 
-	For any vector $v \in \mathcal{S}(d)$ and  a unitary vector $u \in \mathcal{U}$, we denote $z:= v \varoast u$ and get 
+	To proof that convolution with unitary vectors preserves the norm, we use Parseval's theorem again.
+	For any vector $v \in \mathcal{S}(d)$ and  a unitary vector $u \in \mathcal{U}$, we denote $z:= v \varoast u$ and get
 	\begin{equation}
 	\label{eq:norm_parseval}
 	\norm{v \varoast u}^{2} = \sum_{k=0}^{D-1} \left|z_{k}\right|^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|\ac{DFT}_{k}(z)\right|^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|\ac{DFT}_{k}(v) \cdot \ac{DFT}_{k}(u)\right|^{2}.
@@ -392,7 +393,7 @@ The \ac{NEF} expands this idea to neural representations in general.
 Let $A$ be a population of $N \in \mathbb{N}$ neurons encoding a subset $V$ of a real-valued vector space, i.e. $V\subseteq \mathbb{R}^{n}$.
 Given a function $\abbil{\mathbf{x}}{\mathbb{R}}{V}$, we can write the activity $a_{i}$ of the $i$-th neuron in a neural population encoding a time-varying vector $\mathbf{x}(t)$ as a spike train, i.e. a sum of delta functions
 \begin{equation}
-a_{i}\left(\mathbf{x}(t)\right) = \sum_{j=1}^{m_{i}} \delta(t - t_{j}) = G_{i}(\underbrace{\alpha_{i}\langle\mathbf{e}_{i},\mathbf{x}(t)\rangle + J_{i}}_{=:c}) \quad \textrm{ for } 1 \leq i \leq N, 
+a_{i}\left(\mathbf{x}(t)\right) = \sum_{j=1}^{m_{i}} \delta(t - t_{j}) = G_{i}(\underbrace{\alpha_{i}\langle\mathbf{e}_{i},\mathbf{x}(t)\rangle + J_{i}}_{=:c}) \quad \textrm{ for } 1 \leq i \leq N,
 \label{eq:nef_encoding}
 \end{equation}
 where $G_{i}$ is the spiking neural non-linearity, $\alpha_{i}$ is the gain of the neuron, $\mathbf{e}_{i}$ is the neuron's preferred direction or encoding vector and $J_{i}$ is a bias current to account for neural background activity and $t_{j}$ are the $m_{i}$ spike-times of the $i$-th neuron.
@@ -407,8 +408,8 @@ A simple model of an exponential decaying filter is the function $\abb{h}{\mathb
 We obtain an estimation $\mathbf{\hat{x}}(t)$ of the original input $\mathbf{x}(t)$ as a weighted sum with some decoder values $\mathbf{d}_{i}$
 \begin{equation}
 \mathbf{\hat{x}}(t) = \sum_{i=1}^{N} \tilde{a}_{i}\left(\mathbf{x}(t)\right) \mathbf{d}_{i}.
-\label{eq:nef_decoding} 
-\end{equation} 
+\label{eq:nef_decoding}
+\end{equation}
 To calculate the optimal decoders $\mathbf{d}_{i}$, we need to minimize the error between input $\mathbf{x}(t)$ and decoded output $\mathbf{\hat{x}}(t)$
 \begin{equation}
 E = \int \left( \mathbf{x}(t) - \sum_{i=1}^{N} \tilde{a}_{i}\left(\mathbf{x}(t)\right) \mathbf{d}_{i}\right)^{2} \diff \mathbf{x}(t).
@@ -437,9 +438,9 @@ E = \int \left( f(\mathbf{x}(t)) - \sum_{i=1}^{N} \tilde{a}_{i}\left(\mathbf{x}(
 \end{equation}
 Given encoders $\mathbf{e}_{j}^{B}$ and gain $\alpha_{j}^{B}$ for $1 \leq j \leq M$ of population $B$, we can derive a weight matrix for the connection from $A$ to $B$ approximating the function $f$ by
 \begin{equation}
-w_{ij} = \alpha_{j}^{B} \mathbf{d}_{i}^{f} L \mathbf{e}_{j}^{B} \quad \textrm{for } 1 \leq i \leq N \textrm{ and } 1 \leq j \leq M, 
+w_{ij} = \alpha_{j}^{B} \mathbf{d}_{i}^{f} L \mathbf{e}_{j}^{B} \quad \textrm{for } 1 \leq i \leq N \textrm{ and } 1 \leq j \leq M,
 \end{equation}
-where $L$ is a $M \times N$ linear operator. 
+where $L$ is a $M \times N$ linear operator.
 Here, the \ac{NEF} makes the assumption, that connection weights can be factored into encoders, decoders and a linear transform.
 Fig. \ref{fig:nef_transformation} visualizes this \ac{NEF}'s transformation principle for $V = W = \left[ -1, 1\right] \subset \mathbb{R}$, two neural populations $A$, $B$ containing $30$ neurons each.
 The left resp. right panel of plots shows the populations' decoded outputs resp. the neurons' spike times.
@@ -510,7 +511,7 @@ Transforming back leads to the differential equation
 \begin{equation}
 \frac{\partial \mathbf{y}(t)}{\partial t} = \frac{g(\mathbf{y}(t)-y)}{\tau} + \frac{f(\mathbf{x}(t))}{\tau}.
 \end{equation}
-Thus, to construct a neural model approximating a differential equation of the form 
+Thus, to construct a neural model approximating a differential equation of the form
 \begin{equation}
 \frac{\mathbf{y}(t)}{\partial t} = a(\mathbf{y}(t)) + b(\mathbf{x}(t))
 \label{eq:nef_dyn_diffeq}
@@ -521,15 +522,27 @@ By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)
 
 \section{Cognitive Modelling with \aclp{VSA}}
 In this section, we give a brief introduction of how we can use the theory of in \ref{sec:math_prop_vsas} and to \ref{sec:spa} to represent (structured) information using \acp{VSA}.
+\todo{include phrase regarding preprocessing as described in \cite{Gallant2013} and refer to it later in this section}
 We give a general overview of different ways to establish vocabularies containing atomic vectors and how we can build more complex representations from those elementary ingredients.
 Furthermore, we will see how these representations can be implemented in \acp{SNN} using the principles of the \ac{NEF} described in \ref{sec:neural_eng}.
 \subsection{Vocabularies}
-\begin{figure}[t]
+\label{subsec:vocabs}
+\begin{figure}[t!]
 	\centering
-	\includegraphics[width=0.55\textwidth]{imgs/conceptual_golfball.eps}
-	\caption{"Conceptual golfball" depicting the idea of semantic vectors. Image source \cite{Eliasmith2013}.}
-	\label{fig:conceptual_golfbal}
+	\subfloat[\label{subfig:conceptual_golfball}]{%
+		\includegraphics[width=0.45\textwidth]{imgs/conceptual_golfball.eps}
+	}
+	\subfloat[\label{subfig:constructed_vocab_sims}]{%
+		\includegraphics[width=0.45\textwidth]{imgs/SPA_constructed_vocab_sim.png}
+	}
+	\caption{Aspects of vector vocabularies: \ref{subfig:conceptual_golfball} "Conceptual golfball" depicting the idea of semantic vectors. Image source \cite{Eliasmith2013}. \ref{subfig:constructed_vocab_sims} Cosine similarities in a small, manually engineered vector vocabulary of dimension $256$.}\label{fig:vector vocabs}
 \end{figure}
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=0.55\textwidth]{imgs/conceptual_golfball.eps}
+%	\caption{"Conceptual golfball" depicting the idea of semantic vectors. Image source \cite{Eliasmith2013}.}
+%	\label{fig:conceptual_golfbal}
+%\end{figure}
 Let $\vartheta \subset \mathcal{S}(D)$ be a vocabulary in the $D$-dimensional \ac{SPA}, where each vector $v \in \vartheta$ represents one item (i.e. a symbol, word or concept) in the representional space.
 The content and size, i.e. the items of interest to be represented in such a vocabulary and their number as well as the way the representing vectors are established is highly task-dependent.
 In its simplest form, all vectors in the vocabulary are chosen at random.
@@ -537,37 +550,195 @@ This approach is feasible due to the properties of high-dimensional vector space
 Therefore,  we have low probability of unintentionally confusing two different concept vectors.
 However, this approach does not capture any similarities between items being represented.
 Ideally, the goal is that the similarity between vectors in the vocabulary $\vartheta$ somewhat reflects the similarity between represented items.
-Figure \ref{fig:conceptual_golfbal} depicts this idea: one subset of the space is assigned to vectors representing letters whereas another subset contains vectors representing special characters.
-For a small number of items, the simplest way to create a vocabulary respecting some kind of similarity is to manually engineer the desired properties from randomly chosen vectors. 
-Let us assume we want to derive representative vectors for five different classes of traffic participants, namely \emph{pedestrian}, \emph{bicycle}, \emph{motorcycle},  and \emph{car}.
+Figure \ref{subfig:conceptual_golfball} depicts this idea: one subset of the space is assigned to vectors representing letters whereas another subset contains vectors representing special characters.
+For a small number of items, the simplest way to create a vocabulary respecting some kind of similarity is to manually engineer the desired properties from randomly chosen vectors.
+Let us assume we want to derive representative vectors for four different classes of traffic participants, namely \emph{pedestrian}, \emph{bicycle}, \emph{motorcycle},  and \emph{car}.
 A simple structured vocabulary could be constructed in the following way
 \begin{align*}
-\mathbf{PEDESTRIAN} &:= \mathbf{DRIVE} \varoast \mathbf{MUSCLE} + \mathbf{ACTUATOR} \varoast \mathbf{LEG} \varoast \mathbf{TWO} \\ 
+\mathbf{PEDESTRIAN} &:= \mathbf{DRIVE} \varoast \mathbf{MUSCLE} + \mathbf{ACTUATOR} \varoast \mathbf{LEG} \varoast \mathbf{TWO} \\
 \mathbf{BICYCLE} &:= \mathbf{DRIVE} \varoast \mathbf{MUSCLE} + \mathbf{ACTUATOR} \varoast \mathbf{WHEEL} \varoast \mathbf{TWO}\\
 \mathbf{MOTORCYCLE} &:= \mathbf{DRIVE} \varoast \mathbf{MOTOR} + \mathbf{ACTUATOR} \varoast \mathbf{WHEEL} \varoast \mathbf{TWO}\\
 \mathbf{CAR} &:= \mathbf{DRIVE} \varoast \mathbf{MOTOR} + \mathbf{ACTUATOR} \varoast \mathbf{WHEEL} \varoast \mathbf{FOUR},
 \end{align*}
-with all atomic vectors on the right side of the equations being chosen at random from $\mathcal{S}(D)$.\\
+with $\mathbf{DRIVE}$, $\mathbf{MUSCLE}$, $\mathbf{MOTOR}$, $\mathbf{ACTUATOR}$, $\mathbf{LEG}$, $\mathbf{WHEEL}$, $\mathbf{TWO}$ and $\mathbf{FOUR} \in \mathcal{S}(D)$ all being atomic vectors chosen at random.
+Figure \ref{subfig:constructed_vocab_sims} shows the similarities in an example vocabulary in $\mathcal{S}(256)$ constructed in the aforementioned way.
+This vocabulary is designed to map simple motion properties into a vector representation.
+Thus, this manually engineered vocabulary yields the desired property that vulnerable road users (in this case pedestrians and bicyclists) are more similar to each other that motor vehicles, whereas there is also similarity between different types of cyclists.
+This approach allows the engineer to encapsulate almost any desired kind of similarity without loosing transparency during the encoding process, meaning that the reason for certain similarity artifacts is traceable.
+However, not only does this approach become impracticable with increasing number of items in the vocabulary, it is also prone to biases imposed by the preferences of the human engineer.\\
+%\begin{figure}[t!]
+%	\centering
+%	\includegraphics[width=0.6\textwidth]{imgs/SPA_constructed_vocab_sim.png}
+%	\caption{Cosine similarities in a simple, manually engineered vector vocabulary of dimension $256$.}
+%	\label{fig:constructed_vocab_sims}
+%\end{figure}
 A more sophisticated way to create a vector vocabulary is to learn it automatically from data.
 In contrast to purely random vocabularies, the idea here is that the learning system is able to capture the intrinsic similarity between objects in the vector representation.
-Again, the choice of this learning paradigm (supervised vs. unsupervised) and architecture (e.g. \acp{CNN} or \acp{SOM}) depends not only on the given task, but also on the kind of similarity the vectors should encapsulate.
-This can be visual similarity (e.g. items or objects that "look" similar), auditory similarity (e.g. objects producing similar sound), semantic similarity (e.g. words with similar meaning) or similarity in characteristics (e.g. similar motion characteristics).
-
+Again, the choice of learning paradigm (supervised vs. unsupervised) and architecture (e.g. \acp{CNN} or \acp{SOM}) depends not only on the given task, but also on the kind of similarity the vectors should encapsulate.
+This can be visual similarity (e.g. items or objects that "look" similar), auditory similarity (e.g. objects producing similar sound), semantic similarity (e.g. words with similar meaning) or similarity in characteristics (e.g. similar motion characteristics).\\
 A typical way of learning a vocabulary whose vectors conserve visual similarity in supervised fashion are \acp{CNN}.
 These network architectures are inspired by the human visual cortex and compress high-dimensional visual input to lower dimensional representations.
-They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf. fig. \ref{fig:CNN_arch}).
+They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf. fig. \ref{subfig:cnn_arch}).
 The activity of the second-to-last layer (the last fully-connected one before the actual classification) for each known class in the data set can be considered a representational vector for the current visual input.
 A simple way of getting a representative vector for each class is simply calculating the element-wise, normalized mean over all examples in the test set.
 \todo{add reference to later chapter with traffic sign \ac{CNN}}
+% \begin{figure}[t]
+% 	\centering
+% 	\resizebox{.9\textwidth}{!}{%
+% 			\subfloat[\label{subfig:cnn_arch}]{%
+% 				\includegraphics[width=0.7\textwidth, height=6cm]{imgs/CNNArchitecture.jpg}
+% 			}
+% 			\subfloat[\label{subfig:word2vec}]{%
+% 				\centering
+% 				\begin{tikzpicture}[%
+% 				auto,
+% 				scale=5,
+% 				axis/.style={very thick, ->, >=stealth'},
+% 				red line/.style={thick, ->, >=stealth', color=red},
+% 				green line/.style={thick, ->, >=stealth', color=green},
+% 				blue line/.style={thick, ->, >=stealth', color=blue},
+% 				dashed blue line/.style={dashed, thick, color=blue},
+% 				important line/.style={thick},
+% 				dashed line/.style={dashed, thin},
+% 				pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten>=2pt},
+% 				every node/.style={color=black}
+% 				]
+% 				% Draw axes
+% 				% axis
+% 				\draw[axis] (-0.5,0)  -- (1.2,0) node(xline){};
+% 				\draw[axis] (0,-0.1) -- (0,1.1) node(yline){};
+% 				\draw[red line] (0,0) -- (0.3, 0.8) node(King) [above right] {$\mathbf{KING}$};
+% 				\draw[red line] (0,0) -- (0.7, 0.4) node(Man) [above right] {$\mathbf{MAN}$};
+% 				\draw[green line] (0,0) -- (0.7, 0.9) node(Queen) [above right] {$\mathbf{QUEEN}$};
+% 				\draw[green line] (0,0) -- (1.1, 0.5) node(Woman) [above right] {$\mathbf{WOMAN}$};
+% 				\draw[blue line] (0,0) -- (-0.4, 0.4) node(KingMinusMan) [above] {$\mathbf{KING} - \mathbf{MAN}$};
+% 				\draw[dashed blue line] (0.7,0.4) -- (0.3, 0.8);
+% 				\draw[dashed blue line] (0.7,0.9) -- (1.1, 0.5);
+%
+% 				\end{tikzpicture}
+% 				}
+% 			}
+% 	\caption{bla bla bla}\label{fig:vector vocabs2}
+% \end{figure}
+
 \begin{figure}[t]
 	\centering
+	\resizebox{.9\textwidth}{!}{%
+	\begin{tikzpicture}[%
+	auto,
+	multilayer,
+	]
+	% \Plane[x=0, y=0, width=5, height=2, opacity=1, style={dashed, color=red}, NoFill]
+	\node[line width=1mm] (input) at (0,-6)
+	{\includegraphics[width=.15\textwidth]{imgs/mnist.png}};
+	\draw[thick] (0,-5) -- (0.75, -3);
+	\draw[thick] (0,-5) -- (0.25, -2.8);
+	\draw[thick] (0,-5) -- (-0.25, -2.6);
+	\draw[thick] (0,-5) -- (-0.75, -2.4);
+	% \begin{Layer}[layer=1]
+	% 	\draw[very thick] (0,0) rectangle (5,2);
+	% 	\node at (-.5,-.5)[below right]{Layer 1};
+	% \end{Layer}
+	\Vertices{data/cnn_vertices.csv};
+	\Vertices[Pseudo]{data/last_cnn_vertices.csv};
+	\Edges{data/cnn_edges.csv}
+	\Edge[Direct](41)(45)
+	\Edge[Direct](42)(46)
+	\Edge[Direct](43)(47)
+	\Edge[Direct](44)(48)
+	\end{tikzpicture}
+	}
+	\caption{blablabla}
+	\label{fig:cnn_arch}
 \end{figure}
-A similar approach to derive vectors representing digits from $0$ to $9$ was used for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DNN} consisting of four \ac{RBM} layers.
-\todo{check this and reformulate}\\
-The aforementioned approach to create vector vocabularies encapsulating visual similarity is 
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=0.75\textwidth]{imgs/CNNArchitecture.jpg}
+%	\caption{\todo{Adapt image such that the second-to-last layer is highlighted}. Image adapted from \cite{Peemen2011}.}
+%	\label{fig:CNN_arch}
+%\end{figure}
+A similar approach to derive vectors representing digits from $0$ to $9$ was used for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DNN} consisting of four \acl{RBM} layers.
+\todo{check this and reformulate}
+This approach of using the activity of the second to last layer to generate a atomic representational vectors can be generalized to any neural network for classification with dense layers at the end.\\
+The aforementioned approach to create vector vocabularies encapsulating similarity by using neural networks, which are trained in supervised fashion, is suitable for capturing e.g. visual or auditory similarity.
+How to create representational vectors for related words or more generally semantic similarity is a problem often referred to as word embedding, which is a research question related to computational \acl{NLP}.
+The most successful approaches such as \textit{word2vec} \cite{Mikolov2013a, Mikolov2013} or \textit{\ac{GloVe}} \cite{Pennington2014} typically use large corpora of text as input data and are trained in unsupervised fashion based on co-occurence statistics of words.
+The objective of those procedures aims at maximizing the dot product of word vectors that appear often in similar contexts while minimizing it for negative samples (which do not occur in the training data and are sampled at random).
+For a given sentence $S=\left\{w_1, \ldots, w_n\right\}$ a context $C(w)$ of a word $w=w_i$ of size $k$ is a dynamic window of the form $C(w) = \left\{ w_{i-k}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+k}\right\}$.
+The underlying assumption is that words sharing many contexts are similar to each other, such that automated training with the aforementioned objective will produce good word embeddings.
+Surprisingly, these learning procedures lead to linguistic regularities and algebraic relations between word vectors \cite{Mikolov2013b}.
+A common example is visualized in fig. \ref{subfig:word2vec}: subtracting the vector representing $\mathbf{MAN}$ from the one representing $\mathbf{KING}$ and adding the vector representing $\mathbf{WOMAN}$ results in a vector most similar to the one representing $\mathbf{QUEEN}$, i.e. $\mathbf{KING} - \mathbf{MAN} + \mathbf{WOMAN} \approx \mathbf{QUEEN}$.
+\begin{figure}[t]
+	\centering
+	\begin{tikzpicture}[%
+	auto,
+	scale=5,
+	axis/.style={very thick, ->, >=stealth'},
+	red line/.style={thick, ->, >=stealth', color=red},
+	green line/.style={thick, ->, >=stealth', color=green},
+	blue line/.style={thick, ->, >=stealth', color=blue},
+	dashed blue line/.style={dashed, thick, color=blue},
+	important line/.style={thick},
+	dashed line/.style={dashed, thin},
+	pile/.style={thick, ->, >=stealth', shorten <=2pt, shorten>=2pt},
+	every node/.style={color=black}
+	]
+	% Draw axes
+	% axis
+	\draw[axis] (-0.5,0)  -- (1.2,0) node(xline){};
+	\draw[axis] (0,-0.1) -- (0,1.1) node(yline){};
+	\draw[red line] (0,0) -- (0.3, 0.8) node(King) [above right] {$\mathbf{KING}$};
+	\draw[red line] (0,0) -- (0.7, 0.4) node(Man) [above right] {$\mathbf{MAN}$};
+	\draw[green line] (0,0) -- (0.7, 0.9) node(Queen) [above right] {$\mathbf{QUEEN}$};
+	\draw[green line] (0,0) -- (1.1, 0.5) node(Woman) [above right] {$\mathbf{WOMAN}$};
+	\draw[blue line] (0,0) -- (-0.4, 0.4) node(KingMinusMan) [above] {$\mathbf{KING} - \mathbf{MAN}$};
+	\draw[dashed blue line] (0.7,0.4) -- (0.3, 0.8);
+	\draw[dashed blue line] (0.7,0.9) -- (1.1, 0.5);
+
+	\end{tikzpicture}
+	\caption{Word2Vec}
+	\label{fig:word2vec}
+\end{figure}
+However, the formal reasons for successful learning of word embeddings of those approaches are not well understood \cite{Goldberg2014, Levy2015}.
 \subsection{Encoding structure}
-\subsection{Implementation in \acp{SNN}}
+\label{subsec:encoding_struct}
+In section \ref{subsec:vocabs}, we have already seen that there are many ways to create vector vocabularies that encode different types of similarity.
+However, the strength of \acp{VSA} lies in the possibility to build up structured representations from atomic vectors.
+Unordered sets can be represented by simply adding up atomic vectors.
+Through the properties of the similarity measure, the sum is similar to each vector contained in the sum.
+The most common approach to incorporate structure is to use so-called role-filler pairs \cite{Gayler2003}.
+Such a pair is combined via the \ac{VSA}'s binding operation, where one vector of the pair takes the role of a variable while the other one can be considered the value of the variable.
+We have already seen a simple example of this approach in section \ref{subsec:vocabs}, where a small vocabularity representing four different classes of traffic participants was manually created.
+In \ac{NLP} applications, this approach is useful when building up vectors representing phrases from a word vector vocabulary.
+The phrase \textit{The dog chases the boy} could be encoded in a vector as
+\begin{equation*}
+	\mathbf{agent} \varoast \mathbf{dog} + \mathbf{verb} \varoast \mathbf{chase} + \mathbf{theme} \varoast \mathbf{boy},
+\end{equation*}
+assuming we already have a vocabulary containing atomic vectors representing those items.
+Another typical example of this approach is the encoding of relations between items, such as "$\mathbf{A}$ is the mother of $\mathbf{B}$".
+This relation could be represented in vectors through
+\begin{equation*}
+	m \left(\mathbf{A}, \mathbf{B} \right) = \mathbf{motherof} + \mathbf{mother} \varoast \mathbf{A} + \mathbf{child} \varoast \mathbf{B}.
+\end{equation*}
+The strength of \acp{VSA} is that the vectors representing such relations can subsequently be manipulated and combined using the \ac{VSA}'s algebraic operations.
+In \cite{Kanerva2000}, Kanerva shows that this approach can be used to create a system, that is able to infer one relation, which is induced another relation, through learning from example.
+Their example features the aforementioned \textit{mother of} relation, which induces the \textit{parent of} relation
+\begin{equation*}
+	p \left(\mathbf{A}, \mathbf{B} \right) = \mathbf{parentof} + \mathbf{parent} \varoast \mathbf{A} + \mathbf{offspring} \varoast \mathbf{B},
+\end{equation*}
+i.e. we have $m\left(\mathbf{A}, \mathbf{B}\right) \Longrightarrow p\left(\mathbf{A}, \mathbf{B}\right)$.
+Combining several examples
+\begin{equation*}
+	M = \sum_{i=0}^{n} m\left(\mathbf{A}_i, \mathbf{B}_i \right) \varoast p\left(\mathbf{A}_i, \mathbf{B}_i \right)
+\end{equation*}
+yields a transition vector, which gives $ M \varoast m \left(\mathbf{X}, \mathbf{Y} \right) \approx p \left(\mathbf{X}, \mathbf{Y} \right)$ for unseen examples $\mathbf{X}$ and $\mathbf{Y}$.
+However, this approach is based on the self-cancellation property (i.e. $\mathbf{X} \varoast \mathbf{X} = \pmb{1}$) in certain \acp{VSA} (in particular  \acp{BSC}), as it leads to $M$ containing the vector $\mathbf{motherof} \varoast \mathbf{parentof} + \mathbf{mother} \varoast \mathbf{parent} + \mathbf{child} \varoast \mathbf{offspring}$ (see \cite{Kanerva2000} for details).
+A similar approach was used in \cite{Kleyko2015a} for a prototype of concept learning.
+\todo[inline]{include raven matrix example \cite{Rasmussen2011}}
+\subsection{Implementation in \aclp{SNN}}
 
 \todo[inline]{explain how modelling with VSAs works referring to neural modelling section and explain implementation in SNNs}
 \section{Summary}
-
+In this chapter, we have introduced the theoretical background and mathematical properties of \aclp{VSA} and established a formal notation to be used in subsequent chapters.
+Furthermore, we gave a brief description of the \acl{NEF} and showed how it can be used to implement vector representations, in particular the \acl{SPA}, in \aclp{SNN}.
+Finally, we have introduced the basic principles of cognitive modelling with \acp{VSA} and how structured representations can be built from atomic vectors.
