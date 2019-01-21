@@ -97,7 +97,7 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 		The main difference compared to the \ac{MAP} architecture is, that Plate in general allows complex vector values, i.e. $N \subseteq \mathbb{C}$ and uses a different multiplication operation $\varoast$ - namely circular convolution.
 		For any two vectors $x, y \in V_{D}(N)$, circular convolution $\varoast$ is defined as
 		\begin{align*}
-			z = v \varoast w \qquad \textrm{ with } z_{j} := \sum_{k=0}^{D-1} x_{k}y_{(j-k)\Mod{D}}.
+			z = x \varoast y \qquad \textrm{ with } z_{j} := \sum_{k=0}^{D-1} x_{k}y_{(j-k)\Mod{D}}.
 		\end{align*}
 		\begin{figure}
 			\centering
