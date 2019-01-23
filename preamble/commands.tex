@@ -1,5 +1,9 @@
 \newcommand\notice[1]{}
 \newcommand\seppar{ \vspace{2ex} \noindent }
+\newcommand{\sectionnumbering}[1]{%
+  \setcounter{section}{0}%
+  \renewcommand{\thesection}{\csname #1\endcsname{section}}%
+}
 % Command for C++
 \newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
