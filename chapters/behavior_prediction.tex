@@ -228,6 +228,8 @@ Furthermore, we investigate where the models shows their best performance lookin
 \label{subsec:hyperparam_analysis}
 Before we proceed to compare and evaluate our models using each available encoding scheme, we aim to find a suitable set of hyperparameters.
 Therefore, we conduct a thorough analysis on both our network architectures using only numerical input data for simplicity and to keep the time needed for training limited.
+Systematically, we only analyze one parameter at a time and fix the best value for that parameter for the subsequent analysis of other parameters.
+However, we also inspect certain parameter pairs jointly if there are correlations or mutual influences between the parameters to be expected.
 
 \subsubsection{\ac{LSTM} networks}
 \label{subsubsec:hyperparam_lstm}
@@ -238,17 +240,35 @@ Therefore, we conduct a thorough analysis on both our network architectures usin
   \caption{Analysis of the \ac{RMSE} for different variations of numerical input to our \ac{LSTM} model trained on the \emph{On-board} data-set for \num{8} epochs.}\label{fig:lstm_input_data_analysis}
 \end{figure}
 
-For the \ac{LSTM}-models, we firstly investigated is the composition of the input data to the model to get an idea, what kind of information is useful for the task of motion prediction.
-Therefore, we trained several instantiations of our \ac{LSTM}-network architecture as described in Sec.~\ref{subsubsec:lstm_models} on the \emph{On-board} data-set $D_1$ for different variations of the input data.
-Fig.~\ref{fig:lstm_input_data_analysis} depicts the \ac{RMSE} ($y$-axis) for each input data setup ($x$-axis) at each prediction time step.
-The simplest setting is using only the positonal information of the target vehicle as input and its instantaneous velocity as additional information in the embedding without including any information about the ego-vehicle (which is available for the \emph{On-board} data-set only).
+For the \ac{LSTM}-models, we firstly investigated the composition of the input data to the model to get an idea, what kind of information is useful for the task of motion prediction.
+Therefore, we trained several instantiations of our \ac{LSTM}-network architecture as described in Sec.~\ref{subsubsec:lstm_models} on the \emph{On-board} data-set $D_1$ for different variations of the input data, for \num{8} epochs each.
+The simplest setting is using only the positional information of the target vehicle as input and its instantaneous velocity as additional information in the embedding without including any information about the ego-vehicle.
+We refer to this setting as the default setting in this section.
 In addition, we also analyze settings where additional information like velocity and acceleration of the target vehicle are available to the system.
-Furthermore, if all dynamic information are available relative to the ego-vehicle, there are other features that could be useful for motion prediction like the current curvature of the road or the velocity of the ego-vehicle itself.
-For example, if the ego-vehicle performs a lane change, this will influence the relative motion of all other vehicles while this information most likely will not be available from just the positions of the target vehicle. 
+Furthermore, if all dynamic information are available relative to the ego-vehicle, there are other features that could be useful for motion prediction such as the current curvature of the road or the current velocity or steering values of the ego-vehicle itself.
+For example, if the ego-vehicle performs a lane change or the road bends, this will influence the relative motion of all other vehicles while this information most likely will not be available from just the positions of the target vehicle. 
 On the other hand, if such information is available to the system, it would improve the models capability of abstracting and inferring correlations between the available information in such situations.
-In this evaluation, we include the history of the ego-vehicle's information to the input data and future values to the embedding, whereas we include additional information about the target vehicle to the input data only.. 
-From fig. ~\ref{fig:lstm_input_data_analysis} we observe, that additional information about both, the ego- and target-vehicle, indeed improve prediction accuracy.
+In this evaluation, we include the history of the ego-vehicle's information to the input data and future values to the embedding, whereas we include additional information about the target vehicle to the input data only. 
+\\
+Fig.~\ref{fig:lstm_input_data_analysis} depicts the \ac{RMSE} ($y$-axis) for each input data setup ($x$-axis) at each prediction time step.
+Each tick on the $x$-axis corresponds to one input setup, whereas each group of \num{5} ticks from left to right correspond to one fixed setup for the target vehicle.
+The left group contains only the default data about the target vehicle, the middle group contains the history of the target vehicle's velocity and the right group contains additionally the history of the target vehicle's acceleration.
+The ticks within one group correspond to one setting for the ego-vehicle, whereas again from left to right the amount of available information increases.
+Therefore, the rightmost tick contains information about the ego-vehicles acceleration, distance to the lane border as well as the curvature of the current lane and its current steering values (information is added in this order from left to right). 
+In other words, the further we go from left to right on the $x$-axis in fig~\ref{fig:lstm_input_data_analysis}, the more information is available to the system.
+We observe that adding more information about both, the ego- and target-vehicle, indeed improves prediction accuracy significantly: the difference between the best and worst setting is more than \SI{1}{\meter} in $x$-direction and more than \SI{0.1}{\meter} in $y$-direction.
 For both dimensions, the setting using all available information outperforms the simpler setups.
+However, there are some interesting peculiarities visible in this analysis that are worth noting.
+For instance, the input information improving performance in $x$-direction the most appears to be the target vehicle's velocity. 
+Furthermore, the target vehicle's acceleration does not yield further significant improvements given its velocity is available.
+Interestingly, the setting using only the target vehicle's velocity as additional information is closely behind the best setting in $x$-direction.
+Furthermore, the performance boost of the setting using all available information (the rightmost tick) over the prior setting comes from the ego-vehicle's steering, which only appears when its acceleration information is also available.
+For the $y$-direction we observe similar trends in that the target vehicle's acceleration does not yield significant improvements over its velocity.
+However, here the information about the ego-vehicle's distance to the lane borders appears to be the input that gives the most significant improvements in $y$-direction.
+That makes sense, as these inputs encode information about the ego-vehicle's motion in $y$-direction such as lane changes.
+As the setting using all available information (the rightmost tick in fig.~\ref{fig:lstm_input_data_analysis}) is by far outperforming all other settings in $x$-direction and is on par with the best in $y$-direction, we use this data-setup for further analyzing the hyperparameters of the \ac{LSTM}-model.
+\\
+We continue our hyperparameter analysis by inspecting the number of units within the \ac{LSTM} cells.
 \begin{figure}[t!]
 	\centering
     \subfloat[\label{subfig:lstm_units_analysis}]{%
@@ -261,7 +281,10 @@ For both dimensions, the setting using all available information outperforms the
     \caption{Visualization of the \ac{RMSE} for different parameter tests of our \ac{LSTM}-model trained on the \emph{On-board} data-set for \num{8} epochs:~\protect\subref{subfig:lstm_units_analysis} depicts the \ac{RMSE} when varying the number of units in each \ac{LSTM} cell~\protect\subref{subfig:lstm_layers_analysis} visualizes the \ac{RMSE} when varying the number of layers, i.e.\ the number of encoder and decoder \ac{LSTM} cells are used in the network.}
     \label{fig:ngsim_dataset}
 \end{figure}
-
+In our initial experiment, we used \num{80} units in each of the \ac{LSTM} encoder and decoder cell.
+Here, we investigate if additional unit improve the models' prediction performance.
+Again, we train the model for \num{8} epochs.
+Fig.~\ref{subfig:lstm_units_analysis} depicts the \ac{RMSE} for a models with \num{80}, \num{150}, \num{200} and \num{500} units in the \ac{LSTM} cells.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.95\textwidth]{imgs/lstm_layers_epochs_analysis.eps}
@@ -369,7 +392,6 @@ Thus, we consider these characteristics suitable candidates to serve as context 
     \caption{Visualization of the \ac{RMSE} of all \ac{LSTM} models on the \emph{\ac{NGSIM}} validation set $V_2 \subset D_2$ using~\protect\subref{subfig:lstm_rmse_512_ngsim} vectors of dimension $512$ for the \ac{SPA}-based models and~\protect\subref{subfig:lstm_rmse_1024_ngsim} using vectors of dimension $1024$ for the \ac{SPA}-based models.}\label{fig:rmse_ngsim_all}
 
 \end{figure}
-
 
 Fig.~\ref{fig:rmse_ngsim_all} visualizes the \ac{RMSE} of all \ac{LSTM}-based models on the validation-set $V_2 \subset D_2$ of the \emph{\ac{NGSIM}} data-set for \num{512}-dimensional vectors (Fig.~\ref{fig:rmse_ngsim_all} \textbf{(A)}) and for \num{1024}-dimensional vectors (Fig.~\ref{fig:rmse_ngsim_all} \textbf{(B)}).
 We observe, that all \ac{LSTM} models achieve a very similar performance (almost identical in $y$-direction) with the \ac{SPA}-power representation achieving the best performance in $x$-direction being on par with the numerical encoding for \num{512}-dimensional vectors.
