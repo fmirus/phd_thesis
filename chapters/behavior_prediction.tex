@@ -230,6 +230,8 @@ Before we proceed to compare and evaluate our models using each available encodi
 Therefore, we conduct a thorough analysis on both our network architectures using only numerical input data for simplicity and to keep the time needed for training limited.
 Systematically, we only analyze one parameter at a time and fix the best value for that parameter for the subsequent analysis of other parameters.
 However, we also inspect certain parameter pairs jointly if there are correlations or mutual influences between the parameters to be expected.
+All models in sec.~\ref{subsubsec:hyperparam_lstm} are trained and evaluated on the \emph{On-board} data-set $D1$.
+If not declared otherwise, all figures in sec.~\ref{subsubsec:hyperparam_lstm} show the performance of the investigated models on the validation part $V_1 \subset D_1$ of the \emph{On-board} data-set.
 
 \subsubsection{\ac{LSTM} networks}
 \label{subsubsec:hyperparam_lstm}
@@ -268,7 +270,7 @@ However, here the information about the ego-vehicle's distance to the lane borde
 That makes sense, as these inputs encode information about the ego-vehicle's motion in $y$-direction such as lane changes.
 As the setting using all available information (the rightmost tick in fig.~\ref{fig:lstm_input_data_analysis}) is by far outperforming all other settings in $x$-direction and is on par with the best in $y$-direction, we use this data-setup for further analyzing the hyperparameters of the \ac{LSTM}-model.
 \\
-We continue our hyperparameter analysis by inspecting the number of units within the \ac{LSTM} cells.
+We continue our hyperparameter analysis by inspecting the number of dimensions within the \ac{LSTM} cells.
 \begin{figure}[t!]
 	\centering
     \subfloat[\label{subfig:lstm_units_analysis}]{%
@@ -278,26 +280,40 @@ We continue our hyperparameter analysis by inspecting the number of units within
     \subfloat[\label{subfig:lstm_layers_analysis}]{%
         \includegraphics[width=\columnwidth]{imgs/lstm_layers_analysis.eps}
     }
-    \caption{Visualization of the \ac{RMSE} for different parameter tests of our \ac{LSTM}-model trained on the \emph{On-board} data-set for \num{8} epochs:~\protect\subref{subfig:lstm_units_analysis} depicts the \ac{RMSE} when varying the number of units in each \ac{LSTM} cell~\protect\subref{subfig:lstm_layers_analysis} visualizes the \ac{RMSE} when varying the number of layers, i.e.\ the number of encoder and decoder \ac{LSTM} cells are used in the network.}
-    \label{fig:ngsim_dataset}
+    \caption{Visualization of the \ac{RMSE} for different parameter tests of our \ac{LSTM}-model trained on the \emph{On-board} data-set for \num{8} epochs:~\protect\subref{subfig:lstm_units_analysis} depicts the \ac{RMSE} when varying the number of dimensions in each \ac{LSTM} cell~\protect\subref{subfig:lstm_layers_analysis} visualizes the \ac{RMSE} when varying the number of layers, i.e.\ the number of encoder and decoder \ac{LSTM} cells are used in the network.}
+    \label{fig:lstm_units_layers_analysis}
 \end{figure}
-In our initial experiment, we used \num{80} units in each of the \ac{LSTM} encoder and decoder cell.
-Here, we investigate if additional unit improve the models' prediction performance.
+In our initial experiment, we used \num{80} dimensions in each of the \ac{LSTM} encoder and decoder cell.
+Here, we investigate if adding more dimensions improves the models' prediction performance.
 Again, we train the model for \num{8} epochs.
-Fig.~\ref{subfig:lstm_units_analysis} depicts the \ac{RMSE} for a models with \num{80}, \num{150}, \num{200} and \num{500} units in the \ac{LSTM} cells.
+Fig.~\ref{subfig:lstm_units_analysis} depicts the \ac{RMSE} for models with \num{80}, \num{150}, \num{200} and \num{500} dimensions in the \ac{LSTM} cells.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.95\textwidth]{imgs/lstm_layers_epochs_analysis.eps}
-  \caption{Analysis of the \ac{RMSE} varying the number of layers and epochs of our \ac{LSTM} model trained on the \emph{On-board} data-set. The upper row shows }\label{fig:lstm_input_data_analysis}
+  \caption{Analysis of the \ac{RMSE} varying the number of layers and epochs of our \ac{LSTM} model trained on the \emph{On-board} data-set. The upper row shows the \ac{RMSE} of a model with only one layer trained for \num{5}, \num{20} and \num{50} epochs, the lower row shows the \ac{RMSE} of a model with \num{10} layers trained for \num{5}, \num{20} and \num{50} epochs.}
+  \label{fig:lstm_layers_epochs_analysis}
 \end{figure}
+We observe that the model with \num{150} dimensions performs best in $x$-direction whereas all models show comparable performance in $y$-direction.
+However, increasing the number of dimensions beyond \num{150} per \ac{LSTM} does not improve the models' accuracy but rather deteriorates the performance.
+Therefore, we fix the number of dimensions within the \ac{LSTM} cells to \num{150} for further investigation.
+\\
+In the next step, we inspect how the number of layers in our network architecture influences the model's performance.
+Here, one layer is a pair of one \ac{LSTM} encoder and decoder cell each.
+Thus a model with \num{2} layers consists of a sequence of \num{2} \ac{LSTM} encoder cells followed by a sequence of again \num{2} \ac{LSTM} decoder cells.
+Fig.~\ref{subfig:lstm_layers_analysis} visualizes the \ac{RMSE} of models with \num{1} up to \num{9} layers trained for \num{8} epochs.
+This analysis shows the model using only one layer performs best and that increasing the number of layers and thus using a deeper network architecture does not improve the model's performance.
+On the contrary, more layers lead to worse accuracy in both dimensions.
+However, we trained all models for a fixed number of \num{8} epochs whereas deeper network architectures might demand a longer training process.
+\\
+In the next step, we therefore analyze the number of layers and number of epochs jointly to investigate if larger network architectures trained for more epochs improve prediction performance.
+Fig.~\ref{fig:lstm_layers_epochs_analysis} visualizes the results of this experiment: the upper row depicts the \ac{RMSE} of a model with only one layer trained for \num{5}, \num{20} and \num{50} epochs, whereas the lower row shows the \ac{RMSE} of a model with \num{10} layers trained for \num{5}, \num{20} and \num{50} epochs. 
+We observe that training a deeper model for more epochs does improve its accuracy.
+However, if we compare the upper and lower row in fig.~\ref{fig:lstm_layers_epochs_analysis}, we also find that by training a model with \num{10} layers for \num{50} epochs we only achieve the accuracy of the simpler single-layer \ac{LSTM} model trained for \num{5} epochs.
+We conclude, that using more layers even with a longer training process (i.e.\ increased number of epochs) does not lead to improved prediction results.
+Thus, a \ac{LSTM} model with one encoder and decoder cell each is not only the simplest network architecture but also the best in terms of accuracy and time needed for training.
+\\
+We briefly summarize the findings of this section and fix the following set of parameters for subsequent sections: we use a \ac{LSTM} model with one encoder and one decoder cell with \num{150} hidden dimensions each.
 
-
-We varied the number of layers, the number of hidden dimensions and the number of epochs for the models to be trained.
-We found, that increasing the number of layers does not improve model performance, even when training longer using more epochs.
-Thus, a \ac{LSTM} model with one encoder and decoder cell each is not only the simplest network architecture but also the best in terms of accuracy as well as time needed for training.
-For this architecture, we found that the network performs best with \num{150} dimensions each in the encoder and decoder cell.
-Furthermore, we trained our models for \num{10} epochs as we found that training for more epochs up until \num{20} does not significantly improve the models' performance.
-Fig.~\ref{fig:rmse_dev_over_epochs} visualizes this result by showing the development of the \ac{RMSE} of the \ac{LSTM} model using the \ac{SPA}-power-with-ego vector representation $(\mathbf{S}_{t}^{ego})_{t_0}^{t_N}$ as input for the training (Fig.~\ref{fig:rmse_dev_over_epochs} upper row) and validation part (Fig.~\ref{fig:rmse_dev_over_epochs} lower row) of the \emph{On-board} data-set $D_1$.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.95\textwidth]{imgs/rmse_dev_over_epochs.eps}
@@ -329,6 +345,8 @@ As there is no ego-vehicle present in the \emph{\ac{NGSIM}} data-set $D_2$, we u
 For the \emph{On-board} data-set $D_1$, we use the ego-vehicle's predicted acceleration and the estimated curvature of the ego-vehicle's current lane.
 Although this is future information, we argue that it is solely about the ego-vehicle, which we expect to be available at the time the prediction is to happen.
 We assume, that an automated vehicle, in order to safely navigate, will have an estimation of the future lane curvature as well as the acceleration values of its own planned trajectory.
+We trained our models for \num{10} epochs as we found that training for more epochs up until \num{20} does not significantly improve the models' performance (see also the results of sec.~\ref{subsubsec:hyperparam_lstm}).
+Fig.~\ref{fig:rmse_dev_over_epochs} visualizes this result by showing the development of the \ac{RMSE} of the \ac{LSTM} model using the \ac{SPA}-power-with-ego vector representation $(\mathbf{S}_{t}^{ego})_{t_0}^{t_N}$ as input for the training (Fig.~\ref{fig:rmse_dev_over_epochs} upper row) and validation part (Fig.~\ref{fig:rmse_dev_over_epochs} lower row) of the \emph{On-board} data-set $D_1$.
 
 
 \subsubsection{\ac{NEF} networks}
