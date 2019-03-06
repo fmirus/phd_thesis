@@ -1,4 +1,4 @@
-\chapter{Instantiating cognitive models for automotive applications}
+\chapter{Instantiating a cognitive model for driving context classification}
 \begin{itemize}
 	\item example tasks
 	\item data sets
@@ -6,14 +6,13 @@
 	\item implementation in \ac{Nengo}
 	\item implementation details
 \end{itemize}
-\section{Driving context classification}
 \label{sec:driving_context_class}
 Fig. \ref{subfig:system_arch} shows a schematic overview of our system architecture.
 \textit{Environment perception} happens through a variety of different sensors \cite{Aeberhard2015} providing \textit{preprocessed data} in the form of object-lists or raw sensory data.
 We build our representation from this preprocessed data through \textit{vectorization} of sensory data and high-level object lists.
 We use a \textit{neural network} for predictions based on the current scene vector.
 Here, we use supervised learning to distinguish three different driving contexts, namely city, interurban and highway.
-\subsection{Training data}
+\section{Training data}
 The input data used for training and evaluating the system is real-world data gathered during test drives in the region of Munich, Germany.
 Depending on the test vehicle's sensor setup \cite{Aeberhard2015}, a subset of the following sensor systems is available: camera, RADAR, LIDAR as well as the dynamics of the ego-vehicle (e.g. velocity, acceleration, steering angle) through introspective sensors.
 While lists of dynamic objects (i.e. cars, pedestrians, etc.) are available from all extrospective sensors, the camera-based perception system additionally provides lists of static objects like traffic signs.
@@ -23,7 +22,7 @@ Beside the object's classification, the camera systems provides estimations (wit
 The data is divided into three different sets: one for training and two test sets containing roughly \SIlist{27;18;7}{\minute} respectively of driving data.\\
 To enable automated training of any supervised learning system, the training data needs to be labeled.
 In this section, we hand-labeled our data sets by visually inspecting the images provided by a reference camera-system and labelling the intervals  between transitions of driving contexts as indicated by the respective traffic signs.
-\subsection{Scene representation in vectors}
+\section{Scene representation in vectors}
 \begin{figure}[t!]
 	\centering
 	\subfloat[Example scene with labeled object vectors based on environment perception\label{subfig:ex_scene}]{%
@@ -40,7 +39,7 @@ We obtain the final vector describing the current scene by superposition of all 
 For all our vectors in this work we have chosen a dimension of $D=512$, a reasonable trade-off between informational capacity and computational complexity.\\
 %\subsubsection{Ego-vehicle dynamics}
 %\label{subsubsec:ego-veh-dyn}
-\subsubsection{Ego-vehicle dynamics}
+\subsection{Ego-vehicle dynamics}
 For ego-vehicle dynamics, we use the current velocity, acceleration in $x$/$y$-direction (ego-vehicle coordinate system), the angle of the steering wheel as well as the steering angle of the front axle.
 For all values except acceleration, we randomly choose one normalized ID-vector representing the respective value, e.g. $\mathbf{VELOCITY}=\left(v_1, \cdots, v_D\right)$ with $v_i \in \mathbb{R}$ for velocity, and multiply this ID-vector with the current scalar value $x$, e.g. $x \cdot \mathbf{VELOCITY}$ for velocity.
 Furthermore, we normalize all scalar values to the range $\left[-2,2\right]$ to keep the length of our vectors limited.
@@ -57,7 +56,7 @@ and obtain the final vector representation of acceleration in $x$/$y$-direction 
 \]
 This encoding $\lambda\left(a_x, a_y\right)$ leads to normalized, nonzero, similar vectors with information distributed over all elements (in contrast to a simple encoding like $\left(a_x, a_y, 0 \cdots, 0\right)$).\\
 %\subsubsection{Dynamic Objects}
-\subsubsection{Dynamic objects}
+\subsection{Dynamic objects}
 The camera-based classification system is able to distinguish seven different object categories, namely bicycle, car, motorcycle, pedestrian, stationary, truck and unknown.
 In the simplest form of our vector representation, we assign one random vector to each of those categories and add it to the current scene representation once for each category's occurrence in the object-list.
 However, this representation just encodes that there are certain objects present somewhere in the current scene without any additional information.
@@ -72,7 +71,7 @@ For example, a car detected at position $\left(p_x,p_y\right)$ with approximatel
 \mathbf{CAR} + \mathbf{CAR}\otimes\mathbf{POSITION}\otimes\lambda\left(p_x,p_y\right) + \mathbf{CAR}\otimes\mathbf{ORIENTATION}\otimes\mathbf{SAME}.
 \]
 %\subsubsection{Traffic Signs}
-\subsubsection{Traffic signs}
+\subsection{Traffic signs}
 The ego-vehicle's camera-system \cite{Aeberhard2015} is able to recognize a significant amount and variety of traffic signs.
 Again, we assign a random vector to each possible traffic sign label and add it to the current scene representation.
 However, in contrast to dynamic objects, most traffic signs are not only valid while being visible but stay relevant for the current driving context until withdrawn by another sign.
@@ -81,95 +80,9 @@ Due to the fact, that the camera system is not immune to false detections, we im
 We realized the decay by multiplying each vector representing a traffic sign with a (parameterizable) scalar decay factor  at each time step.
 Furthermore, we included a simple withdraw logic, e.g. new speed limit signs overwrites previously seen ones and a sign indicating a city entrance withdraws a memorized highway sign.\\
 %\subsection{Training}
+\section{Experimental results}
+
 \subsection{Baseline for classification: human level performance}
 To get a better understanding of the quality of the context classification system's results, we compare it to human level performance.
 However, neither showing raw camera images nor numerical vectors would yield comparable results.
 Therefore, we created human-readable versions of our input vectors in text form and presented a subset of $50$ random samples for each data set (with the training set always being the first) to two human subjects asking for their classification guess.
-\subsection{Experimental results}
-\section{Behaviour prediction}
-Predicting future behaviour and positions of other traffic participants from observations is a key problem, that needs to be solved by human drivers and automated vehicles alike to safely navigate their environment and to reach their desired goal.
-Therefore, we picked behaviour prediction as another task for investigating the potential of vector representations in automotive context.
-In contrast to the previous task of classifying the current driving context (cf. Sec. \ref{sec:driving_context_class}), predicting future positions of vehicles is a regression problem, as we are predicting continuous values (spatial positions) instead of discrete labels.
-However, future positions of vehicles not only depend on each vehicle's own past positions and dynamic data (e.g. velocity and acceleration) but also on the behaviour of the other traffic participants in the vehicle's surroundings.
-There exist various different approaches to account for those interactions between traffic participants or, more generally, agents in the scene: probabilistic models like costmaps \cite{Bahram2016} accounting for physical constraints on the movements, categorizing and representing scenes in a hierarchy \cite{Bonnin2012}, modeling the interactions in the learning network architecture \cite{Alahi2016} or including distances between other agents and the target directly in the training data \cite{Altche2018}.
-We hypothesize that structured vector representations will be able to capture these relations and mutual influence between traffic participants, which is necessary for reliable predictions.
-As we aim for a model-free data representation, we avoid any physical restrictions for our predictions.
-Although this allows for physically unrealistic or even impossible trajectory predictions, we want our neural network model to figure out the best predictions on its own without biasing it in any direction.
-\subsection{Training data}
-The data used for the behaviour prediction task is real-world data gathered during test drives in the region of Munich, Germany.
-In total, there are \SI{27}{\hour} of driving time available in our data set.
-The largest part of this data is collected while driving on German highways.
-The data traces contain a variety of features obtained from different sensor sources.
-Apart from features about motion and behaviour of dynamic objects in the scene like position, velocity and acceleration, which are estimated from \ac{LIDAR} sensors, there are also visual information like object type probabilities or lane information, which are acquired from addtional camera sensors.
-Table \ref{tab:target_data_features} gives an overview and detailed description of the data features used in this work for our model.
-\begin{center}
-	\begin{tabular}{|l | p{12cm}|}
-		\hline
-		\textbf{Data label} & \textbf{Description}\\ \hline
-		Position & Lateral/Longitudinal position absolute/relative to the ego vehicle's position estimated from range sensor readings \\ \hline
-		Velocity& Lateral/Longitudinal velocity absolute/relative to the ego vehicle's velocity estimated from range sensor readings \\ \hline
-		Acceleration & Lateral/Lateral acceleration absolute/relative to the ego vehicle's velocity estimated from range sensor readings \\ \hline
-		Lane & Information about the lane relative to ego vehicle estimated from fused sensor reading (camera and range sensors) \\ \hline
-		LaneBorderDistance & Distance to left/right border of the current lane estimated from fused sensor reading (camera and range sensors) \\ \hline
-		LaneCurvature & Information about the lane curvature estimated from fused sensor reading (camera and range sensors) \\ \hline
-		TypeProbability & Probability for the object being a of certain type (e.g. car or truck) estimated from camera sensors \\ \hline
-	\end{tabular}
-	\label{tab:target_data_features}
-	\captionof{table}{Table depicting different features for dynamic objects within the training data}
-\end{center}
-\todo[inline]{check if newer files from leo are available with traffic sign or traffic rules in them}
-\begin{itemize}
-	\item describe data set
-	\item find interesting slice in the data set
-	\item labelling/training data generation
-\end{itemize}
-\subsubsection{Preprocessing}
-The fused sensory data is available at a frequency of roughly \SI{5}{\hertz}.
-We aim to predict future positions of dynamic objects \SI{5}{\second} into the future based on their positions \SI{5}{\second} prior to their current location.
-To improve consistency and applicability, we interpolate the available data over 20 equidistant steps such that we have data every \SI{0.25}{\second}.
-\subsubsection{Performance baselines}
-\todo[inline]{Formulation: In this section, we analyze!}
-Figure \ref{fig:overtaking} shows an example of an overtaking maneuvre in a highway situation.
-The ego-vehicle is overtaken by another car approaching from behind.
-Subfigures \ref{subfig:overtaking1}--\ref{subfig:overtaking4} show different times of the maneuvre.
-Solid lines indicate previous positions whereas dashed lines indicate future positions or predictions.
-The dashed green line illustrates linear predicions based on a constant velocity assumption for $x$ direction and linear regression using the last \SI{0.5}{\second} of the positions for $y$ direction.
-\begin{figure}[t!]
-	\centering
-	\subfloat[Overtaking maneuvre at $t=\SI{90}{\second}$\label{subfig:overtaking1}]{%
-		\includegraphics[clip,width=\columnwidth]{imgs/Vis_overtaking_maneuvre_t1.png}
-	}
-	\vspace{-0.3cm}
-	\subfloat[Overtaking maneuvre at $t=\SI{94}{\second}$\label{subfig:overtaking2}]{%
-		\includegraphics[width=\columnwidth]{imgs/Vis_overtaking_maneuvre_t2.png}
-	}
-	\vspace{-0.3cm}
-	\subfloat[Overtaking maneuvre at $t=\SI{98}{\second}$\label{subfig:overtaking3}]{%
-			\includegraphics[width=\columnwidth]{imgs/Vis_overtaking_maneuvre_t3.png}
-	}
-	\vspace{-0.3cm}
-	\subfloat[Overtaking maneuvre at $t=\SI{100}{\second}$\label{subfig:overtaking4}]{%
-			\includegraphics[width=\columnwidth]{imgs/Vis_overtaking_maneuvre_t4.png}
-	}
-	\caption{An example scene visualizing the data of an overtaking maneuvre in a highway situation at selected timesteps.} \label{fig:overtaking}
-\end{figure}
-
-\begin{itemize}
-	\item linear regression
-	\item kalman filters?
-	\item traditional neural networks (\ac{NEF} networks and \ac{LSTM} networks)
-	\item something else?
-\end{itemize}
-\subsubsection{Labelling}
-
-\subsection{Scene representation in vectors}
-We use our vector representation as input data for a neural network to predict the future position of one other traffic participant at a time.
-We use an indication vector $\mathbf{THIS}$ bound to the object we want to predict to tell the network the current focus.
-To predict all objects of the scene during deployment, we envision to use multiple instantiations of the same network.
-Thereby, the amount of training data generated per file increases with the number of objects while we only need to train one network.
-Fixed vector length, independent of the number of vehicles to be present in the scene.
-This is good when using this as input to neural networks compared to numerical inputs as the input size depends and changes with the number of vehicles present in the scene.
-\subsection{Offline (batch) learning}
-\subsection{Refinement at runtime through online learning}
-\subsection{Experimental results}
-\section{Other applications}

@@ -4,7 +4,8 @@
 The term \acfp{VSA} - first coined by Ross W. Gayler \cite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
 The basic idea behind all of those approaches is to represent structure (e.g. cognitive concepts, symbols or language) in a high-dimensional vector space by mapping each entity to be represented to a (possibly random) vector.
 One of the most important properties of high-dimensional vector spaces enabling this kind of representation is the fact, that two high-dimensional random vectors are likely to be dissimilar.
-In the following, we will show what we mean by fuzzy terms like \emph{dissimilar} or \emph{likely} and provide more precise statements.\\
+In the following, we will show what we mean by fuzzy terms like \emph{dissimilar} or \emph{likely} and provide more precise statements.
+
 One main requirement in the context of cognitive modeling is the ability of the modeling framework to address the binding problem \cite{Treisman1999}.
 In \cite{Jackendoff2002}, Jackendoff phrases this as the problem of "combining independent bits into a single coherent percept".
 One strength of \acp{VSA} is that they offer the possibility to manipulate their entities (i.e. vectors) through algebraic operations, usually at least one \emph{addition-like} and \emph{multiplication-like} operation each.
@@ -41,7 +42,7 @@ The most prominent examples are elementwise multiplication in Gayler's \ac{MAP}-
 
 \begin{defn}
 	\label{def:VSA}
-	Let $N \subseteq K$ be a subset of some number field $K$ (i.e. a set of numbers) and $D \in \mathbb{N}$ a natural number.
+	Let $N \subseteq K$ be a subset of some number field $K$ (i.e.\ a set of numbers) and $D \in \mathbb{N}$ a natural number.
 	Furthermore, let
 	\[V_{D}(N)=\{\left(x_{0}, \cdots, x_{D-1}\right)  | x_{i} \in N\} \subseteq K^{D}\]
 	be the set of all $D$-tuples with entries in $N$.
@@ -146,15 +147,18 @@ We will derive this result in the following Theorem.
 	\left(1-\left(2u-1\right)^{2}\right)^{\frac{D-3}{2}} \propto \left(u-u^2\right)^{\frac{D-3}{2}} = \left(u \left(1-u\right)\right)^{\frac{D-3}{2}} = u^{\left(\frac{D-1}{2}-1\right)} \left(1-u\right)^{\left(\frac{D-1}{2}-1\right)},
 	\]
 	which is the density function of the beta distribution $\beta\left(\frac{D-1}{2},\frac{D-1}{2}\right)$.
-	Thus, the cosine similarity is also beta distributed, but scaled and shifted to the interval $\left[-1,1\right]$ by $x=2u-1$.\\
-	For $\alpha=\beta=\frac{D-1}{2}$, the mean of the beta distribution is $\tilde{\mu}=\frac{1}{2}$. Applying the substitution, we get the mean of the shifted distribution $\mu = 2\tilde{\mu }-1 = 0$.\\
+	Thus, the cosine similarity is also beta distributed, but scaled and shifted to the interval $\left[-1,1\right]$ by $x=2u-1$.
+    
+	For $\alpha=\beta=\frac{D-1}{2}$, the mean of the beta distribution is $\tilde{\mu}=\frac{1}{2}$. Applying the substitution, we get the mean of the shifted distribution $\mu = 2\tilde{\mu }-1 = 0$.
+    
 	Making use of the simplification that the distribution of similarity is the same as the distribution in the first coordinate, the variance is given by the expected value of the square value of the first coordinate, i.e. $\mathbb{E}(v_{0}^{2})$.
 	Since all coordinate are identically distributed, we get
 	\[
 	\mathbb{E}(v_{0}) = \frac{1}{D} \sum_{i=0}^{D-1} \mathbb{E}(v_{i}^2)= \frac{1}{D} \underbrace{\mathbb{E}\left(\sum_{i=0}^{D-1} v_{i}^2\right)}_{=:c^2}=\frac{c^2}{D}.
 	\]
 	Hence variance of the distribution of the cosine similarity is $\sigma^2=\frac{c^2}{D}$.
-	In the particular case of the unit sphere $\mathbb{S}^{D-1}$, we get $c^{2}=1$ and a variance of $\sigma^2=\frac{1}{D}$.\\
+	In the particular case of the unit sphere $\mathbb{S}^{D-1}$, we get $c^{2}=1$ and a variance of $\sigma^2=\frac{1}{D}$.
+    
 	To see the convergence behaviour of the standardized distribution, we look at the logarithm of its density function %$f_{\phi(v,w)}\left(\frac{x}{\sqrt{D}}\right)$
 	\begin{equation}
 	\label{eq:log_dens}
@@ -196,7 +200,8 @@ For normally distributed $X$, we even have
 	\mathbb{P}\left(\mu-3\sigma \leq X \leq \mu+3\sigma \right) &\approx 0.997.
 \end{align*}
 Given Definition \ref{def:similar}, the probability of two randomly chosen vectors being similar is below \SI{5}{\percent} for $c=2$ and even below \SI{0.3}{\percent} for $c=3$, while the actual numerical interval $\left[-c\sigma, c\sigma\right]$ only depends on the vector dimension $D$.
-For lower \ac{VSA} dimensions ($D \leq 50$), it can be beneficial to work with a weaker version of definition \ref{def:similar} using $c=2$, whereas for higher dimensions the stronger version can safely be used. \todo{wording}\\
+For lower \ac{VSA} dimensions ($D \leq 50$), it can be beneficial to work with a weaker version of definition \ref{def:similar} using $c=2$, whereas for higher dimensions the stronger version can safely be used. \todo{wording}
+
 Based on the definition of similarity, we derive criteria for "good" multiplication functions in \acp{VSA}.
 \begin{defn}
 	\label{def:binding}
@@ -217,7 +222,8 @@ The first criteria is intended to allow structured representations in \acp{VSA}.
 Representations built solely upon an addition function lack a mechanism to impose structure, as the sum of vectors is similar to all summands.
 For continuous \acp{VSA}, this result is straightforward due to the linearity of the dot product, but it holds true for \acp{BSC} as well.
 Therefore, summing vectors only allows to encode unordered sets of entities.
-The property of binding functions to map two vectors to a vector dissimilar to both inputs enables structured representations.\\
+The property of binding functions to map two vectors to a vector dissimilar to both inputs enables structured representations.
+
 The second criteria of Definition \ref{def:binding} for binding functions is the basis to decode or recover the individual vector ingredients from structured representations.
 The existence of a (pseudo-) inverse element allows the retrieval of $v,w \in V_{D}(N)$ from $v \varoast w$ by
 \begin{equation}
@@ -271,7 +277,8 @@ However, we recapitulate some important properties, which will be used later in 
 Here, we skip an explicit proof for this lemma but rather point to \cite[Section 3.1.2 and 3.1.3]{Plate1994} for a in-depth derivation.
 However, we visualize the similarity $\phi\left(\mathbf{1}, v \varoast \bar{v}\right)$ between the neutral element $\mathbf{1}$ and the result of applying the pseudo-inverse $v \varoast \bar{v}$ compared to the similarity threshold $\epsilon$ (weak and strong version) in fig. \ref{fig:pseudo_inv}.
 Therefore, we randomly chose $100$ sample vectors for various dimensions, convolved them with their pseudo-inverse and compared the result to the neutral element $\mathbf{1}$.
-We observe, that this similarity remains almost constant slightly above $0.7$ and already for low vector dimensions ($D > 20$) way above the strong similarity threshold of $\epsilon=\frac{3}{\sqrt{D}}$.\\
+We observe, that this similarity remains almost constant slightly above $0.7$ and already for low vector dimensions ($D > 20$) way above the strong similarity threshold of $\epsilon=\frac{3}{\sqrt{D}}$.
+
 Lemma \ref{lemma:spa_pseudo_inv} states that we can find a pseudo-inverse element $\bar{v}$ for any vector $v$ in a $D$-dimensional \ac{SPA} (given the dimension $D$ is sufficiently large).
 Although we can also find an exact inverse element $v^{-1}$ for most vectors $v$, it is often more useful to work with pseudo-inverses instead of exact inverse elements.
 We have already seen, that we can use the \acf{DFT} and \acf{IDFT} to calculate circular convolution efficiently by element-wise multiplication (this follows from the convolution theorem \cite[Chap. 6]{Bracewell2000}) in the frequency domain, i.e.
@@ -335,14 +342,16 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
 	\[
 	1 = z_{0} = \norm{u}^{2},
 	\]
-	which gives the first result of the lemma.\\
+	which gives the first result of the lemma.
+    
 	To show that the set of unitary vectors $\mathcal{U}$ is closed under convolutive exponentiation, we write each component of $\ac{DFT}(u)$ for $u \in \mathcal{U}$ in polar coordinates, i.e. $\ac{DFT}_j(u) = r_j\exp\left(\varphi_j\right)$.
 	From previous considerations we know that $\ac{DFT}_j(u^{-1}) = \frac{1}{r_j}\exp\left(-\varphi_j\right)$ and $\ac{DFT}_j(\bar{u}) = r_j\exp\left(-\varphi_j\right)$, which gives $r_j=1$ for $j=0, \ldots, D-1$ because $u$ is a unitary vector.
 	Thus, we have for any $p \in \mathbb{R}$
 	\[
 	\ac{DFT}_j\left(u^{p}\right) = \ac{DFT}_j\left(u\right)^{p} = r_j^{p}\exp\left(ip\varphi\right) = 1^{p} \cdot \exp\left(ip\varphi\right),
 	\]
-	which makes $u^{p}$ itself a unitary vector, as all magnitudes are $1$.	\\
+	which makes $u^{p}$ itself a unitary vector, as all magnitudes are $1$.	
+    
 	To proof that convolution with unitary vectors preserves the norm, we use Parseval's theorem again.
 	For any vector $v \in \mathcal{S}(d)$ and  a unitary vector $u \in \mathcal{U}$, we denote $z:= v \varoast u$ and get
 	\begin{equation}
@@ -398,7 +407,8 @@ a_{i}\left(\mathbf{x}(t)\right) = \sum_{j=1}^{m_{i}} \delta(t - t_{j}) = G_{i}(\
 \end{equation}
 where $G_{i}$ is the spiking neural non-linearity, $\alpha_{i}$ is the gain of the neuron, $\mathbf{e}_{i}$ is the neuron's preferred direction or encoding vector and $J_{i}$ is a bias current to account for neural background activity and $t_{j}$ are the $m_{i}$ spike-times of the $i$-th neuron.
 Notably, the current flowing into the cell is completely determined by $c$, whereas the spiking behaviour of the neuron model is represented by the non-linear function $G_{i}$.
-The input current $c$ and therefore the \ac{NEF}'s encoding process is independent of particular spiking neuron models.\\
+The input current $c$ and therefore the \ac{NEF}'s encoding process is independent of particular spiking neuron models.
+
 To decode the input values $\mathbf{x}(t)$ back out of the neural population $A$, the spike train is convolved with an exponentially decaying filter $\abbil{h}{\mathbb{R}}{\mathbb{R}}$ to simulate the process of neurons generating postsynaptic current after spiking (cf. fig. \ref{subfig:nef_rep_spike_filtered}) resulting in
 \begin{equation}
 \tilde{a}_{i}\left(\mathbf{x}(t)\right) = \sum_{j=1}^{m_{i}} h(t) \ast \delta(t - t_{j}) = \sum_{j=1}^{m_{i}} h(t - t_{j}).
@@ -565,7 +575,8 @@ Figure \ref{subfig:constructed_vocab_sims} shows the similarities in an example 
 This vocabulary is designed to map simple motion properties into a vector representation.
 Thus, this manually engineered vocabulary yields the desired property that vulnerable road users (in this case pedestrians and bicyclists) are more similar to each other that motor vehicles, whereas there is also similarity between different types of cyclists.
 This approach allows the engineer to encapsulate almost any desired kind of similarity without loosing transparency during the encoding process, meaning that the reason for certain similarity artifacts is traceable.
-However, not only does this approach become impracticable with increasing number of items in the vocabulary, it is also prone to biases imposed by the preferences of the human engineer.\\
+However, not only does this approach become impracticable with increasing number of items in the vocabulary, it is also prone to biases imposed by the preferences of the human engineer.
+
 %\begin{figure}[t!]
 %	\centering
 %	\includegraphics[width=0.6\textwidth]{imgs/SPA_constructed_vocab_sim.png}
@@ -575,7 +586,8 @@ However, not only does this approach become impracticable with increasing number
 A more sophisticated way to create a vector vocabulary is to learn it automatically from data.
 In contrast to purely random vocabularies, the idea here is that the learning system is able to capture the intrinsic similarity between objects in the vector representation.
 Again, the choice of learning paradigm (supervised vs. unsupervised) and architecture (e.g. \acp{CNN} or \acp{SOM}) depends not only on the given task, but also on the kind of similarity the vectors should encapsulate.
-This can be visual similarity (e.g. items or objects that "look" similar), auditory similarity (e.g. objects producing similar sound), semantic similarity (e.g. words with similar meaning) or similarity in characteristics (e.g. similar motion characteristics).\\
+This can be visual similarity (e.g. items or objects that "look" similar), auditory similarity (e.g. objects producing similar sound), semantic similarity (e.g. words with similar meaning) or similarity in characteristics (e.g. similar motion characteristics).
+
 A typical way of learning a vocabulary whose vectors conserve visual similarity in supervised fashion are \acp{CNN}.
 These network architectures are inspired by the human visual cortex and compress high-dimensional visual input to lower dimensional representations.
 They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf. fig. \ref{subfig:cnn_arch}).
@@ -659,7 +671,8 @@ A simple way of getting a representative vector for each class is simply calcula
 %\end{figure}
 A similar approach to derive vectors representing digits from $0$ to $9$ was used for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DNN} consisting of four \acl{RBM} layers.
 \todo{check this and reformulate}
-This approach of using the activity of the second to last layer to generate a atomic representational vectors can be generalized to any neural network for classification with dense layers at the end.\\
+This approach of using the activity of the second to last layer to generate a atomic representational vectors can be generalized to any neural network for classification with dense layers at the end.
+
 The aforementioned approach to create vector vocabularies encapsulating similarity by using neural networks, which are trained in supervised fashion, is suitable for capturing e.g. visual or auditory similarity.
 How to create representational vectors for related words or more generally semantic similarity is a problem often referred to as word embedding, which is a research question related to computational \acl{NLP}.
 The most successful approaches such as \textit{word2vec} \cite{Mikolov2013a, Mikolov2013} or \textit{\ac{GloVe}} \cite{Pennington2014} typically use large corpora of text as input data and are trained in unsupervised fashion based on co-occurence statistics of words.
