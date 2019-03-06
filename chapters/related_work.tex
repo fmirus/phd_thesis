@@ -417,8 +417,16 @@ One of their major contributions is the release and maintenance of the KITTI vis
 
 The main research goal after the \ac{DARPA} Challenges was to develop automated driving with off-the-shelf sensors \cite{Furgale2013}.
 As this thesis focuses on environmental modeling in context of autonomous driving, this section presents research from this field like road detection and modeling (Sec. \ref{subsec:lane}), object detection (Sec. \ref{subsec:obj_detect}) and tracking (Sec. \ref{subsec:obj_track}) as well as sensor fusion (Sec. \ref{subsec:sensor_fusion}) while other aspects like localization \cite{Levinson2010, Thrun2005}, path planning (\todo{citation}) and motion control (\todo{citation}) are neglected.
+
 \subsection{Knowledge Representation}
 \label{subsec:knowledge_representation}
+
+As a consequence of increasing complexity of \ac{ADAS} applications, the number of sensors mounted in modern vehicles has grown in recent years and is likely to grow even further in the near future to cover the vehicle's surrounding as completely as possible.
+Another factor that leads to an increasing number of sensors in automotive context are safety considerations, which demand for redundancy in the overall setup to ensure functionality even in case of failure of one sensor.
+Therefore, automated vehicles need to have a way to combine information from multiple sensor sources.
+In the literature, the distinction between different approaches is typically made based on the level at which sensory data is combined \cite{Elfring2016}.
+
+
 Since highly automated vehicles are multi-sensory systems, current automotive world models use mostly probabilistic approaches and Bayesian filtering.
 The main difference is the level, at which sensory data is combined \cite{Elfring2016}.
 Low-level resp. high-level fusion systems combine raw sensor data e.g.\ in an occupancy-grid \cite{Tanzmeister2014} or fuse preprocessed object-lists \cite{Elfring2016} respectively.
