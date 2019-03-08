@@ -425,14 +425,30 @@ As a consequence of increasing complexity of \ac{ADAS} applications, the number 
 Another factor that leads to an increasing number of sensors in automotive context are safety considerations, which demand for redundancy in the overall setup to ensure functionality even in case of failure of one sensor.
 Therefore, automated vehicles need to have a way to combine information from multiple sensor sources.
 In the literature, the distinction between different approaches is typically made based on the level at which sensory data is combined \cite{Elfring2016}.
+The two main classes of approaches are mostly referred to as \emph{low-level} and \emph{high-level} sensor fusion.
+By \emph{low-level} sensor fusion, we mean that raw, previously unprocessed sensor measurements are combined in a coherent representation fur further processing.
+In contrast, the goal of \emph{high-level} sensor fusion is to combine preprocessed tracks or features, that have been extracted from raw sensor measurements by each individual (smart) sensor unit.
+
+\subsubsection{Representations for low-level sensor fusion}
+
+One the most widely used representation to combine low-level sensory data in robotics is an occupancy-grid map.
+This representation is widely used for mobile robot localization \cite{Thrun2005}, but there is also a substantial amount of research regarding occupancy-grids in automotive context \cite{Tanzmeister2014, Steyer2018}.
+\begin{figure*}[t!]
+	\centering
+	\includegraphics[width=0.95\textwidth]{imgs/occupancy_grid_principle.png}
+	\caption{Occupancy-grid visualization for low-level sensor fusion. The left part depicts the principle of occupancy-grids, whereas the right part shows a real world example. Image source ??}
+	\label{fig:occupancy-grid}
+\end{figure*}
 
 
-Since highly automated vehicles are multi-sensory systems, current automotive world models use mostly probabilistic approaches and Bayesian filtering.
-The main difference is the level, at which sensory data is combined \cite{Elfring2016}.
 Low-level resp. high-level fusion systems combine raw sensor data e.g.\ in an occupancy-grid \cite{Tanzmeister2014} or fuse preprocessed object-lists \cite{Elfring2016} respectively.
 The work closest to our approach is \cite{Yamazaki2016}, where they use symbolization, a language modeling technique, to obtain semantic descriptions of driving scenes.
 For the specific task of recognizing the current driving context, there have been early approaches using statistical pattern recognition based solely on the ego-vehicle's dynamics \cite{Engstrom2001} or on fusion with camera data \cite{Hauptmann1996}.
 The key difference to previous work is that our approach employs cognitive modeling techniques, which allows us to use symbolization as well, but also to combine it with the benefits of neural networks.
+
+\subsubsection{Representations for high-level sensor fusion}
+
+
 \subsection{Object Detection and Classification}
 \label{subsec:obj_detect}
 \subsection{Behavior Analysis}
