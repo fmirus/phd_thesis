@@ -439,24 +439,30 @@ In contrast, the goal of \emph{high-level} sensor fusion is to combine preproces
 
 One of the most widely used representations to combine low-level sensory data in robotics is an occupancy-grid map.
 This representation is widely used for mobile robot localization \cite{Thrun2005}, but there is also a substantial amount of research regarding occupancy-grids regarding automotive environment modeling  \cite{Tanzmeister2014, Steyer2018}.
-The left part of fig. \ref{fig:occupancy} visualizes the principles of occupancy-grids, whereas the right part shows a real world example from automotive context.
-An occupancy-grid divides the represented space in discrete cells, which can take on different occupancy values (e.g. free, occupied or unknown).
-The basic assumptions for this representation are that the world is static at each time step and that each cell can have exactly one occupancy value, i.e. one cell is for example completely occupied or completely free.
+The left part of fig.~\ref{fig:occupancy-grid} visualizes the principles of occupancy-grids, whereas the right part shows a real world example from automotive context.
+An occupancy-grid divides the represented space in discrete cells, which can take on different occupancy values (e.g., free, occupied or unknown).
+The basic assumptions for this representation are that the world is static at each time step and that each cell can have exactly one occupancy value, i.e., one cell is for example completely occupied or completely free.
 Therefore, an occupancy-grid is a well-suited representation for range sensors such as \ac{RADAR} or \ac{LIDAR} sensors.
 While static occupancy-grid maps are mainly used for localization and \ac{SLAM} applications, there are also approaches to estimate dynamic parameters such as orientation and velocity within the grid to model dynamic environments \cite{Tanzmeister2014}.
-The incoming raw sensory data is typically combined through some sort of probabilistic, namely Bayesian, filter algorithms such as Kalman- or particle-filters \cite{Thrun2005}.
-One of the main advantages of such a representation is that it is able to incorporate raw, unprocessed sensory data and that the discretization steps can be chosen as fine-grained as the application demands.
+The incoming raw sensory data is typically combined through some sort of probabilistic (Bayesian) filter algorithm such as Kalman- \cite{Kalman1960} or particle-filters \cite{Gordon1993}.
+One of the main advantages of such a representation is that it is able to incorporate raw, unprocessed sensory data and that the discretization steps as well as the size of the cells can be chosen as fine-grained as the application demands.
 Furthermore, it is a natural and precise way to model and represent the free, traversable space around the robot.
 On the other hand, occupancy-grids have rather high requirements regarding memory and computational resources.
-Additionally, the representation contains no information about type or properties of the obstacles that lead to cell being occupied.
-Finally, in contrast to higher-level, more abstract representations, it can be more complex to incorporate sensor modalities other than ranger finders such as vision sensors.
+Additionally, the representation contains no information about type or properties of the obstacles that lead to cells being occupied.
+Finally, in contrast to higher-level, more abstract representations, it can be more complex to incorporate sensor modalities other than range finders such as vision sensors.
 
 \subsubsection{Representations for high-level sensor fusion}
+In contrast to the low-level sensor fusion representation approaches described previously, high-level sensor fusion typically refers to sensory data being fused, that has already been preprocessed though some sort of temporal filtering.
+This usually happens at \emph{tracked objects} level, i.e., object lists provided by individual sensor units each applying their own temporal filtering or tracking based on the data they receive.
+To actually combine this sort of information, Bayesian filter approaches similar to the ones mentioned previously could be applied. 
+However, such filters assume uncorrelated data and thus may deliver overconfident or diverging estimates since objects provided by different filters coming from several sensor sources are in fact correlated due to phenomena such as shared modeling assumptions, common noise acting on the objects being tracked or measurements arriving out of sequence.
 
+\subsubsection{Other representations}
 The work closest to our approach is \cite{Yamazaki2016}, where they use symbolization, a language modeling technique, to obtain semantic descriptions of driving scenes.
+
+\subsection{Driving Context Classification}
 For the specific task of recognizing the current driving context, there have been early approaches using statistical pattern recognition based solely on the ego-vehicle's dynamics \cite{Engstrom2001} or on fusion with camera data \cite{Hauptmann1996}.
 The key difference to previous work is that our approach employs cognitive modeling techniques, which allows us to use symbolization as well, but also to combine it with the benefits of neural networks.
-
 
 \subsection{Object Detection and Classification}
 \label{subsec:obj_detect}
