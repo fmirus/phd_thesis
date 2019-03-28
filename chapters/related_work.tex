@@ -456,9 +456,24 @@ In contrast to the low-level sensor fusion representation approaches described p
 This usually happens at \emph{tracked objects} level, i.e., object lists provided by individual sensor units each applying their own temporal filtering or tracking based on the data they receive.
 To actually combine this sort of information, Bayesian filter approaches similar to the ones mentioned previously could be applied. 
 However, such filters assume uncorrelated data and thus may deliver overconfident or diverging estimates since objects provided by different filters coming from several sensor sources are in fact correlated due to phenomena such as shared modeling assumptions, common noise acting on the objects being tracked or measurements arriving out of sequence.
+Therefore, more advanced track-to-track fusion algorithms need to be used for high-level sensor fusion \cite{Tian2010, Aeberhard2012}.
+These methods typically differ regarding the amount of knowledge they assume to be known about the correlations between the tracks.
+
+The main advantages of high-level sensor fusion are that the amount of transferred data is lower compared to low-level fusion due to the hierarchical structure of the estimation framework.
+Furthermore, as many sensors already employ on-board processing and provide data only at tracked object level, implementation of high-level fusion often does not require in-depth knowledge of the sensor characteristics.
+This gives a more abstract interface and allows for easier replacement of individual sensor units in case the overall setup changes.
+On the other hand, high-level fusion ignores potentially useful information, as it might be discarded at sensor level before the fusion is performed.
+In summary, high-level sensor fusion is arguably the most popular and frequently used approach for combining information from different sensor sources in automated driving.
+The objects are typically represented as "point objects" using a unique identifier and a state vector for dynamic information such as position, velocity and acceleration.
+For certain application types, additional information such as the objects' size, shape and type need to be known (e.g., pedestrians have different dimensions and motion characteristics compared to trucks or vehicles).
+For other objects of interest (e.g., traffic signs or traffic lights), color and shape information might be important.
+While this type of representation is compact and abstract enough and thus well-suited for high-level fusion, the content and thus the represented values might vary depending on the sensor providing the information.
+Therefore, achieving a unified representation across different sensor modalities can become a challenging problem.
 
 \subsubsection{Other representations}
-The work closest to our approach is \cite{Yamazaki2016}, where they use symbolization, a language modeling technique, to obtain semantic descriptions of driving scenes.
+Representation approaches other than the ones mentioned before are rather rarely used in an automotive context.
+Although semantic and structured information will gain increasing importance with the advent of more and more machine learning driven assistant systems, representations that are able to capture and manipulate such information are still hardly used in vehicle context.
+One example of an alternative knowledge representation approach is the work presented in \cite{Yamazaki2016}, where the authors use symbolization, a language modeling technique, to obtain semantic descriptions of driving scenes.
 
 \subsection{Driving Context Classification}
 For the specific task of recognizing the current driving context, there have been early approaches using statistical pattern recognition based solely on the ego-vehicle's dynamics \cite{Engstrom2001} or on fusion with camera data \cite{Hauptmann1996}.
