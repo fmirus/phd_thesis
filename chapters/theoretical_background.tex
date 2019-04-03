@@ -1,5 +1,6 @@
 %----------------------------------------------------------------------------------------------------------
-\chapter{Introduction to \aclp{VSA}}
+\chapter{Introduction to \aclp{VSA}}%
+\label{chap:introduction_to_vsas}
 %----------------------------------------------------------------------------------------------------------
 The term \acfp{VSA} - first coined by Ross W. Gayler \cite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
 The basic idea behind all of those approaches is to represent structure (e.g. cognitive concepts, symbols or language) in a high-dimensional vector space by mapping each entity to be represented to a (possibly random) vector.
@@ -748,7 +749,10 @@ yields a transition vector, which gives $ M \varoast m \left(\mathbf{X}, \mathbf
 However, this approach is based on the self-cancellation property (i.e. $\mathbf{X} \varoast \mathbf{X} = \pmb{1}$) in certain \acp{VSA} (in particular  \acp{BSC}), as it leads to $M$ containing the vector $\mathbf{motherof} \varoast \mathbf{parentof} + \mathbf{mother} \varoast \mathbf{parent} + \mathbf{child} \varoast \mathbf{offspring}$ (see \cite{Kanerva2000} for details).
 A similar approach was used in \cite{Kleyko2015a} for a prototype of concept learning.
 \todo[inline]{include raven matrix example \cite{Rasmussen2011}}
-\subsection{Implementation in \aclp{SNN}}
+
+\subsection{Implementation in \aclp{SNN}}%
+\label{subsec:implementation_in_snns}
+
 
 \todo[inline]{explain how modelling with VSAs works referring to neural modelling section and explain implementation in SNNs}
 \section{Summary}
