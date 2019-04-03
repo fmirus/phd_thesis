@@ -20,7 +20,9 @@ Several research fields like computational neuroscience, neuromorphic engineerin
 During the last decades, researchers and engineers strived to close the gap in performance and efficiency between biological and artificial computing systems by mimicking neuro-biological architectures in hardware and implementing models of neural systems in software.
 This biologically inspired, \textit{neuromorphic} approach promises not only to perform computations in a more efficient way, but also to tackle problems unsolvable with current computing machines.
 
-\subsection{A brief history}
+\subsection{A brief history}%
+\label{subsec:history_neural_nets}
+
 \begin{figure*}[t!]
 	\centering
 	\includegraphics[width=0.95\textwidth,height=270px]{imgs/Neuromorphic_Timeline_beta.png}
@@ -119,7 +121,7 @@ Except for the biologically unrealistic rate coding approach, there are cues for
 There exist several different programming languages, simulators and software libraries specifically designed for modeling \acp{SNN} varying from tools like Corelet \cite{Amir2013} and Compass \cite{Preissl2012} working with one specific hardware component, in this case IBM's TrueNorth chip \cite{Akopyan2015} (cf. Sec. \ref{sec:neuromorphic_HW}), to libraries like \ac{PyNN} \cite{Davison2008}, which aim for universality to work with different simulators and hardware components as back-end.
 
 The simulation tool offering maybe the highest level of abstraction is \ac{Nengo} \cite{Stewart2009}, which implements the principles of the \ac{NEF} \cite{Eliasmith2003} and was used to build the \ac{Spaun} model \cite{Eliasmith2012}.
-Originally written in Java, \ac{Nengo} was reimplemented in Python \cite{Bekolay2014} and improved by incorporating the lessons learned from the creation of \ac{Spaun}.
+Originally written in Java, \ac{Nengo} was re-implemented in Python \cite{Bekolay2014} and improved by incorporating the lessons learned from the creation of \ac{Spaun}.
 \ac{Nengo} allows the user to describe a model on a high level of abstraction by defining groups of neurons to simulate different functional blocks while \ac{Nengo} takes care of neural properties and synaptic weights using the \ac{NEF} (see Sec. \ref{sec:neural_eng} for more details).
 \ac{Nengo} models can be run using the internal simulation back-end, but also simulation on some neuromorphic hardware components like Neurogrid \cite{Dethier2011, Choudhary2012} and \ac{SpiNNaker} \cite{Mundy2015}, which are currently used in developments aiming to run the \ac{Spaun} model in real-time, is supported.
 
@@ -350,6 +352,84 @@ Both approaches are implemented on a small robot with the \ac{DVS} as sensory in
 %Recent neurological research suggests that the exact timing of those spikes encodes information rather than just average firing rates (\todo{Citation}).
 %While \ac{ANN} of the first two generations neglect these biological details, recent neural networks structures, so-called \ac{SNN} \cite{Paugam2009}, embody these spike times and are therefor often referred to as the third generation of neural networks .
 
+\section{Cognitive Modeling}%
+\label{sec:cognitive_modeling}
+
+Over the last decades, understanding and building cognitive systems has seen extensive research leading to the development of several cognitive architectures.
+A cognitive architecture is a "general proposal about the representation and processes that produce intelligent thought" \cite{Thagard2012}.
+On the one hand, these architectures are used to explain and better understand important aspects of human behavior and intelligence.
+However, they are also used to design computers and robots mimicking certain cognitive abilities of humans.
+In this respect, cognitive architectures are typically clustered in three main categories, namely symbolism, connectionism and dynamicism \cite{Eliasmith2013}.
+We will give a brief overview over symbolic and connectionist approaches in subsequent sections, whereas dynamicism \cite{Schoener2008} is of lower relevance to the work at hand.
+
+One important aspect of cognitive modeling and, more generally, \ac{AI}, is knowledge representation.
+Any intelligent agent, artificial or biological, that wants to perform reasoning about the world it encounters, needs to be able to build an internal representation of its perceived information.
+This aspect is quite important for subsequent chapters, while a formal definition of what knowledge representation actually is appears to be difficult and thus is often avoided in the literature \cite{Davis1993}.
+In \cite{Davis1993}, the authors describe five defining roles, that such a representation can play.
+A representation is a surrogate, i.e., an internal substitute for a real-world entity and as such an imperfect approximation.
+Therefore, the choice for each representation implies a set of ontological commitments, which effect the focus of attention of the representation.  
+When the focus of such a representation is to enable some kind of reasoning in intelligent machines or robotic systems, these systems need to be able to manipulate the representation and perform computations with it.
+Finally, as long as the machine needs to interact or communicate with humans in the sense that humans inform the machine about the world by e.g.\ creating a representation, this representation itself also plays the role of a medium of human expression.
+
+\subsection{Symbolic approaches}%
+\label{subsec:symbolic_approaches}
+
+Symbolic approaches are often referred to as the "classical approach" to cognitive modeling or \acf{GOFAI}.
+Most of the approaches rely on the metaphor of the "mind as computer", supposing that cognitive systems have a symbolic "language of thought" \cite{Fodor1975}, that expresses the rationale and rules the systems follow.
+The corresponding analogue for computers are programming languages.
+The dominant paradigm of such approaches is "the manipulation of discrete atomic symbols by explicit rules" \cite{Levy2008}.
+The most prominent approaches in this category are production systems, which typically rely on if-then-rules (or productions) and a control structure.
+One of the first and most influential achievements in this field is a program called the \ac{CogGPS}, which was able to to solve elementary problems in symbolic logic on its own.
+The steps \ac{CogGPS} performed to solve a given problem often matched the steps reported by people solving the same problem.
+This success enabled the development of several other cognitive architectures such as Soar \cite{Laird1987}, \ac{EPIC} \cite{Kieras1997} and \ac{ACT} \cite{Anderson1983} and its successor \ac{ACT-R} \cite{Anderson1996}, which all employed production systems at their core but adding their own extensions.
+\ac{ACT-R} is the most modern of these architectures and arguably the most successful and thus most widely used cognitive architecture.
+Although \ac{ACT-R} incorporates some connectionist-like mechanism in its memory system, it is widely considered a symbolic architectures as it relies on symbolic representations and a production system as central procedural core.
+In general, symbolic approaches to cognitive modeling had the most success when addressing higher-level cognitive tasks, with a rigid set of rules and potential for pre-specified solutions.
+However, these approaches are rarely used when it comes to real-time critic systems such as robots or if the system needs to generalize beyond pre-specified situations.
+
+\subsection{Connectionist approaches}%
+\label{subsec:connectionist_approaches}
+
+One of the first theories challenging the paradigm of \ac{GOFAI} was the "Society of Mind" \cite{Minsky1986} view of specialized individual agents cooperating to accomplish a certain goal.
+The strongest challenge however, was the emergence of connectionism \cite{Rumelhart1986a} (popularly referred to as neural networks), which offered novel learning algorithms such as backpropagation \cite{Rumelhart1986} to solve a wide variety of problems.
+Connectionism explains cognitive phenomena by constructing models consisting of large networks of interconnected nodes performing rather simple input/output mappings.
+If these nodes, however, are connected to sufficiently large networks, the nodes' activity is able to implement cognitive behavior such as rules or analyzing patterns.
+We already gave a brief historical overview over the research conducted related to \acp{ANN} in section ~\ref{subsec:history_neural_nets}. 
+The metaphor behind connectionist approaches to cognitive modeling is that of the "mind as brain", as the processing employed in connectionism is often referred to as "brain-like" or "brain-inspired".
+Connectionism has shown remarkable results in diverse applications such as computer vision, pattern recognition, sequential data analysis and language processing just to name a few.
+However, the most serious criticism of connectionist approaches are that they could not exploit systematic, compositional representations or logical reasoning of the form used in \ac{GOFAI}. 
+Furthermore, the nodes in connectionist networks typically simplify the computational and representational properties of biological neurons, which in addition to the biological implausibility of the backpropagation algorithm, concerns cognitive modelers interested in biological realism.
+Finally, the ability to learn and derive internal representations of features from data, despite being one of the greatest strengths of neural networks approaches, is sometimes criticized for lack of comprehensibility.
+
+\subsection{Vector-based approaches}%
+\label{subsec:vector_based_approaches}
+
+To address some of the concerns regarding both, symbolic and connectionist approaches to cognitive modeling, researchers developed a hybrid approach often referred to as \acf{VSA}, a class of connectionist distributed representations.
+In chapter ~\ref{chap:introduction_to_vsas}, we give an in-depth introduction to the theory and mathematical properties of \acp{VSA}, which will be import ingredients for the remainder of the thesis.
+Here, we give a brief overview of the different variants of such architectures, their similarities and differences, related work and some applications.
+All of the modeling approaches presented in this section employ (high-dimensional) vectors as representational units.
+Similar to the representations derived from connectionist approaches, these are distributed representations, which offer nice properties such as robustness to noise and the support of distance metrics.
+Additionally, all of the approaches allow to treat such vectors as "symbol-like" entities, which can be manipulated through the architecture's algebraic operations (see chapter ~\ref{chap:introduction_to_vsas} for details).
+The first attempt on structured vector representations used the tensor product as multiplication operation \cite{Smolensky1990} to bind two different vector together.
+The tensor product approach already allows for an sufficiently complex embedded structure to do linguistic processing.
+However, scaling becomes a problematic issues as each uncompressed tensor product operation of two high-dimensional vectors increases the result's dimension, which quickly becomes impracticable.
+Hence, there are several architectures such as \ac{MAP} \cite{Gayler1998, Gayler2003}, \acp{BSC} \cite{Kanerva1988} and \acp{HRR} \cite{Plate1991, Plate1994}, which propose different compressed multiplication operations replacing the tensor product and resulting in vectors with the same dimension as the input vectors.
+Furthermore, these different \ac{VSA} variants differ in the choice of the numerical space to pick the vectors' elements from, i.e., if they use binary, real- or complex-valued vectors. 
+The \ac{SPA} \cite{Eliasmith2013} is built upon \acp{HRR} and extends these architectures, by proposing an efficient mechanism of implementing structured vector representations in populations of spiking neurons using the principles of the \ac{NEF} \cite{Eliasmith2003} (again, we refer to chapter ~\ref{chap:introduction_to_vsas} and especially sections ~\ref{sec:neural_eng} and ~\ref{subsec:implementation_in_snns} for further details).   
+
+The most prominent application of vector representations despite cognitive modeling \cite{Blouw2016, Crawford2016, Eliasmith2012} is language processing \cite{Gayler2003}.
+In this context, word embedding refers to the problem of finding (or automatically learning) desirably meaningful representations for words.
+Modern word embedding algorithms such as word2vec \cite{Mikolov2013, Mikolov2013b} or \ac{GloVe} \cite{Pennington2014} employ high-dimensional vectors as representational structure to encode words and language by learning in unsupervised fashion from large corpora of text.
+There are also attempts of using such representations in other domains to e.g., better explain and quantify how \acp{DNN} learn and derive concepts \cite{Fong2018} or for embedding low-level vehicle sensor data in an abstract representation \cite{Hallac2018}.
+
+Another approach employing vector representations is the work of companies such as Numenta \cite{Numenta} and Cortical.io \cite{Cortialio}.
+They employ binary vector representations similar to \acp{BSC} they refer to as \acp{SDR} \cite{Ahmad2015}, which are the basis and main representation for their downstream cortical models such as \ac{HTM} \cite{Cui2017}.
+To create high-dimensional vectors representing words or phrases, a method called semantic folding is applied \cite{Webber2016}.
+Similar to classical word embedding algorithms, the word vectors are created from large corpora of text.
+After laying out a two-dimensional semantic map of available contexts, for each particular word, the context it appears in is marked as active (resulting in a \num{1} bit in the map) and a sparse, high-dimensional binary vector is created from the map through serialization.
+Despite language processing, such representations in cooperation with \ac{HTM} models have shown to be useful for applications such as anomaly detection \cite{Ahmad2017} or classification with noisy data \cite{Ahmad2019}. 
+One key difference to other cognitive architectures like the \ac{SPA} is that the entries of the \ac{SDR} vectors are directly interpreted as neural activity whereas the \ac{SPA} distinguishes between representational and neuronal space.
+
 \section{Automated Driving}
 \label{sec:automated_driving}
 
@@ -367,7 +447,7 @@ Table \ref{tab:autonomy_levels} gives an overview of the particular automation l
 On the road to fully automated driving, several \ac{ADAS} have been developed during the last decades and thus made a huge jump by incrementally increasing complexity and therefor the level of autonomy.
 The history of automated driving research goes back to the 1980's, when governmental institutions funded several explorative projects worldwide to research functionalities like automatic vehicle driving and intelligent route planning resulting in early prototypes.
 In 1986, several European research groups and vehicle manufacturers started the \ac{PROMETHEUS} project \cite{Dickmanns1990} and demonstrated a variety of different approaches to automated driving.
-Another research initiative established during that period is Carnegie Mellon University's Navlab \cite{Thorpe1988}, which achieved the first completely autonomous drive from Pittsburg to San Diego.
+Another research initiative established during that period is Carnegie Mellon University's Navlab \cite{Thorpe1988}, which achieved the first completely autonomous drive from Pittsburgh to San Diego.
 After that first explorative phase, the US government established the \ac{NAHSC} in 1995 and shortly shortly followed by the foundation of the \ac{AHSRA} 1996 in Japan.
 The main contribution of this first phase was the identification and deep analysis of problems, that would need to be tackled by researchers, to understand requirements and possible effects of future automated vehicles.
 \cite{Bertozzi2000} gives an overview of the achievements and perspectives obtained in the projects during that period.
@@ -391,7 +471,7 @@ A major milestone in the research field of automated driving was the first \ac{D
 Although no participating vehicle successfully finished the race \cite{Bacha2004} in the first challenge, valuable insights have been gained.
 Using those insights to make significant progress, five teams (out of 23) were able to successfully complete the second \ac{DARPA} Grand Challenge in 2005 with Stanford's Stanley robot winning first place \cite{Thrun2006}.
 After the success of the second Grand Challenge, the \ac{DARPA} organized the Urban Challenge in 2007, switching the focus to automated driving in urban environments \cite{Buehler2009}.
-In this competition, vehicles had to complete a \SI{97}{\kilo\meter} urban area course autonomously in less than \SI{6}{\hour}, while obeying California state driving laws, avoiding other participating vehicles and other objects using only on-board sensors and \ac{GPS}.
+In this competition, vehicles had to complete a \SI{97}{\kilo\meter} urban area course autonomously in less than \SI{6}{\hour}, while obeying California state driving laws, avoiding other participating vehicles and other objects using only on-board sensors and \ac{SensGPS}.
 Six vehicles out of the 11 final participants successfully finished the competition, with Carnegie Mellon's Boss robot \cite{Urmson.2008} being named the winner finishing the course in little over \SI{4}{\hour} with an average speed of approximately \SI[per-mode=symbol]{22.5}{\kilo\meter\per\hour}.
 
 \begin{figure}[t!]
@@ -471,8 +551,8 @@ While this type of representation is compact and abstract enough and thus well-s
 Therefore, achieving a unified representation across different sensor modalities can become a challenging problem.
 
 \subsubsection{Other representations}
-Representation approaches other than the ones mentioned before are rather rarely used in an automotive context.
-Although semantic and structured information will gain increasing importance with the advent of more and more machine learning driven assistant systems, representations that are able to capture and manipulate such information are still hardly used in vehicle context.
+Representation approaches other than the aforementioned ones are rather rarely used in an automotive context.
+Although semantic and structured information will grow more important with the advent of numerous and increasingly complex machine learning driven assistant systems, representations that are able to capture and manipulate such information are still hardly used in vehicle context.
 One example of an alternative knowledge representation approach is the work presented in \cite{Yamazaki2016}, where the authors use symbolization, a language modeling technique, to obtain semantic descriptions of driving scenes.
 
 \subsection{Driving Context Classification}
@@ -508,11 +588,5 @@ One issue in data-driven approaches to behavior prediction accounting for relati
 If information about vehicles other than the target are encapsulated in the input of the neural network, typically a specific number of other vehicles of interest are manually chosen a priori to avoid this issue \cite{Altche2018, Deo2018}.
 If the information about other vehicles is encapsulated in the network architecture, it might be necessary to train several networks depending on the situation at hand.
 
-\section{Cognitive Modeling}
-\subsection{Vector based approaches}
-\todo[inline]{insert context on vector based approaches, different instantiations of \acp{VSA}}
-\todo[inline]{mention \acp{SDR} and \ac{HTM} and related technology from companies like Numenta, cortical}
-\todo[inline]{context on vector based approaches}
-\todo[inline]{briefly explain other applications like natural language processing, word2vec etc.}
-\subsection{Symbolic approaches}
 \section{Summary}
+\label{sec:related_work_summary}
