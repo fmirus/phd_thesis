@@ -601,18 +601,34 @@ An overview over recent approaches to tackle object detection and semantic segme
 Predicting future behavior and positions of other traffic participants from observations is essential for collision avoidance and thus safe motion planning, and needs to be solved by human drivers and automated vehicles alike to reach their desired goal.
 However, future positions of vehicles not only depend on each vehicle's own past positions and dynamics like  velocity and acceleration, but also on the behavior of the other traffic participants in the vehicle's surroundings.
 Motion prediction for intelligent vehicles in general has seen extensive research in recent years, as it is a cornerstone for collision-free automated driving. \cite{Lefevre2014} classify such prediction approaches into three categories, namely \emph{physics-based}, \emph{maneuver-based} and \emph{interaction-aware}, depending on their level of abstraction.
-\todo[inline]{add phrase referring to fig. \ref{fig:examples_motion_prediction_types}}
-\emph{Physics-based} and \emph{maneuver-based} motion models consider the law of physics and the intended driving maneuver respectively as the only influencing factors for future vehicle motion and ignore inter-dependencies between the motion of different vehicles.
-\todo[inline]{maybe add some more info on those motion models}
+Figure ~\ref{fig:examples_motion_prediction_types} illustrates the differences between the three families of approaches: the \emph{physics-based} approach assumes a constant velocity of both vehicles, whereas the \emph{maneuver-based} approach assumes that the blue car turns left while the black car goes straight.
+Finally the \emph{interaction-aware} approach assumes similar motions as the \emph{maneuver-based} approach whereas the motion of each vehicle is constrained by the traffic rules as well as the relative behavior of the other car.
+
+\emph{Physics-based} approaches represent vehicles as dynamic entities, which obey the laws of physics.
+To predict future motion, such approaches employ dynamic and kinematic models linking contrl inputs, car properties and external condition to the evolution of the state of the vehicle.
+Hence, such approaches are well-suited for short term trajectory prediction but suffer from instabilities when predicting longer time-windows into the future and are unable to account for any change in vehicle motion caused by a particular maneuver (e.g., slowing down or performing a turn). 
+\emph{Maneuver-based} approaches are more advanced assuming the vehicle motion is a series  of maneuvers, which are performed independently from the other traffic participants.
+Such approaches rely on early detection of the maneuver the driver intends to perform, which is then assumed to match the future behavior of the vehicle.
+If the identification of the maneuver was correct, these approaches allow for more accurate long term predictions compared to purely physics-based approaches.
+However, they ignore potential interconnections in the motion between several traffic participants, which, in practice, share the road and the motion of one vehicle will influence the motion of other vehicle in its surroundings.
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=0.95\linewidth]{imgs/deo_lstm_prediction_arch.png}
+    \caption{Visualization of one state-of-the-art \ac{LSTM}-based architecture for vehicle trajectory prediction combining social pooling to account for the influence of other vehicles on the target vehicle with a maneuver-based prediction module. Image source \cite{Deo2018a}.}
+    \label{fig:deo_lstm_prediction_arch}
+\end{figure}
+
 There exist a growing number of different \emph{interaction-aware} approaches to account for those dependencies and mutual influences between traffic participants or, more generally, agents in the scene.
 Probabilistic models like cost maps \cite{Bahram2016} account for physical constraints on the movements of the other vehicles.
 Classification approaches categorize and represent scenes in a hierarchy \cite{Bonnin2012} based on the most generic ones to predict behavior for a variety of different situations.
-Data-driven approaches to behavior prediction mainly rely on \ac{LSTM} neural network architectures, which have proven to be a powerful tool for sequential data analysis.
+Data-driven approaches to behavior prediction mainly rely on \ac{LSTM} neural network architectures \cite{Hochreiter1997}, which have proven to be a powerful tool for sequential data analysis.
 \cite{Alahi2016} model interactions in the learning network architecture by introducing so-called social-pooling layers to connect several \acp{LSTM} each predicting one agent at a time.
-\cite{Deo2018a} adapted the combination of \ac{LSTM} networks for encoding vehicle trajectories and (convolutional) social-pooling layers to account for interactions to vehicle prediction in highway situations.
-\cite{Altche2018} use a \ac{LSTM} network as well, but they account for interaction by including distances between the target vehicle and other agents directly in the training data rather than adapting the network architecture.
-A similar approach is proposed in \cite{Deo2018}, but the authors combine \ac{LSTM} networks with an additional maneuver classification network to predict future vehicle motion.
-One issue in data-driven approaches to behavior prediction accounting for relations between agents is that the number of other vehicles is variable.
+The authors in \cite{Altche2018} use a \ac{LSTM} network and account for interactions by including distances between the target vehicle and other agents directly in the training data.
+A similar approach is proposed in \cite{Deo2018}, but it combines \ac{LSTM} networks with an additional maneuver classification network to predict future vehicle motion.
+In \cite{Deo2018a}, the authors adapted the combination of several \ac{LSTM} networks to encode vehicle trajectories, (convolutional) social-pooling layers to account for interactions between the vehicles, and a maneuver-based \ac{LSTM} decoder to predict vehicle trajectories in highway situations (see figure ~\ref{fig:deo_lstm_prediction_arch}).
+\ac{LSTM}-models are currently considered the most successful approaches and therefore the state-of-the-art regarding trajectory prediction.
+One issue with data-driven approaches to behavior prediction accounting for relations between agents is that the number of other vehicles is variable.
 If information about vehicles other than the target are encapsulated in the input of the neural network, typically a specific number of other vehicles of interest are manually chosen a priori to avoid this issue \cite{Altche2018, Deo2018}.
 If the information about other vehicles is encapsulated in the network architecture, it might be necessary to train several networks depending on the situation at hand.
 
