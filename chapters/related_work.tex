@@ -571,6 +571,24 @@ More modern approaches tend to focus more on the classification and analysis of 
 
 \subsection{Object Detection and Classification}
 \label{subsec:obj_detect}
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=0.95\linewidth]{imgs/segnet.png}
+    \caption{Illustration of the SegNet \ac{FCN} architecture for semantic segmentation of an image visualizing the input data as well as the output of the network with pixel-wise labels indicating class membership. Image source \cite{Badrinarayanan2015}}
+    \label{fig:segnet_achitecture}
+\end{figure}
+Detecting objects in the vehicle's surroundings and classifying their type is a central research problem in automated driving and more generally, in \ac{AI}.
+Knowledge about type, position and behavior of other traffic participants as well as road lane topology is a crucial component for safe automated driving.
+The algorithmic choice for detecting dynamic objects depends heavily on the sensor modality used.
+If \ac{LIDAR} sensors are used, typically model-based approaches involving the object's geometry and dynamics are employed \cite{Petrovskaya2009a, Petrovskaya2009, Darms2008}.
+Classic computer vision approaches employ probabilistic methods combined with information about context, scale or shapes detected using engineered features such as part-based models or \ac{HOG} features to identify cars \cite{Held2012}, traffic signs \cite{Li2015} or the road topology \cite{Alvarez2011, Beyeler2014}.
+Such methods however have been drastically outperformed in recent years through sophisticated \acp{DNN} architectures such as \acp{CNN} achieving remarkable results on tasks like traffic sign detection \cite{Ciresan2012, Sermanet2011} achieving partly super-human performance \cite{Stallkamp2012}.
+Subsequently, \acp{DNN} have been used to segment the road, or more generally, the traversable space \cite{Mohan2014, Bittel2015} or for semantic segmentation of the complete image, i.e., labeling each pixel in the image with the object class it belongs to (cf.\ fig. ~\ref{fig:segnet_achitecture}), using \acp{FCN} \cite{Badrinarayanan2015, Long2015, Chen2018}.
+The approach proposed in \cite{Li2017} deals with the special case of detecting vulnerable road users, i.e., pedestrians and bicyclists, by incorporating a \ac{CNN} variant for classification and localization.
+In \cite{Huval2015}, the authors evaluate general applicability and usability of \acp{CNN} for lane and vehicle detection when deployed on a real-time critic system concluding that powerful \acp{GPU} enable real-time capabilities of such approaches.
+An overview over recent approaches to tackle object detection and semantic segmentation using \acp{DNN} in an automotive context can be found in \cite{Feng2019}.
+
 \subsection{Behavior Analysis}
 \label{subsec:behav_analysis}
 
