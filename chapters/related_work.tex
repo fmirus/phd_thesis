@@ -370,6 +370,7 @@ A representation is a surrogate, i.e., an internal substitute for a real-world e
 Therefore, the choice for each representation implies a set of ontological commitments, which effect the focus of attention of the representation.  
 When the focus of such a representation is to enable some kind of reasoning in intelligent machines or robotic systems, these systems need to be able to manipulate the representation and perform computations with it.
 Finally, as long as the machine needs to interact or communicate with humans in the sense that humans inform the machine about the world by e.g.\ creating a representation, this representation itself also plays the role of a medium of human expression.
+Therefore, we put emphasis on the different aspects of knowledge representation in the different cognitive modeling architectures presented in this section.
 
 \subsection{Symbolic approaches}%
 \label{subsec:symbolic_approaches}
@@ -553,11 +554,20 @@ Therefore, achieving a unified representation across different sensor modalities
 \subsubsection{Other representations}
 Representation approaches other than the aforementioned ones are rather rarely used in an automotive context.
 Although semantic and structured information will grow more important with the advent of numerous and increasingly complex machine learning driven assistant systems, representations that are able to capture and manipulate such information are still hardly used in vehicle context.
-One example of an alternative knowledge representation approach is the work presented in \cite{Yamazaki2016}, where the authors use symbolization, a language modeling technique, to obtain semantic descriptions of driving scenes.
+One example of an abstract vector representation in an automotive context is Drive2Vec \cite{Hallac2018}, an unsupervised embedding of low-level sensory data to a vector, which is subsequently used to make predictions about the vehicle's state.
+Similar to word embedding approaches, Drive2Vec learns an embedding from a high-dimension vector space (i.e., language or in this case several sensor streams) to a vector representation of comparably low dimension (representational space).
+Another example of an alternative knowledge representation approach is the work presented in \cite{Yamazaki2016}, where the authors use symbolization, a language modeling technique, to obtain semantic descriptions of driving scenes.
 
-\subsection{Driving Context Classification}
-For the specific task of recognizing the current driving context, there have been early approaches using statistical pattern recognition based solely on the ego-vehicle's dynamics \cite{Engstrom2001} or on fusion with camera data \cite{Hauptmann1996}.
-The key difference to previous work is that our approach employs cognitive modeling techniques, which allows us to use symbolization as well, but also to combine it with the benefits of neural networks.
+\subsection{Driving Context Classification}%
+\label{subsec:driving_context_classification}
+
+Classification of the current driving context, i.e., if the vehicle is currently driving on a highway or in an urban area, has been investigated mainly in the earlier day of \ac{ADAS} research before digital maps were available at a large scale, which could be used in combination with the vehicle's current position measured using \ac{SensGPS} to detect the driving context.
+However, inferring contextual information from on-board sensory data is appealing as either a fallback option in situations when \ac{SensGPS} is not available of if keeping an updated map with driving context information is not feasible.
+Another simple approach is to classify the current driving context based on a set of conditional, logical rules using if-else statements such as "if the current velocity is greater than \SI{100}{\kilo\meter\per\hour}, then the current context is \emph{highway}".
+However, this simple approach suffers from poor scaling and the difficulty to formulate exact definitions of all possible target categories in advance.
+Improving on a logical rule set, the approach proposed in \cite{Hauptmann1996} employs a combination of a fuzzy-logic system based on the ego-vehicle's dynamics such as velocity, active gear and acceleration and a data-driven feed-forward neural network, which additional uses a front-facing camera.
+In \cite{Engstrom2001}, the authors apply statistical pattern recognition and a simple feed-forward neural network using solely the ego-vehicle's dynamics to classify four different different driving context categories.
+More modern approaches tend to focus more on the classification and analysis of particular traffic situations \cite{Hermann2008} or driving events \cite{Dagostino2013}, which can then be put in relation to the driver's behavior.
 
 \subsection{Object Detection and Classification}
 \label{subsec:obj_detect}
