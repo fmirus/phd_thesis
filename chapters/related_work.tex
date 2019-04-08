@@ -36,10 +36,10 @@ Minsky and Papert \cite{Minsky1969} showed, that single-layer perceptrons are no
 This caused a decreased interest in neural networks research until the rediscovery of the backpropagation algorithm \cite{Werbos1974} in the 1980s \cite{Rumelhart1986}, which introduced a practically feasible method to optimize the network weights using gradient descent and led to a resurgence of neural network research.
 %This gradient descent called for continuous activation functions (mostly sigmoid or hyperbolic) instead of threshold-functions as activation functions, which made the so-called second generation \ac{ANN} universal approximators for continuous functions \cite{Cybenko1989}.
 Since then, various different network architectures like feed-forward, \acp{CNN}, \acp{RNN}, \acp{RBF}, \acp{RBM}, \acp{SOM} and \ac{ART} just to name a few \cite{Schmidhuber2015} have been proposed for different learning paradigms.
-Although several simpler methods like Boosting \cite{Freund1997} or \acp{SVM} \cite{Vapnik1995} have been developed and achieved noteworthy results, the availability of powerful, parallelized computing hardware like \acp{GPU} as well as the advent and success  of deep learning (partly achieving better-than-human accuracy) made \acp{ANN} \cite{Rojas1996} and especially \acp{DNN} \cite{LeCun2015} the state-of-the-art for several machine learning tasks like visual digit \cite{Ciresan2012a} and traffic sign \cite{Ciresan2012} recognition in recent years.
+Although several simpler methods like Boosting \cite{Freund1997} or \acp{SVM} \cite{Vapnik1995} have been developed and achieved noteworthy results, the availability of powerful, parallel computing hardware like \acp{GPU} as well as the advent and success  of deep learning (partly achieving better-than-human accuracy) made \acp{ANN} \cite{Rojas1996} and especially \acp{DNN} \cite{LeCun2015} the state-of-the-art for several machine learning tasks like visual digit \cite{Ciresan2012a} and traffic sign \cite{Ciresan2012} recognition in recent years.
 Another great achievement in the field of deep learning was the victory of AlphaGo \cite{Silver2016} over the world's best Go player Lee Sedol in March 2016, which was considered to be at least a decade away due to the complexity of Go.
 Compared to Deep Blue, the system that beat former chess world champion Garri Kasparov in 1997 \cite{Hsu2002} with sheer computational power by brute forcing through a large number of possible moves in advance to find the best one, this strategy is not feasible for Go due to its higher complexity (larger board, more options to consider per move).
-In contrast, modern \acp{DNN} trained by a combination of supervised learning from human expert games and reinforcement learning from self-play have been used for the evaluation of board positions and selection of moves to avoid expensive lookahead search \cite{Silver2016}.
+In contrast, modern \acp{DNN} trained by a combination of supervised learning from human expert games and reinforcement learning from self-play have been used for the evaluation of board positions and selection of moves to avoid expensive look-ahead search \cite{Silver2016}.
 A comprehensive and historical overview of relevant literature concerning \acp{ANN} and especially \acp{DNN} can be found in \cite{Schmidhuber2015, LeCun2015}.
 
 \subsubsection{Neuromorphic systems}
@@ -60,7 +60,7 @@ The \ac{HBP} is organized in thirteen platforms in total, which focus on differe
 
 Beside these research activities in Europe, the \ac{DARPA} funded another big-budget neuromorphic project: the \ac{SyNAPSE} program \cite{SYNAPSE-proj, Srinivasa2012}, which started in 2008 and is scheduled to run until 2016, has received 102.6 million US dollars in funding as of January 2013.
 The program aims to build an electronic microprocessor system that matches a mammalian brain in function, size, and power consumption.
-Achievements during the \ac{SyNAPSE} program, which is primarily contracted to IBM Research and \acs{HRL}, so far are include brain simulations, design of brain-inspired neuromorphic architectures \cite{Nere2012} and the development of a digital neurosynaptic core \cite{Merolla2011}, which is a building block of IBM's recently published TrueNorth chip \cite{Akopyan2015}.
+Achievements during the \ac{SyNAPSE} program, which is primarily contracted to IBM Research and \acs{HRL}, so far are include brain simulations, design of brain-inspired neuromorphic architectures \cite{Nere2012} and the development of a digital neuro-synaptic core \cite{Merolla2011}, which is a building block of IBM's recently published TrueNorth chip \cite{Akopyan2015}.
 Further project results are the Corelet language \cite{Amir2013} and the simulator Compass \cite{Preissl2012}, which enable dedicated software development as well as simulation and testing of TrueNorth algorithms on standard hardware respectively.
 
 Beside these projects, the neuromorphic community is coming together at two annual  workshops in Telluride and CapoCaccia, which have been established in 1994 and 2007 respectively, to discuss the current state of research in lectures and interactive talk sessions, to forge new ideas and to work on hands-on projects in small work groups.
@@ -79,7 +79,7 @@ Beside these projects, the neuromorphic community is coming together at two annu
 			\includegraphics[height=3cm]{imgs/LIF_Neuron.eps}
 		}
 	}
-    \caption{Visualization of different aspects of neuron models. ~\protect\subref{subfig:biological_neuron} depicts the structure and functioning of biological neurons in a schematic visualization (image source \cite{Gerstner2002}). ~\protect\subref{subfig:lif_neuron_model} visualizes the membrane potential's subthreshold behavior of a \ac{LIF} neuron model (image source \cite{Masquelier2007}).}\label{fig:neuron_models}
+    \caption{Visualization of different aspects of neuron models. ~\protect\subref{subfig:biological_neuron} depicts the structure and functioning of biological neurons in a schematic visualization (image source \cite{Gerstner2002}). ~\protect\subref{subfig:lif_neuron_model} visualizes the membrane potential's sub-threshold behavior of a \ac{LIF} neuron model (image source \cite{Masquelier2007}).}\label{fig:neuron_models}
 \end{figure}
 
 Fig.~\ref{subfig:biological_neuron} depicts the structure and functioning principles of biological neurons.
@@ -94,7 +94,7 @@ The simplest spiking neuron model is the \acf{LIF} model with
 \frac{\partial V}{\partial t}(t) = - \frac{1}{\tau_{m}} \left( V\left(t\right) - R \cdot I\left(t\right) \right)
 \label{eq:LIF}
 \end{equation}
-describing the subthreshold behavior of the neuron, where $V$ is the voltage across the membrane, $I(t)$ is the input current, $R$ is the passive membrane resistance and $\tau_{m}$ is the membrane time constant.
+describing the sub-threshold behavior of the neuron, where $V$ is the voltage across the membrane, $I(t)$ is the input current, $R$ is the passive membrane resistance and $\tau_{m}$ is the membrane time constant.
 In other words, equation \ref{eq:LIF} states as follows: the membrane voltage increases in the presence of input current $I(t)$ depending on the membrane resistance $R$ while at the same time, especially in the absence of input current ($I(t)=0$), the voltage decreases or "leaks out" depending on the membrane time constant $\tau_{m}$.
 When the voltage $V(t)$ passes a certain threshold $\vartheta$, the neuron produces a spike and the voltage is reset to a resting state $c$ for a certain refractory time interval $\tau_{ref}$ during which incoming spikes have no impact on the membrane potential.
 Figure \ref{subfig:lif_neuron_model} visualizes the spiking behavior of the \ac{LIF} model.
@@ -129,7 +129,7 @@ Another Python-based tool is \ac{PyNN} \cite{Davies2010}, which was developed du
 The level of abstraction is lower than \ac{Nengo}, but therefore it allows the creation of arbitrary neuron populations and connections, while the properties and synaptic weights need to be specified by the user or acquired using a learning algorithm.
 \ac{PyNN} implements a number of standard models of neurons like \ac{LIF} or Izhikevich, connection algorithms like "one to one", "all to all" or connection matrices, static and plastic synapse types as well as several \ac{STDP} rules supported by the simulation and hardware back-ends.
 Furthermore, \ac{PyNN} enables the user to implement custom models, connections and learning rules for advanced simulations and thereby extend the neural modeling toolkit.
-\ac{PyNN} currently supports several different back-ends, e.g. simulators like \ac{NEST} \cite{Gewaltig2007}, Brian \cite{Goodman2009} and NEURON  \cite{Carnevale2009} as well as neuromorphic hardware.
+\ac{PyNN} currently supports several different back-ends, e.g., simulators such as \ac{NEST} \cite{Gewaltig2007}, Brian \cite{Goodman2009} and NEURON  \cite{Carnevale2009} as well as neuromorphic hardware.
 \ac{PyNN} is currently the preferred development environment for the creation of \ac{SNN} models to run on the \ac{SpiNNaker} system \cite{Furber2014}.
 The mapping of the network structure, neurons and synapses to actual cores on the chip is done with a separate software package called \ac{PACMAN} \cite{Galluppi2012}.
 
@@ -156,8 +156,8 @@ A collaboration between NVIDIA and Stanford researchers demonstrated a cluster o
 Each machine contained 4 NVIDIA GTX680 \acp{GPU} with \SI{4}{\giga\byte} at \SI{1}{\tera\nothing}\ac{FLOPS} each.
 
 One of the recent developments in digital neuro-chips is IBM's TrueNorth \cite{Akopyan2015}.
-It contains a network of 4096 cores with 256 digital neurons each following a digital reconfigurable spiking neuron model \cite{Cassidy2013}, which makes over one million neurons and 256 million synapses in total consuming about \SI{65}{\milli\watt} of power.
-The cores are connected internally by a 2-D grid.
+It contains a network of \num{4096} cores with \num{256} digital neurons each following a digital, re-configurable spiking neuron model \cite{Cassidy2013}, which makes over one million neurons and \num{256} million synapses in total consuming about \SI{65}{\milli\watt} of power.
+The cores are connected internally by a 2D grid.
 The intersections of this grid contain routers which control the signal transmission within the network of cores inside a chip.
 For programming this novel hardware implementation, a specialized programming language named Corelet was developed \cite{Amir2013}.
 
@@ -177,7 +177,7 @@ One of Loihi's key features is the ability of on-chip learning, which is realize
 Most of analog chips do not allow on-chip training due to limited adaptability of implementation techniques like capacitors \cite{Schwartz1990}, floating gate transistors \cite{Holler1989}, \acp{CCD} \cite{Agranat1990}.
 On the other hand, analog techniques use less components and offer high-speed operation.
 To exploit the benefits of analog semiconductor technologies and neural adaptivity, the learning algorithms have to be implemented on-chip.
-This, however, limits the reconfigurability of the platform and complicates the implementation of most learning rules directly into analog VLSI at the same time.
+This, however, limits the re-configurability of the platform and complicates the implementation of most learning rules directly into analog \ac{VLSI} at the same time.
 These limitations restrict the flexibility of analog designs compared to their digital counterparts.
 %They possess similar functional properties as that of biological networks and can be interfaced directly with real analog world \cite{Mead90}.
 
@@ -194,7 +194,7 @@ The latest processor contains different configuration options.
 Each neural circuit is connected to three different types of synaptic circuits, first of which is an array of $256\times256$ synapse which can be excitatory or inhibitory.
 The synapses in the second $256\times256$ array offers only excitatory mode.
 In the third array, there are $256\times2$ virtual synapses whose weights are configurable with excitatory as well as inhibitory features. The virtual synapses operate in shared mode and occupy less space as compared to individual circuits.
-The neural spikes are generated and received using an \ac{AER} protocol with 8-bit neuron addresses \cite{Qiao2015}.
+The neural spikes are generated and received using an \ac{AER} protocol with \num{8}-bit neuron addresses \cite{Qiao2015}.
 
 Another example of analog neural hardware is a chip \cite{Srinivasa2012} developed under \ac{DARPA}-funded \ac{HRL} \ac{SyNAPSE} project, which uses \ac{STM} for computation and memristors for synaptic weights storage.
 It contains a total of 576 neurons and 73728 synapses, arranged in an array of $24\times24$ neurons each with $128$ synapses and consumes \SI{130}{\milli\watt}.
@@ -202,7 +202,7 @@ In \ac{STM} methodology a single synaptic circuit on the chip calculates multipl
 Hence a single synaptic circuit can emulate multiple logical synapses by switching between the corresponding parameter sets.
 There is a point-to-point routing mechanism hence no \ac{AER} is required \cite{Walter2015}. 
 
-The Brain in Silicon group at Standford University developed the custom board Neurogrid, which contains 16-Neurocores \cite{Benjamin2014, Choudhary2012}.
+The Brain in Silicon group at Stanford University developed the custom board Neurogrid, which contains \num{16} Neurocores \cite{Benjamin2014, Choudhary2012}.
 The neuron circuits are arranged in a 256$\times$256 grid, with every neuron has separate circuits for its soma and the dendrite.
 They combined analog computations with digital communication.
 The system is capable of simulating one million neuron and eight billion synapses in real-time and consumed \SI{3.1}{\watt} of power.
@@ -224,12 +224,12 @@ It offers to explore different cortical areas of the brain by programming each o
 		\centering
 		\subfloat[]{\label{subfig:DVS_operation_principle}\includegraphics[width=0.9\textwidth]{imgs/DVS_operation_principle.PNG}}
 	\end{minipage}\par\medskip
-	\caption{(a) Space-time representation of the event stream generated by a rotating dot on a spinning disk and a snapshot of the events (b) abstracted pixel core schematic (c) principle operation of single DVS pixel. Image source: \cite{Lichtsteiner2008}}
+	\caption{(a) Space-time representation of the event stream generated by a rotating dot on a spinning disk and a snapshot of the events (b) abstracted pixel core schematic (c) principle operation of single \ac{DVS} pixel. Image source: \cite{Lichtsteiner2008}}
 	\label{fig:DVS_with_schem}
 \end{figure}
 To adopt the neuromorphic hardware in real-world applications (e.g. neurorobotics), they need to be able to process sensors signals.
 The neurally inspired, non von-Neumannian architecture requires either a new generation of sensors, e.g.\ the \ac{DVS} \cite{Lichtsteiner2008}, \ac{DAVIS} \cite{Brandli2014} or \ac{DAS} \cite{Liu2014}, which already embody the spiking neuron signal processing or a way of translating traditional sensor signals to sequences of spikes.
-Several approaches to encode signals and stimuli with trains of spikes, e.g. by rate coding, temporal coding \cite[Chap. 7.6]{Gerstner2014} or population coding \cite[Chap. 1]{Gerstner2002}, \cite{Ponulak2011} have been investigated.
+Several approaches to encode signals and stimuli with trains of spikes, e.g., by rate coding, temporal coding \cite[Chap. 7.6]{Gerstner2014} or population coding \cite[Chap. 1]{Gerstner2002}, \cite{Ponulak2011} have been investigated.
 Neuromorphic sensors on the other hand, directly emit a sequence of events without the need of translation.
 The \ac{DVS} for example, unlike traditional frame-based cameras, generates spike events \cite{Lichtsteiner2008} asynchronously for individual pixels when perceiving relative illumination changes (see Fig. \ref{fig:DVS_with_schem}), which are key features of biological vision \cite{Lichtsteiner2008}.
 This event-based approach offers several advantages compared to conventional frame-based cameras like the ability to perceive very fast movements (sub-millisecond time precision) without the need to wait for and process the next frame as well as an output data rate depending on the dynamic content of the scene (Fig. \ref{subfig:DVS_rotationg_dot}) and thus reducing the output of redundant information.
@@ -254,7 +254,7 @@ Although there are currently - to the knowledge of the author - no neuromorphic 
 \label{subsubsec:mixed_sys}
 
 Neuromorphic vision \cite{Tan2015} is an emerging field of research, which aims to transfer approaches from traditional computer vision and also establish new methods incorporating the characteristics of the \ac{DVS}.
-To perform pattern recognition tasks with neuromorphic cameras and at the same time use traditional methods as a benchmark, existing image data bases like the \ac{MNIST} data set \cite{LeCun1998} are translated to neuromorphic data sets by presenting the images on a computer screen to a \ac{DVS} sensor moving minimally back and forth \cite{Orchard2015} (mimicing saccade movements of the human eye), which gives better results than moving the images themselves on the screen \cite{Serrano-Gotarredona2013}.
+To perform pattern recognition tasks with neuromorphic cameras and at the same time use traditional methods as a benchmark, existing image data bases like the \ac{MNIST} data set \cite{LeCun1998} are translated to neuromorphic data sets by presenting the images on a computer screen to a \ac{DVS} sensor moving minimally back and forth \cite{Orchard2015} (mimicking saccade movements of the human eye), which gives better results than moving the images themselves on the screen \cite{Serrano-Gotarredona2013}.
 
 As the \ac{DVS} naturally captures moving objects when held statically and cues of the ego-motion when moving, tracking of these movements are suitable applications making use of the sensor's characteristics.
 These characteristics along with the \ac{DVS}'s advantages compared to traditional frame-based cameras, which have been described in Sec. \ref{subsubsec:neuro_sensors}, have been demonstrated in applications like pencil balancing \cite{Conradt2009} and a robotic goalie \cite{Delbruck2013} interfacing the \ac{DVS} with traditional computing hardware and actuators.
@@ -277,7 +277,7 @@ To incorporate the neuromorphic audio sensor, each digit is assigned one tone fr
 Although the authors state that the actual implementation in \cite{OConnor2013} is just a proof-of-concept in software, their approach shows promise to translate fully trained \acp{DBN} to \acp{SNN}, deploy them on efficient neuromorphic chips and thereby making this technology available for mobile and/or real-time applications.
 
 To demonstrate the functionality and applicability of their neuromorphic chip TrueNorth, IBM implemented several proof-of-concept applications ranging from virtual robots, game simulations \cite{Arthur2012}, digit recognition \cite{Arthur2012, Esser2013} to classical machine learning tasks like object detection \cite{Akopyan2015}.
-In \cite{Arthur2012} the authors present four example applications of neural algorithms implemented on TrueNorth using the Corelet language: a virtual robot driver aiming to keep the simulated robot on a virtual road based on visual cues, a neural algorithm controlling an autonomous player performing the classical video game pong, a neural implementation recognizing hand-written digits of the \ac{MNIST} data-base using \acp{RBM} as well as a Hopfield network, which performs autoassociation.
+In \cite{Arthur2012} the authors present four example applications of neural algorithms implemented on TrueNorth using the Corelet language: a virtual robot driver aiming to keep the simulated robot on a virtual road based on visual cues, a neural algorithm controlling an autonomous player performing the classical video game pong, a neural implementation recognizing hand-written digits of the \ac{MNIST} data-base using \acp{RBM} as well as a Hopfield network, which performs auto-association.
 Seven example algorithms and applications for TrueNorth are presented in \cite{Esser2013}: speaker recognition using \acp{CNN} on the \ac{CUAVE} data set \cite{Patterson2002}, composer recognition distinguishing between classical composers Bach and Beethoven using liquid state machines, recognition of hand-written digits of the \ac{MNIST} data set using population coding and \acp{RBM}, a neural implementation of a \ac{HMM}, collision avoidance using motion extraction and looming detection, optical flow based on \acp{CNN} and eye detection using the \ac{DVS}.
 Most of these algorithms are simplified proof-of-concept implementations showing the general applicability of TrueNorth but are not competitive with traditional machine learning algorithms yet (e.g. \SI{92.34}{\percent} \cite{Esser2013} vs. \SI{99.77}{\percent} \cite{Ciresan2012a} correct classifications on \ac{MNIST}).
 In \cite{Schmitt2017}, the authors demonstrate training and deployment of \acp{DNN} on the \ac{MNIST}-data set using the \ac{BrainScaleS} hardware.
@@ -286,9 +286,8 @@ A more sophisticated application is the multi object detection and classificatio
 The use of the neuromorphic hardware Neurogrid \cite{Benjamin2014} as computational back-end for \ac{Nengo} and proof-of-concept solution for medical motor-prostheses, which shall be connected to biological neurons and thereby be controlled by the patient's brain, is described in \cite{Choudhary2012} and \cite{Dethier2011} respectively.
 The \ac{SpiNNaker} system \cite{Furber2014} also supports the simulation of neural models created using \ac{PyNN} or \ac{Nengo} \cite{Mundy2015}.
 Furthermore, several neural network architectures like \acp{CNN} \cite{Serrano-Gotarredona2015} and pre-trained \acp{DBN} \cite{Stromatias2015, Stromatias2015a} have also been implemented on the \ac{SpiNNaker} system.
-
 To enable biologically inspired learning like \ac{STDP} \cite{Bi2001}, according rules adapting the synaptic weights depending on the timing of the spikes have efficiently been implemented on the \ac{SpiNNaker} \cite{Diehl2014} chip as well.
-\todo{include phrase about own omnibot paper \cite{Mirus2018a}}
+
 \subsubsection{Purely neuromorphic systems}
 \label{subsubsec:neuro_systems}
 
@@ -417,6 +416,7 @@ However, scaling becomes a problematic issues as each uncompressed tensor produc
 Hence, there are several architectures such as \ac{MAP} \cite{Gayler1998, Gayler2003}, \acp{BSC} \cite{Kanerva1988} and \acp{HRR} \cite{Plate1991, Plate1994}, which propose different compressed multiplication operations replacing the tensor product and resulting in vectors with the same dimension as the input vectors.
 Furthermore, these different \ac{VSA} variants differ in the choice of the numerical space to pick the vectors' elements from, i.e., if they use binary, real- or complex-valued vectors. 
 The \ac{SPA} \cite{Eliasmith2013} is built upon \acp{HRR} and extends these architectures, by proposing an efficient mechanism of implementing structured vector representations in populations of spiking neurons using the principles of the \ac{NEF} \cite{Eliasmith2003} (again, we refer to chapter ~\ref{chap:introduction_to_vsas} and especially sections ~\ref{sec:neural_eng} and ~\ref{subsec:implementation_in_snns} for further details).   
+This architecture has been used to built the currently largest functional model of a brain \cite{Eliasmith2012} using a combination of structured vector representations for symbol-like processing and a spiking neuron substrate.
 
 The most prominent application of vector representations despite cognitive modeling \cite{Blouw2016, Crawford2016, Eliasmith2012} is language processing \cite{Gayler2003}.
 In this context, word embedding refers to the problem of finding (or automatically learning) desirably meaningful representations for words.
@@ -441,6 +441,11 @@ In automotive context, an automated vehicle furthermore needs to detect the curr
 The human driver as a fallback option in such situations is of crucial importance, since the level of driving automation is likely to gradually increase instead of a hard transition from manual driving to fully automated driving systems.
 In their J3016 standard \cite{SAE_J3016}, the \ac{SAE} delivers a classification system identifying six different levels of driving automation from "no automation" to "full automation".
 Table \ref{tab:autonomy_levels} gives an overview of the particular automation levels according to \cite{SAE_J3016} in more detail.
+
+In this section, we will briefly present the historical developments in automated driving research and present the current state-of-the-art for some selected task in its sub-domains.
+After reviewing different aspects of knowledge representation with particular focus on automated driving (more general aspects have been discussed in section ~\ref{sec:cognitive_modeling}), we present related work in the fields of driving context classification (section ~\ref{subsec:driving_context_classification}), object detection and classification (section ~\ref{subsec:obj_detect}) and trajectory prediction (section ~\ref{subsec:behav_analysis}). 
+These tasks are selected based on the applications investigated in subsequent chapters in the remainder of the thesis.
+
 
 \subsection{A brief history}
 \label{subsec:aut_driving_hist}
@@ -490,14 +495,18 @@ Six vehicles out of the 11 final participants successfully finished the competit
 
 The technology developed for the \ac{DARPA} challenges formed the basis for commercial \ac{ADAS}, which have seen rapid progress since then and gradually made their way into series-production vehicles.
 There exists a large variety of commercial systems, like e.g. \ac{ACC} or intelligent parking assistance systems, modern vehicles are already equipped with.
-These systems have the potential to increase comfort and safety in road traffic and, in the long run enable fully autonomous driving (cf. Level 5 in Table \ref{tab:autonomy_levels}).
+These systems have the potential to increase comfort and safety in road traffic and, in the long run enable fully autonomous driving (cf. Level \num{5}  in Table \ref{tab:autonomy_levels}).
 On the other hand, many research teams and initiatives were spawned or inspired from these competitions and continued their research work after the \ac{DARPA} Challenges.
 Many researchers involved in the winning teams continued their research within Google's self-driving car project, which started in 2009 and evolved into the Spin-Off company Waymo \cite{Waymo} in 2016.
 Another research team continuing their efforts after the \ac{DARPA} challenges is the Annieway team \cite{Annieway}.
 One of their major contributions is the release and maintenance of the KITTI vision benchmark suite \cite{Geiger2013a}, a publicly available data set containing data from various test drives in the city of Karlsruhe, rural areas as well as highways focusing on providing real world data for vision tasks like stereo, optical flow and 3D object detection and tracking.
 
-The main research goal after the \ac{DARPA} Challenges was to develop automated driving with off-the-shelf sensors \cite{Furgale2013}.
-As this thesis focuses on environmental modeling in context of autonomous driving, this section presents research from this field like road detection and modeling (Sec. \ref{subsec:lane}), object detection (Sec. \ref{subsec:obj_detect}) and tracking (Sec. \ref{subsec:obj_track}) as well as sensor fusion (Sec. \ref{subsec:sensor_fusion}) while other aspects like localization \cite{Levinson2010, Thrun2005}, path planning (\todo{citation}) and motion control (\todo{citation}) are neglected.
+The main research goal after the \ac{DARPA} Challenges was to develop automated driving with off-the-shelf sensors.
+In \cite{Furgale2013}, the authors present a valet-parking approach for electrified vehicles using close-to-market sensors only.
+\cite{Lundgren2014} shows an approach to vehicle self-localization using off-the-shelf sensors in combination with a detailed map.
+In \cite{Aeberhard2015}, results from extensive testing of automated vehicles using mainly off-the-shelf sensors in highway scenarios are presented.
+The sensors used are \ac{RADAR} sensors for long-range detection, \acf{US} sensors for redundant, close-range detection, a \ac{SensGPS} for vehicle-self localization as well as a front-facing mono camera, which are all available and integrated in series-production vehicles.
+The only exception are 2D \ac{LIDAR} sensors, which are needed for high-resolution surround view.
 
 \subsection{Knowledge Representation}
 \label{subsec:knowledge_representation}
@@ -587,7 +596,7 @@ Such methods however have been drastically outperformed in recent years through 
 Subsequently, \acp{DNN} have been used to segment the road, or more generally, the traversable space \cite{Mohan2014, Bittel2015} or for semantic segmentation of the complete image, i.e., labeling each pixel in the image with the object class it belongs to (cf.\ fig. ~\ref{fig:segnet_achitecture}), using \acp{FCN} \cite{Badrinarayanan2015, Long2015, Chen2018}.
 The approach proposed in \cite{Li2017} deals with the special case of detecting vulnerable road users, i.e., pedestrians and bicyclists, by incorporating a \ac{CNN} variant for classification and localization.
 In \cite{Huval2015}, the authors evaluate general applicability and usability of \acp{CNN} for lane and vehicle detection when deployed on a real-time critic system concluding that powerful \acp{GPU} enable real-time capabilities of such approaches.
-An overview over recent approaches to tackle object detection and semantic segmentation using \acp{DNN} in an automotive context can be found in \cite{Feng2019}.
+An overview over recent approaches to tackle object detection and semantic segmentation using \acp{DNN} in an automotive context can be found in \cite{Feng2019}, while \cite{Janai2017} gives a more general overview of computer vision for automated vehicles.
 
 \subsection{Behavior Analysis}
 \label{subsec:behav_analysis}
