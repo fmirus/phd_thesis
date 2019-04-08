@@ -635,17 +635,21 @@ If the information about other vehicles is encapsulated in the network architect
 \subsection{Data sets}%
 \label{subsec:data_sets}
 
-With the advent and success of sophisticated \ac{DNN} architectures and their success in several domains related to automated driving such as object detection (see section ~\ref{subsec:obj_detect}) and behavior prediction (see section ~\ref{subsec:behav_analysis}), the demand for large-scale data-sets for training such networks grew significantly in recent years.
-Furthermore, there is an interest in publicly available data-sets which not only enable competition between researchers bout also allow for transparent benchmarking of approaches against each other.
-Data sets for image classification such as the \ac{MNIST} data set for hand-written digits \cite{LeCun1998} , the \ac{GTSRB} for traffic sign recognition \cite{Stallkamp2012} and the ImageNet data set \cite{Deng2009} provided researchers with large amounts of labeled image data facilitating significant progress.
-One of the first data sets publicly available on a larger scale for an automotive context and encouraging competition is the KITTI vision benchmark suite \cite{Geiger2013a}, which was recorded using the Annieway vehicle prototype \cite{Annieway} in urban environments in the region of the German city Karlsruhe.
-The KITTI data-set offers raw-sensory data for different sensor modalities such as \ac{LIDAR} and vision alongside ground truth labels and benchmarks for several tasks such as road detection, object detection optical flow and tracking.
-The Cityscapes data set \cite{Cordts2016} provides high-definition images recorded from a driving vehicle with accurate pixel-wise labels for semantic segmentation.
-A comparable data set for semantic image segmentation in a broader context (i.e., not restricted to automotive context) is the 
-\cite{COCO} data set \cite{Lin2014}.
-The \ac{NGSIM} US-101 data-set \cite{NGSIM-US101} is a publicly available data set originally intended for driver behavior and traffic flow models \cite{He2017}, that has been used to train trajectory predictions models \cite{Altche2018, Deo2018} as well.
+With the advent and success of sophisticated \ac{DNN} architectures and their success in several domains related to automated driving such as object detection (see section ~\ref{subsec:obj_detect}) and behavior prediction (see section ~\ref{subsec:behav_analysis}), the demand for large-scale data sets for training such networks grew significantly in recent years.
+Furthermore, there is an interest in publicly available data sets which not only enable competition between researchers but also allow for transparent benchmarking of approaches against each other.
+Data sets for image classification such as the \ac{MNIST} data set for hand-written digits \cite{LeCun1998} , the \ac{GTSRB} for traffic sign recognition \cite{Stallkamp2012} and the ImageNet data set \cite{Deng2009} provided researchers with large amounts of labeled image data facilitating significant progress in this research field.
+
+One of the first data sets being made publicly available on a larger scale for research in an automotive context and encouraging competition is the KITTI vision benchmark suite \cite{Geiger2013a}, which was recorded using the Annieway vehicle prototype \cite{Annieway} in urban environments in the region of the German city Karlsruhe.
+The KITTI data set offers raw sensory data for different sensor modalities such as \ac{LIDAR} and vision alongside ground truth labels and benchmarks for several tasks such as road detection, object detection, optical flow and tracking.
+Another large-scale data set targeted at computer vision in an automotive context is the Cityscapes data set \cite{Cordts2016}. 
+It provides high-definition images recorded from a driving vehicle with accurate pixel-wise labels for semantic segmentation.
+Furthermore, the Cityscapes data set also contains labels for depth information obtained from stereo vision, which for instance allows to train neural networks to provide depth information based only on monocular input. 
+A comparable data set for semantic image segmentation in a broader context (i.e., not restricted to an automotive context) is the 
+\ac{COCO}  data set \cite{Lin2014}.
+Furthermore, the \ac{COCO} data set is also provides ground truth captions for each images allowing to train neural networks translating visual input to language. 
+Another more recent data set similar to the KITTI data set is the Apollo Scape data set \cite{Huang2018}, which is provided by the Chinese company Baidu and contains data and ground truth labels for several automotive applications such as scene parsing, lane segmentation, localization, tracking and trajectory prediction.
+The \ac{NGSIM} US-101 data set \cite{NGSIM-US101} is a publicly available data set originally intended for driver behavior and traffic flow models \cite{He2017}, that has been used to train trajectory predictions models \cite{Altche2018, Deo2018} as well.
 It was recorded on a segment of approximately \SI{640}{\meter} length with \num{6} lanes on the US-101 freeway in Los Angeles, California  using cameras observing freeway traffic from rooftops with trajectory-data being extracted later from the obtained video footage.
-A more recent data set similar to the KITTI data set is the Apollo Scape data set \cite{Huang2018}, which is provided by the Chinese company Baidu and contains data and ground truth labels for several automotive applications such as scene parsing, lane segmentation, localization, tracking and trajectory prediction.
 
 \section{Summary}
 \label{sec:related_work_summary}
