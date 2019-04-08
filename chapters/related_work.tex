@@ -653,3 +653,33 @@ It was recorded on a segment of approximately \SI{640}{\meter} length with \num{
 
 \section{Summary}
 \label{sec:related_work_summary}
+
+In this chapter, we have taken a round trip through several research areas related to the thesis at hand.
+We visited the historical and current developments in the field of \ac{AI}, machine learning and neuromorphic engineering.
+Especially the young and emerging research field of neuromorphic engineering shows promise to be an energy-efficient possibility for future applications with tight restrictions regarding their energy-budget and computational resources.
+As a mobile application with a growing number of sensors and increasingly complex modules (often employing modern machine learning techniques) involved not only in autonomous navigation but also for interacting with the passengers inside and other traffic participants outside the car, intelligent vehicles in general offer promising application possibilities for the technology developed in this research area.
+However, the computing hardware prototypes \cite{Furber2014, Akopyan2015, Davies2018} as well as the novel senor technologies \cite{Lichtsteiner2008} are not mature enough yet to either become commercial products or to be deployed in series-production vehicles.
+Additionally, the principles of \acp{SNN} in combination with dedicated computing hardware show promise to be an energy-efficient algorithmic substrate to be applied in future automotive applications.
+However, this algorithmic approach has only been investigated in rather simple robotic applications \cite{Conradt2014, Stewart2016, Galluppi2014} and, similar to the neuromorphic hardware, is not mature enough yet, especially for such safety-critical applications like automated driving.
+
+Furthermore, we presented an overview of different architectures for cognitive modeling putting emphasis on vector-based representations such as the \ac{SPA} or, more generally, \acp{VSA}.
+After showing alternative approaches such as symbolic and connectionist cognitive architectures, we also reviewed the most prominent applications of such architectures and the representations they employ.
+We have seen, that there is a gap between architectures that are well-suited for modeling higher-level cognitive tasks and lower-level tasks closer to the dynamics of perception and action.
+While the former is most successfully tackled with symbolic modeling architectures, the latter often demands for precise mathematical modeling for dealing with the complexity and dynamics of real-world physics.
+Therefore, little attempts have been made to use cognitive modeling in real robotic systems and if, the investigated tasks are often simplified \cite{Neubert2016} and still far away from the demands imposed by complex systems like automated vehicles.
+Although we do not attempt to close this gap in our proposed work, we show that structured vector representations are an interesting option for encode automotive scenes in an abstract, unified and sensor independent substrate.
+Today's sensing and processing hardware is currently not intended to support such a representation.
+However, the full strength of this approach can only unfold once it is possible to employ cognitive modeling and spiking neuron principles in the complete chain from sensing to behavior with dedicated hardware support.
+
+Finally, we summarized the current state-of-the-art in several sub-domains of automated driving related to our work.
+After a brief historical overview, we focused on reviewing the currently used approaches for representing knowledge in an automotive context.
+As stated earlier, the techniques employed here use mainly Bayesian statistics and mathematical modeling to deal with the complexity of the real world.
+Subsequently, we reviewed the state-of-the-art in several selected tasks from sub-domains related to automated driving.
+These tasks mirror the application examples we have chosen as use-cases to investigate our approaches and will be revisited in subsequent chapters (see chapters ~\ref{chap:driving_context_classification}, ~\ref{chap:behav_pred} and ~\ref{chap:mix_online_learning}).
+
+Admittedly, our work touches and incorporates prior work from very different research fields by developing an approach for representing automotive scenes in an abstract vector representation inspired by modern cognitive modeling approaches.
+To the best of our knowledge, our work is the first to employ such a unified vector representation in an automotive context.
+The only other work encapsulating vehicle data in a compact vector representation is \cite{Hallac2018}, whose approach uses sensory data at a far lower level (i.e., closer to the actual sensor data) than we do and targets different application scenarios.
+
+In the next chapter, we give a detailed introduction to the mathematical theory behind \acp{VSA} in general and more specifically to the \ac{SPA} as well as to the principles of the \ac{NEF}.
+Together with the review presented here, this  will form the theoretical basis for the remainder of the thesis.
