@@ -443,7 +443,7 @@ In their J3016 standard \cite{SAE_J3016}, the \ac{SAE} delivers a classification
 Table \ref{tab:autonomy_levels} gives an overview of the particular automation levels according to \cite{SAE_J3016} in more detail.
 
 In this section, we will briefly present the historical developments in automated driving research and present the current state-of-the-art for some selected task in its sub-domains.
-After reviewing different aspects of knowledge representation with particular focus on automated driving (more general aspects have been discussed in section ~\ref{sec:cognitive_modeling}), we present related work in the fields of driving context classification (section ~\ref{subsec:driving_context_classification}), object detection and classification (section ~\ref{subsec:obj_detect}) and trajectory prediction (section ~\ref{subsec:behav_analysis}). 
+After reviewing different aspects of knowledge representation with particular focus on automated driving (more general aspects have been discussed in section ~\ref{sec:cognitive_modeling}), we present related work in the fields of driving context classification (section ~\ref{subsec:driving_context_classification}), object detection and classification (section ~\ref{subsec:obj_detect}) and trajectory prediction (section ~\ref{subsec:trajectory_prediction}). 
 These tasks are selected based on the applications investigated in subsequent chapters in the remainder of the thesis.
 
 
@@ -598,8 +598,8 @@ The approach proposed in \cite{Li2017} deals with the special case of detecting 
 In \cite{Huval2015}, the authors evaluate general applicability and usability of \acp{CNN} for lane and vehicle detection when deployed on a real-time critic system concluding that powerful \acp{GPU} enable real-time capabilities of such approaches.
 An overview over recent approaches to tackle object detection and semantic segmentation using \acp{DNN} in an automotive context can be found in \cite{Feng2019}, while \cite{Janai2017} gives a more general overview of computer vision for automated vehicles.
 
-\subsection{Behavior Analysis}
-\label{subsec:behav_analysis}
+\subsection{Trajectory Prediction}%
+\label{subsec:trajectory_prediction}
 
 \begin{figure*}[t!]
 	\centering
@@ -644,7 +644,7 @@ If the information about other vehicles is encapsulated in the network architect
 \subsection{Data sets}%
 \label{subsec:data_sets}
 
-With the advent and success of sophisticated \ac{DNN} architectures and their success in several domains related to automated driving such as object detection (see section ~\ref{subsec:obj_detect}) and behavior prediction (see section ~\ref{subsec:behav_analysis}), the demand for large-scale data sets for training such networks grew significantly in recent years.
+With the advent and success of sophisticated \ac{DNN} architectures and their success in several domains related to automated driving such as object detection (see section ~\ref{subsec:obj_detect}) and behavior prediction (see section ~\ref{subsec:trajectory_prediction}), the demand for large-scale data sets for training such networks grew significantly in recent years.
 Furthermore, there is an interest in publicly available data sets which not only enable competition between researchers but also allow for transparent benchmarking of approaches against each other.
 Data sets for image classification such as the \ac{MNIST} data set for hand-written digits \cite{LeCun1998} , the \ac{GTSRB} for traffic sign recognition \cite{Stallkamp2012} and the ImageNet data set \cite{Deng2009} provided researchers with large amounts of labeled image data facilitating significant progress in this research field.
 
