@@ -1,4 +1,6 @@
-\chapter{Research Context}
+\chapter{Research Context}%
+\label{chap:research_context}
+
 Highly automated driving is currently an immensely attractive field for both academic and industrial research groups.
 A fully autonomous vehicle, which is able to tackle challenging driving situations without external input comparable to a human driver's performance, is yet to be build.
 In this thesis, we propose a novel approach to knowledge and information representation for automotive environment models using cognitive modeling techniques.
@@ -10,6 +12,7 @@ However, we aim to cover the most significant results from all areas at least br
 
 \section{Biologically-inspired Systems}
 \label{sec:bio_systems}
+
 To fully understand biological systems like the brain, which evolved over millions of years, is an ongoing yet unsolved challenge in biology and neuroscience.
 Even small animals like insects or rodents show remarkable behavioral flexibility and the ability to constantly adapt to a rapidly changing and noisy world, which is unmatched by modern computing machines.
 Mammals and primates are able to perform more sophisticated behaviors culminating in complex cognitive computations humans are capable of doing like thinking, problem solving, memory, reasoning, decision-making, strategic planning, knowledge representation, learning etc.
@@ -118,6 +121,7 @@ Currently, there exist several approaches to code information as spike trains, w
 Except for the biologically unrealistic rate coding approach, there are cues for all of these coding schemes and even combinations \cite{Gupta2014} of them to appear in biological systems.
 
 \subsubsection{Software tools}
+
 There exist several different programming languages, simulators and software libraries specifically designed for modeling \acp{SNN} varying from tools like Corelet \cite{Amir2013} and Compass \cite{Preissl2012} working with one specific hardware component, in this case IBM's TrueNorth chip \cite{Akopyan2015} (cf. Sec. \ref{sec:neuromorphic_HW}), to libraries like \ac{PyNN} \cite{Davison2008}, which aim for universality to work with different simulators and hardware components as back-end.
 
 The simulation tool offering maybe the highest level of abstraction is \ac{Nengo} \cite{Stewart2009}, which implements the principles of the \ac{NEF} \cite{Eliasmith2003} and was used to build the \ac{Spaun} model \cite{Eliasmith2012}.
@@ -149,6 +153,7 @@ Therefore, most of the hardware and sensors described are mainly developed and u
 However, this technology is gradually becoming available to a broader community and draws increased attention in industrial research groups.
 
 \subsubsection{Digital Neurochips}
+
 \acp{GPU} provide a \ac{SIMD} architecture which helps in parallel data processing at the expense of large power consumption \cite{Krichmar2011, Carlson2014}.
 Due to fast matrix and vector multiplication capability of \acp{GPU}, at present they are providing an appealing platform for training and executing real-time data with the help of deep learning techniques \cite{Schmidhuber2015}.
 For specific applications, which take several months of training on a traditional \acp{CPU}, \ac{GPU}-based systems can accomplish the tasks in days \cite{Edwards2015}.
@@ -212,6 +217,7 @@ It offers to explore different cortical areas of the brain by programming each o
 
 \subsubsection{Neuromorphic Sensors}
 \label{subsubsec:neuro_sensors}
+
 \begin{figure}[t!]
 	\centering
 	\subfloat[]{\label{subfig:DVS_rotationg_dot}\includegraphics[width=0.9\textwidth]{imgs/DVS_rotating_dot_stimulus.PNG}}
@@ -446,7 +452,6 @@ In this section, we will briefly present the historical developments in automate
 After reviewing different aspects of knowledge representation with particular focus on automated driving (more general aspects have been discussed in section ~\ref{sec:cognitive_modeling}), we present related work in the fields of driving context classification (section ~\ref{subsec:driving_context_classification}), object detection and classification (section ~\ref{subsec:obj_detect}) and trajectory prediction (section ~\ref{subsec:trajectory_prediction}). 
 These tasks are selected based on the applications investigated in subsequent chapters in the remainder of the thesis.
 
-
 \subsection{A brief history}
 \label{subsec:aut_driving_hist}
 
@@ -520,6 +525,7 @@ By \emph{low-level} sensor fusion, we mean that raw, previously unprocessed sens
 In contrast, the goal of \emph{high-level} sensor fusion is to combine preprocessed tracks or features, that have been extracted from raw sensor measurements by each individual (smart) sensor unit.
 
 \subsubsection{Representations for low-level sensor fusion}
+
 \begin{figure*}[t!]
 	\centering
 	\includegraphics[width=0.95\textwidth]{imgs/occupancy_grid_principle.png}
@@ -542,6 +548,7 @@ Additionally, the representation contains no information about type or propertie
 Finally, in contrast to higher-level, more abstract representations, it can be more complex to incorporate sensor modalities other than range finders such as vision sensors.
 
 \subsubsection{Representations for high-level sensor fusion}
+
 In contrast to the low-level sensor fusion representation approaches described previously, high-level sensor fusion typically refers to sensory data being fused, that has already been preprocessed though some sort of temporal filtering.
 This usually happens at \emph{tracked objects} level, i.e., object lists provided by individual sensor units each applying their own temporal filtering or tracking based on the data they receive.
 To actually combine this sort of information, Bayesian filter approaches similar to the ones mentioned previously could be applied. 
@@ -561,6 +568,7 @@ While this type of representation is compact and abstract enough and thus well-s
 Therefore, achieving a unified representation across different sensor modalities can become a challenging problem.
 
 \subsubsection{Other representations}
+
 Representation approaches other than the aforementioned ones are rather rarely used in an automotive context.
 Although semantic and structured information will grow more important with the advent of numerous and increasingly complex machine learning driven assistant systems, representations that are able to capture and manipulate such information are still hardly used in vehicle context.
 One example of an abstract vector representation in an automotive context is Drive2Vec \cite{Hallac2018}, an unsupervised embedding of low-level sensory data to a vector, which is subsequently used to make predictions about the vehicle's state.
