@@ -1,4 +1,32 @@
-\chapter{A cognitive approach to Automotive Environment Modelling}
+\chapter{A cognitive approach to represent automotive scenes}%
+\label{chap:a_cognitive_approach_to_represent_automotive_scenes}
+
+We have seen in chapter ~\ref{chap:research_context}, especially in section ~\ref{subsec:knowledge_representation}, that, already today, there is a plethora of \acfp{ADAS} in intelligent vehicles. 
+In future vehicles, the number of modules tackling different sub-tasks necessary to enable (semi-) autonomous driving and to interact with humans inside and outside the car will increase even more.
+Given the complexity of the physical world and the recent success of \acp{DNN} in the diverse applications, a substantial amount of such modules could be data-driven with increasingly large neural networks under the surface.
+In a worst case scenario, each of these systems will encapsulate its own representation of knowledge about the data it processes in complete separation from other, potentially related systems.
+Typically, the representations used rely completely on numerical values and lack possibilities to be enriched or combined with symbol-like representations.
+On the other hand, increasingly deep neural network architectures are not only hungry for data to generalize sufficiently enough from the examples they have been trained on, but also tend to require a substantial amount of computational resources.
+Although this aspect is more severe for the training process, it becomes more important for mobile applications such as automated vehicles during the deployment phase.
+
+In this thesis, we propose a novel representation for automotive scenes based on modern cognitive modeling techniques, namely the \ac{SPA}.
+The \ac{SPA} is one particular example from a family of cognitive architectures commonly referred to as \acp{VSA} (see section ~\ref{subsec:vector_based_approaches} and chapter ~\ref{chap:introduction_to_vsas} for further details).
+One of the key components of these cognitive architectures is to use high-dimensional vectors for representation.
+This representational approach offers several desirable features.
+High-dimensional vectors are one variant of distributed representations in the sense, that information is captured over all dimensions of the vector instead of one single number.
+This aspect makes distributed representations more robust to noise in the sense, that a few noisy entries influence the overall information carried by the vector less compared to low-dimensional representations.
+Furthermore, vector representations allow to encode both, symbol-like and numerical structures in a similar and unified way.
+Additionally, the algebraic operations enable manipulation and combination of represented entities into structured representations.
+One potential advantage of this approach is that the number of dimensions remains fixed independent of the number of entities combined through the architecture's algebraic operations.
+Finally, vectors are a suitable representational substrate to be used in combination with neural networks.
+On the one hand, vectors are a natural input to classic \acp{ANN}, but they also offer the possibility to be efficiently implement in \acp{SNN} using the principles of the \ac{NEF} (see \cite{Eliasmith2013}, but also section ~\ref{subsec:implementation_in_snns}).
+Given an widespread implementation of the representations proposed here in combination with \acp{SNN} as algorithmic substrate within intelligent vehicles, the latter offers the potential to deploy such neural representations on dedicated neuromorphic hardware (cf.\ section ~\ref{sec:neuromorphic_HW}).
+Although neuromorphic computing hardware as well as the corresponding neural algorithms are mainly used in academic research and often lack the technical maturity required by industrial applications, they show promise to be an energy-efficient option for future automated vehicles.
+
+In this chapter, we introduce our proposed approach to encapsulate high-level information about automotive scenes in a high-dimensional vector representation.
+In this context, high-level information refers to already preprocessed or even fused data about objects in the driving environment.
+We analyze how different types of data could be encoded in such a representation and show possible variations and how they influence the final representation.
+Thereby, we lay the basis for concrete application examples investigated in forthcoming chapters.
 
 \begin{itemize}
 	\item several driver assistance systems/sub-tasks of automated driving
