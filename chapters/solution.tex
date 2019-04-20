@@ -21,42 +21,55 @@ One potential advantage of this approach is that the number of dimensions remain
 Finally, vectors are a suitable representational substrate to be used in combination with neural networks.
 On the one hand, vectors are a natural input to classic \acp{ANN}, but they also offer the possibility to be efficiently implement in \acp{SNN} using the principles of the \ac{NEF} (see \cite{Eliasmith2013}, but also section ~\ref{subsec:implementation_in_snns}).
 Given an widespread implementation of the representations proposed here in combination with \acp{SNN} as algorithmic substrate within intelligent vehicles, the latter offers the potential to deploy such neural representations on dedicated neuromorphic hardware (cf.\ section ~\ref{sec:neuromorphic_HW}).
-Although neuromorphic computing hardware as well as the corresponding neural algorithms are mainly used in academic research and often lack the technical maturity required by industrial applications, they show promise to be an energy-efficient option for future automated vehicles.
+Although neuromorphic computing hardware as well as the corresponding neural algorithms are mainly used in academic research and often lack the technical maturity required by industrial applications, they show promise to be an energy-efficient option for future automated vehicles once reaching the required level of maturity.
 
-In this chapter, we introduce our proposed approach to encapsulate high-level information about automotive scenes in a high-dimensional vector representation.
-In this context, high-level information refers to already preprocessed or even fused data about objects in the driving environment.
-We analyze how different types of data could be encoded in such a representation and show possible variations and how they influence the final representation.
-Thereby, we lay the basis for concrete application examples investigated in forthcoming chapters.
-
-\begin{itemize}
-	\item several driver assistance systems/sub-tasks of automated driving
-	\subitem in the worst case different kind of knowledge representation for each
-	\subitem this representation is usually not informative to the user
-
-	\item machine learning/\ac{AI} (or data driven approaches in general) become increasingly important $\rightarrow$ unified system for knowledge representation necessary/helpful
-	\item \aclp{VSA} offer the opportunity to combine advantages of symbolism and neural networks (through the principles of the \acf{NEF})
-	\item automotive as a mobile application (with increasingly many ML/AI driven applications) demands for energy efficiency $\rightarrow$ \acp{VSA} can be applied on neuromorphic hardware
-	\item outline scene representation in vector format. how is it currently realized? How could it develop/evolve if (more) sensors would natively support it.
-	\item problem of how to encode numerical information (vector length vs trigonomical vs. unitary vector powers) for values of position, velocity etc.
-	\item possibility to encode structure (first results from Robert's thesis)
-\end{itemize}
-
-\section{Vector representation of automotive scenes}
-\subsection{What types of data to encode?}
-\subsection{Structured representations}
-\subsubsection{Limiting factors to structured representations}
 \begin{figure}[t]
-	\centering
-	\includegraphics[width=0.95\textwidth]{imgs/spa_superposition_capacity.png}
-	\caption{Superposition capacity.}
-	\label{fig:spa_superposition_capacity}
+    \centering
+    \includegraphics[width=0.8\linewidth]{imgs/system_overview_horizontal.eps}
+    \caption{Visualization of the general flow of information of our proposed approach.}
+    \label{fig:vectorization}
 \end{figure}
 
-\section{Representational variations}
-\subsection{Basic (random) vocabularies}
+In this chapter, we introduce our proposed approach to encapsulate high-level information about automotive scenes in high-dimensional, semantic vectors using the \ac{SPA} as representational substrate.
+For this encoding phase, we follow the first two stages, namely \emph{preprocessing} and \emph{representation generation}, of the three-stages process established in \cite{Gallant2013} 
+The third and final stage, \emph{output computation}, will be subject of subsequent chapters, where we investigate concrete applications and use cases.
+The preprocessing stage is the step of creating a suitable vector vocabulary, whereas the representation generation stage is the process of building up structured representations from the atomic vectors within the vocabulary.
+Furthermore, we analyze how different types of data could be encoded in such a representation, we show possible variations of how to encapsulate data in vectors and how they influence the final representation.
+We also investigate potential limitations imposed bu such representations to provide insights into how many concepts can be efficiently encoded in our representations without loss of information.  
+
+
+\section{Preprocessing stage - generating a vocabulary}%
+\label{sec:preprocessing_stage_generating_a_vocabulary}
+
+Fig. ~\ref{fig:vectorization} visualizes the general flow of information of our proposed system.
+To represent high-level information about a scene in an abstract vector representation, we work with already processed data, which comes either from individual sensors, which perform their own low-level processing, or from a higher-level, central module already fusing information from several sensors.
+We simply refer to this step as \emph{environment perception} in fig. ~\ref{fig:vectorization}, whereas its output is referred to as \emph{preprocessed data}.
+This data is typically available as lists of objects present in the current scene and is translated into a semantic vector representation by first assigning atomic vectors to entities of interest and then building up more complex, structured representations by using the \ac{SPA}'s algebraic operations.
+In this section, we will investigate the first step of assigning atomic vectors to entities of interest, i.e., creating a suitable vector vocabulary.
+We have already seen in section ~\ref{subsec:vocabs}, that such vocabularies can be created in several different ways. 
+
+\subsection{What types of data to encode?}%
+\label{subsec:what_types_of_data_to_encode_}
+
+\subsection{Random and manually engineered vocabularies}%
+\label{subsec:basic_random_vocabularies}
+
+\subsection{Pre-learned semantic vocabularies}%
+\label{subsec:pre_learned_semantic_vocabularies}
+
+\subsection{Visual-semantic vocabularies}%
+\label{subsec:visual_semantic_vocabularies}
+
+results from Roberts thesis
+
+\section{Representation generation stage}%
+\label{sec:representation_generation_stage}
+
+
 \subsection{Different vector representations for numerical values}
 In this section, we investigate different approaches to map numerical information to semantic vectors.
 Therefore, we will focus on
+problem of how to encode numerical information (vector length vs trigonomical vs. unitary vector powers) for values of position, velocity etc.
 \subsubsection{Scalar multiplication encoding}
 \subsubsection{Sine and Cosine encoding with different frequencies and offsets}
 For vectorization of two-dimensional values, we use an encoding with sine and cosine functions with different spatial frequencies and offsets.
@@ -72,4 +85,26 @@ and obtain the final vector representation of acceleration in $x$/$y$-direction 
 \]
 This encoding $\lambda\left(a_x, a_y\right)$ leads to normalized, nonzero, similar vectors with information distributed over all elements (in contrast to a simple encoding like $\left(a_x, a_y, 0 \cdots, 0\right)$).
 \subsubsection{Convolutive power encoding}
-\subsection{Encoding visual and semantic structure}
+
+\subsection{Structured representations}%
+\label{subsec:structured_representations}
+
+
+
+\subsection{Output generation stage}%
+\label{subsec:output_generation_stage}
+
+\section{Capacity analysis - limitations to vector representations}%
+\label{sec:capacity_analysis_limitations_to_vector_representations}
+
+\subsection{Limiting factors to structured representations}%
+\label{subsec:limiting_factors_to_structured_representations}
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.95\textwidth]{imgs/spa_superposition_capacity_1.png}
+	\caption{Superposition capacity.}
+	\label{fig:spa_superposition_capacity}
+\end{figure}
+
