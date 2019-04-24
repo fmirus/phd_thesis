@@ -46,13 +46,32 @@ To represent high-level information about a scene in an abstract vector represen
 We simply refer to this step as \emph{environment perception} in fig. ~\ref{fig:vectorization}, whereas its output is referred to as \emph{preprocessed data}.
 This data is typically available as lists of objects present in the current scene and is translated into a semantic vector representation by first assigning atomic vectors to entities of interest and then building up more complex, structured representations by using the \ac{SPA}'s algebraic operations.
 In this section, we will investigate the first step of assigning atomic vectors to entities of interest, i.e., creating a suitable vector vocabulary.
-We have already seen in section ~\ref{subsec:vocabs}, that such vocabularies can be created in several different ways. 
+We have already seen in section ~\ref{subsec:vocabs}, that such vocabularies can be created in several different ways, which we will investigate with the specific focus of encoding automotive scenes.
 
 \subsection{What types of data to encode?}%
 \label{subsec:what_types_of_data_to_encode_}
 
+The data to be encoded in a semantic vector substrate depends not only on the information available from the current sensor-setup, but also on the task at hand.
+For instance, if we want to classify the current driving context (like in chapter ~\ref{chap:driving_context_classification}), the relevant information might be different to the task of predicting a vehicle's trajectory (like in chapter ~\ref{chap:behav_pred}).
+Here, we give an overview of what information in general is available in an intelligent vehicle and how to encode it in a semantic vector substrate.
+We distinguish between symbol-like information such as the type of a dynamic object or numerical information such as the current acceleration of the ego-vehicle.
+In this section, we focus mainly on the symbol-like information, which is suitable to be represented using a single atomic vector or an algebraic combination of several atomic vectors.
+In section ~\ref{subsec:different_vector_representations_for_numerical_values}, we will focus on numerical information and different options of encoding them in vectors,
+Here, we will closely follow the structure of section ~\ref{sec:cognitive_modelling_with_vsa} and present different possibilities to generate a vocabulary of atomic vectors to built structured representations upon.
+
 \subsection{Random and manually engineered vocabularies}%
 \label{subsec:basic_random_vocabularies}
+
+The simplest possible option to generate a vocabulary of atomic vectors is to sample them randomly, in case of continuous \acp{VSA} such as the \ac{SPA}, from the $D$-dimensional unit sphere \cite{Voelker2017}.
+Naturally, randomly chosen atomic vectors do not carry semantic meaning or any intended notion of similarity.
+However, given a sufficiently large dimension $D$ of the chosen \ac{VSA} and its theoretical properties (see chapter ~\ref{chap:introduction_to_vsas}), we can assume that randomly chosen vectors will be dissimilar enough to avoid accidentally mistaking them for one another.
+Another advantage of this simple approach is that is comparatively easy to create a vocabulary avoiding any complex learning system to embed the concepts of interest in semantic vectors.
+On the other hand, if specific applications demand for the vectors to actually carry semantic information meaning that similar concepts need to be mapped to similar vectors for the application to succeed, this simple approach can be extended by manually engineering a vocabulary reflecting the desired similarity structure.
+This is typically achieved by randomly choosing a set of auxiliary vectors and building atomic vectors with the desired similarity from them through the \ac{VSA}'s algebraic operations (cf.\ section ~\ref{subsec:vocabs}).
+However, this approach is only feasible and appropriate for rather small sized vocabularies as manually designing semantic vectors with certain similarity properties becomes intractable quickly with an increasing number of concepts to be embedded.
+Furthermore, manually designing vocabularies involves design choices by human engineers, which is sensitive to potentially undesired biases in the similarity structure of the vectors.
+For instance, the example vocabulary created in section ~\ref{subsec:vocabs} solely focused on the motion characteristics and typical actuators of different traffic participants.
+However, there are many other possible similarity structures such as visual (or auditory) similarity, to be considered when designing the vocabulary.
 
 \subsection{Pre-learned semantic vocabularies}%
 \label{subsec:pre_learned_semantic_vocabularies}
@@ -66,7 +85,10 @@ results from Roberts thesis
 \label{sec:representation_generation_stage}
 
 
-\subsection{Different vector representations for numerical values}
+\subsection{Different vector representations for numerical values}%
+\label{subsec:different_vector_representations_for_numerical_values}
+
+
 In this section, we investigate different approaches to map numerical information to semantic vectors.
 Therefore, we will focus on
 problem of how to encode numerical information (vector length vs trigonomical vs. unitary vector powers) for values of position, velocity etc.
@@ -89,11 +111,6 @@ This encoding $\lambda\left(a_x, a_y\right)$ leads to normalized, nonzero, simil
 \subsection{Structured representations}%
 \label{subsec:structured_representations}
 
-
-
-\subsection{Output generation stage}%
-\label{subsec:output_generation_stage}
-
 \section{Capacity analysis - limitations to vector representations}%
 \label{sec:capacity_analysis_limitations_to_vector_representations}
 
@@ -107,4 +124,9 @@ This encoding $\lambda\left(a_x, a_y\right)$ leads to normalized, nonzero, simil
 	\caption{Superposition capacity.}
 	\label{fig:spa_superposition_capacity}
 \end{figure}
+
+\section{Summary}%
+\label{sec:vector_representations_automotive_summary}
+\todo[inline]{somewhere (maybe in one of the subsequent chapters) where it is fitting the option to adjust the vector embedding based on the performance on a certain task to potentially improve the model's task performance by a better vector embedding (something more of future work thing, not intended to be investigated in this thesis, but still worth mentioning)}
+
 
