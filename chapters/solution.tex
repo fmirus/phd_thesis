@@ -59,6 +59,80 @@ In this section, we focus mainly on the symbol-like information, which is suitab
 In section ~\ref{subsec:different_vector_representations_for_numerical_values}, we will focus on numerical information and different options of encoding them in vectors,
 Here, we will closely follow the structure of section ~\ref{sec:cognitive_modelling_with_vsa} and present different possibilities to generate a vocabulary of atomic vectors to built structured representations upon.
 
+If the vectors in the vocabulary are not chosen at random, the general goal when creating the vocabulary is to generate atomic vectors that carry inherent structure or meaning.
+This meaning is typically reflected by similar concepts being mapped to similar vectors.
+However, there are several possible notions of similarity that can be encoded in the vocabulary, which we will specify in this section.
+
+\subsubsection{Visual similarity}%
+\label{ssubsec:visual_similarity}
+
+A first simple and comprehensible notion of similarity is visual similarity between two entities: "do they look similar". 
+Encoding this notion in vectors, we would expect the vector representations to represent this type of similarity within the relation between the vectors, meaning that vectors representing visually similar entities will have large cosine similarity.
+In conjunction with other information, this type of similarity could be useful to detect a wrong classification, in case it has high similarity to another one that makes more sense in the situation or context at hand.
+An example would the German traffic signs indicating a speed limit of \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} and \SI[per-mode=symbol]{80}{\kilo\meter\per\hour}, which are both circular with a red frame and a similar looking black number on white background in the middle.
+However, encountering a speed limit sign of \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} in an urban situation is more plausible than a sign indicating a speed limit of \SI[per-mode=symbol]{80}{\kilo\meter\per\hour}.
+
+\subsubsection{Similarity of motion}%
+\label{ssubsec:similarity_of_motion}
+
+Another notion of similarity, that is a candidate to be encoded in a vector vocabulary is the similarity of motion properties.
+For instance, bicycles and motorcycles have more similar motion properties (dynamics of vehicles with two wheels) than for example a pedestrian and a truck.
+Apart from motion properties such as dynamics of the movement, the number of wheels or the mean expected velocity the direction of movement of traffic participants can be a notion of similarity to be encoded in the vocabulary.
+For instance, traffic participants such as bicycles or cars moving towards us might be encoded more similarly to each other than to parked cars or those moving away.
+Furthermore, some entities are more likely to change their motion or direction: while traffic lights frequently alternate and parked cars might start moving, trees, buildings and traffic signs are expected to remain static. 
+The notion of similarity of motion can be useful in various ways.
+In a first step, knowing the motion of other traffic participants could help in classifying the situation: on a multi-lane highway we would expect cars around us to move in the same direction, whereas in an urban driving situation the motion of other traffic participants is more diverse. 
+Additionally, this notion of similarity could potentially help in focusing the system's attention or more precisely, use computing power more efficiently on entities that are more relevant to decision making.
+For example, a change of the 'motion status' (e.g.\ when a bus stops) might need particular attention.
+
+\subsubsection{Semantic similarity}%
+\label{ssubsec:semantic_similarity}
+
+While visual similarity already captures a significant part of perceivable information about entities in automotive context, there is further information that could be encoded in the vector vocabulary that is different, and maybe even, contrary to visual similarity. 
+Considering automotive situations, we as humans do not only assess them based on visual appearance but also by incorporating underlying and, most likely, previously acquired knowledge about the objects in the scene.
+This underlying information can be considered the semantic aspect.
+Revisiting the aforementioned example, the speed limit sign for \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} is \emph{viusally} more similar to \SI[per-mode=symbol]{80}{\kilo\meter\per\hour} than to \SI[per-mode=symbol]{20}{\kilo\meter\per\hour}.
+However, in the context (or semantics) of an automotive situation such as driving in an urban environment, speed limit signs for \num{20} and \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} should be contextually or semantically more similar than signs for \num{30} and \SI[per-mode=symbol]{80}{\kilo\meter\per\hour}, as they are more likely to appear in similar contexts and both describe the traffic rule restricting driving to slow velocities.
+
+Semantic similarity is not quite as intuitive as visual similarity. 
+In general, we want to encode objects and concepts sharing similarity in \emph{meaning} in vectors with a high cosine similarity.
+However, it is not intuitively clear what similar meaning actually refers to and how to properly define semantic similarity in an automotive context.
+In the field of generating word embeddings for natural language processing, the typical assumption is that words that share similarity in meaning appear in close proximity with high probability within text corpora.
+This assumption could be transferred to automotive context as well, for instance thinking of traffic signs indicating speed limits appearing in similar contexts or driving situations such as urban driving compared to higher speed limit signs.
+However, on the one hand it is not clear how to transfer this approach to other object classes such as traffic participants whose appearance probability is less context dependent than for traffic signs. 
+On the other hand the process of automatically training a system to learn this form of embedding is not clear as it would probably demand for another learning model to extract contextual information from the rich features of driving contexts.
+Therefore, will now focus on the potential meaning of objects appearing in an automotive environment and how their semantic meaning could be embedded into a vector representation while leaving aside intangible concepts representing vehicle dynamics such as "velocity" or "acceleration".
+
+\paragraph{Traffic signs}%
+\label{par:traffic_signs}
+
+Any traffic sign carries an explicit meaning defined in traffic law and anyone with a driver's license should know its meaning and be able to immediately explain it.
+The meaning of a traffic sign is an instruction for the driver's behavior to, for instance, not surpass a certain velocity or to give way to other traffic participants. 
+There are sub-groups of signs with similar meanings, such as signs indicating speed limits, prescribed direction or warnings for potentially dangerous road conditions or to pay increased attention.
+Encoding the semantic structure of traffic signs in a vector vocabulary, we expect not only all traffic signs will be similar but also that all signs within a certain sub-group end up being more similar to one another compared to signs from other subgroups. 
+For instance, signs indicating speed limits should be similar to one another, ideally with signs indicating lower velocities such as \SI[per-mode=symbol]{20}{\kilo\meter\per\hour} and \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} should be more similar than \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} and \SI[per-mode=symbol]{130}{\kilo\meter\per\hour}. 
+Beside their explicit meaning, the number of traffic signs is finite and limited to a small number compared to the number of words in a typical human-level language vocabulary.
+Therefore it is possible to manually engineer their semantic similarity, which makes it easier to impose our human understanding onto the structure, although the resulting vocabulary will most likely differ from the structure an unsupervised learning model would pick up from the data. 
+
+\paragraph{Traffic participants}%
+\label{par:traffic_participants}
+
+While the meaning of traffic signs is clear and explicit, it is far more difficult to derive a meaning of a traffic participant such as a car or a pedestrian or a measure of similarity between them.
+It is unclear if a truck is semantically more similar to a motorcycle or to a car without considering any contextual information while ignoring similarity of motion properties, which have already been discussed in section ~\ref{ssubsec:similarity_of_motion}.
+However, if we do consider contextual information, we as humans decide intuitively if a truck and a motorcycle are more similar when compared to a pedestrian by e.g., considering their velocity of motion.
+We also know from experience that the meaning of a car approaching from the right potentially means that it has the right of way when we encounter a situation at a crossroads without traffic signs indicating other right of way rules. 
+Hence, the situational context has a significant impact on comprehending the "meaning" of traffic participants, which in most cases directly results in appropriate driving actions to take such as decelerating or changing the lane.
+However, such a situational understanding is impossible to derive without additional information such as position, velocity or direction of each traffic participant.
+Consequently, it is impossible to encapsulate such semantic or contextual similarity in a vector vocabulary directly but rather encode another notion of similarity for atomic vectors of traffic participants and built situational similarity through structured representations using the \ac{VSA}'s algebraic operations.
+
+\subsubsection{Summary on similarity}%
+\label{ssubsec:summary_similarity}
+
+All of the aforementioned notions cover a certain aspect of similarity.
+Ideally, it is desirable for a vector vocabulary to encapsulate more than one notion of similarity comparable to a human understanding all these different aspects of similarity.
+However, it is not clear if it is helpful or even possible, to encapsulate several notions of similarity into one coherent vector vocabulary or if it is more suitable to have separate vocabularies for each similarity of interest and combine them in structured representations using the \ac{VSA}'s algebraic operations as mentioned e.g., in \cite{Crawford2016}.
+For the remainder of this section, we give an overview over different options of how to generate vector vocabularies encoding their own notion of similarity.
+
 \subsection{Random and manually engineered vocabularies}%
 \label{subsec:basic_random_vocabularies}
 
@@ -71,7 +145,10 @@ This is typically achieved by randomly choosing a set of auxiliary vectors and b
 However, this approach is only feasible and appropriate for rather small sized vocabularies as manually designing semantic vectors with certain similarity properties becomes intractable quickly with an increasing number of concepts to be embedded.
 Furthermore, manually designing vocabularies involves design choices by human engineers, which is sensitive to potentially undesired biases in the similarity structure of the vectors.
 For instance, the example vocabulary created in section ~\ref{subsec:vocabs} solely focused on the motion characteristics and typical actuators of different traffic participants.
-However, there are many other possible similarity structures such as visual (or auditory) similarity, to be considered when designing the vocabulary.
+However as mentioned before, there are many other possible similarity structures such as visual (or auditory), motion or semantic similarity, to be considered when designing the vocabulary.
+
+\subsection{Visual vocabularies}%
+\label{subsec:visual_vocabularies}
 
 \subsection{Pre-learned semantic vocabularies}%
 \label{subsec:pre_learned_semantic_vocabularies}
