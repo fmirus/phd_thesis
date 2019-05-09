@@ -61,7 +61,6 @@ The most prominent examples are elementwise multiplication in Gayler's \ac{MAP}-
 	If $N$ is a subset of the real or complex numbers, i.e. $N \subset \mathbb{R}$ or $N \subseteq \mathbb{C}$, we call any \ac{VSA} $\left(V_{D}(N), \varoast, \oplus, \phi\right)$ \emph{continuous}.
 \end{defn}
 Although the set $V_{D}(N)$ might not be a vector space in the strict mathematical sense (in most cases it is at least a subset of a vector space), we will refer to its elements as \emph{vectors}.
-\todo{note that VSA in general must not be closed under its operations}
 %The metric in definition \ref{def:VSA} is needed as measure of similarity between vectors.
 Before we proceed in deriving some important properties of \acp{VSA}, we present some of the most prominent examples.
 
@@ -69,7 +68,7 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 	\label{ex:VSAs}
 	\begin{enumerate}
 		\item The first example of a \ac{VSA} is Kanerva's \acfl{BSC} \cite{Kanerva2009}.
-		He restricts the elements of his vectors to binary values, i.e. $N=\{0,1\}$
+            He restricts the elements of his vectors to binary values, i.e. $N=\{0,1\} = \mathbb{F}_{2}$.
 		The operations $\varoast$ and $\oplus$ in this case are the XOR-function and a thresholded sum respectively.
 		With $v_{i} = \left(v_{i 0}, \cdots, v_{i D-1}\right) \in V_{D}(N)$ and  $i \in \{1, \cdots, n\}$, the operation $\oplus$ is usually defined in the following way
 		\begin{align*}
@@ -530,8 +529,9 @@ Thus, to construct a neural model approximating a differential equation of the f
 with functions $\abbil{a}{W}{W}$ and $\abbil{b}{V}{W}$, the first two principles of the \ac{NEF} can be used to create a neural population of the form as shown in fig. \ref{fig:nef_dynamics}.
 By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)$ and $f(\mathbf{x}(t))=\tau b(\mathbf{x}(t))$, we obtain a neural model approximating the desired dynamical system described by the differential equation \ref{eq:nef_dyn_diffeq}.
 
+\section{Cognitive Modelling with \aclp{VSA}}%
+\label{sec:cognitive_modelling_with_vsa}
 
-\section{Cognitive Modelling with \aclp{VSA}}
 In this section, we give a brief introduction of how we can use the theory of in \ref{sec:math_prop_vsas} and to \ref{sec:spa} to represent (structured) information using \acp{VSA}.
 \todo{include phrase regarding preprocessing as described in \cite{Gallant2013} and refer to it later in this section}
 We give a general overview of different ways to establish vocabularies containing atomic vectors and how we can build more complex representations from those elementary ingredients.
