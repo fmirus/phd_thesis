@@ -265,7 +265,116 @@ Less similar, but still significantly higher than the similarity thresholds, are
 All other pairs have similarity values in the order of magnitude or below the similarity thresholds and are therefore considered dissimilar while we do not attach the greatest importance to the actual (low) numbers.
 Consequently, we can conclude, that we are able to encode visual similarity of traffic signs as well as traffic participants in a visual vector vocabulary.
 
+\subsection{Semantic vocabularies}%
+\label{subsec:semantic_vocabularies}
 
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{imgs/semantic_vocab_traffic_signs_internal_similarities.png}
+    \caption{Pairwise similarities between representative vectors encoding traffic signs in a manually designed semantic vector vocabulary.}
+    \label{fig:semantic_vocab_traffic_signs_internal_similarities}
+\end{figure}
+In this section, we go one step further and try to encapsulate semantic similarity structures within a vector vocabulary.
+As discussed in section ~\ref{ssubsec:semantic_similarity}, semantic similarity as a concept is comparatively intuitive for traffic signs and less obvious for other objects, such as traffic participants.
+Furthermore, we also highlighted in that section that semantic similarity in other domains such as language modeling typically unfolds through proximity, i.e., that similar words appear in similar contexts or proximity within the text.
+While this could give a hint towards what kind of learning procedure could be used to automatically generate a semantic vocabulary in automotive context, availability of suitable data sets is rather limited.
+Analogously to the visual vocabulary, we consider the encoding of traffic signs and traffic participants separately in this section as well. 
+
+\subsubsection{Traffic signs}%
+\label{ssubsec:traffic_signs}
+
+Our goal is to encode the meaning of traffic signs, i.e., the driving instruction or traffic rule they indicate to the driver in a semantic vector vocabulary.
+As with visual similarity, this goal could be achieved by either manually engineering the similarity structure through the \ac{VSA}'s algebraic operations from randomly chosen atomic vectors or through some automated learning approach.
+If we were to learn this automatically, there are two possible approaches. 
+Similar to word embedding algorithms for language, we could either learn the meaning of traffic signs explicitly from a large  corpus of text that describes traffic signs and their meanings in context.
+Alternatively, we could try to learn the semantic meaning of traffic signs implicitly from many dynamic driving situations.
+Unfortunately, there are no suitable data sets available for either of the aforementioned learning approaches.
+Additionally, an implementation of the latter, implicit learning approach would be quite complex, as it would require additional steps to extract structural understanding from the driving scene upon on which the vocabulary generation system needs to be built.
+To our our knowledge, such a system does not exist.
+Consequently, the only remaining option is to manually design the desired similarity structure as described in section ~\ref{subsec:basic_random_vocabularies}.
+
+To encode the semantic meaning of traffic signs, we choose atomic vectors for the basic building blocks of the representation at random and create semantic structure by employing the algebraic operations of the \ac{SPA}.
+We apply the role-filler pair approach described in section ~\ref{subsec:encoding_struct}.
+We randomly choose vectors for the roles \textbf{TYPE} and \textbf{MEANING} encoding the type and the meaning of a particular traffic sign.
+For some traffic signs, we need an additional role \textbf{REASON} giving further information to the vocabulary vector in order to distinguish similar traffic signs from one another.
+As potential filler vectors for the \textbf{TYPE} role, we choose random vectors representing the following traffic sign classes included in the \ac{GTSRB}: \textbf{LIMIT}, \textbf{PASSING}, \textbf{PRIORITY}, \textbf{DIRECTION} and \textbf{ATTENTION}.
+Similarly, we create filler vectors for the \textbf{MEANING} role like \textbf{RIGHTOFWAY}, \textbf{GIVEWAY}, \textbf{SLOW}, \textbf{PREPARETOSTOP}, \textbf{CONCENTRATE}, \textbf{LEFT}, \textbf{RIGHT}, \textbf{STRAIGHT}, \textbf{OVERTAKING}.
+Finally, we create filler vectors for the \textbf{REASON} role indicating the reason for increased attention or other additional information such as \textbf{PEDESTRIANS}, \textbf{CHILDREN} or \textbf{SLIPPERYROAD}, \textbf{ROADWORKS} etc.
+Given these role and filler vectors, we generate semantic vocabulary vectors encoding the meaning of traffic signs in the following way
+
+\begin{equation}
+    \label{eq:semantic_vocab_traffic_signs}
+    \mathbf{SIGN} = \mathbf{TYPE} \varoast \mathbf{FT} + \mathbf{MEANING} \varoast \left( \sum\limits_{i=0}^{n} \beta_{i} \cdot  \mathbf{FM}_{i}  \right) + \gamma \cdot \mathbf{REASON} \varoast \mathbf{FR}, 
+\end{equation}
+
+where \textbf{FT}, $\mathbf{FM}_{i}$ for $i = 0, \ldots, n$ and \textbf{FR} are placeholders for the filler vectors and $\beta_{i} \in \mathbb{R} $ for $i = 0, \ldots, n$ and $\gamma \in \mathbb{R} $ are weighting factors.
+In case, the additional \textbf{REASON} role is not needed for a particular traffic sign, the corresponding weight factor $\gamma$ is set to \num{0}.
+For instance, the vocabulary vector encoding the traffic sign indicating danger is calculated as
+
+\begin{equation}
+\label{eq:semantic_vocab_traffic_sign_example}
+\mathbf{DANGER} = \mathbf{TYPE} \varoast \mathbf{ATTENTION} + \mathbf{MEANING} \varoast  \left(\mathbf{SLOW} + \mathbf{PREPARETOSTOP}\right).
+\end{equation}
+
+Traffic signs indicating speed limits form somewhat of a special case, as we want to encode them in such a way, that signs indicting lower speed limits are more similar to one another than to signs indicating higher speed limits.
+To achieve that, we need to encode numerical values that are closer to one another more similar than numerical values with larger intervals.
+Here, we employ a very simple encoding scheme using the function 
+\begin{equation}
+\label{eq:cosin_vec_func}
+\abb{\varphi}{i\mathbb{R}}{\mathbb{R}^{D}}{x}{\left(\sin(x), \cos(x), 0, \ldots, 0\right)}.
+\end{equation}
+In other words, we create a speed vector by setting the first two dimensions to $\sin(x)$ and $\cos(x)$ for the encoded numerical value $x \in [0,\frac{\pi}{2}]$ and all other entries to \num{0} (note that we will discuss other, more complex approaches to encode numerical values in vectors in section ~\ref{subsec:different_vector_representations_for_numerical_values}).
+We use \SI[per-mode=symbol]{200}{\kilo\meter\per\hour} as general speed limit, i.e., we map all speed limit values between \num{0} and \num{200} to the interval $\left[0, \frac{\pi}{2}\right]$ with \SI[per-mode=symbol]{200}{\kilo\meter\per\hour} $\equiv \frac{\pi}{2}$.
+
+Figure ~\ref{fig:semantic_vocab_traffic_signs_internal_similarities} shows the pairwise similarities between the manually designed semantic vectors encoding traffic signs in the \ac{GTSRB} created in the aforementioned fashion.
+As expected, we see a highly structured area in the top left corner, the speed limit signs.
+The other groups of signs (overtaking, priority, warning and direction) are also visible as triangles on the right hand side.
+All non-related entities have low similarities of less than \num{0.1}.
+Brighter spots in the large dark area to the left represent similarities across sign groups, especially, for signs related to trucks and curves or bends.
+Consequently, we were successful in manually designing a vocabulary encapsulating semantic similarity of traffic signs as an alternative to the visual vocabulary created in section ~\ref{subsec:visual_vocabularies}.
+
+\subsubsection{Traffic participants}%
+\label{ssubsec:traffic_participants}
+
+\begin{figure}[t]
+    \centering
+    \resizebox{.9\textwidth}{!}{%
+        \subfloat[\label{subfig:semantic_vocab_traffic_participants_word2vec_internal_similarities}]{%
+            \includegraphics[height=3cm]{imgs/semantic_vocab_traffic_participants_word2vec_internal_similarities.png}
+        }
+        \subfloat[\label{subfig:semantic_vocab_traffic_participants_manual_internal_similarities}]{%
+            \includegraphics[height=3cm]{imgs/semantic_vocab_traffic_participants_manual_internal_similarities.png}
+        }
+    }
+    \caption{Pairwise similarities between representative vectors encoding traffic participants in a semantic vector vocabulary. ~\protect\subref{subfig:semantic_vocab_traffic_participants_word2vec_internal_similarities} Learned with word2vec ~\protect\subref{subfig:semantic_vocab_traffic_participants_manual_internal_similarities} manually designed.}
+    \label{fig:semantic_vocab_traffic_participants_internal_similarities}
+\end{figure}
+
+As discussed in section ~\ref{subsec:what_types_of_data_to_encode_}, semantic similarity for traffic participants is hard to capture intuitively.
+We concluded that the general meaning of traffic participants is highly context-dependent, which in turn can only be learned from dynamic driving data of from a text corpus describing traffic situations.
+However, such data sets are either not available or do not even exist.
+Hence, as a first step towards the goal of encoding semantic similarity, we will therefore encapsulate the similarity between the five classes of traffic participants already discussed in section ~\ref{subsec:visual_vocabularies}, namely \emph{Bicycle}, \emph{Car}, \emph{Motorcycle}, \emph{Pedestrian}, \emph{Truck}.
+Here, we employ two different approaches: an automated learning approach making use of the well-established word embedding of the word2vec algorithm \cite{Mikolov2013} trained on the Google News data set and, similar to the semantic vocabulary of traffic signs, manual design, which is only possible due to the small size of our vocabulary.
+Word2vec is an unsupervised learning approach generating a word embedding, i.e., vectors representing every word encountered in the training text, where words that appear in similar context (close proximity within the text) are mapped to similar vectors. 
+For our purposes, we simply extract the (\num{300}-dimensional) vectors representing the objects of interest (traffic participants) from the learned vocabulary.
+The manually designed semantic vocabulary is generated similarly to the aforementioned vocabulary of traffic signs using the \ac{SPA}'s algebraic operation and the role-filler-pairs approach based on two key properties, which give good yet simple description of the traffic participant's semantic properties: speed and vulnerability represented by randomly chosen atomic vectors \textbf{SPEED} and \textbf{VULNERABILITY}.
+Hence, we encode the five classes of traffic participants through
+
+\begin{equation}
+\label{eq:semantic_vocab_traffic_participants}
+\mathbf{PARTICIPANT} = \mathbf{SPEED} \varoast \varphi(s) + \mathbf{VULNERABILITY} \varoast \varphi(v),
+\end{equation}
+
+using the encoding function $\varphi$ from equation ~\ref{eq:cosin_vec_func}.
+
+Figure ~\ref{fig:semantic_vocab_traffic_participants_internal_similarities} depicts the pairwise similarities of both, the semantic vocabulary using word2vec vectors (figure ~\ref{subfig:semantic_vocab_traffic_participants_word2vec_internal_similarities}) and the manually designed vocabulary vectors (figure ~\ref{subfig:semantic_vocab_traffic_participants_manual_internal_similarities}.
+We observe that the pre-trained word vectors from word2vec are not entirely successful to capture the kind of semantic similarity we are interested in.
+While vectors are similar to each other, the individual similarities do not always match our human understanding, especially when considering an automotive context.
+For instance, the vector encoding \emph{person} is significantly more similar to the one representing \emph{truck} than to the one representing \emph{car} while \emph{car} is the traffic participant least similar to \emph{truck}. 
+
+For the manually designed vocabulary (figure \ref{subfig:semantic_vocab_traffic_participants_manual_internal_similarities}), results are more convincing.
+We are able to achieve a higher similarity between vectors encoding \emph{car} and \emph{truck} as well as \emph{bicycle} and \emph{person} with lower similarities between \emph{person} and \emph{truck} as well as \emph{bicycle} and \emph{truck}.
+This vocabulary is also not an ideal representation but gets much closer to the desired semantic structure between these entities in an automotive context. 
 
 \subsection{Visual-semantic vocabularies}%
 \label{subsec:visual_semantic_vocabularies}
