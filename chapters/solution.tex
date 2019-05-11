@@ -378,8 +378,81 @@ This vocabulary is also not an ideal representation but gets much closer to the 
 
 \subsection{Visual-semantic vocabularies}%
 \label{subsec:visual_semantic_vocabularies}
+ 
+After having created vector vocabularies encoding visual (section ~\ref{subsec:visual_vocabularies}) and semantic similarity (section ~\ref{subsec:semantic_vocabularies}) structures, we aim to generate a vector vocabulary, which combines both aforementioned similarities in one comprehensive vocabulary.
+The idea is that for high or low similarity in both, visual and semantic domain we want the resulting vectors to preserve or even increase that similarity structure.
+For a diverging similarity in the two domains, the fusion process should somewhat dilute the two extremes resulting in vectors with medium similarity.
+Contrary to other visual-semantic fusion methods, these properties can be achieved employing again the algebraic operations of the \ac{SPA} and the role-filler-pair approach.
+Therefore, we randomly choose two additional role vectors, \textbf{VISUAL} and \textbf{SEMANTIC} and construct the visual-semantic vocabulary vectors as
+\begin{equation}
+\label{eq:visual_semantic_vocab}
+\mathbf{VISUALSEMANTIC} = \mathbf{VISUAL} \varoast \mathbf{V} + \mathbf{SEMANTIC} \varoast \mathbf{S},
+\end{equation}
 
-results from Roberts thesis
+where \textbf{V} and \textbf{S} are placeholders for the visual and semantic vocabulary vectors to be fused.
+Given the mathematical properties of the \ac{SPA}'s algebraic operations (cf.\ chapter ~\ref{chap:introduction_to_vsas}, this fusion procedure guarantees that for two similar vectors in either of the input domains, the resulting visual-semantic vectors will preserve that similarity.
+
+\subsubsection{Traffic signs}%
+\label{ssubsec:traffic_signs}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{imgs/visual_semantic_vocab_traffic_signs_internal_similarities.png}
+    \caption{Pairwise similarities between vectors encoding traffic signs in a visual-semantic vocabulary.}
+    \label{fig:visual_semantic_vocab_traffic_signs_internal_similarities}
+\end{figure}
+
+Figure ~\ref{fig:visual_semantic_vocab_traffic_signs_internal_similarities} shows the pairwise similarities of the visual-semantic vocabulary vectors representing traffic signs.
+We observe that opposite similarities from the input domains are smoothed out through the convolution-based fusion process.
+For instance, the strong visual similarity between the traffic sign indicating 'Priority ahead' and all attention signs (triangular shape, red border, black symbol in the middle), which has been clearly visible in figure ~\ref{fig:visual_vocab_traffic_signs_internal_similarities}, does not correspond to a large semantic similarity and was canceled during the fusion procedure.
+The same holds true for the clearing signs as well as for the similarities between signs indicating 'No entry trucks' and 'roundabout' and the speed limits.
+On the other hand, for those traffic signs with high semantic similarity such as between signs indicating overtaking rules for trucks and the sign indicating no entry for trucks, this similarity is preserved in the joint visual-semantic vocabulary. 
+Particularly for the speed limits, we observe that a high similarity in both domains translates into a high joint similarity, whereas in other cases, the manually designed semantic similarity is partly 'overwritten' with the visual information.
+Generally, many signs from different groups with very low semantic similarity (the dark blue block in the bottom left of figure ~\ref{fig:visual_semantic_vocab_traffic_signs_internal_similarities}) are increased by the visual part. 
+
+\subsubsection{Traffic participants}%
+\label{ssubsec:traffic_participants}
+
+\begin{figure}[t]
+    \centering
+    \resizebox{.9\textwidth}{!}{%
+        \subfloat[\label{subfig:visual_semantic_vocab_traffic_participants_word2vec_internal_similarities}]{%
+            \includegraphics[height=3cm]{imgs/visual_semantic_vocab_traffic_participants_word2vec_internal_similarities.png}
+        }
+        \subfloat[\label{subfig:visual_semantic_vocab_traffic_participants_manual_internal_similarities}]{%
+            \includegraphics[height=3cm]{imgs/visual_semantic_vocab_traffic_participants_manual_internal_similarities.png}
+        }
+    }
+    \caption{Pairwise similarities between vocabulary vectors encoding traffic participants in a visual-semantic vocabulary, where the semantic part is  ~\protect\subref{subfig:semantic_vocab_traffic_participants_word2vec_internal_similarities} learned with word2vec ~\protect\subref{subfig:semantic_vocab_traffic_participants_manual_internal_similarities} manually designed.}
+    \label{fig:visual_semantic_vocab_traffic_participants_internal_similarities}
+\end{figure}
+
+In section ~\ref{subsec:semantic_vocabularies}, we created two semantic vocabularies, which have been learned with word2vec and manually designed.
+Figure ~\ref{fig:visual_semantic_vocab_traffic_participants_internal_similarities} depicts the pairwise similarities of two visual-semantic vocabularies, where the two different vocabularies from section ~\ref{subsec:semantic_vocabularies} are used for the semantic part.
+We observe fusion results similar to those for the visual-semantic traffic sign vocabulary, where opposite similarities from the input domains are smoothed out through the convolution-based fusion process while differences in semantic structure between the two methods remain visible in the complete vocabulary.
+Consequently, the visual-semantic encoding based on manually designed semantics appear to be a convincing vector representation for the similarity structure expected for traffic participants in an automotive context.
+
+\subsection{Summary on vocabularies}%
+\label{subsec:summary_on_vocabularies}
+
+In this section, we investigated several options of generating a suitable vector vocabulary for entities of interest in an automotive context.
+We have shown a way of learning a visual structure for two classes of categories appearing in an automotive context, namely traffic signs and traffic participants using \acp{CNN}.
+Furthermore, we were able to create a learned semantic vocabulary for traffic participants, but not traffic signs due to lack of suitable training data sets.
+Hence, we designed the semantic vocabulary for traffic signs manually using the mathematical properties and algebraic operations of the \ac{SPA}.
+Furthermore, we also generate an alternative semantic vocabulary for traffic participants as a baseline to compare the learned semantic structure, which has not been adapted to the automotive context, to.
+Finally, we successfully generated a visual-semantic vocabulary encapsulating both, visual and semantic similarity by using the \ac{SPA}'s algebraic operations and the role-filler-pair approach.
+This visual-semantic vocabulary appears to represent the expected similarity structure between the entities of interest in automotive context.
+
+It is worth noting however, that the manual generation process of the semantic vocabularies, as mentioned in ~\ref{subsec:basic_random_vocabularies}, imposes a significant amount of design choices biased by the human engineer.
+However, the choice of generating some of the semantic vectors in this context manually is due to the fact, that one the one hand, the vocabulary is comparatively small while on the other hand, there are no suitable data sets available to learn the desired semantic structure from.
+Furthermore, the described procedure to fuse visual and semantic similarities into one coherent vocabulary is only one of several available options.
+It would have also been possible to try to automatically learn such a fusion process by projecting the visual vocabulary to the semantic one by combining visual properties and language descriptions like for instance in \cite{Karpathy2017}.
+However, such a learning approach again would require a suitable, sufficiently large data set, which in turn is not available for the entities investigated here.
+
+Finally, the process of generating structured representations from an available vocabulary created with any of the techniques described in this section is independent from the particular vocabulary at hand.
+Hence, although it seems intuitive and useful to encode similarities of potential interest to the task to be solved using the vector representation, it remains to be seen, if using a vocabulary encapsulating any form of similarity actually improves task performance.
+Furthermore, the choice which similarity structure to use naturally appears to be heavily task-dependent.
+Thus, we will investigate the influence of the vocabulary structure on the task performance for selected tasks in subsequent chapters of the thesis by simply evaluating the same models with changing underlying vocabularies.
 
 \section{Representation generation stage}%
 \label{sec:representation_generation_stage}
