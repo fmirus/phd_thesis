@@ -457,6 +457,32 @@ Thus, we will investigate the influence of the vocabulary structure on the task 
 \section{Representation generation stage}%
 \label{sec:representation_generation_stage}
 
+After having created a vector vocabulary suitable for a specific application of interest as shown in section ~\ref{sec:preprocessing_stage_generating_a_vocabulary}, we focus our attention in this section to the second stage of the encoding process proposed in \cite{Gallant2013}, the \emph{representation generation stage}.
+This second step is the process of actually generating structured vector representations from a given vocabulary of atomic vectors.
+As mentioned in \cite{Gallant2013}: "Although the pre-processing and output computation stage can involve significant machine learning, there are reasons for the representation generation stage to \emph{avoid} machine learning."
+Using machine learning in the stage of representation generation means to adjust the representation to the specific set of applications, which restricts them to be used for different, but related sets of problems.
+Furthermore, involving learning in the representation generation might slow down the whole system prohibiting practical usage of the representation in application scenarios.
+However, in certain situations it could make sense to involve a learning step at the representation generation stage, for example if the system should detect novelties and assign them to new vectors or representations and/or needs to memorize them.
+
+In this work however, we will focus our efforts mainly on representations which are manually designed without involving machine learning models.
+Thereby, we aim to generate representations that are general enough to be applied to a variety of different problems with only moderate modifications necessary.
+One crucial aspect in the field of automotive scene representation is encoding dynamic data such as positions or velocities, which constitutes a significant part of the situational context.
+This is essential for the representation to capture the semantics of the scene and gather a comprehensive understanding of the situation at hand.
+Depending on the application, different requirements on such a representation might be necessary.
+For instance, for some applications it might be necessary that the encoded numerical values need to be decoded back out exactly from the representing vector while for others an approximate recovery might be sufficient.
+Other tasks might demand for the representational vectors to have unit length independent from the encoded value.
+We therefore investigate several possible options of how to encode numerical values in semantic vectors focusing on different aspects of possible requirements.
+
+Encoding numerical values, although an important one, is only one aspect of representing automotive scenes in high-dimensional vectors.
+The second crucial aspect of the representation generation stage is that of how to build up vectors representing structured information and complex interrelations encountered in automotive scenes.
+We need to combine several pieces of information into one or a set of scene vectors of fixed length representing the semantics of the situation.
+We will investigate how the \ac{SPA}'s algebraic operations can be used to combine numerical and symbol-like information to build such complex representations.
+
+However, given the mathematical properties of \acp{VSA} in general and the \ac{SPA} in particular, there are natural limitations to the amount of information that can be encoded in such a vector representation.
+Every algebraic operation, addition and circular convolution, will introduce a certain amount of noise into the representation, which for some applications, imposes the functional demand for a clean-up memory (cf.\ chapter ~\ref{chap:introduction_to_vsas}).
+These limitations are actually not a flaw of such architectures, but rather a feature for being able to model limitations of cognitive functions of living beings, who are also not able to store unlimited amounts of information.
+The limitations of the modeling architecture are strongly connected to the chosen dimension of the underlying vector space.
+Therefore, we will finally analyze what kind of limitations these architectures impose on us and how much information can effectively be encoded in such a vector representation before noise reaches a critical level.
 
 \subsection{Different vector representations for numerical values}%
 \label{subsec:different_vector_representations_for_numerical_values}
