@@ -327,8 +327,9 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
 	\label{lemma:unitary_vec}
 	Let $\mathcal{U}$ be the set of unitary vectors in the $D$-dimensional \ac{SPA} $\mathcal{S}(D)$. The following statements hold
  	\begin{enumerate}[label=\roman*]
-		\item All elements of $\mathcal{U}$ have unit length, i.e. we have $\norm{u} = 1$ for any vector $u \in \mathcal{U}$.
+		\item All elements of $\mathcal{U}$ have unit length, i.e.\ we have $\norm{u} = 1$ for any vector $u \in \mathcal{U}$.
 		\item $\mathcal{U}$ is closed under convolutive exponentiation, i.e. $u^{p} \in \mathcal{U}$ for any $u \in \mathcal{U}$ and $p \in \mathbb{R}$.
+        \item The product under circular convolution of two unitary vectors is unitary, i.e.\ $u_{1} \varoast u_{2} \in \mathcal{U} $ for $u_{1}, u_{2} \in mathcal{U}.$
 		\item Convolution with unitary vectors preserves the norm, i.e. $\norm{v} = \norm{v \varoast u}$ for any $v \in \mathcal{S}(D), u \in \mathcal{U}$.
 	\end{enumerate}
 \end{lemma}
@@ -351,6 +352,18 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
 	\ac{DFT}_j\left(u^{p}\right) = \ac{DFT}_j\left(u\right)^{p} = r_j^{p}\exp\left(ip\varphi\right) = 1^{p} \cdot \exp\left(ip\varphi\right),
 	\]
 	which makes $u^{p}$ itself a unitary vector, as all magnitudes are $1$.	
+
+    Similarly, we proof that the convolution of two unitary vectors is again unitary. 
+    Let $u_{1}, u_{2} \in mathcal{U}$ be unitary vectors, then we have
+    \[
+        \ac{DFT} \left(u_1 \varoast u_2\right) = \ac{DFT} \left( \ac{IDFT} \left( \ac{DFT} \left(u_1\right) \odot \ac{DFT} \left(u_2\right)\right)\right) =  \ac{DFT} \left(u_1\right) \odot \ac{DFT} \left(u_2\right).
+    \]
+    Writing both $\ac{DFT}_j(u_1) = r_{1j}\exp\left(\varphi_{1j}\right)$ and $\ac{DFT}_j(u_2) = r_{2j}\exp\left(\varphi_{2j}\right)$ in polar coordinates, we get 
+    \[
+        \ac{DFT}_j \left(u_1 \varoast u_2\right) = r_{1j} \cdot r_{2j} \cdot \exp \left(\varphi_{1j} + \varphi_{2j}\right) = 1 \cdot \exp \left(\varphi_{1j} + \varphi_{2j}\right),
+    \]
+    as we have $r_{1j}=1$ and $r_{2j}=1$ for all magnitudes since both $u_1$ and $u_2$ are unitary vectors.
+    This in turn makes their product under convolution unitary as well.
     
 	To proof that convolution with unitary vectors preserves the norm, we use Parseval's theorem again.
 	For any vector $v \in \mathcal{S}(d)$ and  a unitary vector $u \in \mathcal{U}$, we denote $z:= v \varoast u$ and get
@@ -714,15 +727,17 @@ A common example is visualized in fig. \ref{subfig:word2vec}: subtracting the ve
 	\label{fig:word2vec}
 \end{figure}
 However, the formal reasons for successful learning of word embeddings of those approaches are not well understood \cite{Goldberg2014, Levy2015}.
+
 \subsection{Encoding structure}
 \label{subsec:encoding_struct}
+
 In section \ref{subsec:vocabs}, we have already seen that there are many ways to create vector vocabularies that encode different types of similarity.
 However, the strength of \acp{VSA} lies in the possibility to build up structured representations from atomic vectors.
 Unordered sets can be represented by simply adding up atomic vectors.
 Through the properties of the similarity measure, the sum is similar to each vector contained in the sum.
 The most common approach to incorporate structure is to use so-called role-filler pairs \cite{Gayler2003}.
 Such a pair is combined via the \ac{VSA}'s binding operation, where one vector of the pair takes the role of a variable while the other one can be considered the value of the variable.
-We have already seen a simple example of this approach in section \ref{subsec:vocabs}, where a small vocabularity representing four different classes of traffic participants was manually created.
+We have already seen a simple example of this approach in section \ref{subsec:vocabs}, where a small vocabulary representing four different classes of traffic participants was manually created.
 In \ac{NLP} applications, this approach is useful when building up vectors representing phrases from a word vector vocabulary.
 The phrase \textit{The dog chases the boy} could be encoded in a vector as
 \begin{equation*}
