@@ -33,17 +33,17 @@ Although neuromorphic computing hardware as well as the corresponding neural alg
 In this chapter, we introduce our proposed approach to encapsulate high-level information about automotive scenes in high-dimensional, semantic vectors using the \ac{SPA} as representational substrate.
 For this encoding phase, we follow the first two stages, namely \emph{preprocessing} and \emph{representation generation}, of the three-stages process established in \cite{Gallant2013} 
 The third and final stage, \emph{output computation}, will be subject of subsequent chapters, where we investigate concrete applications and use cases.
-The preprocessing stage is the step of creating a suitable vector vocabulary, whereas the representation generation stage is the process of building up structured representations from the atomic vectors within the vocabulary.
+The pre-processing stage is the step of creating a suitable vector vocabulary, whereas the representation generation stage is the process of building up structured representations from the atomic vectors within the vocabulary.
 Furthermore, we analyze how different types of data could be encoded in such a representation, we show possible variations of how to encapsulate data in vectors and how they influence the final representation.
 We also investigate potential limitations imposed bu such representations to provide insights into how many concepts can be efficiently encoded in our representations without loss of information.  
 
 
-\section{Preprocessing stage - generating a vocabulary}%
+\section{Pre-processing stage - generating a vocabulary}%
 \label{sec:preprocessing_stage_generating_a_vocabulary}
 
 Fig. ~\ref{fig:vectorization} visualizes the general flow of information of our proposed system.
 To represent high-level information about a scene in an abstract vector representation, we work with already processed data, which comes either from individual sensors, which perform their own low-level processing, or from a higher-level, central module already fusing information from several sensors.
-We simply refer to this step as \emph{environment perception} in fig. ~\ref{fig:vectorization}, whereas its output is referred to as \emph{preprocessed data}.
+We simply refer to this step as \emph{environment perception} in fig. ~\ref{fig:vectorization}, whereas its output is referred to as \emph{pre-processed data}.
 This data is typically available as lists of objects present in the current scene and is translated into a semantic vector representation by first assigning atomic vectors to entities of interest and then building up more complex, structured representations by using the \ac{SPA}'s algebraic operations.
 In this section, we will investigate the first step of assigning atomic vectors to entities of interest, i.e., creating a suitable vector vocabulary.
 We have already seen in section ~\ref{subsec:vocabs}, that such vocabularies can be created in several different ways, which we will investigate with the specific focus of encoding automotive scenes.
@@ -306,7 +306,6 @@ Given these role and filler vectors, we generate semantic vocabulary vectors enc
     \label{eq:semantic_vocab_traffic_signs}
     \mathbf{SIGN} = \mathbf{TYPE} \varoast \mathbf{FT} + \mathbf{MEANING} \varoast \left( \sum\limits_{i=0}^{n} \beta_{i} \cdot  \mathbf{FM}_{i}  \right) + \gamma \cdot \mathbf{REASON} \varoast \mathbf{FR}, 
 \end{equation}
-
 where \textbf{FT}, $\mathbf{FM}_{i}$ for $i = 0, \ldots, n$ and \textbf{FR} are placeholders for the filler vectors and $\beta_{i} \in \mathbb{R} $ for $i = 0, \ldots, n$ and $\gamma \in \mathbb{R} $ are weighting factors.
 In case, the additional \textbf{REASON} role is not needed for a particular traffic sign, the corresponding weight factor $\gamma$ is set to \num{0}.
 For instance, the vocabulary vector encoding the traffic sign indicating danger is calculated as
@@ -321,7 +320,7 @@ To achieve that, we need to encode numerical values that are closer to one anoth
 Here, we employ a very simple encoding scheme using the function 
 \begin{equation}
 \label{eq:cosin_vec_func}
-\abb{\varphi}{i\mathbb{R}}{\mathbb{R}^{D}}{x}{\left(\sin(x), \cos(x), 0, \ldots, 0\right)}.
+\abb{\varphi}{\mathbb{R}}{\mathbb{R}^{D}}{x}{\left(\sin(x), \cos(x), 0, \ldots, 0\right)}.
 \end{equation}
 In other words, we create a speed vector by setting the first two dimensions to $\sin(x)$ and $\cos(x)$ for the encoded numerical value $x \in [0,\frac{\pi}{2}]$ and all other entries to \num{0} (note that we will discuss other, more complex approaches to encode numerical values in vectors in section ~\ref{subsec:different_vector_representations_for_numerical_values}).
 We use \SI[per-mode=symbol]{200}{\kilo\meter\per\hour} as general speed limit, i.e., we map all speed limit values between \num{0} and \num{200} to the interval $\left[0, \frac{\pi}{2}\right]$ with \SI[per-mode=symbol]{200}{\kilo\meter\per\hour} $\equiv \frac{\pi}{2}$.
@@ -364,7 +363,6 @@ Hence, we encode the five classes of traffic participants through
 \label{eq:semantic_vocab_traffic_participants}
 \mathbf{PARTICIPANT} = \mathbf{SPEED} \varoast \varphi(s) + \mathbf{VULNERABILITY} \varoast \varphi(v),
 \end{equation}
-
 using the encoding function $\varphi$ from equation ~\ref{eq:cosin_vec_func}.
 
 Figure ~\ref{fig:semantic_vocab_traffic_participants_internal_similarities} depicts the pairwise similarities of both, the semantic vocabulary using word2vec vectors (figure ~\ref{subfig:semantic_vocab_traffic_participants_word2vec_internal_similarities}) and the manually designed vocabulary vectors (figure ~\ref{subfig:semantic_vocab_traffic_participants_manual_internal_similarities}.
@@ -487,34 +485,179 @@ Therefore, we will finally analyze what kind of limitations these architectures 
 \subsection{Different vector representations for numerical values}%
 \label{subsec:different_vector_representations_for_numerical_values}
 
-
 In this section, we investigate different approaches to map numerical information to semantic vectors.
-Therefore, we will focus on
-problem of how to encode numerical information (vector length vs trigonomical vs. unitary vector powers) for values of position, velocity etc.
-\subsubsection{Scalar multiplication encoding}
-\subsubsection{Sine and Cosine encoding with different frequencies and offsets}
-For vectorization of two-dimensional values, we use an encoding with sine and cosine functions with different spatial frequencies and offsets.
-Therefore, we define the following helper functions
-\[ \abb{f_{\left(m,i\right)}}{\mathbb{R}^2}{\mathbb{R}^4}{\left(x,y\right)}{\left(\cos\frac{m\cdot \pi + x}{i + 1}, \sin\frac{m\cdot \pi + x}{i + 1}, \cos\frac{m\cdot \pi + y}{i + 1}, \sin\frac{m\cdot \pi + y}{i + 1}\right)},
-\]
-\[
-\abb{\psi_i}{\mathbb{R}^2}{\mathbb{R}^4}{\left(x,y\right)}{\left(f_{\left(0,i\right)}\left(x,y\right), f_{\left(\frac{1}{2},i\right)}\left(x,y\right), f_{\left(1,i\right)}\left(x,y\right), f_{\left(\frac{3}{2},i\right)}\left(x,y\right)\right)}
-\]
-and obtain the final vector representation of acceleration in $x$/$y$-direction via the function
-\[
+We have already seen one simple option for such an encoding in section ~\ref{subsec:semantic_vocabularies}, where we used the function $\varphi$ from equation ~\ref{eq:cosin_vec_func}.
+Here, we will show a more complex adoption of this encoding again making use of the sine and cosine functions alongside two more possibilities of how to represent numerical values.
+
+\subsubsection{Sine-Cosine-based representations}%
+\label{ssubsec:sine_cosine_based_representations}
+
+The idea behind using the sine and cosine functions to encode numerical values in high-dimensional vectors is their property of adding up to \num{1} when being squared, the Pythagorean identity
+\begin{equation}
+\label{eq:pythagorean_identity}
+\sin^{2}(x) + \cos^{2}(x) = 1.
+\end{equation}
+
+For the simple encoding given in equation ~\ref{eq:cosin_vec_func} 
+\begin{equation}
+\abb{\varphi}{\mathbb{R}}{\mathbb{R}^{D}}{x}{\left(\sin(x), \cos(x), 0, \ldots, 0\right)},
+\tag{\ref{eq:cosin_vec_func} revisited}
+\end{equation}
+
+equation ~\ref{eq:pythagorean_identity} leads to the resulting vector $\varphi(x)$ having unit length, which is a desirable feature for many representations.
+
+As many of the dynamic data to be encoded in automotive context such as positions and velocities is two-dimensional, we also show a more complex adaptation of this simple trigonometrical encoding for two numerical values using different spatial frequencies and offsets.
+Therefore, we define the following auxiliary functions
+\begin{align}
+    &\abb{f_{\left(m,i\right)}}{\mathbb{R}^2}{\mathbb{R}^4}{\left(x,y\right)}{\left(\cos\frac{m\cdot \pi + x}{i + 1}, \sin\frac{m\cdot \pi + x}{i + 1}, \cos\frac{m\cdot \pi + y}{i + 1}, \sin\frac{m\cdot \pi + y}{i + 1}\right)}, \label{eq:cos_aux_1} \\
+    &\abb{\psi_i}{\mathbb{R}^2}{\mathbb{R}^4}{\left(x,y\right)}{\left(f_{\left(0,i\right)}\left(x,y\right), f_{\left(\frac{1}{2},i\right)}\left(x,y\right), f_{\left(1,i\right)}\left(x,y\right), f_{\left(\frac{3}{2},i\right)}\left(x,y\right)\right)} \label{eq:cos_aux_2}
+\end{align}
+
+and obtain the final vector representation of two-dimensional values via the function 
+\begin{equation}
+\label{eq:cosin_2d_enc}
 \abb{\lambda}{\mathbb{R}^2}{\mathbb{R}^D}{\left(x,y\right)}{\frac{1}{\sqrt{\frac{D}{2}}}\left(\psi_0\left(x,y\right), \cdots, \psi_{\frac{D}{16}-1}\left(x,y\right)\right).}
-\]
-This encoding $\lambda\left(a_x, a_y\right)$ leads to normalized, nonzero, similar vectors with information distributed over all elements (in contrast to a simple encoding like $\left(a_x, a_y, 0 \cdots, 0\right)$).
-\subsubsection{Convolutive power encoding}
+\end{equation}
+
+The encoding $\lambda\left(x, y\right)$ leads to non-zero vectors having unit length with information distributed over all elements (in contrast to a simple encoding like $\left(x, y, 0 \ldots, 0\right)$).
+Although for both trigonometrical encoding schemes shown here there is a way of decoding back out the input values exactly from resulting vector by using either the inverse trigonometrical functions or the $\atantwo$ function, both approaches have certain drawbacks.
+For instance, the simple encoding (cf.\ equation ~\ref{eq:cosin_vec_func}) uses only two of a typically large number of dimensions and thus somewhat neglects the architectural strength of \acp{VSA} being \emph{distributed} representations.
+On the other hand, the encoding of two-dimensional values based on different spatial frequencies and offsets of the trigonometrical functions uses all of the available dimensions, but is constructed for vector space dimensions being a multiple of \num{16}.
+Although this is true for all sufficiently large powers of \num{2} such as $512=2^{9}, 1024=2^{10}, \ldots$ it still imposes significant restrictions on the potential dimensions of the vector spaces to be used.
+
+\subsubsection{Scalar multiplication encoding}%
+\label{ssubsec:scalar_multiplication_encoding}
+
+\begin{figure}[t]
+    \centering
+    \subfloat[\label{subfig:scalar_encoding_decoding_rmse}]{%
+        \includegraphics[width=0.48\linewidth]{imgs/scalar_encoding_decoding_rmse.png}
+    }
+    \subfloat[\label{subfig:scalar_encoding_norm}]{%
+        \includegraphics[width=0.48\linewidth]{imgs/scalar_encoding_norm.png}
+    }
+    \caption{Properties of the simple scalar multiplication encoding of numerical values in vectors. ~\protect\subref{subfig:scalar_encoding_decoding_rmse} shows the \ac{RMSE} when decoding back out an approximation of the original numerical values from the vector representation. ~\protect\subref{subfig:scalar_encoding_norm} shows the norm of the representation vectors.}
+    \label{fig:scalar_multiplication_encoding}
+\end{figure}
+Apart from encoding numerical values in vectors as the only non-zero elements within a vector contain only zero elements elsewhere, possibly the simplest encoding is to (for instance, randomly) choose vector representing the desired entity/unit to be encoded and simply multiply all elements of that vector with the number the vector should represent.
+Hence, to encode a sequence $a_{1}, \ldots, a_{n}$ of numerical values in vectors, we create a vocabulary of vectors $\mathcal{V}=\left\{ \mathbf{X}_{1}, \ldots, \mathbf{X}_{n} \right\}$ representing the corresponding units and multiply them by the scalar values with the vectors representing the units $a_{i}\cdot \mathbf{X}_{i}$.
+Finally, summing up all of these vectors generates one single vector encoding all of the numerical values $a_{1}, \ldots, a_{n}$ 
+\begin{equation}
+\label{eq:scalar_mult_encoding}
+\mathbf{V} = \sum\limits_{i=1}^{n} a_{i}\cdot \mathbf{X}_{i}. 
+\end{equation}
+
+For $\mathbf{X}_{i} = \left(x_{i0}, \ldots, x_{iD-1}\right)^{\intercal}$, this encoding is equivalent to the linear map given by the matrix $ \mathbf{M} $ consisting of the elements of the vectors $ \mathbf{X}_{i}$ column-wise concatenated
+
+\begin{equation}
+\label{eq:scalar_encoding_linear_map}
+\mathbf{V} = \underbrace{\left(
+\begin{matrix}
+    x_{10} & \ldots & x_{n0} \\
+    \vdots & \ddots & \vdots \\
+    x_{1D-1} & \ldots & x_{nD-1} \\
+\end{matrix}
+\right)}_{=: \mathbf{M} } \cdot \left(
+\begin{matrix}
+a_{1} \\
+\vdots \\
+a_{n}\\ 
+\end{matrix}
+\right)
+\end{equation}
+
+Hence, we can use the inverse matrix $ \mathbf{M}^{-1}$ to decode back out an approximation $\hat{a}_{1}, \ldots, \hat{a}_{n}$ of the original numerical values $a_{1}, \ldots, a_{n}$ from the vector $ \mathbf{V}$ by $ \mathbf{V} \cdot \mathbf{M}^{-1}$.
+
+The error of that approximation depends on the dimension $D$ of the underlying vector space and the number of numerical values encoded in the representation.
+To analyze this error, we randomly choose numerical values $a_{1}, \ldots, a_{n}$ uniformly from the interval $ \left[0, 1\right)$ for $n=10, 20, 50,100,200,300,400,500,1000$ to be encoded as well as random, unit-length vectors $\mathbf{X}_{1}, \ldots, \mathbf{X}_{n}$ representing the numerical units, decode back out the approximations $\hat{a}_{1}, \ldots, \hat{a}_{n}$ of the original values and calculate the \ac{RMSE} between the actual values and their decoded approximations.
+Figure ~\ref{subfig:scalar_encoding_decoding_rmse} visualizes the results of this analysis for four different random trials for each vector dimension  $D=64, 256, 512, 1024$.
+We observe that we can reliable decode back out up to $50, 200, 500$ and \num{1000} numerical values from the scalar multiplication encoding for vectors of dimension $64, 256, 512$ and \num{1024} respectively with an error in the order of magnitude of \num{e-14}, which is more than enough for our purposes.
+However, figure ~\ref{subfig:scalar_encoding_norm} shows one of the drawbacks of the scalar multiplication encoding scheme.
+Although we choose the numerical values to be encoded to be lower than \num{1}, the norm of the resulting vectors becomes comparatively large for increasing vector dimension and number of numerical values encoded.
+This makes sense, as we sum up an increasingly large number of vectors having the numerical values as their length.
+This behavior will be reinforced if we use larger numerical values to be encoded.
+Another potential drawback is that we need to calculate an entire inverse matrix to decode back out the original information from the vector representation, whereas one of the key strengths of \acp{VSA} is that of decoding back out information using the \ac{VSA}' binding operation and (pseudo-) inverse vectors (cf.\ ~\ref{eq:retrieval}).
+
+\subsubsection{Convolutive power encoding}%
+\label{ssubsec:convolutive_power_encoding}
+
+In this section, we present the final and, for this work most important, encoding scheme for numerical values, which we call the \emph{convolutive power encoding}.
+The basic idea is to encode a numerical value $p \in \mathbb{R} $ as the power of a vocabulary vector $ \mathbf{X} $ representing the corresponding unit, i.e.\ $ \mathbf{X}^{p} $.
+While defining the power of a vector $ \mathbf{X}^{n} $ is straightforward for an integer exponent $ n \in \mathbb{N} $,
+\begin{equation}
+\label{eq:vector_power_integer}
+\mathbf{X}^{n} := \underbrace{ \mathbf{X} \varoast \mathbf{X} \varoast \ldots \varoast \mathbf{X} }_{\textrm{$n$ times}},
+\end{equation}
+it is not as intuitive for real-valued exponents $a \in \mathbb{R} $.
+Therefore, we revisit the convolutive vector power given in definition ~\ref{def:conv_power} 
+\begin{equation}
+\label{eq:conv_power}
+v^{p} := \Re\left(\ac{IDFT} \left(\left(\ac{DFT}_{j}\left(v\right)^{p}\right)_{j=0}^{D-1}\right)\right),
+\end{equation}
+where $\Re$ denotes the real part $a$ of a complex number $a + ib \in \mathbb{C}$.
+Equation ~\ref{eq:conv_power} enables us to encode numerical, real-numbered values $p \in \mathbb{R} $ as convolutive power $ \mathbf{X}^{p}$ and multiple numerical values $ p_{1}, \ldots, p{n}$ as
+\begin{equation}
+\label{eq:conv_power_several}
+\mathbf{V} = \mathbf{X}_{1}^{p_{1}} \varoast \mathbf{X}_{2}^{p_{2}} \varoast \ldots \varoast \mathbf{X}_{n}^{p_{n}}.
+\end{equation}
+However, as we aim to avoid the issue of growing vector lengths when encoding a increasing number of numerical values mentioned for the scalar multiplication encoding, we restrict the vectors representing the units of the numerical values to be \emph{unitary} vectors.
+Revisiting definition ~\ref{def:unitary_vec} and lemma ~\ref{lemma:unitary_vec}, a vector $ \mathbf{U}$ whose inverse element $ \mathbf{U}^{-1} $ is equal to its pseudo-inverse element $ \bar{\mathbf{U}} $ is called unitary.
+Regarding the encoding of numerical values through their power, unitary vectors have some desirable properties (cf.\ lemma ~\ref{lemma:unitary_vec}): 
+\begin{itemize}
+    \item unitary vector have unit length, i.e.\ $\norm{ \mathbf{U} }=1$,
+    \item the power of a unitary vector is again unitary, i.e.\ the set of unitary vectors $ \mathcal{U} $ is closed under convolutive exponentiation,
+    \item the product of two unitary vectors is again unitary,
+    \item convolution with unitary vectors preserves the norm of the vector they are convolved with.
+\end{itemize}
+
+Given these properties, any vector created using equation ~\ref{eq:conv_power_several} representing numerical values is a unitary vector with all its desirable properties.
+Hence, we indeed avoid the problem of growing vector norm posed by the scalar multiplication encoding.
+
+\begin{figure}[t]
+    \centering
+    \subfloat[\label{subfig:spa_power_representation_one_item}Convolutive power encoding for one two-dimensional numerical entity]{%
+        \includegraphics[width=0.9\linewidth]{imgs/spa_power_representation_one_item.png}
+    }\\
+    \subfloat[\label{subfig:spa_power_representation_two_items}Convolutive power encoding for two two-dimensional numerical entities]{%
+        \includegraphics[width=0.9\linewidth]{imgs/spa_power_representation_two_items.png}
+    }
+    \caption{
+        Visualization of the convolutive power encoding scheme for \num{512}-dimensional representation vectors depicting the similarity between the representation vector and auxiliary comparison vectors created from a sequence of discrete values.
+        The left plot in both rows shows a two-dimensional grid of the similarities, while the middle and right plot shows the individual entities respectively.
+        The red circles in the left and the dashed blue lines in the middle and right plots indicate the
+    actual encoded values.}
+    \label{fig:spa_power_encoding}
+\end{figure}
+
+As mentioned previously, we are primarily interested in a way of encoding two-dimensional values in vectors, which is why we focus our analysis of the convolutive power encoding scheme on this case.
+Hence, we encode two numerical values $x,y$, i.e.\ a two-dimensional entity, by generating two random, unitary vectors $ \mathbf{X}, \mathbf{Y} $ representing the corresponding units and applying equation ~\ref{eq:conv_power_several} 
+\begin{equation}
+\label{eq:conv_power_2d}
+\mathbf{V} = \mathbf{X}^{x} \varoast \mathbf{Y}^{y}.
+\end{equation}
+To encode a sequence $ \left(x_{i}, y_{i}\right) $ for $i=1, \ldots, n$ of two-dimensional numerical values all sharing the same units, we simply sum up a their individual encoding via equation ~\ref{eq:conv_power_2d}, which leads to
+\begin{equation}
+\label{eq:conv_power_sum}
+\mathbf{V} = \sum\limits_{i=1}^{n} \mathbf{X}^{x_i} \varoast \mathbf{Y}^{y_i}
+\end{equation}
+Figure ~\ref{fig:spa_power_encoding} visualizes vectors encoding one (cf.\ figure ~\ref{subfig:spa_power_representation_one_item} and equation ~\ref{eq:conv_power_2d}) and two two-dimensional entities (cf.\ figure ~\ref{subfig:spa_power_representation_two_items} and equation ~\ref{eq:conv_power_sum}) within one vector.
+To generate the similarities shown in figure ~\ref{fig:spa_power_encoding}, we calculate the dot product between the vectors actually representing the encoded values and vectors $ \tilde{\mathbf{V}_{i}} = \mathbf{X}^{\tilde{x}_{i}} \varoast \mathbf{Y}^{\tilde{y}_i} $ encoding a sequence of discrete samples values $ \left( \tilde{x}_{i}, \tilde{y}_{i} \right)$ for $i=1, \ldots, m$.
+The left plot in each row of figure ~\ref{fig:spa_power_encoding} depicts the similarities as heat map over a two-dimensional grid. 
+The middle and right plots in figure ~\ref{fig:spa_power_encoding} visualize the similarities of each individual unit, which is similar to plotting the heat map in three dimensions as ridges and slicing them through one of the ground axes.
+In both rows, we observe high similarity peaks way above both similarity thresholds at the actual encoded values and significantly lower similarity values everywhere else.
+However, we already encounter one the problems of this encoding scheme.
+Comparing the similarities at the positions of the encoded values, we observe a drop of similarity values from roughly \num{0.7} to \num{0.5} when encoding two two-dimensional numerical values instead of only one.
+Thus, there is a limit of how many values can effectively be encoded in such a representation before noise becomes predominant and the encoded values can not be properly recovered anymore.
+Such limitations regarding the number of concepts that can be represented in one vector depending on its dimension is a recurrent theme in the field of \acp{VSA}. 
+Furthermore, we picked a $20 \times 20$ grid to encode numerical values using the convolutive power, which shows promising representational features here.
+Although we are dealing with real-world sensor measurements in our applications, which are naturally limited by the sensors range or other physical constraints and/or can be re-scaled to a suitable numerical range, we still need to analyze further, if and why the chosen size of the grid is reasonable.
+We will further investigate these limiting factors of our representation in section ~\ref{subsec:capacity_analysis_limitations_to_vector_representations}.
 
 \subsection{Structured representations}%
 \label{subsec:structured_representations}
 
-\section{Capacity analysis - limitations to vector representations}%
-\label{sec:capacity_analysis_limitations_to_vector_representations}
-
-\subsection{Limiting factors to structured representations}%
-\label{subsec:limiting_factors_to_structured_representations}
+\subsection{Capacity analysis - limiting factors to vector representations}%
+\label{subsec:capacity_analysis_limitations_to_vector_representations}
 
 
 \begin{figure}[t]
