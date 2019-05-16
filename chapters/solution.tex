@@ -640,17 +640,17 @@ To encode a sequence $ \left(x_{i}, y_{i}\right) $ for $i=1, \ldots, n$ of two-d
 \label{eq:conv_power_sum}
 \mathbf{V} = \sum\limits_{i=1}^{n} \mathbf{X}^{x_i} \varoast \mathbf{Y}^{y_i}
 \end{equation}
-Figure ~\ref{fig:spa_power_encoding} visualizes vectors encoding one (cf.\ figure ~\ref{subfig:spa_power_representation_one_item} and equation ~\ref{eq:conv_power_2d}) and two two-dimensional entities (cf.\ figure ~\ref{subfig:spa_power_representation_two_items} and equation ~\ref{eq:conv_power_sum}) within one vector.
-To generate the similarities shown in figure ~\ref{fig:spa_power_encoding}, we calculate the dot product between the vectors actually representing the encoded values and vectors $ \tilde{\mathbf{V}_{i}} = \mathbf{X}^{\tilde{x}_{i}} \varoast \mathbf{Y}^{\tilde{y}_i} $ encoding a sequence of discrete samples values $ \left( \tilde{x}_{i}, \tilde{y}_{i} \right)$ for $i=1, \ldots, m$.
+Figure ~\ref{fig:spa_power_encoding} visualizes vectors encoding one (cf.\ figure ~\ref{subfig:spa_power_representation_one_item} and equation ~\ref{eq:conv_power_2d}) and two numerical entities (cf.\ figure ~\ref{subfig:spa_power_representation_two_items} and equation ~\ref{eq:conv_power_sum}) given by two units within one vector.
+To generate the similarities shown in figure ~\ref{fig:spa_power_encoding}, we calculate the dot product between the vectors actually representing the encoded values and vectors $ \tilde{\mathbf{V}_{i}} = \mathbf{X}^{\tilde{x}_{i}} \varoast \mathbf{Y}^{\tilde{y}_i} $ encoding a sequence of discrete sample values $ \left( \tilde{x}_{i}, \tilde{y}_{i} \right)$ for $i=1, \ldots, m$.
 The left plot in each row of figure ~\ref{fig:spa_power_encoding} depicts the similarities as heat map over a two-dimensional grid. 
 The middle and right plots in figure ~\ref{fig:spa_power_encoding} visualize the similarities of each individual unit, which is similar to plotting the heat map in three dimensions as ridges and slicing them through one of the ground axes.
 In both rows, we observe high similarity peaks way above both similarity thresholds at the actual encoded values and significantly lower similarity values everywhere else.
-However, we already encounter one the problems of this encoding scheme.
+However, we already encounter one of the problems of this encoding scheme.
 Comparing the similarities at the positions of the encoded values, we observe a drop of similarity values from roughly \num{0.7} to \num{0.5} when encoding two two-dimensional numerical values instead of only one.
 Thus, there is a limit of how many values can effectively be encoded in such a representation before noise becomes predominant and the encoded values can not be properly recovered anymore.
-Such limitations regarding the number of concepts that can be represented in one vector depending on its dimension is a recurrent theme in the field of \acp{VSA}. 
+Such limitations regarding the number of concepts that can be represented in one vector depending on its dimension are a recurrent theme in the field of \acp{VSA}. 
 Furthermore, we picked a $20 \times 20$ grid to encode numerical values using the convolutive power, which shows promising representational features here.
-Although we are dealing with real-world sensor measurements in our applications, which are naturally limited by the sensors range or other physical constraints and/or can be re-scaled to a suitable numerical range, we still need to analyze further, if and why the chosen size of the grid is reasonable.
+Although we are dealing with real-world sensor measurements in our applications, which are naturally limited by the sensors' range or other physical constraints and/or can be re-scaled to a suitable numerical range, we still need to analyze further, if and why the chosen size of the grid is reasonable.
 We will further investigate these limiting factors of our representation in section ~\ref{subsec:capacity_analysis_limitations_to_vector_representations}.
 
 \subsection{Structured representations}%
