@@ -354,7 +354,7 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
     as we have $r_{1j}=1$ and $r_{2j}=1$ for all magnitudes since both $ \mathbf{u}_1$ and $ \mathbf{u}_2$ are unitary vectors.
     This in turn makes their product under convolution unitary as well.
     
-    To proof that convolution with unitary vectors preserves the norm, we use Parseval's theorem (cf.\ equation ~\eqref{eq:parseval}) again.
+    To proof that convolution with unitary vectors preserves the norm, we use Parseval's theorem (cf.\ equation~\eqref{eq:parseval}) again.
 	For any vector $ \mathbf{v} \in \mathcal{S}(d)$ and  a unitary vector $ \mathbf{u} \in \mathcal{U}$, we denote $ \mathbf{z}:=  \mathbf{v} \varoast \mathbf{u}$ and get
 	\begin{equation}
 	\label{eq:norm_parseval}
@@ -536,7 +536,7 @@ By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)
 
 In this section, we give a brief introduction of how we can use the theory shown in sections~\ref{sec:math_prop_vsas} and~\ref{sec:spa} to represent (structured) information using \acp{VSA}.
 We give a general overview of different ways to establish vocabularies containing atomic vectors and how we can build more complex representations from those elementary ingredients.
-The authors of \cite{Gallant2013} refer to these two steps as the first two of three stages for generating structured vector representations: the \emph{pre-processing stage} (generating a vocabulary; see also section ~\ref{sec:preprocessing_stage_generating_a_vocabulary}) and the \emph{representation generation stage} (building structured representations from the vocabulary; see also ~\ref{sec:representation_generation_stage}).
+The authors of \cite{Gallant2013} refer to these two steps as the first two of three stages for generating structured vector representations: the \emph{pre-processing stage} (generating a vocabulary; see also section~\ref{sec:preprocessing_stage_generating_a_vocabulary}) and the \emph{representation generation stage} (building structured representations from the vocabulary; see also~\ref{sec:representation_generation_stage}).
 Furthermore, we will see how these representations can be implemented in \acp{SNN} using the principles of the \ac{NEF} described in~\ref{sec:neural_eng}.
 \subsection{Vocabularies}
 \label{subsec:vocabs}
@@ -585,8 +585,7 @@ These network architectures are inspired by the human visual cortex and compress
 They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf.\ figure~\ref{subfig:cnn_arch}).
 The activity of the second to last layer (the last fully-connected one before the actual classification) for each known class in the data set can be considered a representational vector for the current visual input.
 A simple way of getting a representative vector for each class is simply calculating the element-wise, normalized mean over all examples in the test set.
-We employ this approach in section ~\ref{subsec:visual_vocabularies} to generate vocabularies encapsulating the visual similarity of traffic signs and traffic participants.
-
+We employ this approach in section~\ref{subsec:visual_vocabularies} to generate vocabularies encapsulating the visual similarity of traffic signs and traffic participants.
 \begin{figure}[t]
 	\centering
 	\resizebox{.9\textwidth}{!}{%
@@ -626,9 +625,7 @@ We employ this approach in section ~\ref{subsec:visual_vocabularies} to generate
 	\caption{A schematic visualization of a \ac{CNN} network architecture with the second to last layer, whose activity can be considered a compressed, lower-dimensional representation of the high-dimensional visual input, highlighted by a red ellipsis.}
 	\label{fig:cnn_arch}
 \end{figure}
-
-A similar approach to derive vectors representing digits from $0$ to $9$ was used for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DNN} consisting of four \acl{RBM} layers.
-\todo{check this and reformulate}
+A similar approach to derive vectors representing digits from $0$ to $9$ was used for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DBN} consisting of four \acl{RBM} layers.
 This approach of using the activity of the second to last layer to generate a atomic representational vectors can be generalized to any neural network for classification with dense layers at the end.
 
 The aforementioned approach to create vector vocabularies encapsulating similarity by using neural networks, which are trained in supervised fashion, is suitable for capturing visual or auditory similarity structure in a vectors.
@@ -638,7 +635,7 @@ The objective of those procedures aims at maximizing the dot product of word vec
 For a given sentence $S=\left\{w_1, \ldots, w_n\right\}$ a context $C(w)$ of a word $w=w_i$ of size $k$ is a dynamic window of the form $C(w) = \left\{ w_{i-k}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+k}\right\}$.
 The underlying assumption is that words sharing many contexts are similar to each other, such that automated training with the aforementioned objective will produce a good word embedding.
 Surprisingly, these learning procedures lead to linguistic regularities and algebraic relations between word vectors \cite{Mikolov2013b}.
-A common example is visualized in figure~\ref{subfig:word2vec}: subtracting the vector representing $\mathbf{MAN}$ from the one representing $\mathbf{KING}$ and adding the vector representing $\mathbf{WOMAN}$ results in a vector most similar to the one representing $\mathbf{QUEEN}$, i.e., $\mathbf{KING} - \mathbf{MAN} + \mathbf{WOMAN} \approx \mathbf{QUEEN}$.
+A common example is visualized in figure~\ref{fig:word2vec}: subtracting the vector representing $\mathbf{MAN}$ from the one representing $\mathbf{KING}$ and adding the vector representing $\mathbf{WOMAN}$ results in a vector most similar to the one representing $\mathbf{QUEEN}$, i.e., $\mathbf{KING} - \mathbf{MAN} + \mathbf{WOMAN} \approx \mathbf{QUEEN}$.
 \begin{figure}[t]
 	\centering
 	\begin{tikzpicture}[%
@@ -714,10 +711,76 @@ They implement these vectors as well as their inductive learning system in a \ac
 \subsection{Implementation in \aclp{SNN}}%
 \label{subsec:implementation_in_snns}
 
-\todo[inline]{explain implementation in SNNs}
-$W = \frac{1}{ \sqrt{D-1}} \left(\zeta_{D} ^{i\cdot j}\right)_{i,j=0}^{D-1}$
+In this section, we show how \acp{VSA} and in particular the \ac{SPA} can be implemented in \acp{SNN}.
+In section~\ref{subsec:nef_representation}, we have already discussed the representation principle of the \ac{NEF}, that allows to encode time-varying vectors in the activity of populations of spiking neurons using equation~\eqref{eq:nef_encoding}.
+Given that all representations of entities in the \ac{SPA} are vectors, we can directly apply equation~\eqref{eq:nef_encoding} to encode any vector representation generated using the principles and algebraic operations of the \ac{SPA}.
+Similarly, we can employ equation~\eqref{eq:nef_decoding} to decode back out the original vector from the neurons' activities.
+However, to manipulate the encoded vectors into structured representations using the \ac{SPA}'s algebraic operations, we also need to be able to implement these operations in networks of spiking neurons.
+Again, the tools of the \ac{SPA} allow this implementation.
+The implementation of element-wise addition of vectors is straightforward: assuming we have created a neural populations $A$ and $B$ encoding the vectors $ \mathbf{v}$ and $ \mathbf{w}$ respectively using equation~\eqref{eq:nef_encoding}, we can now use the transformation principle and equation~\eqref{eq:nef_transformation} to connect \emph{both} populations $A$ and $B$ to a third population $C$ with both connections approximating the identity function.
+The population $C$ receiving input from both populations $A$ and $B$ will end up representing an approximation of the sum $ \mathbf{v}+ \mathbf{w}$.
+
+Similarly, we can use the \ac{NEF}'s principles to implement the \ac{SPA}'s binding operation, circular convolution, in a network of spiking neurons.
+Revisiting equation~\eqref{eq:conv_with_dft}, we can write the circular convolution of two vectors $ \mathbf{z} = \mathbf{v}, \mathbf{w}$ as
+
+\begin{equation}
+    \mathbf{z} = \mathbf{v} \varoast \mathbf{w} = \ac{IDFT}\left(\ac{DFT}( \mathbf{v}) \odot \ac{DFT}( \mathbf{w}) \right). \tag{\ref{eq:conv_with_dft} revisited}
+\end{equation}
+
+We can consider the \ac{DFT} and \ac{IDFT} as linear functions given by the matrices
+
+\begin{equation}
+\label{eq:dft_mat}
+W = \frac{1}{ \sqrt{D-1}} \left(\zeta_{D} ^{i\cdot j}\right)_{i,j=0}^{D-1} \qquad
+W^{-1} = \frac{1}{ \sqrt{D-1}} \left(\zeta_{D} ^{-i\cdot j}\right)_{i,j=0}^{D-1}
+\end{equation}
+and thus write circular convolution as matrix multiplication
+
+\begin{equation}
+\label{eq:circ_conv_mat}
+\mathbf{z} = \mathbf{v} \varoast \mathbf{w} = W^{-1} \left( \left(W \mathbf{v}\right) \cdot \left(W \mathbf{w}\right)\right).
+\end{equation}
+Applying the \ac{NEF}'s transformation principle, we can implement circular convolution in a spiking neuron substrate.
+To finally be able to unbind vectors, i.e., calculate $ \mathbf{v} = \mathbf{z} \varoast \bar{\mathbf{w}}$ using the pseudo-inverse element $ \bar{ \mathbf{w}} = \left(w_0, w_{D-1}, w_{D-2}, \ldots, w_{1}\right)$ (cf.\ Lemma~\ref{lemma:spa_pseudo_inv}), we can adapt equation~\eqref{eq:circ_conv_mat}.
+The function transforming a vector into its pseudo-inverse element is a simple permutation of elements given by the matrix 
+\begin{equation}
+\label{eq:mat}
+C_{pinv} = \left(
+    \begin{matrix}
+        1 & 0 &  \cdots & 0  & 0 \\
+        0 & 0 &  \cdots & 0  & 1 \\
+        0 & 0 &  \cdots & 1  & 0 \\
+        \vdots & \vdots  & \iddots & \vdots  & \vdots \\
+        0 & 1 &  0 & \cdots  & 0 
+    \end{matrix}
+\right),
+\end{equation}
+which allows us to transform equation ~\eqref{eq:circ_conv_mat} into
+\begin{equation}
+\label{eq:unbind_mat}
+\mathbf{v} \approx \mathbf{z} \varoast \bar{ \mathbf{w}} = W^{-1} \left( \left(W \mathbf{z}\right) \cdot \left(W \cdot C_{pinv} \mathbf{w}\right)\right).
+\end{equation}
+The implementation of a \ac{SNN} performing a biologically plausible version of a cleanup memory employing the \ac{NEF} is shown in \cite{Stewart2011}.
+Thus, applying the principles of the \ac{NEF}, we can represent the representational vectors of the \ac{SPA} in the activity of populations of spiking neurons and implement its algebraic operations in networks of spiking neuron populations.
+A subtle detail worth noting with regard to implementing \acp{VSA} in \acp{SNN} is that the vectors used for representing concepts or entities of interest are \emph{not} vectors of neural activity.
+That is, there are two distinct representational vector spaces: the space of neural activities (i.e., measurable properties like spike patterns) and the vector space used to generate the vocabulary and structured representations vectors which in turn are represented by the activities of populations in the neural space (see \cite{Eliasmith2013} for further details).
+
+There are several reasons for implementing cognitive architectures like the \ac{SPA} in a spiking neuron substrate.
+Regarding the application of vector-based representations in cognitive modeling, it makes sense to consider an implementation in neural activity, since the biological systems able to perform cognitive tasks are also systems of neural networks.
+Hence, when generating models of some cognitive function or behavior such as the model for inductive rule generation applied to \acp{RPM} in \cite{Rasmussen2011}, implementation in a spiking neuron substrate allows to compare the model's neural activity with neural activity measured in the brain of human subjects performing a similar task.
+Such a comparison enables more detailed model analysis and improvements by allowing researchers to draw inspirations from actual biological systems.
+Considering applications of the \ac{SPA} in domains such as automated driving as proposed in later chapters~\ref{chap:driving_context_classification},~\ref{chap:behav_pred} and~\ref{chap:mix_online_learning}, the possibility of implementation in a spiking neuron substrate is particularly interesting in terms of energy-efficiency.
+As discussed in section~\ref{sec:neuromorphic_HW}, there exists a growing number of neuromorphic hardware devices dedicated to efficiently processing networks of spiking neurons.
+Such dedicated computing hardware allows to run \acp{SNN} more efficiently than traditional computing hardware, which often requires several orders of magnitude less energy \cite{Hunsberger2016}.
+This is particularly interesting in mobile applications such as robotic systems or, more particularly, automated driving which poses increasingly strong restrictions on the energy-budget of individual components due to growing setups of both, on-board sensors and computing hardware.
+Since these novel computing devices are not yet available as commercial products but rather prototypes developed in academic research, the deployment of the models developed in this thesis on neuromorphic computing hardware integrated into a vehicle's architecture is unfortunately out of scope of this thesis. 
 
 \section{Summary}
-In this chapter, we have introduced the theoretical background and mathematical properties of \aclp{VSA} and established a formal notation to be used in subsequent chapters.
-Furthermore, we gave a brief description of the \acl{NEF} and showed how it can be used to implement vector representations, in particular the \acl{SPA}, in \aclp{SNN}.
-Finally, we have introduced the basic principles of cognitive modeling with \acp{VSA} and how structured representations can be built from atomic vectors.
+In this chapter, we have introduced the theoretical background and mathematical properties of \aclp{VSA}, which is the basis for subsequent chapters.
+Furthermore, we established a formal, mathematical notion for \acp{VSA} in general (section ~\ref{sec:math_prop_vsas}), which, to the best or our knowledge, is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \cite{Plate1994}, \cite{Gayler1998} or \cite{Kanerva2009}.
+The we shifted our focus to one particular \ac{VSA}, the \ac{SPA}, presenting its most important aspects and properties with respect to subsequent chapters of the thesis.
+Furthermore, we gave a brief description of the \acl{NEF}, which is typically used to implement large-scale neural models of spiking neurons such as the one presented in \cite{Eliasmith2012}.
+Finally, we have introduced the basic principles of cognitive modeling using \acp{VSA} in general and the \ac{SPA} in particular.
+We showed several general approaches to generate vocabularies of atomic vectors, which form the basis of more complex structured representations built from the using the \ac{VSA}'s algebraic operations.
+Finally, we connected the mathematical description and theory of both, the \acp{VSA} and the \ac{NEF} by depicting how the \ac{NEF} can be used to implement the \ac{SPA} in a spiking neuron substrate, which offers interesting possibilities regarding energy-efficiency in mobile applications such as automated driving.
+We will use the theory and findings shown here in subsequent chapters to derive vector-based representations of automotive data measured and collected in actual driving situations to tackle tasks like classifying the current driving context or prediction the future development of the scene based on past observations.
