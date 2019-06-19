@@ -1,5 +1,18 @@
-\chapter{Closed-loop neuromorphic systems}%
-\label{chap:closed_loop_neuromorphic_systems}
+\chapter{Closed-loop neuromorphic control systems}%
+\label{chap:closed_loop_neuromorphic_control_systems}
+In this chapter, we present a first step towards a neuromorphic control architecture, that can be used to implement generic control algorithms in the language of \acp{SNN}.
+This offers the the advantage, that the overall task can be divided into several sub-networks.
+We develop two sample instantiations of neurally-inspired control algorithms, namely for mobile robot manipulation and vehicle trajectory control based on reinforcement learning.
+Here, we partly depart from the application of automated driving unsing real-world data, which is an intentional choice.
+As mentioned earlier, control of an automated vehicle is an extremely safety-critical task.
+Furthermore, current vehicle hardware architectures are designed neither to include neuromorphic hardware nor to efficiently process \acp{SNN}.
+Therefore, we demonstrate the general feasibility of this neuromorphic control architecture on the task of bringing order in a sequence of unorderd visual stimuli detected using a neuromorphic vision sensor, the \ac{DVS} (section~\ref{sec:sensorimotor_adaptation_for_mobile_robotic_manipulation}). 
+The second demonstration scenario is closer to automotive context, presenting system employing reinforcement learning for short-term vehicle trajectory planning evaluated in the simulated environment of the \acf{TORCS} \cite{TORCS}.
+Both applications demonstrate certain aspects of the control architecture: the mobile manipulation tasks shows how the principles of neural engineering can be used to manually program non-trivial tasks in the a spiking neural substrate.
+This can be useful, to either bootstrap learning to improve task performance without having to starte the process from an initial blank state or to complement learning networks with manually designed networks involving human expert knowledge.
+The second task presents such a combination in an instantiaton of the neuromorphic control architecture, with a trajectory selection module employing reinforcement learning while all other modules are manually designed for simplicity.
+This also allows to train and validate learning system soving certain sub-tasks decoupled from the rest of the system.
+
 
 \section{Sensorimotor adaptation for mobile robotic manipulation}%
 \label{sec:sensorimotor_adaptation_for_mobile_robotic_manipulation}
@@ -34,7 +47,6 @@ Such information is communicated through spikes, representing a quantized change
 The mobile platform is equipped with a $6$-axis robotic arm with a working space between \SI{10}{\centi\metre} and \SI{41}{\centi\metre}. 
 The robotic arm is composed of a set of links connected together by revolute joints and has a lifting weight force up to \SI{800}{\gram}. 
 The mobile platform contains an on-board battery of \SI{12}{\volt} @ \SI{30}{\amperehour}; thereby providing a total of \SI{360}{\watt}, which allows autonomous operation for well above \SI{5}{\hour}.
-% FIGURE 1
 
 \begin{figure}[t]
     \centering
@@ -121,7 +133,7 @@ Our long-term research goal is to apply these learning systems to the programmed
     \end{tikzpicture}}
 }
     \caption{Schematic visualization of two neural networks computing a complex function $m=h(f(x), g(w))$:
- ~\protect\subref{subfig:combined_net} shows a combined network computing $m=h(f(x),g(w))$ while the network in ~\protect\subref{subfig:direct_net} computes the function directly.
+~\protect\subref{subfig:combined_net} shows a combined network computing $m=h(f(x),g(w))$ while the network in~\protect\subref{subfig:direct_net} computes the function directly.
 }
 \end{figure}
 
@@ -224,7 +236,7 @@ This behavior simply moves the arm from its holding position to a position suita
         }
     }
     \caption{Schematic visualization of two sub-networks of our model with sets of white circles indicating neural populations while boxes depict sub-networks.
-        ~\protect\subref{subfig:omni_bot_out_of_order_net} shows the \emph{Out of Order} network, which detects if one frequency does not fit the assumed order as target and keeps this object’s information in a memory.
+       ~\protect\subref{subfig:omni_bot_out_of_order_net} shows the \emph{Out of Order} network, which detects if one frequency does not fit the assumed order as target and keeps this object’s information in a memory.
 ~\protect\subref{subfig:omni_bot_grab_net} illustrates the \emph{TaskGrab} network, which finds an object and grabs it.
 }
     \label{fig:omni_bot_nets}
@@ -235,10 +247,11 @@ Assuming the objects' blinking frequencies are given in descending order, this n
 Furthermore, the network detects those frequencies, which should be the neighbors of our detected target if in correct order and keeps their information in a memory as well.
 Figure \ref{subfig:omni_bot_out_of_order_net} gives a schematic visualization of the network and its individual components.
 The $x$-values ensemble encodes $x$-positions of stimuli in \ac{DVS}-image, the diff ensemble encodes pairwise differences between $x$-positions, the negative-min ensemble indicates if the minimal difference is negative, odd encodes the frequency, which is out of order (inhibited by negative min when all differences are positive), the evidence networks integrate evidence for the target object and the neighbor frequencies if in correct order.
-Figure \ref{subfig:omni_bot_out_of_order_net_behavior} shows an example of actual \ac{DVS} input data from the embedded tracking algorithm as well as the decoded output of the network’s subcomponents activity: during the first \SI{5}{\second} the stimuli are in correct descending order from left to right in the \ac{DVS}-image (Fig. \ref{subfig:omni_bot_out_of_order_net_behavior} a), so the minimum pairwise difference is non-negative (Fig. \ref{subfig:omni_bot_out_of_order_net_behavior} b and \ref{subfig:omni_bot_out_of_order_net_behavior} c). 
-In the interval \SIrange{5}{15}{\second}, the \SI{250}{\hertz} stimulus is put between the \SI{150}{\hertz} and \SI{200}{\hertz} stimuli, so now the sequence is out of order and the \SI{250}{\hertz} frequency is detected by the odd ensemble (Fig. \ref{subfig:omni_bot_out_of_order_net_behavior} d) while the evidence networks integrate accordingly (Fig. \ref{subfig:omni_bot_out_of_order_net_behavior} f-h). 
-Starting from around \SI{15}{\second} the \SI{250}{\hertz} and \SI{350}{\hertz} stimuli are interchanged and the network's outputs change accordingly (Fig. \ref{subfig:omni_bot_out_of_order_net_behavior} a-d).
-However, the evidence networks - as desired - still keep the information about the old target until a forget mechanism (Fig. \ref{subfig:omni_bot_out_of_order_net_behavior} e) is triggered in the interval \SIrange{20}{25}{\second} allowing the evidence networks to recover for new input (Fig. \ref{subfig:omni_bot_out_of_order_net_behavior} f-h).
+Figure \ref{subfig:omni_bot_out_of_order_net_behavior} shows an example of actual \ac{DVS} input data from the embedded tracking algorithm as well as the decoded output of the network’s subcomponents activity: during the first \SI{5}{\second} the stimuli are in correct descending order from left to right in the \ac{DVS}-image (first plot in the left column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}), so the minimum pairwise difference is non-negative ( second and third
+plots in the left column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}). 
+In the interval \SIrange{5}{15}{\second}, the \SI{250}{\hertz} stimulus is put between the \SI{150}{\hertz} and \SI{200}{\hertz} stimuli, so now the sequence is out of order and the \SI{250}{\hertz} frequency is detected by the odd ensemble (last row in the left column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}) while the evidence networks integrate accordingly (second to last row in the right column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}). 
+Starting from around \SI{15}{\second} the \SI{250}{\hertz} and \SI{350}{\hertz} stimuli are interchanged and the network's outputs change accordingly (left column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}).
+However, the evidence networks - as desired - still keep the information about the old target until a forget mechanism (first row of the right column in Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}) is triggered in the interval \SIrange{20}{25}{\second} allowing the evidence networks to recover for new input (right column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}).
 
 \paragraph{Perform Grasping Action} 
 \label{grasp}
@@ -265,9 +278,9 @@ This positions the robot such that it can move forward and grab the object.
 Finally, if the robot is at the correct distance from the object (as measured by binocular disparity), and it's right in front of it, then it closes the gripper. 
 This combination of actions serves to successfully grab the object. 
 Figure \ref{subfig:omni_bot_grab_net} gives a schematic visualization of this network.
-The \emph{TargetInfo} ensemble encodes sensory information ($x$- and $y$-position in the image, as well as radius and track-certainty for each \ac{DVS}) of the target object (coming from the evidence sub-network in the out of order network), which serves as input for the low-level behaviors.
-The has-grabbed ensemble keeps the information once the object was grabbed in memory to indicate this task finished successfully.
-Figure \ref{subfig:omni_bot_grab_net_behavior} shows the activation levels of the high- and low-level behaviors (Fig. \ref{subfig:omni_bot_grab_net_behavior} a and \ref{subfig:omni_bot_grab_net_behavior} b) as well as the sensory information the behaviors make use of, namely tracking certainty and disparity and $x$-position of the target object in the arm retina (Fig. \ref{subfig:omni_bot_grab_net_behavior} c and \ref{subfig:omni_bot_grab_net_behavior} d respectively). 
+The \emph{TargetInfo} ensemble encodes sensory information ($x$- and $y$-position in the image, as well as radius and track-certainty for each \ac{DVS}) of the target object (coming from the \emph{evidence} sub-network in the out of order network), which serves as input for the low-level behaviors.
+The \emph{has-grabbed} ensemble keeps the information once the object was grabbed in memory to indicate this task finished successfully.
+Figure \ref{subfig:omni_bot_grab_net_behavior} shows the activation levels of the high- and low-level behaviors (first two rows of Fig. \ref{subfig:omni_bot_grab_net_behavior}) as well as the sensory information the behaviors make use of, namely tracking certainty and disparity and $x$-position of the target object in the arm retina (last two rows in Fig. \ref{subfig:omni_bot_grab_net_behavior}). 
 
 \paragraph{Hold Object and Move To Goal Position} 
 \label{holdmoveside}
@@ -292,7 +305,7 @@ Figure \ref{subfig:omni_bot_grab_and_sort_net_behavior} shows the activation lev
         }
     }
     \caption{Schematic visualization of two networks of our model with sets of white circles indicating neural populations while boxes depict sub-networks.
-        ~\protect\subref{subfig:omni_bot_hold_and_move_net} shows the \emph{HoldAndMove} network, while ~\protect\subref{subfig:omni_bot_grab_and_sort_net} illustrates the complete Sorting network.
+       ~\protect\subref{subfig:omni_bot_hold_and_move_net} shows the \emph{HoldAndMove} network, while~\protect\subref{subfig:omni_bot_grab_and_sort_net} illustrates the complete Sorting network.
 The boxes in the lower part visualize the subtask-networks, which are activated by the upper network chain for action selection incorporating the Basal Ganglia and Thalamus networks pre-implemented in \ac{Nengo}.
     }
     \label{fig:omni_bot_nets_sort}
@@ -331,13 +344,13 @@ Once the robot picked up the target object and built up sufficient evidence, the
 As soon as the robot reached its goal position between the neighbor objects and the according network built sufficient evidence, the \emph{PutDown} behavior to put down the target object is activated. 
 As soon as this behavior is completed, the whole sequence is wrapped up by activating the \emph{Finish} behavior. 
 Figure \ref{subfig:omni_bot_grab_and_sort_net} gives a schematic visualization of the network. 
-Figure \ref{fig:omni_bot_example_run} illustrates the most important stages of one example run while Figure \ref{subfig:omni_bot_grab_and_sort_net_behavior} gives a visualization of the decoded output of the network’s components: once the Out of Order network detected the target object (roughly the first 5 s), the Grab behavior is activated to find grasp the target object (Fig. \ref{fig:omni_bot_example_run} a-c, Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}, t = 8s - 26s). 
+Figure \ref{fig:omni_bot_example_run} illustrates the most important stages of one example run while Figure \ref{subfig:omni_bot_grab_and_sort_net_behavior} gives a visualization of the decoded output of the network’s components: once the \emph{Out of Order} network detected the target object (roughly the first \SI{5}{\second}), the \emph{Grab} behavior is activated to find and grasp the target object (Fig. \ref{fig:omni_bot_example_run} a-c, Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}, t = 8s - 26s). 
 The different low-level behaviors for orientation and navigation are enabled based on the certainty and disparity of the tracked stimuli. 
-Once the robot grabbed the target object, the Basal Ganglia activates the Hold and Move Side behavior \ref{holdmoveside} (Fig. \ref{fig:omni_bot_example_run}d-e, Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}, t = 26s - 39s). 
+Once the robot grabbed the target object, the \emph{Basal Ganglia} activates the \emph{HoldAndMoveSide} behavior (Fig. \ref{fig:omni_bot_example_run}d-e, Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}, t = 26s - 39s). 
 
-The main sensory input in this phase is the $x$-position of the neighbor objects (Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior} e). 
-A clear indicator for successful pick-up is the decrease of certainty in the base-retinas (Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior} d). 
-Once the robot reached its goal position between the neighboring objects, the Put Down behavior \ref{putdown} is activated (Fig. \ref{fig:omni_bot_example_run} f-g). 
+The main sensory input in this phase is the $x$-position of the neighbor objects (last row in Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}). 
+A clear indicator for successful pick-up is the decrease of certainty in the base-retinas (forth row in Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}). 
+Once the robot reached its goal position between the neighboring objects, the \emph{PutDown} behavior is activated (Fig. \ref{fig:omni_bot_example_run} f-g). 
 Finally the whole task is wrapped up by the Finish behavior and all other behaviors are deactivated (Fig. \ref{fig:omni_bot_example_run} h) to put the robot back into resting position.
 
 \begin{figure}[t]
@@ -535,5 +548,17 @@ These modules could be trained separately or jointly to evaluate applicability o
 
 \section{Summary}%
 \label{sec:summary_closed_loop_systems}
+
+In this chapter, we have presented a first step towards a neuromorphic control architecture.
+Due to the abscene of a suitable vehicle demonstrator, lacking integration of neuromorphic prototypes into current vehicle hardware architectures and finally due to safety considerations, we have demonstrated the general feasibility of such a neuromorphic control architecture in two sample instantiation.
+First, we presented a proof-of-concept implementation of a non-trivial mobile robot manipulation taks in the substrate of \acp{SNN}.
+We showed, that our architecture can be used to induce human expert knowledge into neural task implemenetations.
+Such manually designed networks can either be used to complement other, decoupled learning networks or serve as a basis to bootstrap learning to avoid starting the training procedure from a completely blank state.
+The second proof-of-concept implementation combines manual designed and automatically learned networks in the context of short-term vehicle trajectory planning.
+We use reinforcement learning in \acp{SNN} to select trajectories for a classical controller, which is decoupled from the learning network.
+Thereby, we demonstrate that neuromorphic principles can be used in the context of vehicle control.
+However, todays vehicle architectures are not designed yet to integrate neuromorphic hardware, which on the other hand have not reached the technical and commcercial maturity to be integrated in such architectures.
+This lack of integration prohibits the adoption of any algorithm implemented in a spiking neuron substrate into vehicle applications, since the advantages of this algorithmic substrate are closely coupled to energy-efficient deployment on dedicated hardware.
+That is, one of the unique strengths of \acp{SNN} in contrast to more traditional learning apporaches is their ability to be efficiently processed on neuromorphic hardware mostly leading to a trade-off between efficiency and higher accuracy delivered by traditional approaches.
 
 
