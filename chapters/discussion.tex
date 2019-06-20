@@ -1,4 +1,125 @@
-\chapter{Discussion}
-\section{Interpretation of results}
-\section{Conclusion}
-\section{Future work}
+\chapter{Discussion}%
+\label{chap:discussion}
+
+This thesis presented a novel perspective on several automotive tasks with regard to cognitive modeling and/or neuromorphic principles, particularly representation of the environment around the vehicle.
+After giving an overview on recent research in the field of neuromorphic engineering regarding both hardware and software, cognitive modeling as well as automated driving in chapter~\ref{chap:research_context}, we proceeded to the theoretical background in chapter~\ref{chap:introduction_to_vsas}, the backbone of the thesis.
+We established a coherent mathematical formalism to describe the theory and properties behind \acp{VSA}, a family of modeling techniques deploying representations based on high-dimensional vectors.
+In this coherence, such a description is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \cite{Plate1994}, \cite{Gayler1998} or \cite{Kanerva2009}.
+We proceeded to describe the theory of the \ac{SPA}, a special case of the general construct of \acp{VSA}.
+We presented essential features like circular convolution, unitary vectors and convolutive powers, which form the basis of structured representations used in later chapters.
+Following \cite{Eliasmith2003}, we presented a brief introduction to the \ac{NEF} and showed how its principles can be applied to implement the \ac{SPA} in a spiking neuron substrate.
+Finally, we introduced established approaches to generate structured representations to build cognitive models from them to be used in later chapters.
+
+In chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes}, we established our general approach to represent automotive scenes in the representational substrate of the \ac{SPA}.
+Following the workflow of \cite{Gallant2013}, we present first present different options to generate vocabularies of atomic vectors and secondly, how to generate structured representations from them. 
+We proposed several approaches to encapsulate different structures such as visual similarity, semantic similarity and a combination of both in vector vocabularies.
+We focus on encoding entities typically occurring in automotive context, namely traffic signs and traffic participants.
+While manual vocabulary design is feasible and demonstrated in this context of such rather small vocabularies, we also successfully demonstrated approaches to automatically learn such vocabularies based on \ac{CNN} learning systems for visual similarity and unsupervised word embedding algorithms like word2vec for semantic similarity.
+Proceeding to structured representations based on atomic vocabularies, we present several approaches to encapsulate numerical or, more particularly, spatial information in a vector substrate.
+The main contribution was the introduction of a representation for spatial information using the convolutive power established in chapter~\ref{chap:introduction_to_vsas}.
+We concluded the chapter with an experimental analysis of the amount of information, that can effectively be stored in structured vector representations.
+We analyzed the capacity of such representations for simple superposition of concepts as well as superpositions of vector encapsulating spatial information using the convolutive power yielding upper bounds for the total number of concepts or objects being encoded.
+ 
+Starting with chapter~\ref{chap:driving_context_classification}, we proceeded to the third stage as proposed in \cite{Gallant}, which was omitted in chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes}: the output computation stage or, in other words, applying our vector representations to particular tasks.
+We presented a spiking neuron model learning to classify the current driving context based on a vector representation of the current scene from real-world driving data.
+This model made use of one of the key strengths of vector representations, namely being able to combine symbol-like manipulation with neural network learning.
+We demonstrated that our model is able to capture the semantics of the scene to successfully classify the current driving context.
+Comparing the model's performance with a traditional deep network trained on the same input data, a \ac{CNN} trained on raw visual input as well as human level-performance, we demonstrated that the representation was successful in abstracting away visual features irrelevant for the task at hand.
+However, the data set used in this chapter has clear limitations in terms of size and diversity with human bias being imposed through the manual labeling process.
+We concluded the chapter by analyzing the influence of structured vocabularies created in chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes} on the model's performance. 
+Although imposing more structure into led to measurable differences in the models classification accuracy, most of the structured vocabularies only deteriorated performance with only the visual-semantic vocabulary achieving subtle improvements.
+We assume that limited amount of data as well as the rather small vocabulary, with not even all vectors absorbing the similarity structure, are the main reasons for these results.
+
+Proceeding to another essential task in automotive context in chapter~\ref{chap:behav_pred}, we encapsulated spatial positions of several objects into one coherent vector representation using the convolutive power and trained several learning models to predict the future trajectory of one target vehicle based on that vector representation.
+On the one hand, we employed traditional deep learning models based on \ac{LSTM} cells to predict the future trajectory based on a sequence of semantic vectors and compared them to similar networks making prediction based on other, reference encoding schemes of the input data and a simple linear predictor.
+Evaluating these systems on two real-world driving data sets, we observed subtle performance nuances without any model clearly outperforming the others while simple linear prediction already offers solid prediction accuracy especially for short term horizons.
+The main reason for this result is the composition of both data sets with straight driving constituting the majority of the samples compared to more challenging maneuvers such as lane changes.
+However, we were able to demonstrate that the models using the convolutive power representation tended to perform better in situations where the target vehicle drives close to other vehicles in crowded situations.
+Furthermore, the model was able to predict lane change situation better than all other models when trained on a subset of the training data consisting these particular situations, whereas the other models did not show a similar adaptation behavior.
+Hence, we expect the models to improve with a more balanced data set since the data sets used in this work show a strong imbalance towards straight driving compared to lane change maneuvers.
+Finally, we observed when training an unsupervised learning algorithm for detecting anomalies on the convolutive vector representation, that it tended to label crowded situations with a higher number of vehicles driving close to the target as outliers.
+Therefore, we conclude, that the encoding the scene are able to capture the essential semantics of the spatial information of the driving scene.
+Additionally, we compared the \ac{LSTM} models to simpler single-layer \acp{SNN}, which achieved results slightly worse, but comparable to the more complex networks.
+
+In chapter~\ref{chap:mix_online_learning}, we extended our work on vehicle trajectory prediction by developing a novel, mixture-of-experts online learning model trained at run time to refine the anticipations of several individual prediction models using delta-rule learning and spiking neurons.
+We tackled the issue of delayed error signals introducing potentially long lags into the learning process through a temporal spreading of the error signal.
+That is, the model delays the error signal of earlier prediction step to later prediction steps assuming that the general direction of the error is the same for earlier and further prediction horizons.
+We presented a context-free model variant updating its weights simply based on the prediction error as well as a model incorporating the current driving context.
+We used the indicators for crowded situations identified in chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes} as description for this context.
+We conducted a thorough analysis and showed, that this context-sensitive model performs significantly better than the context-free version.
+Furthermore, we showed that the model employing temporal spreading is successful in learning to predict trajectories already after being presented with a small number of vehicles.
+
+Finally in chapter~\ref{chap:closed_loop_neuromorphic_control_systems}, we introduced a neuromorphic control architecture to provide a first step towards linking the more knowledge representation and higher-level tasks of earlier chapters to actual control. 
+We showed, that implementing control algorithms in this spiking neuron substrate has two key advantages: it allows to manually program certain networks inducing human expert knowledge while employing automated learning in other, decoupled models, which can be validated separately.
+Furthermore, the manually implemented networks could function as initialization of the learning networks to refine task performance by bootstrapping the learning process instead of starting from a completely blank state.
+We demonstrated these principles on two proof-of-concepts implementations: a non-trivial mobile robot manipulation task as well as a simple reinforcement learning model short-term vehicle trajectory control in a simulated environment.
+
+\section{Conclusion and outlook}%
+\label{sec:conclusion_and_outlook}
+
+The results achieved in this thesis allow a novel perspective on knowledge representation, modeling and computation in automotive context through distributed representations and \acp{SNN}.
+We introduced a novel kind of representational substrate to encapsulate automotive scenes in high-dimensional vectors that additionally can be implemented in the language of \acp{SNN}.
+After evaluating the properties and limitations of this representation approach, we applied it to two automotive tasks, namely driving context classification and vehicle trajectory prediction.
+One key feature of vector representations is their distributed nature as well as their ability to encapsulate symbol-like concepts as well as numerical information.
+We learned however, that there are certain limitations depending on the dimension of the representational vector space to the amount of information the vectors are able to capture.
+We presented upper bounds for simple superposition representations as well as more complex encodings of spatial structures employing convolutive powers.
+However, these bound impose specific limitations on the representations themselves: when encapsulating increasingly complex structures through the architecture's algebraic operations, the limits enforce a certain focus on the most relevant features to encode.
+
+Additionally, our analysis in chapter~\ref{chap:driving_context_classification} showed, that encoding certain similarity structures within the underlying vector vocabularies themselves does not necessarily improve the performance of downstream learning models employing such representations.
+Hence, the good care has to be taken when deciding for similarities to be encoded in the vector vocabulary since random vocabularies, although not following an inherent structure, already have some desirable properties.
+Furthermore, it might be beneficial, to generate several vocabularies to encode different similarities to encode several aspects of the same concepts.
+For instance, we as human have a very wide understanding of perceived entities for example visual appearance, sound, smell, taste or their linguistic meaning: the word \emph{apple} can stand for a fruit with a certain look, taste and smell, while it also could be referring to several electrical devices.
+This approach of generating different vocabularies for aspects of objects has not been investigated in this thesis.
+Another idea regarding vocabularies could be to learn the embedding based on the performance of a learning model on the task to be solved.
+That is, starting out with a randomly chosen vocabulary used for model solving the task and by randomization, unsupervised learning or evolutionary algorithms change the underlying vocabulary to let it converge to one best suitable for solving the particular task at hand. 
+This also circumvents the human bias often explicitly imposed on the structure encoded in such vocabularies through either manually engineering the desired similarity structure or deciding for one to be automatically learned.
+On the other hand, the evaluation of the driving context classification model showed, that vector representations of driving situations are able to capture the relevant semantics of the scene abstracting away potentially unnecessary features.
+However, current sensor systems do not natively produce such vector representations as output, which could be an alternative as low-dimensional semantic compression of high-dimensional raw sensory values.
+Once perception of the outside world would be available directly in such a vector substrate, we could avoid the intermediate step of vectorization by engineering the structured representations of the scene.
+
+We proceeded to investigate models for vehicle trajectory prediction models based on our vector representation encoding spatial information through the convolutive vector power in chapter~\ref{chap:behav_pred}.
+There were three key findings to point out: first, there is not one model or representational substrate of the input data that outperforms all other models in all driving situations.
+In contrast, each model and representation showed particular strengths and weaknesses, which we are able to draw a connection to the currently driving context.
+For instance, the models using the convolutive power representation of the current scene tended to perform better in crowded and potentially dangerous situations with multiple vehicles driving close to one another.
+These findings were further investigated in chapter~\ref{chap:mix_online_learning} introducing a novel online learning model employing a mixture-of-experts approach to weight several prediction models based either solely on their prediction error or incorporating contextual information.
+This weighting is intended to be learned while the model is running for being able to adapt to unexpected behavior of particular vehicles and adjust the model accordingly, which is not possible for models trained and validated offline.
+We demonstrated that it is possible to improve over the individual models through this online learning approach, applying temporal spreading of the error signal from earlier to later prediction horizons to avoid lags in the learning process.
+However, the advanced model having to deal with temporally delayed error signals was not able to achieve results comparable to a simplified model variant, which was virtually given access to the future error at prediction time.
+This simplified model was investigated to decide between the context-free and context-sensitive version while also serving as an upper bound for the more complex model having to deal with delayed error signals.
+Thus, there is still room for improvement for this online learning system in terms of parameter tuning.
+Furthermore, it could be investigated how varying contextual information influence the model's performance.
+For instance, we could simply use the vector representing the current scene as context information or include other descriptive values into the context.
+Additionally, other online learning approaches more advanced than the simple delta-rule learning rule investigated in this thesis could be investigated.
+
+The second key finding regarding trajectory prediction is that the data set used for training has a significant impact on the learning capabilities of the models.
+This is not a new finding: deep learning approaches mainly rely on vast amounts of data to adjust their multitude of parameters.
+However, the issue of composition of data sets is rather rarely investigated.
+We found for the particular task of vehicle trajectory prediction, that both our data sets consist predominantly of straight driving with rather rarely occurring samples containing a lane change of the target vehicle.
+We demonstrated significant changes in the models' performance when trained solely on the samples containing a lane change of the target vehicle supporting the hypothesis, that a more balanced data set would most likely improve the learning models' performance on critical data samples that can not be predicted using simple linear regression.
+However, we expect that the prediction of lane change maneuvers could even be further improved when incorporating additional information such as lane information (which lane are the vehicles driving, how large is the distance to the lane border) or dynamical information such as velocity or acceleration.
+The imbalanced composition of the data, however, was somewhat expected, since both data sets mainly consist of highway driving, which reveals a second issue: although our models learned to reasonably predict vehicle behavior based on the presented training data, the same models would most likely show weaker performance when presented with data consisting of interurban or inner-city driving.
+Hence, we would either have to train on even larger data sets containing a well-balanced mix of city, interurban and highway driving with all of these sub-categories being more balanced as the current data sets or we could also train separate models for each driving context category and select at run time the best suitable model variant.
+The latter approach would offer the interesting possibility to combine all models presented in this thesis: a driving context classification model predicting the current context, which in turn could be used as contextual information for an online learning model, that decides for the most suitable prediction model in the current situation.
+
+An additional evaluation of unsupervised anomaly detection supports the third key finding that there is sufficient information encoded in our vector representation to at least classify driving situations as outliers and thus potentially dangerous, since there are more objects present and closer to the target and ego-vehicle than in the normal samples.
+However, the outliers do not contain proportionally more lane change samples than the complete data set.
+Additionally, the anomaly detection system was trained with an unsupervised learning approach on an unlabeled data set.
+Hence, it was impossible to qualitatively evaluate the model's performance against known ground truth data.
+
+Finally, in chapter~\ref{chap:closed_loop_neuromorphic_control_systems}, we introduced a novel neuromorphic control architecture to demonstrate at least general feasibility and usability of neuromorphic control principles employing a spiking neurons as algorithmic substrate.
+We presented two proof-of-concept implementations for mobile robot manipulation on a real robotic system and a simplified vehicle trajectory planning system using reinforcement learning in an open source race car simulator.
+We demonstrated that our neuromorphic control architecture employing \acp{SNN} allows to decouple manually designed networks from learning networks, or even combine the two by using a manual implementation as starting point to bootstrap the neural network's learning phase.
+However, we did not actually explore this possibility of extending an existing manual task implementation in spiking neurons to further improve task performance through learning.
+Furthermore, although both proof-of-concept implementations translated sensory stimuli to complex control behaviors, they are not fully coupled or integrated into neuromorphic computing hardware.
+
+In conclusion, higher level cognition and lower level perception/action are not two separate aspects of the same system, but tightly coupled and integrated in biological organisms.
+While artificial systems already show advanced capabilities regarding perception and action, the principles and functions in humans are less well understood.
+The first coherent integration of both aspects into a large-scale cognitive model making sense out of complex sensor stream into active motion was presented in \cite{Eliasmith2012}.
+However the overall question of how biological organism effectively integrate and combine low-level behaviors and higher-level cognitive functions is still and unsolved scientific problem.
+However, an complete integration of such a \emph{brain model} in an actual \emph{body} of hardware is yet to be developed.
+The goal of this thesis was to propose a first step into the direction of cognitive automated vehicles.
+However, is was originally intended to complement the thesis at hand with another, more hardware oriented thesis, which was unfortunately not completed.
+Revisiting the original motivation introduced in chapter~\ref{chap:introduction}, we achieved promising results regarding neuromorphic principles in an automotive context on both "ends" of the perception-action-cycle.
+However, an coupled integration, into one coherent system as well as the integration into neuromorphic hardware to demonstrate benefits regarding energy-efficiency of our proposed approaches is still missing and an interesting task for future work.
+There are several promising neuromorphic hardware prototypes such as \ac{SpiNNaker}, IBM's TrueNorth and Intel's Loihi chip each offering a unique perspective on spike-based computation, which could be evaluated with the models propsed in this work and possible extensions.
+
