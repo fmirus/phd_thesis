@@ -1,8 +1,22 @@
 %----------------------------------------------------------------------------------------------------------
-\chapter{Introduction to \aclp{VSA}}%
+\chapter{Theoretical background}%
 \label{chap:introduction_to_vsas}
 %----------------------------------------------------------------------------------------------------------
-The term \acfp{VSA} - first coined by Ross W. Gayler \cite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
+
+In this chapter, we present the theoretical background and mathematical formalism needed as basis for later chapters.
+We introduce \acfp{VSA}, describe their most important properties and present proofs where relevant for the thesis.
+We proceed with one particular instantiation of \ac{VSA}, the \acf{SPA}, and present more specific properties, which do not necessary hold for all \acp{VSA}.
+Additionally, we give a brief introduction to the theory of the \acf{NEF}, a set of mathematical tools enabling the implementation of the \ac{SPA} in \acp{SNN}.
+Then, we shift our focus to cognitive modeling based on such vector representations keeping it as generic as possible without particular attention on the \ac{SPA}. 
+We show several approaches to generate vector vocabularies, which form the basis of more complex structured representations built from them using the \ac{VSA}'s algebraic operations.
+Bringing all of the presented tools together, we show how the \ac{NEF} can be used to implement vector representation generated using the \ac{SPA} in a spiking neuron substrate.
+
+%----------------------------------------------------------------------------------------------------------
+\section{Mathematical properties of \aclp{VSA}}
+\label{sec:math_prop_vsas}
+%----------------------------------------------------------------------------------------------------------
+
+The term \acp{VSA} - first coined by Ross W. Gayler \cite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
 The basic idea behind all of those approaches is to represent structure (e.g.\ cognitive concepts, symbols or language) in a high-dimensional vector space by mapping each entity to be represented to a (possibly random) vector.
 One of the most important properties of high-dimensional vector spaces enabling this kind of representation is the fact, that two high-dimensional random vectors are likely to be dissimilar.
 In the following, we will show what we mean by fuzzy terms like \emph{dissimilar} or \emph{likely} and provide more precise statements.
@@ -18,11 +32,6 @@ For finite dimensional vector spaces  $V$ and $W$ of dimensions $n$ and $m$, the
 As a consequence, each binding operation $v\otimes w$ for vectors $ \mathbf{v} \in V, \mathbf{w} \in W$ would increase the dimension of the representational space, which is computationally unfeasible and leads to poor scaling.
 This lead researchers to define several slightly different multiplication or binding operations, depending on the underlying numerical structure.
 The most prominent examples are element-wise multiplication in Gayler's \ac{MAP}-architecture \cite{Gayler1998}, the XOR-operation in Kanerva's \acp{BSC} \cite{Kanerva2000, Kanerva2009} as well as circular convolution in Plate's \acp{HRR} \cite{Plate1991, Plate1994}.
-
-%----------------------------------------------------------------------------------------------------------
-\section{Mathematical properties of \aclp{VSA}}
-\label{sec:math_prop_vsas}
-%----------------------------------------------------------------------------------------------------------
 
 \begin{defn}
 	\label{def:VSA}
@@ -163,9 +172,9 @@ Theorem~\ref{theorem:VSA_cossim_distribution} states, that the probability of fi
     \centering
     \includegraphics[width=1.\linewidth]{imgs/distributions_cosine_sims.eps}
     \caption{Visualization of the distribution of the cosine similarity between two randomly chosen vectors depending on their dimension.}
-    \label{fig:cosine_dist/distributions_cosine_sims}
+    \label{fig:distributions_cosine_sims}
 \end{figure}
-Figure~\ref{fig:cosine_dist}, which shows the probability distributions of cosine similarity for different vector dimensions, illustrates this result.
+Figure~\ref{fig:distributions_cosine_sims}, which shows the probability distributions of cosine similarity for different vector dimensions, illustrates this result.
 Furthermore, Theorem~\ref{theorem:VSA_cossim_distribution} allows us to give a more formal definition of the term "dissimilar".
 \begin{defn}
 	\label{def:similar}
@@ -438,7 +447,8 @@ Note, that the neural population's decoded output is only a noisy approximation 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=0.85\textwidth]{imgs/NEF_transformation.eps}
-	\caption{The transformation principle of the \ac{NEF}.}
+	\caption{The transformation principle of the \ac{NEF}.
+    Images adapted from \cite{Nengo}.}
 	\label{fig:nef_transformation}
 \end{figure}
 The second main principle of the \ac{NEF}, \emph{transformation}, provides the mathematical tools to compute functions across connections between populations of neurons.
@@ -664,7 +674,8 @@ A common example is visualized in figure~\ref{fig:word2vec}: subtracting the vec
 	\draw[dashed blue line] (0.7,0.9) -- (1.1, 0.5);
 
 	\end{tikzpicture}
-	\caption{A typical example illustrating the semantic similarity structure between vectors representing the words \emph{king}, \emph{queen}, \emph{man} and \emph{woman} learned by Word2Vec allowing algebraic manipulation of the encoded entities.}
+	\caption{A typical example illustrating the semantic similarity structure between vectors representing the words \emph{king}, \emph{queen}, \emph{man} and \emph{woman} learned by Word2Vec allowing algebraic manipulation of the encoded entities. 
+    Image inspired from \cite{Mikolov2013b}.}
 	\label{fig:word2vec}
 \end{figure}
 However, the formal reasons for successful learning of word embeddings of those approaches are not well understood \cite{Goldberg2014, Levy2015}.
@@ -781,6 +792,6 @@ Furthermore, we established a formal, mathematical notion for \acp{VSA} in gener
 The we shifted our focus to one particular \ac{VSA}, the \ac{SPA}, presenting its most important aspects and properties with respect to subsequent chapters of the thesis.
 Furthermore, we gave a brief description of the \acl{NEF}, which is typically used to implement large-scale neural models of spiking neurons such as the one presented in \cite{Eliasmith2012}.
 Finally, we have introduced the basic principles of cognitive modeling using \acp{VSA} in general and the \ac{SPA} in particular.
-We showed several general approaches to generate vocabularies of atomic vectors, which form the basis of more complex structured representations built from the using the \ac{VSA}'s algebraic operations.
+We showed several general approaches to generate vocabularies of atomic vectors, which form the basis of more complex structured representations built from them using the \ac{VSA}'s algebraic operations.
 Finally, we connected the mathematical description and theory of both, the \acp{VSA} and the \ac{NEF} by depicting how the \ac{NEF} can be used to implement the \ac{SPA} in a spiking neuron substrate, which offers interesting possibilities regarding energy-efficiency in mobile applications such as automated driving.
 We will use the theory and findings shown here in subsequent chapters to derive vector-based representations of automotive data measured and collected in actual driving situations to tackle tasks like classifying the current driving context or prediction the future development of the scene based on past observations.
