@@ -147,73 +147,73 @@ A comprehensive overview of several other simulation tools for neural modeling c
 %----------------------------------------------------------------------------------------------------------
 
 In this section, we give a brief overview of recent neuromorphic prototypes and hardware developments.
-Although our work is not primarily targeted at use with this kind of dedicated hardware platforms, it shows promise regarding energy-efficiency and scalability in combination with specialized hardware components.
-The neuromorphic prototypes described here are still comparatively young and not technologically mature yet, especially compared to traditional computing approaches.
-Therefore, most of the hardware and sensors described are mainly developed and used in academia and are not standardized, commercial products yet.
+Although we do not integrate the models and approaches developed in this thesis with this kind of dedicated hardware platforms, deployment on specialized hardware components is an interesting future possibility promising increased energy-efficiency and scalability.
+The neuromorphic prototypes described here are still comparatively young and not technologically mature yet, especially compared to traditional computing systems.
+Therefore, most of the hardware and sensors described are mainly developed and used in academic research and are not standardized, commercial products yet.
 However, this technology is gradually becoming available to a broader community and draws increased attention in industrial research groups.
 
 \subsubsection{Digital Neurochips}
 
-\acp{GPU} provide a \ac{SIMD} architecture which helps in parallel data processing at the expense of large power consumption \cite{Krichmar2011, Carlson2014}.
-Due to fast matrix and vector multiplication capability of \acp{GPU}, at present they are providing an appealing platform for training and executing real-time data with the help of deep learning techniques \cite{Schmidhuber2015}.
-For specific applications, which take several months of training on a traditional \acp{CPU}, \ac{GPU}-based systems can accomplish the tasks in days \cite{Edwards2015}.
-A collaboration between NVIDIA and Stanford researchers demonstrated a cluster of \ac{GPU} servers which was able to train 1 billion parameters (scalable to 11 billion using 16 machines) on just 3 computers in two days.
-Each machine contained 4 NVIDIA GTX680 \acp{GPU} with \SI{4}{\giga\byte} at \SI{1}{\tera\nothing}\ac{FLOPS} each.
+\acp{GPU} provide a \ac{SIMD} architecture, which processes data in parallel at the cost of increased power consumption \cite{Krichmar2011, Carlson2014} compared to \acp{CPU}.
+Allowing fast matrix and vector multiplication, \acp{GPU} provide an appealing platform for training and executing deep learning techniques \cite{Schmidhuber2015} on real-time data.
+For specific applications, which take several months of training on a traditional \acp{CPU}, \ac{GPU}-based systems can significantly accelerate processing by several orders of magnitude to decrease the computation time to a number of days \cite{Edwards2015}.
+A collaboration between NVIDIA and Stanford researchers demonstrated a cluster of \ac{GPU} servers, which was able to train a network with billion parameters (scalable to \num{11} billion using \num{16} machines) on just three computers in two days.
+Each machine contained \num{4} NVIDIA GTX680 \acp{GPU} with \SI{4}{\giga\byte} at \SI{1}{\tera\nothing}\ac{FLOPS} each.
 
 One of the recent developments in digital neuro-chips is IBM's TrueNorth \cite{Akopyan2015}.
-It contains a network of \num{4096} cores with \num{256} digital neurons each following a digital, re-configurable spiking neuron model \cite{Cassidy2013}, which makes over one million neurons and \num{256} million synapses in total consuming about \SI{65}{\milli\watt} of power.
-The cores are connected internally by a 2D grid.
-The intersections of this grid contain routers which control the signal transmission within the network of cores inside a chip.
+It contains a network of \num{4096} cores with \num{256} digital neurons each following a digital, re-configurable spiking neuron model \cite{Cassidy2013} yielding the capability to implement over one million neurons and \num{256} million synapses in total while consuming only \SI{65}{\milli\watt} of power.
+The cores are connected internally by a two-dimensional grid.
+The intersections of this grid contain routers, which control the signal transmission within the network of cores inside a chip.
 For programming this novel hardware implementation, a specialized programming language named Corelet was developed \cite{Amir2013}.
 
-Another example of a digital neuromorphic hardware implementation is University of Manchester's \ac{SpiNNaker} Chip \cite{Furber2014}.
-It contains 18 synchronously connected ARM968 microprocessors and \SI{128}{\mega\byte} \ac{DDR} \ac{SDRAM}.
-Communication is carried out by a packet-switched on-chip network, where all chips have a router.
+Another example of a digital neuromorphic hardware implementation is University of Manchester's \ac{SpiNNaker} system \cite{Furber2014}.
+It contains \num{18} synchronously connected ARM968 microprocessors and \SI{128}{\mega\byte} \ac{DDR} \ac{SDRAM}.
+Communication is carried out by a packet-switched on-chip network with all chips having their own router.
 This architecture scales well to larger application by allowing to place more chips on a board \cite{Painkras2013,Navaridas2009}.
-A \ac{SpiNNaker} system forms a toroidal mesh which has fixed connections, but the protocol implemented by the routers on the individual chips allows for the simulation of neural networks of arbitrary connectivity.
+A \ac{SpiNNaker} system forms a toroidal mesh, which, despite having fixed connections, allows the simulation of neural networks of arbitrary connectivity due to the protocol implemented by the routers on the individual chips.
 
 Another recent digital neuromorphic hardware platform is Intel's Loihi chip \cite{Davies2018}.
-This chip consists of a fully asynchronous many-core mesh of $128$ neuromorphic cores, each containing $1024$ primitive units implementing spiking neuron behavior in a tree-like structure.
-In total, it contains $130000$ artificial spiking neurons and $130$ million synapses.
+This chip consists of a fully asynchronous many-core mesh of \num{128} neuromorphic cores, each containing \num{1024} primitive units implementing spiking neuron behavior in a tree-like structure.
+In total, it contains \num{130000} artificial spiking neurons and \num{130} million synapses.
 One of Loihi's key features is the ability of on-chip learning, which is realized through a learning engine integrated in each core that enables the implementation of learning rules to adapt parameters of the core's \ac{SNN}.
 
 \subsubsection{Analog Neurochips}
 
-Most of analog chips do not allow on-chip training due to limited adaptability of implementation techniques like capacitors \cite{Schwartz1990}, floating gate transistors \cite{Holler1989}, \acp{CCD} \cite{Agranat1990}.
+Most analog chips prohibit on-chip training due to limited adaptability of implementation techniques like capacitors \cite{Schwartz1990}, floating gate transistors \cite{Holler1989} or \acp{CCD} \cite{Agranat1990}.
 On the other hand, analog techniques use less components and offer high-speed operation.
 To exploit the benefits of analog semiconductor technologies and neural adaptivity, the learning algorithms have to be implemented on-chip.
-This, however, limits the re-configurability of the platform and complicates the implementation of most learning rules directly into analog \ac{VLSI} at the same time.
+However, on-chip-implementation limits the platform's re-configurability and complicates the implementation of most learning rules directly into analog \ac{VLSI} at the same time.
 These limitations restrict the flexibility of analog designs compared to their digital counterparts.
 %They possess similar functional properties as that of biological networks and can be interfaced directly with real analog world \cite{Mead90}.
 
-The \ac{HICANN} chip \cite{Schemmel2008} has the capability to simulate $131072$ synapses and $512$ neurons residing inside an \ac{ANC}.
-For simulation of large networks a wafer-scale integration method was used, which enabled $384$ \ac{HICANN} chips to be interconnected on a wafer of \SI{20}{\centi\meter} diameter \cite{Schemmel2010}.
-The spikes between various \acp{ANC} on a wafer or between interconnected wafers are carried out by a network of horizontal and vertical grid like structure.
-The horizontal pathway consists of 64 bus lines which carry spikes from 64 neurons.
-The 256 vertical lines collect spikes for all connected \acp{ANC}.
-The spikes are represented as data packet of 6-bits (for the group of 64-neurons) and transmitted using \ac{AER}. 
+The \ac{HICANN} chip \cite{Schemmel2008} has the capability to simulate \num{131072} synapses and \num{512} neurons residing inside an \ac{ANC}.
+To simulate large networks, a wafer-scale integration method was used, which allows \num{384} \ac{HICANN} chips to be interconnected on a wafer of \SI{20}{\centi\meter} diameter \cite{Schemmel2010}.
+The spikes between various \acp{ANC} on a wafer and between interconnected wafers are carried out by a network of horizontal and vertical grid like structure.
+The horizontal pathway consists of \num{64} bus lines which carry spikes from \num{64} neurons.
+The \num{256} vertical lines collect spikes for all connected \acp{ANC}.
+The spikes are represented as data packet of \SI{6}{\bit} for groups of \num{64} neurons and transmitted using \ac{AER}. 
 
-The \ac{ROLLS} consists of $256$ neurons and $131072$ synapses.
+The \ac{ROLLS} neuromorphic processor consists of \num{256} neurons and \num{128000} synapses.
 It consumes only \SI{4}{\milli\watt} of power and uses exponential \ac{IF} modeling \cite{Qiao2015}.
 The latest processor contains different configuration options.
-Each neural circuit is connected to three different types of synaptic circuits, first of which is an array of $256\times256$ synapse which can be excitatory or inhibitory.
+Each neural circuit is connected to three different types of synaptic circuits: the first is an array of $256\times256$ synapse, which can be excitatory or inhibitory.
 The synapses in the second $256\times256$ array offers only excitatory mode.
-In the third array, there are $256\times2$ virtual synapses whose weights are configurable with excitatory as well as inhibitory features. The virtual synapses operate in shared mode and occupy less space as compared to individual circuits.
-The neural spikes are generated and received using an \ac{AER} protocol with \num{8}-bit neuron addresses \cite{Qiao2015}.
+In the third array, there are $256\times2$ virtual synapses with weights being configurable as both, excitatory as well as inhibitory.
+The virtual synapses operate in shared mode and occupy less space compared to individual circuits.
+The neural spikes are generated and transmitted using an \ac{AER} protocol with \SI{8}{\bit} neuron addresses \cite{Qiao2015}.
 
 Another example of analog neural hardware is a chip \cite{Srinivasa2012} developed under \ac{DARPA}-funded \ac{HRL} \ac{SyNAPSE} project, which uses \ac{STM} for computation and memristors for synaptic weights storage.
-It contains a total of 576 neurons and 73728 synapses, arranged in an array of $24\times24$ neurons each with $128$ synapses and consumes \SI{130}{\milli\watt}.
-In \ac{STM} methodology a single synaptic circuit on the chip calculates multiple logical synapses of the simulated neural network because the electrical circuitry can function at much higher speeds than biological neurons.
-Hence a single synaptic circuit can emulate multiple logical synapses by switching between the corresponding parameter sets.
-There is a point-to-point routing mechanism hence no \ac{AER} is required \cite{Walter2015}. 
+It contains a total of \num{576} neurons and \num{73728} synapses, arranged in an array of $24\times24$ neurons each with \num{128} synapses and consumes \SI{130}{\milli\watt}.
+In \ac{STM} methodology, a single synaptic circuit on the chip calculates multiple logical synapses of the simulated neural network since the electrical circuitry can function at higher speeds than biological neurons.
+Hence, a single synaptic circuit allows emulating multiple logical synapses by switching between the corresponding parameter sets.
+There is a point-to-point routing mechanism avoiding the necessity of the \ac{AER} protocol \cite{Walter2015}. 
 
 The Brain in Silicon group at Stanford University developed the custom board Neurogrid, which contains \num{16} Neurocores \cite{Benjamin2014, Choudhary2012}.
-The neuron circuits are arranged in a 256$\times$256 grid, with every neuron has separate circuits for its soma and the dendrite.
-They combined analog computations with digital communication.
-The system is capable of simulating one million neuron and eight billion synapses in real-time and consumed \SI{3.1}{\watt} of power.
-The spikes are transmitted using \ac{AER}.
+The neuron circuits are arranged in a $256\times256$ grid with every neuron having separate circuits for its soma and  dendrite and combining analog computations with digital communication.
+The system is capable of simulating a million neurons and eight billion synapses in real-time while consuming \SI{3.1}{\watt} of power.
+Neurogrid employs the \ac{AER} protocol to transmit spikes.
 It additionally implements a deadlock-free wormhole routing protocol to ensure free transmission of packets.
-It offers to explore different cortical areas of the brain by programming each of the Neurocores with a different model \cite{Merolla2014}.
+Finally, Neurogrid allows to explore different cortical areas of the brain by programming each of the Neurocores with a different model \cite{Merolla2014}.
 
 \subsubsection{Neuromorphic Sensors}
 \label{subsubsec:neuro_sensors}
@@ -233,19 +233,19 @@ It offers to explore different cortical areas of the brain by programming each o
 	\caption{(a) Space-time representation of the event stream generated by a rotating dot on a spinning disk and a snapshot of the events (b) abstracted pixel core schematic (c) principle operation of single \ac{DVS} pixel. Image source: \cite{Lichtsteiner2008}}
 	\label{fig:DVS_with_schem}
 \end{figure}
-To adopt the neuromorphic hardware in real-world applications (e.g. neurorobotics), they need to be able to process sensors signals.
-The neurally inspired, non von-Neumannian architecture requires either a new generation of sensors, e.g.\ the \ac{DVS} \cite{Lichtsteiner2008}, \ac{DAVIS} \cite{Brandli2014} or \ac{DAS} \cite{Liu2014}, which already embody the spiking neuron signal processing or a way of translating traditional sensor signals to sequences of spikes.
+To integrate neuromorphic hardware in real-world applications such as neurorobotics, it needs to be able to process sensors signals.
+The neurally inspired, non von-Neumannian architecture requires either a new generation of sensors such as the \ac{DVS} \cite{Lichtsteiner2008}, \ac{DAVIS} \cite{Brandli2014} or \ac{DAS} \cite{Liu2014}, which already embody the spiking neuron signal processing, or a way of translating traditional sensor signals to sequences of spikes.
 Several approaches to encode signals and stimuli with trains of spikes, e.g., by rate coding, temporal coding \cite[Chap. 7.6]{Gerstner2014} or population coding \cite[Chap. 1]{Gerstner2002}, \cite{Ponulak2011} have been investigated.
-Neuromorphic sensors on the other hand, directly emit a sequence of events without the need of translation.
+Neuromorphic sensors on the other hand, directly emit a sequence of events without the need of such a translation process.
 The \ac{DVS} for example, unlike traditional frame-based cameras, generates spike events \cite{Lichtsteiner2008} asynchronously for individual pixels when perceiving relative illumination changes (see Fig. \ref{fig:DVS_with_schem}), which are key features of biological vision \cite{Lichtsteiner2008}.
-This event-based approach offers several advantages compared to conventional frame-based cameras like the ability to perceive very fast movements (sub-millisecond time precision) without the need to wait for and process the next frame as well as an output data rate depending on the dynamic content of the scene (Fig. \ref{subfig:DVS_rotationg_dot}) and thus reducing the output of redundant information.
+This event-based approach offers several advantages compared to conventional frame-based cameras like the ability to perceive very fast movements (sub-millisecond time precision) without the need to wait for the next frame and the time to process it
+Furthermore, the rate of the output data depends on the dynamic content of the scene (Fig. \ref{subfig:DVS_rotationg_dot}) and thus reduces the output of redundant information at a fixed frame-rate.
 
 The \ac{DVS}-pixels were designed to cover wide dynamic range and to offer low latency and mismatch.
 This is achieved by a fast photoreceptor circuit with logarithmic response whose output is fed into a high precision difference amplifier circuit followed by a two-transistor comparator circuit (see Fig. \ref{subfig:DVS_pixel_core} and \ref{subfig:DVS_operation_principle}).
 %The pixels are arranged in rows and columns which have $x$, $y$-address.
-The comparator circuit produces ON and OFF signals for each pixel, which are passed to the \ac{AER} interface for transmission via USB2.0 interface. \cite{Lichtsteiner2008}.
-On the other hand, the \ac{DAVIS} employs an \ac{APS} circuit to output synchronous global shutter frames, which helps in persevering absolute intensity information needed for classification and object recognition tasks while asynchronous \ac{DVS} events are beneficial for the tracking of fast movable objects \cite{Brandli2014}.
-
+The comparator circuit produces ON and OFF signals for each pixel, which are passed to the \ac{AER} interface for transmission \cite{Lichtsteiner2008}.
+On the other hand, the \ac{DAVIS} employs an \ac{APS} circuit to output synchronous global shutter frames, which helps in persevering absolute intensity information needed for classification and object recognition tasks while asynchronous \ac{DVS} events are beneficial for the tracking of fast moving objects \cite{Brandli2014}.
 
 \subsection{Neuromorphic Applications}
 \label{subsec:neuro_applic}
@@ -254,7 +254,6 @@ In this section we present some examples of applications of neuromorphic hardwar
 First, we describe applications using either neuromorphic sensors or hardware in combination with traditional computing hardware.
 Then, we focus on purely neuromorphic systems, where the spiking signals of neuromorphic sensors, mainly the \ac{DVS}, is processed by neuromorphic hardware.
 Although there are currently - to the knowledge of the author - no neuromorphic actuators working directly on the basis of spikes, we refer to the robotic systems described here as purely neuromorphic.
-
 
 \subsubsection{Mixed systems}
 \label{subsubsec:mixed_sys}
