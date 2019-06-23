@@ -33,17 +33,17 @@ Although neuromorphic computing hardware as well as the corresponding neural alg
 In this chapter, we introduce our proposed approach to encapsulate high-level information about automotive scenes in high-dimensional, semantic vectors using the \ac{SPA} as representational substrate.
 For this encoding phase, we follow the first two stages, namely \emph{preprocessing} and \emph{representation generation}, of the three-stages process established in \cite{Gallant2013} 
 The third and final stage, \emph{output computation}, will be subject of subsequent chapters, where we investigate concrete applications and use cases.
-The pre-processing stage is the step of creating a suitable vector vocabulary, whereas the representation generation stage is the process of building up structured representations from the atomic vectors within the vocabulary.
+The preprocessing stage is the step of creating a suitable vector vocabulary, whereas the representation generation stage is the process of building up structured representations from the atomic vectors within the vocabulary.
 Furthermore, we analyze how different types of data could be encoded in such a representation, we show possible variations of how to encapsulate data in vectors and how they influence the final representation.
 We also investigate potential limitations imposed bu such representations to provide insights into how many concepts can be efficiently encoded in our representations without loss of information.  
 
 
-\section{Pre-processing stage - generating a vocabulary}%
+\section{Preprocessing stage - generating a vocabulary}%
 \label{sec:preprocessing_stage_generating_a_vocabulary}
 
 Fig.~\ref{fig:vectorization} visualizes the general flow of information of our proposed system.
 To represent high-level information about a scene in an abstract vector representation, we work with already processed data, which comes either from individual sensors, which perform their own low-level processing, or from a higher-level, central module already fusing information from several sensors.
-We simply refer to this step as \emph{environment perception} in fig.~\ref{fig:vectorization}, whereas its output is referred to as \emph{pre-processed data}.
+We simply refer to this step as \emph{environment perception} in fig.~\ref{fig:vectorization}, whereas its output is referred to as \emph{preprocessed data}.
 This data is typically available as lists of objects present in the current scene and is translated into a semantic vector representation by first assigning atomic vectors to entities of interest and then building up more complex, structured representations by using the \ac{SPA}'s algebraic operations.
 In this section, we will investigate the first step of assigning atomic vectors to entities of interest, i.e., creating a suitable vector vocabulary.
 We have already seen in section~\ref{subsec:vocabs}, that such vocabularies can be created in several different ways, which we will investigate with the specific focus of encoding automotive scenes.
@@ -91,7 +91,7 @@ For example, a change of the 'motion status' (e.g.\ when a bus stops) might need
 While visual similarity already captures a significant part of perceivable information about entities in automotive context, there is further information that could be encoded in the vector vocabulary that is different, and maybe even, contrary to visual similarity. 
 Considering automotive situations, we as humans do not only assess them based on visual appearance but also by incorporating underlying and, most likely, previously acquired knowledge about the objects in the scene.
 This underlying information can be considered the semantic aspect.
-Revisiting the aforementioned example, the speed limit sign for \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} is \emph{viusally} more similar to \SI[per-mode=symbol]{80}{\kilo\meter\per\hour} than to \SI[per-mode=symbol]{20}{\kilo\meter\per\hour}.
+Revisiting the aforementioned example, the speed limit sign for \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} is \emph{visually} more similar to \SI[per-mode=symbol]{80}{\kilo\meter\per\hour} than to \SI[per-mode=symbol]{20}{\kilo\meter\per\hour}.
 However, in the context (or semantics) of an automotive situation such as driving in an urban environment, speed limit signs for \num{20} and \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} should be contextually or semantically more similar than signs for \num{30} and \SI[per-mode=symbol]{80}{\kilo\meter\per\hour}, as they are more likely to appear in similar contexts and both describe the traffic rule restricting driving to slow velocities.
 
 Semantic similarity is not quite as intuitive as visual similarity. 
@@ -456,7 +456,7 @@ Thus, we will investigate the influence of the vocabulary structure on the task 
 
 After having created a vector vocabulary suitable for a specific application of interest as shown in section~\ref{sec:preprocessing_stage_generating_a_vocabulary}, we focus our attention in this section to the second stage of the encoding process proposed in \cite{Gallant2013}, the \emph{representation generation stage}.
 This second step is the process of actually generating structured vector representations from a given vocabulary of atomic vectors.
-As mentioned in \cite{Gallant2013}: "Although the pre-processing and output computation stage can involve significant machine learning, there are reasons for the representation generation stage to \emph{avoid} machine learning."
+As mentioned in \cite{Gallant2013}: "Although the preprocessing and output computation stage can involve significant machine learning, there are reasons for the representation generation stage to \emph{avoid} machine learning."
 Using machine learning in the stage of representation generation means to adjust the representation to the specific set of applications, which restricts them to be used for different, but related sets of problems.
 Furthermore, involving learning in the representation generation might slow down the whole system prohibiting practical usage of the representation in application scenarios.
 However, in certain situations it could make sense to involve a learning step at the representation generation stage, for example if the system should detect novelties and assign them to new vectors or representations and/or needs to memorize them.
@@ -502,7 +502,6 @@ For the simple encoding given in equation~\eqref{eq:cosin_vec_func}
 \abb{\varphi}{\mathbb{R}}{\mathbb{R}^{D}}{x}{\left(\sin(x), \cos(x), 0, \ldots, 0\right)},
 \tag{\eqref{eq:cosin_vec_func} revisited}
 \end{equation}
-
 equation~\eqref{eq:pythagorean_identity} leads to the resulting vector $\varphi(x)$ having unit length, which is a desirable feature for many representations.
 
 As many of the dynamic data to be encoded in automotive context such as positions and velocities is two-dimensional, we also show a more complex adaptation of this simple trigonometrical encoding for two numerical values using different spatial frequencies and offsets.
@@ -658,7 +657,7 @@ Assuming we have generated a suitable vocabulary of atomic vectors encoding the 
 In general, we employ the \ac{SPA}'s algebraic operations to bind connected items and concepts together through circular convolution and to sum up independent concepts appearing alongside one another.
 More particularly, we combine all principles for structured representations presented so far in this thesis: simple superposition to generate unordered sets of items by summing the representational vectors, encoding of bound concepts through role-value pairs as shown in section~\ref{subsec:encoding_struct} and the several approaches to encode numerical values in structured vector representations as shown in section~\ref{subsec:different_vector_representations_for_numerical_values}.
 However, the setup of such a vector representation is highly dependent on the actual task to be solved as well as the data available to be encoded.
-Thus, we will present and investigate our structured representations in detail for two particular tasks in automotive context, namely driving context classification and vehicle trajectory prediction, in separate chapters~\ref{chap:driving_context_classification} and~\ref{chap:behv_pred}.
+Thus, we will present and investigate our structured representations in detail for two particular tasks in automotive context, namely driving context classification and vehicle trajectory prediction, in separate chapters~\ref{chap:driving_context_classification} and~\ref{chap:behav_pred}.
 However, before we proceed to applying our vector representations to specific automotive tasks, we need to analyze their systematical limitations regarding the amount of information that can effectively be encoded in semantic vectors.
 
 \subsection{Capacity analysis - limiting factors to vector representations}%

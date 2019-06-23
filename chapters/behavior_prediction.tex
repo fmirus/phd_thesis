@@ -1,7 +1,7 @@
 \chapter{Instantiating a cognitive model for predicting vehicle behavior}
 \label{chap:behav_pred}
 
-\todo[inline]{check behavior prediction chapter for consistency}
+%\todo[inline]{check behavior prediction chapter for consistency}
 
 Predicting future behavior and positions of other traffic participants from observations is a key problem, that needs to be solved by human drivers and automated vehicles alike to safely navigate their environment and to reach their desired goal.
 Therefore, we picked behavior prediction as another task for investigating the potential of vector representations in automotive context.
@@ -11,12 +11,12 @@ We hypothesize that structured vector representations will be able to capture th
 As we aim for a model-free data representation, we avoid introducing any physical constraints or restrictions regarding our data-representation or the predicting models.
 Although this allows for physically unrealistic or even impossible trajectory predictions, we want our neural network models to figure out the best predictions on their own without biasing them in any direction.
 In this section, we present a representation of spatial information for multiple objects in semantic vectors of fixed length using the convolutive power introduced in definition~\ref{def:conv_power}.
-In contrast to other representations of spatial data, our the dimensionality of our vectors is independant of the number of encoded entities.
+In contrast to other representations of spatial data, our the dimensionality of our vectors is independent of the number of encoded entities.
 We use this representation as input for simple feed-forward neural networks and more sophisticated \ac{LSTM}-based models and compare them against each other and a linear prediction model as the simplest baseline.
 We conduct a thorough and detailed analysis and evaluate our  models on two different data sets, namely one proprietary data set recorded with an automated vehicle prototype and one publicly available trajectory data set.
 
 We analyze our models with respect to the context, i.e., which model performs best depending on the current driving situation.
-Furthmore, we investigate the influence of the composition of the training data on the models performance.
+Furthermore, we investigate the influence of the composition of the training data on the models performance.
 Additionally, we 
 and show that by using our vector representation with a simple network architecture we can achieve results comparable to more complex models.
 
@@ -60,10 +60,10 @@ Table~\ref{tab:target_data_features} gives an overview and detailed description 
 	\label{tab:target_data_features}
 	\captionof{table}{Table depicting different features for dynamic objects within the training data}
 \end{center}
-In contrast to the data set used in chapter~\ref{chap:driving_context_classification}, the object-lists of the data set used here contains already pre-processed information as a fusion from the different available sensor sources.
+In contrast to the data set used in chapter~\ref{chap:driving_context_classification}, the object-lists of the data set used here contains already preprocessed information as a fusion from the different available sensor sources.
 This fused information about objects is available at a frequency of roughly \SI{5}{\hertz}.
 The main feature of this data-set is that all information (position, velocity, etc.) about vehicles other than the ego-vehicle are measured with respect to that ego-vehicle and its coordinate system.
-Figure~\ref{fig:on_board_data_example} shows one example situation from this data-set: the left plot depicts the already pre-processed) positional information of all vehicles detected by the ego-vehicle's on-board sensors.
+Figure~\ref{fig:on_board_data_example} shows one example situation from this data-set: the left plot depicts the already preprocessed) positional information of all vehicles detected by the ego-vehicle's on-board sensors.
 The dots indicate the current position of the vehicles and color-code the vehicle type (red=motorcycle, green=car, blue=truck, black=ego-vehicle).
 The blue and orange lines illustrate \SI{5}{\second} of past and future motion of the target vehicle respectively.
 Solid and dashed gray lines depict the other vehicles' past and future motion respectively.
@@ -100,19 +100,19 @@ In total, the \emph{\ac{NGSIM}} data-set contains \num{5930} vehicles and theref
 \subsection{Preprocessing}
 \label{subsec:preproc}
 
-In this section, we describe the preprocessing steps performed before training our models to prepare the trajectory information contained in our two data-sets as inpuyt for neural networks.
+In this section, we describe the preprocessing steps performed before training our models to prepare the trajectory information contained in our two data-sets as input for neural networks.
 Although we aim to keep these preprocessing steps as consistent as possible across both data-sets, there are some mild differences, which we will point out here.
 We aim to anticipate positions of dynamic objects \SI{5}{\second} into the future based on past positions \SI{5}{\second} prior to their current location for one object at a time.
 As the two data-sets are sampled at different frequencies, we interpolate the available data over \num{20} equidistant steps to achieve intervals of \SI{0.25}{\second} to improve consistency and comparability.
 Furthermore, we translate the current position of the target vehicle, i.e., the vehicle to be predicted, to be the origin of the reference coordinate system.
 That is, the current position of the target vehicle will be at position $\left(0,0\right)$ for all data samples consistently across both data sets (see figure~\ref{fig:on_board_data_example} and~\ref{subfig:ngsim_example_xy}).
-The reason fot this design choice is two-fold: on the one hand, we make samples from both data sets, which originally have different coordinate frames (global vs. ego-vehicle) as reference, more comparable and consistent.
+The reason for this design choice is two-fold: on the one hand, we make samples from both data sets, which originally have different coordinate frames (global vs.\ ego-vehicle) as reference, more comparable and consistent.
 On the other hand, by moving the current position of the ego-vehicle to the origin of the reference coordinate system of the sample, we prevent our models from treating similar trajectories differently due to positional variations.
 Finally, to improve suitability of the data as input for neural networks, we divide all $x$-positions by a factor of \num{10} such that $x$-/$y$-values are scaled to a similar order of magnitude.
 Since the \emph{\acs{NGSIM}} data-set $D_2$ is sampled at a high frequency of \SI{10}{\hertz} and contains more data than the \emph{On-board} data set, we use only every \num{10}th data point.
 Thereby, we avoid the creation of too many overlapping, and therefore too similar, data samples for the \emph{\ac{NGSIM}} data set.
 Furthermore, we swapped the dimensions of the positions in the \emph{\ac{NGSIM}} data set such that for both data-sets $x$- and $y$-direction correspond to longitudinal and lateral positions respectively.
-For training and evaluating our models, we split both data sets into two distinct subsetc containing training $T_i \subset D_i$ and validation data $V_i \subset D_i$.
+For training and evaluating our models, we split both data sets into two distinct subset containing training $T_i \subset D_i$ and validation data $V_i \subset D_i$.
 Those training and validation subsets contain \SI{90}{\percent} and \SI{10}{\percent} of the objects within the data sets respectively with $T_i \cap V_i = \varnothing$ to avoid testing our models on vehicles they have been trained with.
 
 \subsection{Data set peculiarities}%
@@ -150,7 +150,7 @@ We further distinguish between lane changes performed during the trajectory hist
 We consider the lane changes in the future part of data samples to be the most interesting and challenging ones, as the any model making predictions about the future trajectory need to be able to anticipate these lane changes.
 For the \emph{On-board} data set, \SI{7}{\percent} of all data samples contain a lane change in the trajectory history, while \SI{8.2}{\percent} of the samples contain a future lane change performed by the target vehicle.
 In comparison to the \SI{86.1}{\percent} of data samples not containing a lane change, the amount of samples with interesting behavior other than straight driving within the data set is significantly less present.
-For the \emph{\ac{NGSIM}} data set, the discrepancy between the amount of samples without the target vehicle performing lance change and the number of samples containig a lane change is even more significant.
+For the \emph{\ac{NGSIM}} data set, the discrepancy between the amount of samples without the target vehicle performing lance change and the number of samples containing a lane change is even more significant.
 The percentage of samples without a target vehicle lane change is \SI{95.1}{\percent} while only \SI{4.9}{\percent} of the samples contain a lane change performed by the target vehicle at all.
 The amount of samples containing a future lane change performed by the target vehicle is only \SI{2.6}{\percent} of all samples in the \emph{\ac{NGSIM}} data set.
 Hence, there is a significant imbalance in both data sets between examples containing mainly straight driving by the target vehicle, namely \SI{86.1}{\percent} and \SI{95.1}{\percent} of all samples in the \emph{On-board} and \emph{\ac{NGSIM}} data set respectively, where most likely already simple prediction approaches are able to achieve reasonable results.
@@ -229,7 +229,7 @@ We also apply two other encoding scheme using the scalar multiplication encoding
 \end{figure}
 
 In this section, we investigate the expressive power of encoding the spatial positions of multiple vehicles using the convolutive vector-power introduced in Def.~\ref{def:conv_power}.
-Given the results of section~\ref{subsec:the_influence_of_varying_vocabularies}, that the impact of similarity structuresin rather small vocabularies is neglectible, we create a random vocabulary $V$ of atomic vectors here.
+Given the results of section~\ref{subsec:the_influence_of_varying_vocabularies}, that the impact of similarity structures in rather small vocabularies is neglectable, we create a random vocabulary $V$ of atomic vectors here.
 We assign a random real-valued vector from the unit sphere to each category of dynamic objects (e.g.\ car, motorcycle, truck) as well as random unitary vectors (c.f.\ def.~\ref{def:unitary_vec}) $\mathbf{X}$ and $\mathbf{Y}$ to encode the units of spatial positions in vectors.
 We use unitary vectors $\mathbf{X}$ and $\mathbf{Y}$ since they have unit length and are closed under convolutive exponentiation as shown in Lemma ~\ref{lemma:unitary_vec}.
 Therefore, by encoding spatial positions with powers of unitary vectors, we avoid exploding lengths of our final scene vectors, which would lead to additional noise and unwanted behavior when using them as input for neural networks.
@@ -246,7 +246,7 @@ An alternative option could be to simply sum up the vectors at each past time st
 However, given the results regarding the capacity of the convolutive power encoding shown in section~\ref{subsec:capacity_analysis_limitations_to_vector_representations}, we decided for a sequence of individual vectors instead, which is also a more suitable input to neural networks employing \ac{LSTM} units.
 Figure~\ref{fig:spa_power} depicts the aforementioned scene vector representation: the left plots show similarities (depicted as heat map) between the vector $\mathbf{S}_{t}$ encoding the scene from figure~\ref{fig:on_board_data_example} and the vectors $ \mathbf{v}_{i}=\mathbf{TARGET}\varoast \mathbf{TYPE}_{target} \varoast \mathbf{X}^{\bar{x}_{i}} \varoast \mathbf{Y}^{\bar{y}_{i}}$ for a sequence of discrete position samples ${\bar{x}_{i}, \bar{y}_{i}}$.
 Similarly, the right plots show similarities between $\mathbf{S}_{t}$ and $\mathbf{CAR} \varoast \mathbf{X}^{\bar{x}_{i}} \varoast \mathbf{Y}^{\bar{y}_{i}}$ visualizing all other objects in the scene of type \emph{car}.
-Importantly, each vector in the sequence $ \mathbf{S}_{t}$, i.e., each plane in in the sequence of heat mapts shown in figure~\ref{fig:spa_power} is a spatial encoding vector of the type depicted figure~\ref{fig:spa_power_encoding}
+Importantly, each vector in the sequence $ \mathbf{S}_{t}$, i.e., each plane in in the sequence of heat maps shown in figure~\ref{fig:spa_power} is a spatial encoding vector of the type depicted figure~\ref{fig:spa_power_encoding}
 Hence, we can encode spatial information of several different objects in a sequence of semantic vectors and reliably decode it back out.
 This allows us to encode automotive scenes with varying number of dynamic objects in a vector representation of fixed dimension.
 Note that by using this vector representation as input data for a neural network (or any other predictor), we predict the future position of one other traffic participant at a time.
@@ -289,7 +289,7 @@ This auxiliary data should be information, that is available to the system when 
 Finally, the embedding vector is used as input for the decoder \ac{LSTM} to predict future vehicle positions.
 We use the same network architecture for all encoding schemes of the input data and for both data-sets.
 However, the dimensionality of the input and the information used as auxiliary information to enrich the embedding vector vary over different encoding schemes and data-sets respectively.
-figure~\ref{fig:lstm_arch} visualizes the architecture of our \ac{LSTM} models indicating modules that change when varying the encoding scheme by a dashed red border whereas parts that change with the data-set are highlighted through a dashed blue border.
+Figure~\ref{fig:lstm_arch} visualizes the architecture of our \ac{LSTM} models indicating modules that change when varying the encoding scheme by a dashed red border whereas parts that change with the data-set are highlighted through a dashed blue border.
 
 \subsection{Simple feed-forward \acs{NEF}-based prediction models}%
 \label{subsec:simple_feed_forward_nef_based_prediction_models}
@@ -310,7 +310,7 @@ We are further interested in the information encapsulated within our semantic ve
 \acp{VSA} in general already have an intrinsic mechanism of comparing vectors with one another through the measure of similarity $phi$.
 However, it is not clear if simply comparing vectors in terms of similarity to for instance the mean pairwise-similarity of all known vectors, or a subset of vectors considered "normal", will differentiate outliers from the "normal data".
 A-prior, it might not even be clear what vectors belong to the baseline set of normal data or how to define vectors to be considered as inliers.
-One option could be to manually define metrics such as the number of vehicles in the scene or a a threshold for the distance between the vehicles to detect crowded and potentially dangerous situations.
+One option could be to manually define metrics such as the number of vehicles in the scene or a threshold for the distance between the vehicles to detect crowded and potentially dangerous situations.
 However, such an approach suffers from the typical issues of manual engineering such as biases introduced by the human designer as well as poor scaling.
 Therefore, we employ an unsupervised learning approach based on fully-connected autoencoder neural networks similar to the one proposed in \cite{Chen2017}.
 We train an autoencoder neural network on the latest vector in the sequence $(\mathbf{S}_{t})_{t_0}^{t_N}$ of our scene vectors based on the convolutive vector-power representation in unsupervised fashion.
@@ -342,7 +342,7 @@ However, we also inspect certain parameter pairs jointly if there are correlatio
 All hyperparameter analyses in this section on both model types is performed on the \emph{On-board} data-set $D1$.
 If not declared otherwise, all figures show the performance of the investigated models on the validation part $V_1 \subset D_1$ of the \emph{On-board} data-set.
 The training process however is intended to be kept as coherent as possible between the data-sets and differences having an impact on the training process will be highlighted where necessary.
-Finally, we evaluate both model types perfomance on both available data-sets and, especially for the \ac{LSTM}-based models, we give a thorough analysis on which model performs best depeding on the current driving context.
+Finally, we evaluate both model types performance on both available data-sets and, especially for the \ac{LSTM}-based models, we give a thorough analysis on which model performs best depending on the current driving context.
 Thereby, we will identify strengths and weaknesses of each particular model.
 
 \subsection{Evaluation of the \acs{LSTM}-based prediction models}%
@@ -404,7 +404,7 @@ We continue our hyperparameter analysis by inspecting the number of dimensions w
 In our initial experiment, we used \num{80} dimensions in each of the \ac{LSTM} encoder and decoder cell.
 Here, we investigate if adding more dimensions improves the models' prediction performance.
 Again, we train the model for \num{8} epochs.
-figure~\ref{subfig:lstm_units_analysis} depicts the \ac{RMSE} for models with \num{80}, \num{150}, \num{200} and \num{500} dimensions in the \ac{LSTM} cells.
+Figure~\ref{subfig:lstm_units_analysis} depicts the \ac{RMSE} for models with \num{80}, \num{150}, \num{200} and \num{500} dimensions in the \ac{LSTM} cells.
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.9\textwidth]{imgs/lstm_layers_epochs_analysis.eps}
@@ -418,7 +418,7 @@ Therefore, we fix the number of dimensions within the \ac{LSTM} cells to \num{15
 In the next step, we inspect how the number of layers in our network architecture influences the model's performance.
 Here, one layer is a pair of one \ac{LSTM} encoder and decoder cell each.
 Thus a model with \num{2} layers consists of a sequence of \num{2} \ac{LSTM} encoder cells followed by a sequence of again \num{2} \ac{LSTM} decoder cells.
-figure~\ref{subfig:lstm_layers_analysis} visualizes the \ac{RMSE} of models with \num{1} up to \num{9} layers trained for \num{8} epochs.
+Figure~\ref{subfig:lstm_layers_analysis} visualizes the \ac{RMSE} of models with \num{1} up to \num{9} layers trained for \num{8} epochs.
 This analysis shows the model using only one layer performs best and that increasing the number of layers and thus using a deeper network architecture does not improve the model's performance.
 On the contrary, more layers lead to worse accuracy in both dimensions.
 However, we trained all models for a fixed number of \num{8} epochs whereas deeper network architectures might demand a longer training process.
@@ -465,7 +465,7 @@ Figure~\ref{fig:rmse_dev_over_epochs} visualizes this result by showing the deve
     \subfloat[\label{subfig:lstm_rmse_subset_on_board}]{%
         \includegraphics[width=\columnwidth]{imgs/rmse_large_subset.eps}
     }
-    \caption{Visualization of the \ac{RMSE} of all \ac{LSTM} models on the \emph{On-board} data-set:~\protect\subref{subfig:lstm_rmse_all_on_board} shows the complte validation set $V_1 \subset D_1$~\protect\subref{subfig:lstm_rmse_subset_on_board} shows the subset of situations with at least \num{3} other vehicles present and distance between the target and ego vehicle lower than  \SI{20}{\meter} and between target and closest other vehicle lower than \SI{10}{\meter}.}\label{fig:rmse_on_board_all}
+    \caption{Visualization of the \ac{RMSE} of all \ac{LSTM} models on the \emph{On-board} data-set:~\protect\subref{subfig:lstm_rmse_all_on_board} shows the complete validation set $V_1 \subset D_1$~\protect\subref{subfig:lstm_rmse_subset_on_board} shows the subset of situations with at least \num{3} other vehicles present and distance between the target and ego vehicle lower than  \SI{20}{\meter} and between target and closest other vehicle lower than \SI{10}{\meter}.}\label{fig:rmse_on_board_all}
 \end{figure}
 
 Figure~\ref{fig:rmse_on_board_all} visualizes the \ac{RMSE} of all \ac{LSTM}-based models on the validation-set $V_1 \subset D_1$ of the \emph{On-board} data-set using \num{512}-dimensional vectors.
@@ -682,7 +682,7 @@ In this case, the \ac{NEF}-model is not only simpler, but also has access to les
     }
     \caption{Visualization of the results of the autoencoder neural network used for unsupervised anomaly detection on the \emph{On-board} data set.
         The figures show the distribution of certain characteristic values, namely distances between the target and other vehicles (figures~\protect\subref{subfig:anomalies_on_board_boxplots_distances} and~\protect\subref{subfig:anomalies_on_board_histograms_distances}) as well as the number of other vehicles (figures~\protect\subref{subfig:anomalies_on_board_boxplots_other_vehicles} and~\protect\subref{subfig:anomalies_on_board_histograms_other_vehicles}), for situations classified as anomalies and for the complete data set.
-        The upper row shows boxplots to visualize the difference between anomalies and the complete data set, whereas the lower row shows histograms for a more in-depth visualization of the metrics' distribution.
+        The upper row shows box plots to visualize the difference between anomalies and the complete data set, whereas the lower row shows histograms for a more in-depth visualization of the metrics' distribution.
 }
     \label{fig:anomaly_on_board}
 \end{figure}
@@ -697,7 +697,7 @@ Hence, our only option is to analyze the anomalies detected by our neural networ
 If this comparison uncovers significant differences between the anomalies detected by the neural network and the entirety of all data samples, we can at least conclude that the anomalies are reasonably different from the rest of the data set and furthermore, that there is sufficient information encoded in our vector representation to unravel them.
 For this analysis, we use the same metrics already analyzed in section~\ref{ssubsec:evaluation_nef} to characterize crowded and potentially dangerous driving situations, namely the distance between the target and the ego-vehicle, the distance between the target and the closest other vehicle and the number of other vehicles present in the scene.
 Figure~\ref{fig:anomaly_on_board} visualizes the distribution of these metrics on the set of anomalies produced by the neural network and on all data samples in the \emph{On-board} data set.
-Figure~\ref{subfig:anomalies_on_board_boxplots_distances} shows boxplots of the distances between the target and the closest other vehicle (left plot in figure~\ref{subfig:anomalies_on_board_boxplots_distances}) as well the target and the closest other vehicle (right plot in figure~\ref{subfig:anomalies_on_board_boxplots_distances}) while figure~\ref{subfig:anomalies_on_board_histograms_distances} shows the same data, but illustrated as histograms.
+Figure~\ref{subfig:anomalies_on_board_boxplots_distances} shows box plots of the distances between the target and the closest other vehicle (left plot in figure~\ref{subfig:anomalies_on_board_boxplots_distances}) as well the target and the closest other vehicle (right plot in figure~\ref{subfig:anomalies_on_board_boxplots_distances}) while figure~\ref{subfig:anomalies_on_board_histograms_distances} shows the same data, but illustrated as histograms.
 Figure~\ref{subfig:anomalies_on_board_boxplots_other_vehicles} and~\ref{subfig:anomalies_on_board_histograms_other_vehicles} visualize a similar evaluation for the number of other vehicles within a certain distance (left plots), namely \SI{40}{\meter}, and all other vehicles in the scene (right plots).
 
 We observe a clear difference for both, the evaluation of the distances and the number of other vehicles, between the anomalies detected by our neural network and the complete set of data samples.
@@ -732,7 +732,7 @@ In contrast, the great majority of samples from the complete data set has at mos
     }
     \caption{Visualization of the results of the autoencoder neural network used for unsupervised anomaly detection on the \emph{\ac{NGSIM}} data set.
         The figures show the distribution of distances between the target and other vehicles (figures~\protect\subref{subfig:anomalies_ngsim_boxplot_distance} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}) as well as the number of other vehicles (figures~\protect\subref{subfig:anomalies_ngsim_boxplot_other_vehicles} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}), for situations classified as anomalies and for the complete data set.
-    The left figures (figure~\protect\subref{subfig:anomalies_ngsim_boxplot_distance} and~\protect\subref{subfig:anomalies_ngsim_boxplot_other_vehicles}) show boxplots to visualize the difference between anomalies and the complete data set, whereas the right figures (figure~\protect\subref{subfig:anomalies_ngsim_histogram_distance} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}) show histograms for a more in-depth visualization of the metrics' distribution.}
+    The left figures (figure~\protect\subref{subfig:anomalies_ngsim_boxplot_distance} and~\protect\subref{subfig:anomalies_ngsim_boxplot_other_vehicles}) show box plots to visualize the difference between anomalies and the complete data set, whereas the right figures (figure~\protect\subref{subfig:anomalies_ngsim_histogram_distance} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}) show histograms for a more in-depth visualization of the metrics' distribution.}
     \label{fig:anomaly_ngsim}
 \end{figure}
 

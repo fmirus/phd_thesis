@@ -135,7 +135,7 @@ However, rather than applying that change to $\mathbf{W}$ directly, we instead u
   \Delta\mathbf{d}_{ p ,t,i} = \kappa a_i \nu_{t} \left(\mathbf{v}_{observed,t}-\mathbf{v}_{mix,t}\right) = \kappa a_i \nu_{t} \epsilon_{t} = a_i \Delta\mathbf{W}_{ p ,t}.
   \label{eq:learning2}
 \end{equation}
-Fig.~\ref{fig:mix_context_sensitive_system_arch} shows a schematic visualization of our model's architecture.
+Figure~\ref{fig:mix_context_sensitive_system_arch} shows a schematic visualization of our model's architecture.
 The solid red line indicates the connection to decode out the weights $ \mathbf{W}_{p,t}$ for the individual expert predictors from the neural population encoding the context $ \mathbf{z}$.
 The dotted green line indicates the (delayed) error signal $\epsilon_{t}$ used to update the decoders $ \mathbf{d}_{p,t,i}$ of the connection between the context population and the expert weights.
 
@@ -145,12 +145,12 @@ The dotted green line indicates the (delayed) error signal $\epsilon_{t}$ used t
 One extremely important consideration for any online updating of a predictive model (i.e., one where it is generating anticipated future observations) is that the error signal is only available in the future.
 That is, we can only apply Equation~\eqref{eq:learning2} after the amount of time $t$ has occurred.  
 This introduces a long lag into the learning process.  
-We illustrate this issue using an example situation showing the predictions of the individual offline models depicted in Fig.~\ref{fig:lstm_predictions_example}.
+We illustrate this issue using an example situation showing the predictions of the individual offline models depicted in figure~\ref{fig:mix_individual_predictors_example}.
 In this example, all individual models predict the target vehicle's motion in $y$-direction almost perfectly until a prediction horizon of roughly \SI{2.5}{\second} when the predictions start to deviate from the actual motion.
 Assuming a similar situation for a model employing an online learning approach, the weights for the current prediction \SI{2.5}{\second} into the future can only be updated after \SI{2.5}{\second} have passed. 
 For all prediction time-steps further into the future, we have to wait even longer while the error between the prediction and the actual motion potentially increases even more.
 In the meantime, the model is doomed to make predictions for these future time-steps based on sub-optimal weights based on past learning updates.
-However, the example depicted in Fig.~\ref{fig:lstm_predictions_example} also hints, that the error at \SI{2.5}{\second} could already be used to update weights further into the future as, although the error increases, the general \emph{direction} of the deviation between predictions and actual motion remains the same. 
+However, the example depicted in figure~\ref{fig:mix_individual_predictors_example} also hints, that the error at \SI{2.5}{\second} could already be used to update weights further into the future as, although the error increases, the general \emph{direction} of the deviation between predictions and actual motion remains the same. 
 In other words, we assume that if our system is currently predicting too large a value at time $t$, then it is likely also to be predicting too large a value at time $ \tilde{t} > t$.
 That is, whenever we have an observation at time $t$ that we compare with the prediction made $t$ time steps ago, we can also apply Equation~\eqref{eq:learning2} for all the larger values as well, i.e., we apply Equation~\eqref{eq:learning2} for all $ \tilde{t}$ with $ \tilde{t} > t$ once the amount of time $t$ has passed.
 Since this is just an estimation, we want the predictions for time steps $ \tilde{t} $ further into the future than $t$ be less influenced by the error at $t$.
@@ -179,7 +179,7 @@ We present results from two variants of our mixture-of-experts model.
 Firstly, we evaluate a simplified version, which applies Equation \eqref{eq:learning2} directly at prediction time assuming that the error signal, which is future data, is actually available already at prediction time. 
 The benefit of this prior evaluation is two-fold: on the one hand, we get an impression what benefits can be expected from using context information over the context-free variant before employing the more sophisticated, timing-sensitive model.
 On the other hand, a model having immediate access to the future error signal serves as an upper bound for the performance to be expected from models that have to deal with temporally delayed error signals. 
-We present the results of this prior evaluation in section~\ref{subsec:comparing_timing_agnostic_context_free_and_context_sensitive_mixture_models}, whereas the evaluation of the model tackling temporally delayed error signals is shown in section~\ref{subsec:results_of_the_mixture_model_using_temporal_spreading}.
+We present the results of this prior evaluation in section~\ref{subsec:comparing_timing_agnostic_context_free_and_context_sensitive_mixture_models}, whereas the evaluation of the model tackling temporally delayed error signals is shown in section~\ref{subsec:evaluation_of_the_context_sensitive_model_variant_with_temporal_spreading}.
 
 All model variants in this chapter are implemented using the neural simulator Nengo \cite{Bekolay2014}, which is typically used for constructing large-scale biologically realistic neural models \cite{Eliasmith2013}, but also allows for traditional feed-forward artificial neural networks using either spiking or non-spiking neurons.
 Here, we use the rate-approximation of the Leaky Integrate and Fire neuron, although we expect any other neuron model to have similar behavior.
@@ -211,8 +211,8 @@ The lower row finally shows the error between each model's prediction and the ta
 
 
 Independent of what type of prediction model shown in chapter~\ref{chap:behav_pred} we use as input for the online learning system, the output of each individual predictor is anticipated positions in $x$- and $y$-direction at \num{20} equidistant time steps $t_i$ for $i=1,\ldots,20$ for \SI{5}{\second} into the future, i.e.\ $t_1=0.25, t_2=0.5, \ldots, t_{20}=5.0$.
-Fig.~\ref{fig:lstm_predictions_example} shows one data sample from the \emph{On-board} data-set depicting the input data to the offline models (previous motion) as well as each model's individual predictions, which are the input to the mixture model. 
-In other words, the colored lines in Fig.~\ref{fig:lstm_predictions_example} depicting the predictions of the \emph{linear}, \emph{\ac{SPA}} and \emph{numerical} models form the input of the mixture-of-experts online learning model.
+Figure~\ref{fig:mix_individual_predictors_example} shows one data sample from the \emph{On-board} data-set depicting the input data to the offline models (previous motion) as well as each model's individual predictions, which are the input to the mixture model. 
+In other words, the colored lines in figure~\ref{fig:mix_individual_predictors_example} depicting the predictions of the \emph{linear}, \emph{\ac{SPA}} and \emph{numerical} models form the input of the mixture-of-experts online learning model.
 Note that these anticipated positions are each individual model's guesses about the actual position values used as ground truth in chapter~\ref{chap:behav_pred}.
 We use these prediction values unaltered and without further preprocessing as input for our mixture models.
 Furthermore, we only present vehicles from the test sets $V_1$ and $V_2$ to our mixture models to avoid presenting vehicles to the system the individual predictors have already been trained on.
@@ -253,7 +253,7 @@ To translate these context values to a common order of magnitude, we use the tra
     }
     \caption{Visualization of the \ac{RMSE} of the timing-agnostic variants of our mixture-of-experts model, both context-free and context-sensitive, on both data sets.
 ~\protect\subref{subfig:mix_start_on_board} shows the performance at the start of the training process on the \emph{On-board} data set. 
-~\protect\subref{subfig:mix_start_ngsim} shows the performance at the start of the training process on the \emph{\ac{NGSIM}} data set. Similarly,~\protect\subref{subfig:mix_on_board} shows the models' performance on the first \num{70} vehicles of the \emph{on-board} data set, whereas fig.~\protect\subref{subfig:mix_ngsim} show the models' performance on the first \num{92} vehicles of the \emph{\ac{NGSIM}} data set.}
+~\protect\subref{subfig:mix_start_ngsim} shows the performance at the start of the training process on the \emph{\ac{NGSIM}} data set. Similarly,~\protect\subref{subfig:mix_on_board} shows the models' performance on the first \num{70} vehicles of the \emph{on-board} data set, whereas figure~\protect\subref{subfig:mix_ngsim} show the models' performance on the first \num{92} vehicles of the \emph{\ac{NGSIM}} data set.}
     \label{fig:mix_timing_agnostic}
 \end{figure}
 
@@ -292,7 +292,7 @@ To limit the simulation time, we exposed only a subset of \num{70} vehicles from
 \label{ssubsec:results}
 
 Figure~\ref{fig:mix_timing_agnostic} shows the results of the simplified, timing-agnostic variants of the context-free and context-sensitive mixture-of-experts online learning models on both data sets. 
-Figure~\ref{subfig:mix_start_on_board} and~\ref{subfig:mix_on_board} show the models' performance on the \emph{On-board} data set at the start of training (\ref{subfig:mix_start_on_board}) and for the complete set of \num{70} evaluation vehicles from $V_1$ (\ref{subfig:mix_on_board}), whereas fig.~\ref{subfig:mix_start_ngsim} and~\ref{subfig:mix_ngsim} similarly depict the models' performance on the \emph{\ac{NGSIM}} data set at the start of training and for all \num{92} evaluation
+Figure~\ref{subfig:mix_start_on_board} and~\ref{subfig:mix_on_board} show the models' performance on the \emph{On-board} data set at the start of training (\ref{subfig:mix_start_on_board}) and for the complete set of \num{70} evaluation vehicles from $V_1$ (\ref{subfig:mix_on_board}), whereas figure~\ref{subfig:mix_start_ngsim} and~\ref{subfig:mix_ngsim} similarly depict the models' performance on the \emph{\ac{NGSIM}} data set at the start of training and for all \num{92} evaluation
 vehicles respectively.
 We observe in figure~\ref{subfig:mix_start_on_board} and~\ref{subfig:mix_start_ngsim} that both, the context-free and context-sensitive mixture models perform poorly at the start of training (which makes sense due to the randomly initialized weights), but improve significantly and consistently on both data sets (figure~\ref{subfig:mix_on_board} and~\ref{subfig:mix_ngsim}) the more data they receive.
 The context-free version yields mild improvements over all individual predictors in $x$-direction without improving over the best individual model in $y$-direction.
@@ -301,7 +301,7 @@ The context-sensitive variant outperforms all other models (including the contex
 \subsection{Evaluation of the context-sensitive model variant with temporal spreading}%
 \label{subsec:evaluation_of_the_context_sensitive_model_variant_with_temporal_spreading}
 
-Having seen that the simplified mixture model using contextual information clearly outperformed the context-free version, we now proceed to the evaluation of the context-sensitive mixture-of-experts model variant having to deal with temporally delayed error signials employing our temporal spreading approach.
+Having seen that the simplified mixture model using contextual information clearly outperformed the context-free version, we now proceed to the evaluation of the context-sensitive mixture-of-experts model variant having to deal with temporally delayed error signals employing our temporal spreading approach.
 We describe the experimental setup, analyze several adjustable parameters of the model and finally evaluate the performance of the model given the chosen parameter setup.
 
 \subsubsection{Experimental setup}%
@@ -326,7 +326,7 @@ During the presentation of these \num{30} test vehicles, the mixture model conti
 
 Figure~\ref{fig:mix_train_obj} shows the performance of the mixture model with \num{50} neurons in the context population for selected vehicles during the \num{5}-vehicle ramp up phase.
 The upper row in each plot shows the predictions of all input predictors, the mixture model as well as the actual motion of the target vehicle for one particular prediction time step.
-For instance, the upper row in figure~\ref{subfig:mix_train_0_2} illustrates the predictions of all models for \SI{0.75}{\second} into the future over the complete time the target vehicle ist visible.
+For instance, the upper row in figure~\ref{subfig:mix_train_0_2} illustrates the predictions of all models for \SI{0.75}{\second} into the future over the complete time the target vehicle is visible.
 The lower row in each plot illustrates the \ac{RMSE} of the models for all prediction time steps with the particular time step shown in the upper row highlighted by a dotted vertical line.
 Figures~\ref{subfig:mix_train_0_2} and~\ref{subfig:mix_train_0_18} show the prediction time steps \SIlist{0.75;4.75}{\second} into the future respectively of the first vehicle during the ramp-up phase while figure~\ref{subfig:mix_train_4_18} shows the prediction time step \SI{4.75}{\second} into the future for the last vehicle of the ramp-up phase.
 We observe, that the even distributed weights are a reasonable initialization for our further adaptation by our model , since already for the first presented vehicle is achieves decent prediction accuracy.
@@ -358,13 +358,13 @@ Therefore, we focus on scaling factors $\nu_t$ decreasing linearly from \num{1} 
 Figure~\ref{fig:mix_parameters2} shows a visualization of the \ac{RMSE} performance of our mixture-model with \num{100} neurons in the context population with for different values of the learning rate $\kappa$.
 Figure~\ref{subfig:mix_learning_rate_analysis} shows an analysis similar to figure~\ref{subfig:mix_learning_rates_even_scale_50n} but using the linearly decreasing scaling factors.
 We observe, that the scaling the learning rates down stabilizes the model compared to the even scaling factors.
-As already shon in figure~\ref{subfig:mix_fail}, we found that a rather low learning rate $\kappa$ is necessary as higher learning rates tend to let the model overfit the current vehicle, which leads to large errors and even complete failure when switching from one vehicle to the next.
+As already shown in figure~\ref{subfig:mix_fail}, we found that a rather low learning rate $\kappa$ is necessary as higher learning rates tend to let the model overfit the current vehicle, which leads to large errors and even complete failure when switching from one vehicle to the next.
 We observe that issue in particular in $x$-direction when already a learning rate of $\kappa = 10^{-13}$ leads to large errors and even failure.
 Given the results shown in figure~\ref{subfig:mix_fail}, we use a learning rate of $\kappa=10^{-15}$.
 As the evaluation shown in figure~\ref{fig:mix_parameters2} included only \num{30} test vehicles, we chose this rather conservative learning rate to make sure our model does not overfit when using a different set of vehicles.
 
 Furthermore, we investigated the influence of the number of neurons in the context ensemble on the model's performance employing the aforementioned values for the learning rate $\kappa$ and scaling factors $\nu_{t}$.
-Fig.~\ref{subfig:mix_num_neuron_analysis} shows the \ac{RMSE} of the model for varying numbers of neurons in the context population. 
+Figure~\ref{subfig:mix_num_neuron_analysis} shows the \ac{RMSE} of the model for varying numbers of neurons in the context population. 
 In $y$-direction, the influence of the number of neurons is nearly invisible, whereas in $x$-direction increasing the number of neurons results in lower \ac{RMSE} values.
 Thus, we focus our further investigations on models with \num{2000} neurons in the context population.
 
@@ -378,7 +378,7 @@ Thus, we focus our further investigations on models with \num{2000} neurons in t
     \label{fig:mix_vs_other_approaches_over_objects}
 \end{figure}
 
-Fig.~\ref{fig:mix_vs_other_approaches_over_objects} shows the \ac{RMSE} performance of our context-sensitive mixture-of-experts model employing temporal spreading with \num{2000} neurons on the \num{30} test vehicles in comparison to the individual input predictors after the ramp-up phase of \num{5} vehicles.
+Figure~\ref{fig:mix_vs_other_approaches_over_objects} shows the \ac{RMSE} performance of our context-sensitive mixture-of-experts model employing temporal spreading with \num{2000} neurons on the \num{30} test vehicles in comparison to the individual input predictors after the ramp-up phase of \num{5} vehicles.
 We observe, that our mixture-of-experts model improves over the individual models on average over all \num{30} test vehicles in both directions without clearly outperforming them.
 
 \begin{figure}[t]
@@ -415,7 +415,7 @@ We observe, that our mixture-of-experts model improves over the individual model
 
 To further investigate these results, we evaluate the  model's performance on individual vehicles.
 Figure~\ref{fig:mix_vehicle_examples} shows the \ac{RMSE} performance of our mixture-of-experts model in comparison to the individual input predictors on a selection of \num{8} individual test vehicles.
-For most of the examples, we observe results similar to the overall, mean performance shown in figure~\ref{fig:mix_vs_others} with the mixture model improving over all individual predictors in $x$-direction and being at least comparable to the best individual predictor in $y$-direction (cf.\ figure~\ref{subfig:mix_vehicle_1},~\ref{subfig:mix_vehicle_3},~\ref{subfig:mix_vehicle_4},~\ref{subfig:mix_vehicle_5}).
+For most of the examples, we observe results similar to the overall, mean performance shown in figure~\ref{fig:mix_vs_other_approaches_over_objects} with the mixture model improving over all individual predictors in $x$-direction and being at least comparable to the best individual predictor in $y$-direction (cf.\ figure~\ref{subfig:mix_vehicle_1},~\ref{subfig:mix_vehicle_3},~\ref{subfig:mix_vehicle_4},~\ref{subfig:mix_vehicle_5}).
 However, there are also vehicles such as the one shown in figure~\ref{subfig:mix_vehicle_2}, where we observe improvements of the mixture model over the individual predictors in $y$-direction with no improvements shown in $x$-direction.
 For the vehicle shown in figure~\ref{subfig:mix_vehicle_6}, the mixture model does not yield any improvements over the input models in either direction.
 For that particular vehicle however, we also observe for both directions, that one of the offline models achieves a remarkably low \ac{RMSE} performance, namely the linear predictor in $x$-direction and the \ac{LSTM} models in $y$-direction, leaving little room for improvement.

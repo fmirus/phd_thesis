@@ -511,7 +511,9 @@ circ/.style={
 \caption{The dynamics principle of the \ac{NEF} for recurrent connections.}
 \label{fig:nef_dynamics}
 \end{figure}
-\todo[inline]{check if figure~\ref{fig:nef_dynamics} can be beautified}
+
+%\todo[inline]{check if figure~\ref{fig:nef_dynamics} can be beautified}
+
 The third main principle of the \ac{NEF}, \emph{dynamics}, provides a set of mathematical tools to implement dynamical systems in neural populations through recurrent connections.
 Let $A$ be a population of neurons with an incoming connection approximating the function $\abbil{f}{V}{W \subset \mathbb{R}^{m}}$ and a recurrent connection approximating the function $\abbil{g}{W}{W}$ (cf.\ figure~\ref{fig:nef_dynamics}).
 Thus, the overall function the population is approximating is
@@ -592,7 +594,7 @@ This can be visual similarity (e.g.\ items or objects that "look" similar), audi
 
 A typical way of learning a vocabulary whose vectors conserve visual similarity in supervised fashion are \acp{CNN}.
 These network architectures are inspired by the human visual cortex and compress high-dimensional visual input to lower dimensional representations.
-They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf.\ figure~\ref{subfig:cnn_arch}).
+They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf.\ figure~\ref{fig:cnn_arch}).
 The activity of the second to last layer (the last fully-connected one before the actual classification) for each known class in the data set can be considered a representational vector for the current visual input.
 A simple way of getting a representative vector for each class is simply calculating the element-wise, normalized mean over all examples in the test set.
 We employ this approach in section~\ref{subsec:visual_vocabularies} to generate vocabularies encapsulating the visual similarity of traffic signs and traffic participants.
