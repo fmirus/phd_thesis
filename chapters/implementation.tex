@@ -9,9 +9,9 @@ However, inferring contextual information from on-board sensory data is appealin
 Furthermore, it is an interesting option and a good candidate to firstly investigate our vector representation for automotive scenes, as it seems to be a moderately complex task in the context of automated driving, yet still challenging fitting enough, since we need to combine symbol-like processing with numerical data.
 
 Fig.~\ref{subfig:system_overview_horizontal} shows a schematic overview of our approach to driving context classification  and the general flow of information within the system.
-Environment perception happens through the ego-vehicle's on-board sensors such as cameras, \ac{RADAR} and \ac{LIDAR} sensor providing data either in the form of either already pre-processed object-lists or unprocessed raw sensory data.
+Environment perception happens through the ego-vehicle's on-board sensors such as cameras, \ac{RADAR} and \ac{LIDAR} sensor providing data either in the form of either already preprocessed object-lists or unprocessed raw sensory data.
 From this data, we generate our vector representation encapsulating the structure and semantics of the current scene, which will be used as input for the classification system.
-In the subsequent sections, we will describe the data sets used for driving context classification alongside the pre-processing steps performed to prepare the data for the task at hand, our vector representation for the current driving scene and the models used for classifying the current driving context.
+In the subsequent sections, we will describe the data sets used for driving context classification alongside the preprocessing steps performed to prepare the data for the task at hand, our vector representation for the current driving scene and the models used for classifying the current driving context.
 Finally, we will evaluate the systems performance and compare it to two performance baselines.
 In the evaluation stage, we will also investigate the influence of variations in the vocabulary of atomic vectors on the performance of the classification system.
 
@@ -21,7 +21,7 @@ In the evaluation stage, we will also investigate the influence of variations in
 The input data used for training and evaluating the driving context classification models is real-world data gathered during test drives in the region of Munich, Germany.
 Depending on the test vehicle's sensor setup \cite{Aeberhard2015}, a subset of the following extrospective sensor systems is available: cameras, \ac{RADAR} and \ac{LIDAR} sensors.
 Furthermore, the dynamics of the ego-vehicle such as velocity, acceleration or the steering angle are measured using introspective sensors.
-While all extrospective sensors provide pre-processed lists of dynamic objects such as cars or pedestrians, the camera system additionally detect static objects such as traffic signs.
+While all extrospective sensors provide preprocessed lists of dynamic objects such as cars or pedestrians, the camera system additionally detect static objects such as traffic signs.
 Furthermore, the raw images of both, the front and rear camera are also available. 
 
 In this chapter, we focus on the ego-vehicle's dynamics and the information provided by the camera-system as the only extrospective sensor, since there are no object-lists with information fused from several sensor sources available.
@@ -77,20 +77,20 @@ Finally, we describe the models trained to produce the actual context classifica
 \end{figure}
 
 For the task of classifying the current driving context from measurements provided by the ego-vehicle's on-board sensors, we encapsulate three types of information in our vector-based scene representation, namely certain dynamics of the ego-vehicle, dynamic objects and traffic signs.
-Information on all of these entities if provided as pre-processed object-lists as described in section ~\ref{sec:data_and_preprocessing_context_classification}.
+Information on all of these entities if provided as preprocessed object-lists as described in section ~\ref{sec:data_and_preprocessing_context_classification}.
 In subsequent sections, we describe the process of converting the input data into a vector representation for each of these categories of information.
 
 \subsubsection{Ego-vehicle dynamics}
 \label{subsubsec:ego-veh-dyn}
 
-Rergarding the dynamics of the ego-vehicle, we encapsulate the current velocity $\nu$, acceleration $(a_x, a_y)$ split in lateral and longitudinal direction with respect to the ego-vehicle's coordinate system  as well as the angle $\alpha_{steering}$ of the steering wheel, and the steering angle $\alpha_{axle}$ of the front axle.
+Regarding the dynamics of the ego-vehicle, we encapsulate the current velocity $\nu$, acceleration $(a_x, a_y)$ split in lateral and longitudinal direction with respect to the ego-vehicle's coordinate system  as well as the angle $\alpha_{steering}$ of the steering wheel, and the steering angle $\alpha_{axle}$ of the front axle.
 Since all of these units are intangible concepts, we encode them by assigning a random vocabulary vector to it.
 To represent the numerical value corresponding to each unit, we employ the simple scalar multiplication encoding introduced in section~\ref{ssubsec:scalar_multiplication_encoding}.
-We illustrate this preocedure for the current velocity of the ego-vehicle: let $ \mathbf{VELOCITY} = \left(v_0, \ldots, v_{D-1}\right)$ with $v_i \in \mathbb{R}$ for all $i=0, \ldots, D-1$ be the randomly chosen, normalized vocabulary vector representing the unit velocity, we encode the value $\nu$ of the ego-vehicle's velocity as $\nu \cdot \mathbf{VELOCITY}$.
+We illustrate this procedure for the current velocity of the ego-vehicle: let $ \mathbf{VELOCITY} = \left(v_0, \ldots, v_{D-1}\right)$ with $v_i \in \mathbb{R}$ for all $i=0, \ldots, D-1$ be the randomly chosen, normalized vocabulary vector representing the unit velocity, we encode the value $\nu$ of the ego-vehicle's velocity as $\nu \cdot \mathbf{VELOCITY}$.
 Furthermore, we normalize all scalar values to the range $\left[-2,2\right]$ to keep the length of our vectors limited.
 For vectorization of the two-dimensional acceleration values in longitudinal ($x$) and lateral ($y$) direction, we use the encoding based on sine and cosine functions with different spatial frequencies and offsets employing the function $\lambda$ introduced in equation~\eqref{eq:cosin_2d_enc} in section~\ref{ssubsec:sine_cosine_based_representations}.
 Hence, to obtain a vector representation of acceleration in longitudinal ($x$) and lateral ($y$) direction $(a_x, a_y)$, we use the encoding $\lambda\left(a_x, a_y\right)$, leads to normalized, nonzero, similar vectors with information distributed over all elements.
-To achieve the encoding of all dynamics of the ego-vehile, we sum up the vectors representing the individual values, i.e.,
+To achieve the encoding of all dynamics of the ego-vehicle, we sum up the vectors representing the individual values, i.e.,
 \begin{align}
 \label{eq:ego_dynamics}
 \mathbf{EGO}_{t} &= \nu \cdot \mathbf{VELOCITY} + \alpha_{steering} \cdot\mathbf{STEERING} \nonumber \\
@@ -106,7 +106,7 @@ In the simplest form of a vector representation, we could simply add the vocabul
 However, this representation just encodes that there are certain objects present somewhere in the current scene without any additional information.
 To encode a more detailed representation of the current scene with additional information on each traffic participants position, we use the function $\lambda$ from equation ~\eqref{eq:cosin_2d_enc} again to map each dynamic object's position $(p_x, p_y)$ in longitudinal ($x$) and lateral ($y$) direction relative to the ego-vehicle's coordinate system to vector form $ \lambda(p_x, p_y)$.
 Subsequently, we bind the resulting vector encoding the object's position to the vector representing the object's category.
-However, positionnal information for each traffic participant might not be informative enough regarding the task of distinguishing between several driving contexts.
+However, positional information for each traffic participant might not be informative enough regarding the task of distinguishing between several driving contexts.
 One quite unique feature of for instance, highway driving is the fact that almost all other traffic participants drive in similar direction as the ego-vehicle.
 Therefore, we create additional vocabulary vectors encoding the orientation of dynamic objects relative to the ego-vehicle for three discretized categories, namely $\mathbf{SAME}$, $\mathbf{OPPOSITE}$ and $\mathbf{OTHER}$  bind this orientation information to each dynamic object as we did for position information.
 If we want to jointly attach those two pieces of information to one object, we need to generate two additional vocabulary vectors $\mathbf{POSITION}$ and $\mathbf{ORIENTATION }$ to impose structure.
@@ -122,7 +122,6 @@ Given all traffic participants in the current scene as $obj_{i}$ for $i=0, \ldot
 \mathbf{OBJ}_{t} &= \sum\limits_{i=0}^{n} \mathbf{TYPE}_{obj_i} + \mathbf{TYPE}_{obj_i} \varoast \mathbf{POSITION} \lambda\left(p_{x,i},p_{y,i}\right) \nonumber \\
                  &+ \mathbf{TYPE}_{obj_i}\varoast\mathbf{ORIENTATION}\varoast\mathbf{ORIENT}_{obj_i},
 \end{align}
-
 with $ \mathbf{TYPE}_{obj_i}$ denoting the vector representing the object's category and $ \mathbf{ORIENT}_{obj_i}$ denoting the vector representing the object's orientation.
 
 \subsubsection{Traffic signs}%
@@ -147,7 +146,6 @@ Assuming we have encountered a particular sign $\mathbf{S}_{i}$ at time $t_{i}$,
 \label{eq:traffic_sign_context_class}
 \mathbf{SIGNS}_{t} = \sum\limits_{i=0}^{n} \sigma(t, t_{i}) \cdot \mathbf{S}_{i} + \sum\limits_{j=0}^{m} \mathbf{\tilde{S}}_{j},
 \end{equation}
-
 for traffic signs $ \mathbf{S}_{i}$, which need to be memorized and traffic signs $ \mathbf{ \tilde{S}}_{i}$, which are only valid while they are visible.
 
 \subsubsection{Putting it all together}%
@@ -187,7 +185,7 @@ We leave $\mathbf{e}_{i,j}$ and $\beta_i$ at their randomly initialized values a
 \label{sec:experiments_context_classificaiton}
 
 In this section, we describe the experimental setup, models and metrics to analyze and evaluate our driving context classification model.
-We present several reference models and human performance on the task of driving conbtext classification in order to compare our model to.
+We present several reference models and human performance on the task of driving context classification in order to compare our model to.
 Furthermore, we analyze the influence variations in the underlying vector vocabularies on the classification accuracy.
 
 \subsection{Performance baselines}%
@@ -209,16 +207,16 @@ We use three baselines to compare our models performance to: human performance, 
 
 One of the best and most competitive baselines for any learning model is the performance of humans in the task given the learning system.
 Hence, we also aim to compare our classification models performance to that of human subjects on the same task.
-However, we need to make sure that the data provdided to the human subjects is as similar as possible to the information exposed to the learning system to make the results as comparable as possible.
+However, we need to make sure that the data provided to the human subjects is as similar as possible to the information exposed to the learning system to make the results as comparable as possible.
 The most intuitive way for human subjects to perceive and hence classify the current driving context would be through visual information, i.e., raw camera images.
-However, the vector representation of the driving scene abstracts away most of the unneccessary visual features provided by the camera images and thus is very different information.
+However, the vector representation of the driving scene abstracts away most of the unnecessary visual features provided by the camera images and thus is very different information.
 On the other hand, the raw numerical values of the vector representation are hard if not impossible to comprehend for human subjects.
 Another intuitive way for human to perceive information is language.
 Therefore, we created human-readable versions of our input vectors in the form of written text by concatenating the label of the vocabulary vector followed by the encoded numerical value.
 We presented a subset of \num{50} random samples for each data set to two human subjects asking for their classification guess.]
 To make this process as similar to the automated learning process pursued by the neural network, the human subjects had to classify samples from the training data set first.
 After every sample, the subject was informed if the provided classification was correct or, in case of wrong classifications, which label would have been the correct answer.
-In this way, we aim to provocate a steep learning curve for the human subjects before switching to the test set and replicate the learning process of the neural models as closely as possible.
+In this way, we aim to provoke a steep learning curve for the human subjects before switching to the test set and replicate the learning process of the neural models as closely as possible.
 Figure~\ref{fig:context_class_human_train_test} shows the performance for the two human subjects on both the training and test sets on the individual labels and their overall performance.
 These results indicate that an overall classification performance of roughly \SI{92}{\percent} and at least \SI{80}{\percent} for the individual driving context labels are a reasonable baseline for the neural models to be compared to.
 
@@ -228,7 +226,7 @@ These results indicate that an overall classification performance of roughly \SI
 The first reference model to compare our spiking neuron based driving context classification model to is a more traditional feed-forward, multi-layer neural networks of rate neurons.
 This model also uses our representation of the current driving scene as input and is trained in supervised fashion to classify the current driving context.
 Here, we use a network consisting of several fully-connected hidden layers followed by a classification layer producing the models predictions.
-This model is quite similar to our classifcation network with the most significant differences being the neuron models, i.e., \ac{ReLU} in contrast to the spiking \ac{LIF} neuron model in the \ac{Nengo} network version and the training procedure.
+This model is quite similar to our classification network with the most significant differences being the neuron models, i.e., \ac{ReLU} in contrast to the spiking \ac{LIF} neuron model in the \ac{Nengo} network version and the training procedure.
 Both models employ supervised learning techniques and while the \ac{Nengo} model employs simple least squares optimization, the multi-layer Keras-model employs the classical backpropagation algorithm using gradient descent.
 
 \subsubsection{Visual driving context classification using a \acs{CNN}}%
@@ -237,27 +235,27 @@ Both models employ supervised learning techniques and while the \ac{Nengo} model
 As mentioned earlier, a very intuitive way for us as human to classify the current driving context is by using visual information, i.e., raw images of the ego-vehicle's camera systems.
 Many deep learning models, especially \acp{CNN}, are inspired by the structure of the human visual cortex and have achieved remarkable results on visual classification tasks.
 Hence, we use a \ac{CNN} using the raw camera images as input data as our third and final reference model to compare our context classification network to.
-We use a network architecture similar to the one employed in section~\ref{subsec:visual_vocabularies} to classify traffic signs based on visual input since this network architecture has been used succesfully for classification tasks based on visual input.
+We use a network architecture similar to the one employed in section~\ref{subsec:visual_vocabularies} to classify traffic signs based on visual input since this network architecture has been used successfully for classification tasks based on visual input.
 The model is a multi-layer neural network with three convolutional layers each followed by a pooling layer with one additional fully connected layer and the final classification layer.
 The network is trained using backpropagation and the classical gradient descent.
 
 \subsection{Model training}%
 \label{subsec:model_training}
 
-In this section, we describe the process of training our context classification model as well as the aformentioned reference models.
+In this section, we describe the process of training our context classification model as well as the aforementioned reference models.
 
 \subsubsection{Nengo model training}%
 \label{ssubsec:nengo_model_training}
 
-As mentioned in section~\ref{subsec:classification_model}, we use \ac{Nengo}'s default least squares optimization to solve fo the decoders $ \mathbf{d}_{i}$ in equation~\eqref{eq:context_class_decoding}.
+As mentioned in section~\ref{subsec:classification_model}, we use \ac{Nengo}'s default least squares optimization to solve for the decoders $ \mathbf{d}_{i}$ in equation~\eqref{eq:context_class_decoding}.
 However, in order to generate the optimal decoders for the complete training set, we need to solve equation~\eqref{eq:context_class_decoding} for all samples, i.e., each pair of scene vectors and true context labels  $ \left( \mathbf{v}_{j}, \mathbf{c}_j\right)$ for $j=0, \ldots, M$ in the training data set.
 By default, this results in a matrix $A = \left( \mathbf{a}_{i,j}\right)$ for $i=0, \ldots, N$ and $j=0, \ldots, M$, with $N$ being the number of neurons in the population encoding the current scene vector and $M$ being the number of samples in the training set, which in our case is roughly \num{350000} samples.
 Hence, in order to solve for the optimal decoders, \ac{Nengo} needs to generate a giant matrix $A$ of neural activities and store it in the system's memory in addition to the high-dimensional vectors in the training set.
-That results in high memory requirements for the training process, which imposes restrictions on the computational hardware and could thus be prohibitve.
+That results in high memory requirements for the training process, which imposes restrictions on the computational hardware and could thus be prohibitive.
 Therefore, we also implemented a variant of the training process, that calculates the matrix $A$ in blocks for subsets of the training samples of size $b < M$ and thus solves iteratively for the decoders $ \mathbf{d}_{i}$ for $i=0, \ldots, b-1$ and then for the next block $i=b, \ldots, 2b-1$ until we have calculated all decoders.
-That slight adjustment is mathematically equivalent to the default least squares optimization process to solve for the decoders, but only consumes memeory resources in the order of $ \mathcal{O}\left(N\cdot b\right)$ instead of $ \mathcal{O}\left(N \cdot M\right)$.
-The only other difference is that we use regularization in the default least squares optimizaton method.
-This is typicaly used to impose a certain amound of noise to make the learning population generalize better.
+That slight adjustment is mathematically equivalent to the default least squares optimization process to solve for the decoders, but only consumes memory resources in the order of $ \mathcal{O}\left(N\cdot b\right)$ instead of $ \mathcal{O}\left(N \cdot M\right)$.
+The only other difference is that we use regularization in the default least squares optimization method.
+This is typically used to impose a certain amount of noise to make the learning population generalize better.
 In our case however, we found that dropping this regularization leads to improved classification results (see section~\ref{subsec:evaluation_of_the_classification_performance})
 
 \subsubsection{Multi-layer neural network training}%
@@ -290,9 +288,9 @@ We use a similar architecture as the one used for traffic sign classification in
     \captionof{table}{Layer by layer architecture of our reference \ac{CNN} for driving context classification.}
 \end{center}
 This architecture is shown in table ~\ref{tab:context_class_cnn_arch} consisting of three consecutive convolutional layers each followed by a max-pooling layer and two fully-connected layers for the final classification.
-The network has two additional dropout layers, one after the convolutional layer part of the network dropping \SI{25}{\percent} of the nueorns activity and one before the final classification layer dropping \SI{50}{\percent} activity.
+The network has two additional dropout layers, one after the convolutional layer part of the network dropping \SI{25}{\percent} of the neurons activity and one before the final classification layer dropping \SI{50}{\percent} activity.
 The model is trained using backpropagation and the classical gradient descent algorithm.
-We also employed early stopping since the model's validation loss did not significanlty decrease after roughly \num{3500} epochs and the model's performance did not improve for longer training phases.
+We also employed early stopping since the model's validation loss did not significantly decrease after roughly \num{3500} epochs and the model's performance did not improve for longer training phases.
 
 \subsection{Evaluation of the classification performance}%
 \label{subsec:evaluation_of_the_classification_performance}
@@ -334,7 +332,7 @@ On the other hand, \emph{interurban} is the category with the least amount of sa
 Thus, we assume that a more balanced and/or larger data set could be essential to tackle this issue.
 
 Hence, we evaluated our classification model on a subset of the test set simply removing that interurban part both model variants struggle to predict.
-Figure~\ref{subfig:context_class_test_subset} shows the results of the original \ac{Nengo} classification network (i.e., trained without the memory-efficieny and regularization improvements) on the complete test set as well as on the subset, while figure~\ref{subfig:context_class_prediction_vs_true_label_test_subset} shows a similar evaluation for the subset of the training set as figure~\ref{fig:context_class_prediction_vs_true_label} for the complete test set.
+Figure~\ref{subfig:context_class_test_subset} shows the results of the original \ac{Nengo} classification network (i.e., trained without the memory-efficiency and regularization improvements) on the complete test set as well as on the subset, while figure~\ref{subfig:context_class_prediction_vs_true_label_test_subset} shows a similar evaluation for the subset of the training set as figure~\ref{fig:context_class_prediction_vs_true_label} for the complete test set.
 We observe that, even for this non-optimized model variant, the classification accuracy of the \emph{interurban} category significantly increases from \SI{8.1}{\percent} to \SI{79.5}{\percent} when switching from the complete test set to the smaller subset.
 Thus, we consider this a strong hint that a more balanced and larger training data set will be able to improve the poor classification performance on the \emph{interurban} driving context category and therefore the overall accuracy of the model.
 \begin{figure}[t]
