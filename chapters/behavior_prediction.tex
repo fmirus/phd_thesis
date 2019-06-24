@@ -755,7 +755,7 @@ Since these are the kind of situations, where our prediction models based on the
 In this chapter, we showed a novel approach to encapsulate spatial information of multiple objects in a sequence of semantic pointers of fixed vector length.
 We used a \ac{LSTM} sequence to sequence model as well as a simple feed-forward \acl{SNN} to predict future vehicle positions from this representation.
 For each of those models, we implemented at least one reference model using other encoding schemes to compare their performance to.
-Furthermore, we compared all our models to a simple linear prediction based on a constant velocity assumption.
+Furthermore, we compared all our models to a simple linear predictor based on a constant velocity assumption.
 We evaluated our models on two different data-sets, one recorded with on-board sensors from a driving vehicle and one publicly available trajectory data-set recorded with an external camera observing a highway segment and conducted a thorough analysis.
 
 For the trained neural networks, simple feed-forward \ac{NEF} models and more sophisticated \ac{LSTM} models alike, we observe that most improvements over the linear model are achieved in $y$-direction.
@@ -764,6 +764,9 @@ We found that the \ac{LSTM} models based on our \ac{SPA}-power representation ac
 However, for the \emph{On-board} data-set, this encoding scheme achieves its best result in crowded and potentially dangerous driving situations, without clearly outperforming the other approaches on the whole data set (see section~\ref{subsec:evaluation_of_the_lstm_based_prediction_models} and figure~\ref{fig:rmse_on_board_all}).
 Given these finding, we investigated situations, where the \ac{SPA}-power representation does outperform all other approaches in $y$-direction and thereby came up with metrics characterizing such crowded situations (see figure \ref{fig:histograms_on_board}).
 This result did not hold that clearly on the \emph{\ac{NGSIM}} data-set $D_2$, since the \ac{LSTM} models achieve an almost identical performance in $y$-direction on this data-set.
+On the other hand, employing an unsupervised learning method for anomaly detection yielded a significantly higher amount of such crowded situations within the samples classified as anomalies compared to the normal samples.
+Additionally, we found that when training the \ac{LSTM} models only on data samples containing a lane change performed by the target vehicle, that the model employing \ac{SPA}-power representation clearly outperforms all other approaches in $y$-direction when evaluated on the samples containing a lane change.
+These results suggest, that training the whole system on a more balanced data-set containing equally many lane change and straight driving samples could improve the overall model performance.
 
 Another interesting result of our experiments is the fact, that the simple, feed-forward \ac{NEF} networks show results comparable to the more sophisticated \ac{LSTM} models.
 For those simple models, the \ac{SPA}-power representation shows promising results comparable to the \ac{NEF} model using numerical input on the \emph{On-board} data-set and clearly outperforming it on the \emph{\ac{NGSIM}} data-set (figure \ref{fig:rmse_nef_nets}).
@@ -771,3 +774,5 @@ Although the \ac{NEF} models do not clearly outperform the \ac{LSTM} models (whi
 These results make those simple models using our proposed vector-representation as well as a numerical encoding scheme (possibly in combination with an online learning system like the one proposed in this paper) potential candidates to be deployed on dedicated neuromorphic hardware in mobile applications, as they can be efficiently implemented in a spiking neuron substrate.
 This could be an interesting, power-efficient approach in future automated vehicles.
 
+Finally, given the results that there is not one model clearly outperforming all the others in all evaluated situations, we aim to implement an online model meant to be trained at run time to weight the predictions of several models, which have been trained offline, to improve over the individual predictors.
+We will introduce and evaluate such a model in the next chapter.
