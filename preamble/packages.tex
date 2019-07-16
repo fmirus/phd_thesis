@@ -44,15 +44,17 @@
 \usepackage{tumcolor}
 %\usepackage[]{isodate}
 \usepackage[backend=biber,
-            %style=authoryear,
-            style=alphabetic,
+            style=authoryear,
+            %style=alphabetic,
             %style=numeric,
 			sorting=anyt,
+            natbib=true,
 			urldate=iso8601,
 			date=iso8601,
 			giveninits=true,
 			maxbibnames=99,
-			maxcitenames=99]{biblatex}
+            uniquelist=false,
+			maxcitenames=2]{biblatex}
 \addbibresource{../literature/literature.bib}
 \usepackage{stmaryrd} % for some symbols like \varoast (* within a circle)
 \usepackage{url}
