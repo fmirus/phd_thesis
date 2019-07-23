@@ -16,22 +16,22 @@ Bringing all of the presented tools together, we show how the \ac{NEF} can be us
 \label{sec:math_prop_vsas}
 %----------------------------------------------------------------------------------------------------------
 
-The term \acp{VSA} - first coined by Ross W. Gayler \cite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
+The term \acp{VSA} - first coined by \textcite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
 The basic idea behind all of those approaches is to represent structure (e.g.\ cognitive concepts, symbols or language) in a high-dimensional vector space by mapping each entity to be represented to a (possibly random) vector.
 One of the most important properties of high-dimensional vector spaces enabling this kind of representation is the fact, that two high-dimensional random vectors are likely to be dissimilar.
 In the following, we will show what we mean by fuzzy terms like \emph{dissimilar} or \emph{likely} and provide more precise statements.
 
-One main requirement in the context of cognitive modeling is the ability of the modeling framework to address the binding problem \cite{Treisman1999}.
-In \cite{Jackendoff2002}, Jackendoff phrases this as the problem of "combining independent bits into a single coherent percept".
+One main requirement in the context of cognitive modeling is the ability of the modeling framework to address the binding problem \parencite{Treisman1999}.
+\textcite{Jackendoff2002} phrases this as the problem of "combining independent bits into a single coherent percept".
 One strength of \acp{VSA} is that they offer the possibility to manipulate their entities (i.e., vectors) through algebraic operations, usually at least one \emph{addition-like} and \emph{multiplication-like} operation each.
 Typically, the multiplication operation is used for binding different representations into a new vector.
 This operation, depending on the vector representation, is constructed with some desirable properties in mind (see Definition~\ref{def:binding}).
-A first attempt on using a multiplication operation on vectors for binding was done by Smolensky \cite{Smolensky1990} using the tensor product.
+A first attempt on using a multiplication operation on vectors for binding was done by \textcite{Smolensky1990} using the tensor product.
 The major drawback of this approach is exploding dimensionality of the tensor product.
 For finite dimensional vector spaces  $V$ and $W$ of dimensions $n$ and $m$, the tensor space $V \otimes W$ is a vector space of dimension $n\cdot m$.
 As a consequence, each binding operation $v\otimes w$ for vectors $ \mathbf{v} \in V, \mathbf{w} \in W$ would increase the dimension of the representational space, which is computationally unfeasible and leads to poor scaling.
 This lead researchers to define several slightly different multiplication or binding operations, depending on the underlying numerical structure.
-The most prominent examples are element-wise multiplication in Gayler's \ac{MAP}-architecture \cite{Gayler1998}, the XOR-operation in Kanerva's \acp{BSC} \cite{Kanerva2000, Kanerva2009} as well as circular convolution in Plate's \acp{HRR} \cite{Plate1991, Plate1994}.
+The most prominent examples are element-wise multiplication in the \ac{MAP}-architecture proposed by \textcite{Gayler1998}, the XOR-operation in \acp{BSC} proposed by \textcite{Kanerva2000, Kanerva2009} as well as circular convolution \acp{HRR} proposed by \textcite{Plate1991, Plate1994}.
 
 \begin{defn}
 	\label{def:VSA}
@@ -59,8 +59,8 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 \begin{ex} \aclp{VSA}
 	\label{ex:VSAs}
 	\begin{enumerate}
-		\item The first example of a \ac{VSA} is Kanerva's \acfl{BSC} \cite{Kanerva2009}.
-            He restricts the elements of his vectors to binary values, i.e., $N=\{0,1\} = \mathbb{F}_{2}$.
+		\item The first example of a \ac{VSA} is \acfl{BSC}.
+            \textcite{Kanerva2009} restricts the elements of his vectors to binary values, i.e., $N=\{0,1\} = \mathbb{F}_{2}$.
 		The operations $\varoast$ and $\oplus$ in this case are the XOR-function and a thresholded sum respectively.
 		With $ \mathbf{v}_{i} = \left(v_{i 0}, \cdots, v_{i D-1}\right) \in V_{D}(N)$ and  $i \in \{1, \cdots, n\}$, the operation $\oplus$ is usually defined in the following way
 		\begin{align*}
@@ -79,25 +79,72 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 		\acp{BSC} have some interesting properties compared to other \acp{VSA}:
 		The neutral element for both operations $\varoast$ and $\oplus$ is the vector $\pmb{0} := \left(0, \cdots, 0\right)$, while all vectors are self-inverse regarding the multiplication operation $\varoast$, i.e., $ \mathbf{v} \varoast \mathbf{v} = \pmb{0}$ for any $ \mathbf{v} \in V_{D}(N)$.
 
-		\item The first example of \ac{VSA} in continuous space is Gayler's \acrfull{MAP} architecture \cite{Gayler1998} with $N \subseteq \mathbb{R}$ and the cosine similarity as measure of similarity
+		\item The first example of \ac{VSA} in continuous space is the \acrfull{MAP} architecture proposed by \textcite{Gayler1998} with $N \subseteq \mathbb{R}$ and the cosine similarity as measure of similarity
 		\[
 		\phi( \mathbf{v}, \mathbf{w}) = \frac{ \mathbf{v} \cdot \mathbf{w}}{\norm{ \mathbf{v}}\norm{ \mathbf{w}}}=\cos(\theta),
 		\]
 		with $\theta$ being the angle between the vectors $ \mathbf{v}, \mathbf{w} \in V_{D}(N)$.
 		The operations $\varoast$ and $\oplus$ are simply element-wise multiplication and addition with neutral elements $\pmb{1}=\left(1, \cdots, 1\right)$ and $\pmb{0} := \left(0, \cdots, 0\right)$ respectively.
 
-		\item Another example of a \ac{VSA} in continuous space is Plate's \acfl{HRR} \cite{Plate1994, Plate1997}.
-		The main difference compared to the \ac{MAP} architecture is, that Plate in general allows complex vector values, i.e., $N \subseteq \mathbb{C}$ and uses a different multiplication operation $\varoast$ - namely circular convolution.
+		\item Another example of a \ac{VSA} in continuous space is \acfl{HRR} proposed by \textcite{Plate1991}.
+		The main difference compared to the \ac{MAP} architecture is, that \textcite{Plate1994} in general allows complex vector values, i.e., $N \subseteq \mathbb{C}$ and uses a different multiplication operation $\varoast$ - namely circular convolution.
 		For any two vectors $ \mathbf{x}, \mathbf{y} \in V_{D}(N)$, circular convolution $\varoast$ is defined as
 		\begin{align*}
 			\mathbf{z} = \mathbf{x} \varoast \mathbf{y} \qquad \textrm{ with } z_{j} := \sum_{k=0}^{D-1} x_{k}y_{(j-k)\Mod{D}}.
 		\end{align*}
-		\begin{figure}
-			\centering
-			\includegraphics[width=0.85\textwidth]{imgs/circular_convolution_visualization_hor.eps}
-			\caption{Visualization of circular convolution as compressed outer product for $3$-dimensional vectors. Image source \cite{Plate1994a}}
-			\label{fig:circ_conv}
-		\end{figure}
+		%\begin{figure}
+			%\centering
+			%\includegraphics[width=0.85\textwidth]{imgs/circular_convolution_visualization_hor.eps}
+			%\caption{Visualization of circular convolution as compressed outer product for $3$-dimensional vectors. Image source: \textcite{Plate1994a}.}
+			%\label{fig:circ_conv}
+		%\end{figure}
+        \begin{figure}[t!]
+            \centering
+            \begin{tikzpicture}
+            \Vertex[color=gray!70, opacity=0.4, size=0.5, label=$x_0$, fontsize=\large, position=left]{x0y0} 
+            \Vertex[y=2,style={color=white}, size=0.5,label=$y_0$, fontsize=\large, position=below, distance=1cm]{y0} 
+            \Vertex[x=-1,y=-1,style={color=white}, size=0.5, label=$z_0$, fontsize=\large, position=center, distance=0.1cm]{z0} 
+            \Vertex[style={color=white}, opacity=1.0, size=0.01, x=2, y=2, label=$y_1$, fontsize=\large, position=below, distance=1cm]{y1} 
+            \Vertex[x=-1,y=-3,style={color=white}, size=0.5, label=$z_1$, fontsize=\large, position=center, distance=0.1cm]{z1} 
+            \Vertex[style={color=white}, size=0.5, x=4, y=2, label=$y_2$, fontsize=\large, position=below, distance=1cm]{y2} 
+            \Vertex[x=-1,y=-5,style={color=white}, size=0.5, label=$z_2$, fontsize=\large, position=center, distance=0.1cm]{z2} 
+            \Vertex[x=2,color=gray!70, opacity=0.4, size=0.5]{x0y1}
+            \Vertex[x=4,color=gray!70, opacity=0.4, size=0.5]{x0y2}
+            \Vertex[y=-2,color=gray!70, opacity=0.4, size=0.5, label=$x_1$, fontsize=\large, position=left]{x1y0} 
+            \Vertex[x=2,y=-2,color=gray!70, opacity=0.4, size=0.5]{x1y1}
+            \Vertex[x=4,y=-2,color=gray!70, opacity=0.4, size=0.5]{x1y2}
+            \Vertex[y=-4,color=gray!70, opacity=0.4, size=0.5, label=$x_2$, fontsize=\large, position=left]{x2y0} 
+            \Vertex[x=2,y=-4,color=gray!70, opacity=0.4, size=0.5]{x2y1}
+            \Vertex[x=4,y=-4,color=gray!70, opacity=0.4, size=0.5]{x2y2}
+            \Edge(x2y1)(x1y2)
+            \Edge[Direct](x0y0)(z0)
+            \Edge[Direct](x1y0)(z1)
+            \Edge[Direct](x2y0)(z2)
+            \Edge(x1y1)(x2y0)
+            \Edge(x0y2)(x1y1)
+            \Edge(x0y1)(x1y0)
+            \Edge(y1)(x0y0)
+            \draw [line width=1.5pt, color=black!75] (5,-1) edge[out=45, in=45] (2,2);
+            \draw [-<,>=latex,line width=1.5pt, color=black!75] (x1y2) edge[out=45, in=45] (5,-1);
+            \draw [line width=1.5pt, color=black!75] (1.9,1.9) edge[out=45, in=45] (x0y0);
+            \draw [line width=1.5pt, color=black!75] (3,1) edge[out=45, in=45] (x0y1);
+            \draw [line width=1.5pt, color=black!75] (6,-2) edge[out=45, in=45] (3,1);
+            \draw [line width=1.5pt, color=black!75] (x0y2) edge[out=45, in=45] (4.5,0.5);
+            \draw [line width=1.5pt, color=black!75] (x2y1) edge (1,-5);
+            \draw [line width=1.5pt, color=black!75] (x2y2) edge (3,-5);
+            \draw [->,>=latex,line width=1.5pt, color=black!75] (x2y2) edge (5.5,-2.5);
+            \draw [line width=1.5pt, color=black!75]  (5.4,-2.6) edge (6,-2) ;
+            \node [text width=6cm, align=center] at (10,-1) {\Large
+                    $\begin{aligned}
+                        \mathbf{z} &= \mathbf{x} \varoast \mathbf{y}\\
+                        z_0 = x_0y_0 &+ x_2y_1+x_1y_2\\
+                        z_1 = x_1y_0 &+ x_0y_1+x_2y_2\\
+                        z_2 = x_2y_0 &+ x_1y_1+x_0y_2
+                    \end{aligned}$ }; 
+        \end{tikzpicture}
+        \caption{Visualization of circular convolution as compressed outer product for $3$-dimensional vectors. Image adapted from \textcite{Plate1994a}.}
+        \label{fig:circ_conv}
+        \end{figure}
 		The neutral element regarding circular convolution is $\pmb{1} = \left(1, 0, \cdots, 0\right)$.
 		One important property of this operation is the fact, that circular convolution can efficiently be computed using the \ac{DFT}.
 		The \ac{DFT} is defined as the function
@@ -110,7 +157,7 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
         \label{eq:inv_dft}
 		\abb{\ac{IDFT}}{\mathbb{C}^{D}}{\mathbb{C}^{D}}{ \mathbf{x}}{\left( \frac{1}{D} \sum_{j=0}^{D-1} x_{j} \zeta_{D}^{jk} \right)_{k=0}^{D-1}}.
         \end{equation}
-		From the convolution theorem \cite[Chap. 6]{Bracewell2000} we know, that we can calculate the circular convolution of any two vectors $ \mathbf{v}, \mathbf{w} \in V_{D}(N)$ by
+        From the convolution theorem \parencite[see][Chap. 6]{Bracewell2000} we know, that we can calculate the circular convolution of any two vectors $ \mathbf{v}, \mathbf{w} \in V_{D}(N)$ by
         \begin{equation}
         \label{eq:conv_with_dft}
 		\mathbf{v} \varoast \mathbf{w} = \ac{IDFT}\left(\ac{DFT}( \mathbf{v}) \odot \ac{DFT}( \mathbf{w}) \right),
@@ -130,7 +177,7 @@ We will derive this result in the following Theorem.
 \begin{proof}
 	We will only give the proof of this Theorem for real valued \acp{VSA}, i.e., $N \subseteq \mathbb{R}$ and $\phi$ as the cosine similarity.
 	Without loss of generality, we assume the vectors $ \mathbf{v}, \mathbf{w}$ picked randomly from the unit sphere $\mathbb{S}^{D-1} = \{ \mathbf{v} \in \mathbb{R}^{D} | \norm{ \mathbf{v}} = 1 \}$, as we can simply normalize the vectors by $\frac{ \mathbf{v}}{\norm{ \mathbf{v}}}$.
-	Since binary \acp{VSA} can be associated with a euclidean sphere as well, the same result can be proven for those architectures with similar arguments (see \cite{Kanerva1988} for details).
+    Since binary \acp{VSA} can be associated with a euclidean sphere as well, the same result can be proven for those architectures with similar arguments \parencite[see][for details]{Kanerva1988}.
 	Due to symmetry of the unit sphere $\mathbb{S}^{D-1}$, we can furthermore - again without loss of generality - choose one vector as a unit vector, i.e., $ \mathbf{w}=\left(1, 0 , \cdots, 0\right)$.
 	Thereby, the cosine similarity for $ \mathbf{v}=\left(v_{0}, \cdots, v_{D-1}\right)$ is given by $\phi\left( \mathbf{v}, \mathbf{w}\right) = v_{0}$
 	By fixing one coordinate, we get the constraint $\sum_{i=1}^{D-1} v_{i}^{2} = 1-v_{0}^{2}$ which is equivalent to a lower dimensional sphere $\mathbb{S}^{D-2}$ with radius $\sqrt{1-v_{0}^2}$.
@@ -228,7 +275,7 @@ The existence of a (pseudo-) inverse element allows the retrieval of $ \mathbf{v
 \end{equation}
 In case of exact inverse elements, the right hand side of equation~\eqref{eq:retrieval} becomes an exact equality $\tilde{\mathbf{w}}= \mathbf{w}$.
 In most cases, however, the result $\tilde{\mathbf{w}}$ is not exactly equal to $ \mathbf{w}$, but similar.
-It is this inherent inexactness of most \acp{VSA} what makes them suitable candidates for cognitive modeling \cite{Eliasmith2013}.
+It is this inherent inexactness of most \acp{VSA} what makes them suitable candidates for cognitive modeling \parencite{Eliasmith2013}.
 On the other hand, it imposes a functional demand for a clean-up memory.
 A clean-up memory is a mechanism, which maps noisy versions of vectors like $\tilde{\mathbf{w}}$ to their exact counterparts, here $ \mathbf{w}$.
 Therefore, we need to have a set of vectors, which represent established concepts or symbols the system has knowledge of.
@@ -257,11 +304,11 @@ In this section, we focus on one particular \ac{VSA}, namely the \ac{SPA}, as we
 The \ac{SPA} is an adoption of Plate's previously mentioned \acp{HRR} (cf.\ example~\ref{ex:VSAs}).
 Revisiting definition~\ref{def:VSA}, the underlying number field of the \ac{SPA} is the field of real numbers, i.e., $N \subseteq \mathbb{R}$, the addition $\oplus$ and multiplication $\varoast$ operations are element-wise addition and circular convolution respectively, and the cosine similarity serves as measure of similarity $\phi$.
 We will use $\mathcal{S}(D)$ as a short notation for the $D$-dimensional \ac{SPA} $(V_{D}(\mathbb{R}), \varoast, \oplus, \phi)$.
-Eliasmith gives an in-depth description of the \ac{SPA} in \cite{Eliasmith2013}.
+Eliasmith gives an in-depth description of the \ac{SPA} in \textcite{Eliasmith2013}.
 However, we recapitulate some important properties, which will be used later in this work.
 \begin{figure}[t!]
 	\centering
-	\includegraphics[width=1.0\textwidth]{imgs/pseudo_inverse_tsplot_1.png}
+	\includegraphics[width=1.0\textwidth]{imgs/pseudo_inverse_tsplot.eps}
 	\caption{Visualization of the similarity $\phi\left(\mathbf{1}, v \varoast \bar{v}\right)$ between the neutral element $\mathbf{1}$ and the result of applying the pseudo-inverse to different vectors for varying vector dimensions. This plot shows the result of $100$ samples compared to the similarity threshold $\epsilon$.}
 	\label{fig:pseudo_inv}
 \end{figure}
@@ -270,14 +317,14 @@ However, we recapitulate some important properties, which will be used later in 
 	Let $ \mathbf{v}=\left(v_0, \ldots, v_{D-1}\right)$ be an element of a $D$-dimensional \ac{SPA} $\mathcal{S}(D)$, i.e., $v_0, \ldots, v_{D-1} \in \mathbb{R}$.
 	The vector $\bar{\mathbf{v}}=\left(v_0, v_{D-1}, \ldots, v_{1}\right)$ is a pseudo-inverse element of $ \mathbf{v}$ with respect to circular convolution, i.e., $ \mathbf{v} \varoast \bar{\mathbf{v}} \approx \mathbf{1}$.
 \end{lemma}
-Here, we skip an explicit proof for this lemma but rather point to \cite[Section 3.1.2 and 3.1.3]{Plate1994} for a in-depth derivation.
+Here, we skip an explicit proof for this lemma but rather point to \textcite[Section 3.1.2 and 3.1.3]{Plate1994} for a in-depth derivation.
 However, we visualize the similarity $\phi\left(\mathbf{1}, \mathbf{v} \varoast \bar{\mathbf{v}}\right)$ between the neutral element $\mathbf{1}$ and the result of applying the pseudo-inverse $ \mathbf{v} \varoast \bar{\mathbf{v}}$ compared to the similarity threshold $\epsilon$ (weak and strong version) in figure~\ref{fig:pseudo_inv}.
 Therefore, we randomly chose \num{100} sample vectors for various dimensions, convolved them with their pseudo-inverse and compared the result to the neutral element $\mathbf{1}$.
 We observe, that this similarity remains almost constant slightly above \num{0.7} and already for low vector dimensions ($D > 20$) way above the strong similarity threshold of $\epsilon=\frac{3}{\sqrt{D}}$.
 
 Lemma~\ref{lemma:spa_pseudo_inv} states that we can find a pseudo-inverse element $\bar{\mathbf{v}}$ for any vector $ \mathbf{v}$ in a $D$-dimensional \ac{SPA} (given the dimension $D$ is sufficiently large).
 Although we can also find an exact inverse element $ \mathbf{v}^{-1}$ for most vectors $ \mathbf{v}$, it is often more useful to work with pseudo-inverses instead of exact inverse elements.
-We have already seen, that we can use the \acf{DFT} and \acf{IDFT} to calculate circular convolution efficiently by element-wise multiplication (this follows from the convolution theorem \cite[Chap. 6]{Bracewell2000}) in the frequency domain, i.e.,
+We have already seen, that we can use the \acf{DFT} and \acf{IDFT} to calculate circular convolution efficiently by element-wise multiplication  \parencite[this follows from the convolution theorem, see][Chap. 6]{Bracewell2000} in the frequency domain, i.e.,
 \begin{equation}
     \mathbf{v} \varoast \mathbf{w} = \ac{IDFT}\left(\ac{DFT}( \mathbf{v}) \odot \ac{DFT}( \mathbf{w}) \right). \tag{\ref{eq:conv_with_dft} revisited}
 \end{equation}
@@ -298,7 +345,7 @@ If we express $\ac{DFT}_{j}( \mathbf{v}) \in \mathbb{C}$ in polar coordinates, i
 By using the symmetry property of the real-valued \ac{DFT}, we can see that the transform $\ac{DFT}_j(\bar{\mathbf{v}})$ of the pseudo-inverse element $\bar{\mathbf{v}}$ from Lemma~\ref{lemma:spa_pseudo_inv} is the complex conjugate of $\ac{DFT}_j( \mathbf{v})$, i.e., we can write $\ac{DFT}_j(\bar{\mathbf{v}}) = r_j \exp\left(-i\varphi\right)$ in polar coordinates.
 From those equations, we can see that the pseudo-inverse $\bar{\mathbf{v}}$ has the same norm as the original vector $ \mathbf{v}$, i.e., $\norm{ \mathbf{v}} = \norm{\bar{\mathbf{v}}}$, whereas the norm of the exact inverse $ \mathbf{v}^{-1}$ can become significantly larger than the norm of $ \mathbf{v}$ in some cases.
 This is due to the fact, that elements of the transform of the pseudo-inverse have the same lengths $r_j$ as the original vector, whereas the transformed elements of the exact inverse have lengths $\frac{1}{r_j}$, which can become significantly large when $r_j$ is close to $0$.
-The relation between the vector norm and the magnitudes in the frequency domain is given by Parseval's theorem (also known as Rayleigh's theorem) \cite[Chap. 6]{Bracewell2000}, which states
+The relation between the vector norm and the magnitudes in the frequency domain is given by Parseval's theorem  \parencite[also known as Rayleigh's theorem, see][Chap. 6]{Bracewell2000}, which states
 \begin{equation}
 \label{eq:parseval}
 \norm{\mathbf{v}}^2 = \sum_{k=0}^{D-1} \left| v_{k} \right|^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|\ac{DFT}_{k}\left( \mathbf{v}\right)\right|^{2} = \sum_{k=0}^{D-1} r_{k}^{2}.
@@ -381,17 +428,17 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
 %----------------------------------------------------------------------------------------------------------
 
 In this section, we make a short excursion and give a brief overview of the \acf{NEF}, as we will be making use of it in forthcoming chapters.
-The \ac{NEF} \cite{Eliasmith2003} is a mathematical theory, which provides a set of methods to construct biologically plausible, large-scale neural models.
+The \ac{NEF} \parencite{Eliasmith2003} is a mathematical theory, which provides a set of methods to construct biologically plausible, large-scale neural models.
 These methods can be divided into the three main principles of the \ac{NEF}: \emph{representation}, \emph{transformation} and \emph{dynamics}.
-The \ac{Nengo} \cite{Bekolay2014, Nengo} software suite is a python library, which implements the \ac{NEF}'s principles.
-\ac{Nengo} has been used to build a variety of neural models, e.g.\ models of the basal ganglia system \cite{Stewart2010, Stewart2012} and \acf{Spaun} \cite{Eliasmith2012}, a large-scale, functional model of the brain, which is able to perform eight cognitive tasks.
-Furthermore, \ac{Nengo} has been used to interface neural models with physical, neuromorphic hardware systems and robots \cite{Conradt2014, Stewart2016, Mirus2018a}.
-Here, we give a brief introduction to the \ac{NEF}'s principles and refer to \cite{Eliasmith2003, Eliasmith2013, Bekolay2014} for more details.
+The \ac{Nengo} \footfullcite{Nengo} software suite is a python library, which implements the \ac{NEF}'s principles \parencite{Bekolay2014}.
+\ac{Nengo} has been used to build a variety of neural models, e.g., models of the Basal Ganglia system \parencite{Stewart2010, Stewart2012} and \acf{Spaun}, a large-scale, functional model of the brain, which is able to perform eight cognitive tasks \parencite{Eliasmith2012}.
+Furthermore, \ac{Nengo} has been used to interface neural models with physical, neuromorphic hardware systems and robots \parencites{Conradt2014, Stewart2016, Mirus2018a}.
+Here, we give a brief introduction to the \ac{NEF}'s principles and refer to \textcite{Eliasmith2003, Eliasmith2013, Bekolay2014} for more details.
 \subsection{Representation}
 \label{subsec:nef_representation}
 The first principle of the \ac{NEF}, representation, provides mathematical tools to encode information, namely time-varying real-valued vectors, in the activity of neural populations.
 It is based on the assumption, that neurons have a "preferred direction vector" in the represented space, each neuron responds most strongly to.
-This assumption is grounded by the findings of \cite{Georgopoulos1989} that each neuron in motor cortex of rhesus monkeys has a different preferred arm direction.
+This assumption is grounded by the findings of \textcite{Georgopoulos1989} that each neuron in motor cortex of rhesus monkeys has a different preferred arm direction.
 The \ac{NEF} expands this idea to neural representations in general.
 \begin{figure}[t!]
 	\centering
@@ -408,7 +455,9 @@ The \ac{NEF} expands this idea to neural representations in general.
 	\subfloat[Filtered neural activity\label{subfig:nef_rep_spike_filtered}]{%
 		\includegraphics[width=0.45\textwidth]{imgs/NEF_spikes_filtered.eps}
 	}
-	\caption{The representation principle of the \ac{NEF}. Images adapted from \cite{Bekolay2014}}\label{fig:nef_representation}
+	\caption{The representation principle of the \ac{NEF}. 
+    Images adapted from \textcite{Bekolay2014}.}
+    \label{fig:nef_representation}
 \end{figure}
 Let $A$ be a population of $N \in \mathbb{N}$ neurons encoding a subset $V$ of a real-valued vector space, i.e., $V\subseteq \mathbb{R}^{n}$.
 Given a function $\abbil{\mathbf{x}}{\mathbb{R}}{V}$, we can write the activity $a_{i}$ of the $i$-th neuron in a neural population encoding a time-varying vector $\mathbf{x}(t)$ as a spike train, i.e., a sum of delta functions
@@ -436,7 +485,7 @@ To calculate the optimal decoders $\mathbf{d}_{i}$, we need to minimize the erro
 E = \int \left( \mathbf{x}(t) - \sum_{i=1}^{N} \tilde{a}_{i}\left(\mathbf{x}(t)\right) \mathbf{d}_{i}\right)^{2} \diff \mathbf{x}(t).
 \label{eq:decoder_calculation}
 \end{equation}
-\ac{Nengo} solves for the decoders $\mathbf{d}_{i}$ by default using least squares optimization \cite{Eliasmith2013}[Appendix B1].
+\ac{Nengo} solves for the decoders $\mathbf{d}_{i}$ by default using least squares optimization \parencite{Eliasmith2013}[Appendix B1].
 Figure~\ref{fig:nef_representation} visualizes this encoding process for $V = \left[ -1, 1\right] \subset \mathbb{R}$ and a population of $8$ neurons.
 Figure~\ref{subfig:nef_rep_tuning_curves} shows the tuning curves of individual neurons, which define how these neurons respond to specific input values.
 Equation~\eqref{eq:nef_encoding} is depicted in figure~\ref{subfig:nef_rep_spike_raster}, which shows a raster plot of the neurons' spike times based on the input signal shown in figure~\ref{subfig:nef_rep_decoded}.
@@ -446,9 +495,9 @@ Note, that the neural population's decoded output is only a noisy approximation 
 \subsection{Transformation}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.85\textwidth]{imgs/NEF_transformation.eps}
+	\includegraphics[width=0.95\textwidth]{imgs/NEF_transformation.eps}
 	\caption{The transformation principle of the \ac{NEF}.
-    Images adapted from \cite{Nengo}.}
+    Images adapted from \textcite{Nengo}.}
 	\label{fig:nef_transformation}
 \end{figure}
 The second main principle of the \ac{NEF}, \emph{transformation}, provides the mathematical tools to compute functions across connections between populations of neurons.
@@ -548,10 +597,12 @@ By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)
 
 In this section, we give a brief introduction of how we can use the theory shown in sections~\ref{sec:math_prop_vsas} and~\ref{sec:spa} to represent (structured) information using \acp{VSA}.
 We give a general overview of different ways to establish vocabularies containing atomic vectors and how we can build more complex representations from those elementary ingredients.
-The authors of \cite{Gallant2013} refer to these two steps as the first two of three stages for generating structured vector representations: the \emph{pre-processing stage} (generating a vocabulary; see also section~\ref{sec:preprocessing_stage_generating_a_vocabulary}) and the \emph{representation generation stage} (building structured representations from the vocabulary; see also~\ref{sec:representation_generation_stage}).
+\textcite{Gallant2013} refer to these two steps as the first two of three stages for generating structured vector representations: the \emph{pre-processing stage} (generating a vocabulary; see also section~\ref{sec:preprocessing_stage_generating_a_vocabulary}) and the \emph{representation generation stage} (building structured representations from the vocabulary; see also~\ref{sec:representation_generation_stage}).
 Furthermore, we will see how these representations can be implemented in \acp{SNN} using the principles of the \ac{NEF} described in~\ref{sec:neural_eng}.
+
 \subsection{Vocabularies}
 \label{subsec:vocabs}
+
 \begin{figure}[t!]
 	\centering
 	\subfloat[\label{subfig:conceptual_golfball}]{%
@@ -560,7 +611,8 @@ Furthermore, we will see how these representations can be implemented in \acp{SN
 	\subfloat[\label{subfig:constructed_vocab_sims}]{%
 		\includegraphics[width=0.45\textwidth]{imgs/SPA_constructed_vocab_sim.png}
 	}
-	\caption{Aspects of vector vocabularies:~\ref{subfig:conceptual_golfball} "Conceptual golf ball" depicting the idea of semantic vectors. Image source \cite{Eliasmith2013}.~\ref{subfig:constructed_vocab_sims} Cosine similarities in a small, manually engineered vector vocabulary of dimension $256$.}\label{fig:vector vocabs}
+	\caption{Aspects of vector vocabularies:~\ref{subfig:conceptual_golfball} "Conceptual golf ball" depicting the idea of semantic vectors. Image source: \textcite{Eliasmith2013}.~\ref{subfig:constructed_vocab_sims} Cosine similarities in a small, manually engineered vector vocabulary of dimension $256$.}
+    \label{fig:vector vocabs}
 \end{figure}
 
 Let $\vartheta \subset \mathcal{S}(D)$ be a vocabulary in the $D$-dimensional \ac{SPA}, where each vector $v \in \vartheta$ represents one item (i.e., a symbol, word or concept) in the representational space.
@@ -574,6 +626,7 @@ Figure~\ref{subfig:conceptual_golfball} depicts this idea: one subset of the spa
 For a small number of items, the simplest way to create a vocabulary respecting some kind of similarity is to manually engineer the desired properties from randomly chosen vectors.
 Let us assume we want to derive representative vectors for four different classes of traffic participants, namely \emph{pedestrian}, \emph{bicycle}, \emph{motorcycle},  and \emph{car}.
 A simple structured vocabulary could be constructed in the following way
+
 \begin{align*}
 \mathbf{PEDESTRIAN} &:= \mathbf{DRIVE} \varoast \mathbf{MUSCLE} + \mathbf{ACTUATOR} \varoast \mathbf{LEG} \varoast \mathbf{TWO} \\
 \mathbf{BICYCLE} &:= \mathbf{DRIVE} \varoast \mathbf{MUSCLE} + \mathbf{ACTUATOR} \varoast \mathbf{WHEEL} \varoast \mathbf{TWO}\\
@@ -592,12 +645,6 @@ In contrast to purely random vocabularies, the idea here is that the learning sy
 Again, the choice of learning paradigm (supervised vs.\ unsupervised) and architecture (e.g. \acp{CNN} or \acp{SOM}) depends not only on the given task, but also on the kind of similarity the vectors should encapsulate.
 This can be visual similarity (e.g.\ items or objects that "look" similar), auditory similarity (e.g.\ objects producing similar sound), semantic similarity (e.g.\ words with similar meaning) or similarity in characteristics (e.g.\ similar motion characteristics).
 
-A typical way of learning a vocabulary whose vectors conserve visual similarity in supervised fashion are \acp{CNN}.
-These network architectures are inspired by the human visual cortex and compress high-dimensional visual input to lower dimensional representations.
-They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf.\ figure~\ref{fig:cnn_arch}).
-The activity of the second to last layer (the last fully-connected one before the actual classification) for each known class in the data set can be considered a representational vector for the current visual input.
-A simple way of getting a representative vector for each class is simply calculating the element-wise, normalized mean over all examples in the test set.
-We employ this approach in section~\ref{subsec:visual_vocabularies} to generate vocabularies encapsulating the visual similarity of traffic signs and traffic participants.
 \begin{figure}[t]
 	\centering
 	\resizebox{.9\textwidth}{!}{%
@@ -637,16 +684,23 @@ We employ this approach in section~\ref{subsec:visual_vocabularies} to generate 
 	\caption{A schematic visualization of a \ac{CNN} network architecture with the second to last layer, whose activity can be considered a compressed, lower-dimensional representation of the high-dimensional visual input, highlighted by a red ellipsis.}
 	\label{fig:cnn_arch}
 \end{figure}
-A similar approach to derive vectors representing digits from $0$ to $9$ was used for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model \cite{Eliasmith2012}, which was derived by training a \ac{DBN} consisting of four \acl{RBM} layers.
+
+A similar approach to derive vectors representing digits from $0$ to $9$ was used \textcite{Eliasmith2012} for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model, which was derived by training a \ac{DBN} consisting of four \acl{RBM} layers.
 This approach of using the activity of the second to last layer to generate a atomic representational vectors can be generalized to any neural network for classification with dense layers at the end.
+A typical way of learning a vocabulary whose vectors conserve visual similarity in supervised fashion are \acp{CNN}.
+These network architectures are inspired by the human visual cortex and compress high-dimensional visual input to lower dimensional representations.
+They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf.\ figure~\ref{fig:cnn_arch}).
+The activity of the second to last layer (the last fully-connected one before the actual classification) for each known class in the data set can be considered a representational vector for the current visual input.
+A simple way of getting a representative vector for each class is simply calculating the element-wise, normalized mean over all examples in the test set.
+We employ this approach in section~\ref{subsec:visual_vocabularies} to generate vocabularies encapsulating the visual similarity of traffic signs and traffic participants.
 
 The aforementioned approach to create vector vocabularies encapsulating similarity by using neural networks, which are trained in supervised fashion, is suitable for capturing visual or auditory similarity structure in a vectors.
 The generation of representational vectors for related or similar words or more generally semantic similarity in language is a problem often referred to as word embedding, which is a research question related to computational \acl{NLP}.
-The most successful approaches such as \textit{word2vec} \cite{Mikolov2013a, Mikolov2013} or \textit{\ac{GloVe}} \cite{Pennington2014} typically use large corpora of text as input data and are trained in unsupervised fashion based on co-occurrence statistics of words.
+The most successful approaches such as \textit{word2vec} \parencite{Mikolov2013a, Mikolov2013} or \textit{\ac{GloVe}} \parencite{Pennington2014} typically use large corpora of text as input data and are trained in unsupervised fashion based on co-occurrence statistics of words.
 The objective of those procedures aims at maximizing the dot product of word vectors that appear often in similar contexts while minimizing it for negative samples (which do not occur in the training data and are sampled at random).
 For a given sentence $S=\left\{w_1, \ldots, w_n\right\}$ a context $C(w)$ of a word $w=w_i$ of size $k$ is a dynamic window of the form $C(w) = \left\{ w_{i-k}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+k}\right\}$.
 The underlying assumption is that words sharing many contexts are similar to each other, such that automated training with the aforementioned objective will produce a good word embedding.
-Surprisingly, these learning procedures lead to linguistic regularities and algebraic relations between word vectors \cite{Mikolov2013b}.
+Surprisingly, these learning procedures lead to linguistic regularities and algebraic relations between word vectors \parencite{Mikolov2013b}.
 A common example is visualized in figure~\ref{fig:word2vec}: subtracting the vector representing $\mathbf{MAN}$ from the one representing $\mathbf{KING}$ and adding the vector representing $\mathbf{WOMAN}$ results in a vector most similar to the one representing $\mathbf{QUEEN}$, i.e., $\mathbf{KING} - \mathbf{MAN} + \mathbf{WOMAN} \approx \mathbf{QUEEN}$.
 \begin{figure}[t]
 	\centering
@@ -677,10 +731,10 @@ A common example is visualized in figure~\ref{fig:word2vec}: subtracting the vec
 
 	\end{tikzpicture}
 	\caption{A typical example illustrating the semantic similarity structure between vectors representing the words \emph{king}, \emph{queen}, \emph{man} and \emph{woman} learned by Word2Vec allowing algebraic manipulation of the encoded entities. 
-    Image inspired from \cite{Mikolov2013b}.}
+    Image inspired from \textcite{Mikolov2013b}.}
 	\label{fig:word2vec}
 \end{figure}
-However, the formal reasons for successful learning of word embeddings of those approaches are not well understood \cite{Goldberg2014, Levy2015}.
+However, \textcite{Goldberg2014, Levy2015} point out that the formal reasons for successful learning of word embeddings of those approaches are not well understood.
 
 \subsection{Encoding structure}
 \label{subsec:encoding_struct}
@@ -689,7 +743,7 @@ In section~\ref{subsec:vocabs}, we have already seen that there are many ways to
 However, the strength of \acp{VSA} lies in the possibility to build up structured representations from atomic vectors.
 Unordered sets can be represented by simply adding up atomic vectors.
 Through the properties of the similarity measure, the sum is similar to each vector contained in the sum.
-The most common approach to incorporate structure is to use so-called role-filler pairs \cite{Gayler2003}.
+The most common approach to incorporate structure is to use so-called role-filler pairs \parencite{Gayler2003}.
 Such a pair is combined via the \ac{VSA}'s binding operation, where one vector of the pair takes the role of a variable while the other one can be considered the value of the variable.
 We have already seen a simple example of this approach in section~\ref{subsec:vocabs}, where a small vocabulary representing four different classes of traffic participants was manually created.
 In \ac{NLP} applications, this approach is useful when building up vectors representing phrases from a word vector vocabulary.
@@ -704,7 +758,7 @@ This relation could be represented in vectors through
 	m \left(\mathbf{A}, \mathbf{B} \right) = \mathbf{motherof} + \mathbf{mother} \varoast \mathbf{A} + \mathbf{child} \varoast \mathbf{B}.
 \end{equation*}
 The strength of \acp{VSA} is that the vectors representing such relations can subsequently be manipulated and combined using the \ac{VSA}'s algebraic operations.
-In \cite{Kanerva2000}, Kanerva shows that this approach can be used to create a system, that is able to infer one relation, which is induced by another relation, through learning from example.
+\textcite{Kanerva2000} shows that this approach can be used to create a system, that is able to infer one relation, which is induced by another relation, through learning from example.
 Their example features the aforementioned \textit{mother of} relation, which induces the \textit{parent of} relation
 \begin{equation*}
 	p \left(\mathbf{A}, \mathbf{B} \right) = \mathbf{parentof} + \mathbf{parent} \varoast \mathbf{A} + \mathbf{offspring} \varoast \mathbf{B},
@@ -715,9 +769,9 @@ Combining several examples
 	M = \sum_{i=0}^{n} m\left(\mathbf{A}_i, \mathbf{B}_i \right) \varoast p\left(\mathbf{A}_i, \mathbf{B}_i \right)
 \end{equation*}
 yields a transition vector, which gives $ M \varoast m \left(\mathbf{X}, \mathbf{Y} \right) \approx p \left(\mathbf{X}, \mathbf{Y} \right)$ for unseen examples $\mathbf{X}$ and $\mathbf{Y}$.
-However, this approach is based on the self-cancellation property (i.e., $\mathbf{X} \varoast \mathbf{X} = \pmb{1}$) in certain \acp{VSA} (in particular  \acp{BSC}), as it leads to $M$ containing the vector $\mathbf{motherof} \varoast \mathbf{parentof} + \mathbf{mother} \varoast \mathbf{parent} + \mathbf{child} \varoast \mathbf{offspring}$ (see \cite{Kanerva2000} for details).
-A similar approach was used in \cite{Kleyko2015a} for a prototype of concept learning.
-The authors in \cite{Rasmussen2011} employ a similar approach to encode a rule for inductive learning in a transition vector using the \ac{VSA}'s algebraic operations to solve \acp{RPM}.
+However, this approach is based on the self-cancellation property (i.e., $\mathbf{X} \varoast \mathbf{X} = \pmb{1}$) in certain \acp{VSA} (in particular  \acp{BSC}), as it leads to $M$ containing the vector $\mathbf{motherof} \varoast \mathbf{parentof} + \mathbf{mother} \varoast \mathbf{parent} + \mathbf{child} \varoast \mathbf{offspring}$ \parencite[see][for details]{Kanerva2000}.
+A similar approach was used in \textcite{Kleyko2015a} for a prototype of concept learning.
+\textcite{Rasmussen2011} employ a similar approach to encode a rule for inductive learning in a transition vector using the \ac{VSA}'s algebraic operations to solve \acp{RPM}.
 The authors represent consecutive cells in an \ac{RPM} and encode the transition from one cell to another in a particular transition vector and, from a sequence of those, iteratively create a general transition vector encapsulating the general rule for going to the next cell in the matrix.
 They implement these vectors as well as their inductive learning system in a \ac{SNN} model, a process we will also briefly discuss in the next section,
 
@@ -773,26 +827,26 @@ which allows us to transform equation ~\eqref{eq:circ_conv_mat} into
 \label{eq:unbind_mat}
 \mathbf{v} \approx \mathbf{z} \varoast \bar{ \mathbf{w}} = W^{-1} \left( \left(W \mathbf{z}\right) \cdot \left(W \cdot C_{pinv} \mathbf{w}\right)\right).
 \end{equation}
-The implementation of a \ac{SNN} performing a biologically plausible version of a cleanup memory employing the \ac{NEF} is shown in \cite{Stewart2011}.
+The implementation of a \ac{SNN} performing a biologically plausible version of a cleanup memory employing the \ac{NEF} is shown in \textcite{Stewart2011}.
 Thus, applying the principles of the \ac{NEF}, we can represent the representational vectors of the \ac{SPA} in the activity of populations of spiking neurons and implement its algebraic operations in networks of spiking neuron populations.
 A subtle detail worth noting with regard to implementing \acp{VSA} in \acp{SNN} is that the vectors used for representing concepts or entities of interest are \emph{not} vectors of neural activity.
-That is, there are two distinct representational vector spaces: the space of neural activities (i.e., measurable properties like spike patterns) and the vector space used to generate the vocabulary and structured representations vectors which in turn are represented by the activities of populations in the neural space (see \cite{Eliasmith2013} for further details).
+That is, there are two distinct representational vector spaces: the space of neural activities (i.e., measurable properties like spike patterns) and the vector space used to generate the vocabulary and structured representations vectors which in turn are represented by the activities of populations in the neural space \parencite[see][for further details]{Eliasmith2013}.
 
 There are several reasons for implementing cognitive architectures like the \ac{SPA} in a spiking neuron substrate.
 Regarding the application of vector-based representations in cognitive modeling, it makes sense to consider an implementation in neural activity, since the biological systems able to perform cognitive tasks are also systems of neural networks.
-Hence, when generating models of some cognitive function or behavior such as the model for inductive rule generation applied to \acp{RPM} in \cite{Rasmussen2011}, implementation in a spiking neuron substrate allows to compare the model's neural activity with neural activity measured in the brain of human subjects performing a similar task.
+Hence, when generating models of some cognitive function or behavior such as the model for inductive rule generation applied to \acp{RPM} in \textcite{Rasmussen2011}, implementation in a spiking neuron substrate allows to compare the model's neural activity with neural activity measured in the brain of human subjects performing a similar task.
 Such a comparison enables more detailed model analysis and improvements by allowing researchers to draw inspirations from actual biological systems.
 Considering applications of the \ac{SPA} in domains such as automated driving as proposed in later chapters~\ref{chap:driving_context_classification},~\ref{chap:behav_pred} and~\ref{chap:mix_online_learning}, the possibility of implementation in a spiking neuron substrate is particularly interesting in terms of energy-efficiency.
 As discussed in section~\ref{sec:neuromorphic_HW}, there exists a growing number of neuromorphic hardware devices dedicated to efficiently processing networks of spiking neurons.
-Such dedicated computing hardware allows to run \acp{SNN} more efficiently than traditional computing hardware, which often requires several orders of magnitude less energy \cite{Hunsberger2016}.
+Such dedicated computing hardware allows to run \acp{SNN} more efficiently than traditional computing hardware, which often requires several orders of magnitude less energy \parencite{Hunsberger2016}.
 This is particularly interesting in mobile applications such as robotic systems or, more particularly, automated driving which poses increasingly strong restrictions on the energy-budget of individual components due to growing setups of both, on-board sensors and computing hardware.
 Since these novel computing devices are not yet available as commercial products but rather prototypes developed in academic research, the deployment of the models developed in this thesis on neuromorphic computing hardware integrated into a vehicle's architecture is unfortunately out of scope of this thesis. 
 
 \section{Summary}
 In this chapter, we have introduced the theoretical background and mathematical properties of \aclp{VSA}, which is the basis for subsequent chapters.
-Furthermore, we established a formal, mathematical notion for \acp{VSA} in general (section ~\ref{sec:math_prop_vsas}), which, to the best or our knowledge, is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \cite{Plate1994}, \cite{Gayler1998} or \cite{Kanerva2009}.
+Furthermore, we established a formal, mathematical notion for \acp{VSA} in general (section ~\ref{sec:math_prop_vsas}), which, to the best or our knowledge, is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \textcites{Plate1994}{Gayler1998}{Kanerva2009}.
 The we shifted our focus to one particular \ac{VSA}, the \ac{SPA}, presenting its most important aspects and properties with respect to subsequent chapters of the thesis.
-Furthermore, we gave a brief description of the \acl{NEF}, which is typically used to implement large-scale neural models of spiking neurons such as the one presented in \cite{Eliasmith2012}.
+Furthermore, we gave a brief description of the \acl{NEF}, which is typically used to implement large-scale neural models of spiking neurons such as the one presented in \textcite{Eliasmith2012}.
 Finally, we have introduced the basic principles of cognitive modeling using \acp{VSA} in general and the \ac{SPA} in particular.
 We showed several general approaches to generate vocabularies of atomic vectors, which form the basis of more complex structured representations built from them using the \ac{VSA}'s algebraic operations.
 Finally, we connected the mathematical description and theory of both, the \acp{VSA} and the \ac{NEF} by depicting how the \ac{NEF} can be used to implement the \ac{SPA} in a spiking neuron substrate, which offers interesting possibilities regarding energy-efficiency in mobile applications such as automated driving.
