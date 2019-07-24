@@ -19,7 +19,7 @@ Furthermore, vector representations allow to encode both, symbol-like and numeri
 Additionally, the algebraic operations enable manipulation and combination of represented entities into structured representations.
 One potential advantage of this approach is that the number of dimensions remains fixed independent of the number of entities combined through the architecture's algebraic operations.
 Finally, vectors are a suitable representational substrate to be used in combination with neural networks.
-On the one hand, vectors are a natural input to classic \acp{ANN}, but they also offer the possibility to be efficiently implement in \acp{SNN} using the principles of the \ac{NEF} (see \cite{Eliasmith2013}, but also section~\ref{subsec:implementation_in_snns}).
+On the one hand, vectors are a natural input to classic \acp{ANN}, but they also offer the possibility to be efficiently implement in \acp{SNN} using the principles of the \ac{NEF} \parencite[see][but also section~\ref{subsec:implementation_in_snns}]{Eliasmith2013}.
 Given an widespread implementation of the representations proposed here in combination with \acp{SNN} as algorithmic substrate within intelligent vehicles, the latter offers the potential to deploy such neural representations on dedicated neuromorphic hardware (cf.\ section~\ref{sec:neuromorphic_HW}).
 Although neuromorphic computing hardware as well as the corresponding neural algorithms are mainly used in academic research and often lack the technical maturity required by industrial applications, they show promise to be an energy-efficient option for future automated vehicles once reaching the required level of maturity.
 
@@ -31,7 +31,7 @@ Although neuromorphic computing hardware as well as the corresponding neural alg
 \end{figure}
 
 In this chapter, we introduce our proposed approach to encapsulate high-level information about automotive scenes in high-dimensional, semantic vectors using the \ac{SPA} as representational substrate.
-For this encoding phase, we follow the first two stages, namely \emph{preprocessing} and \emph{representation generation}, of the three-stages process established in \cite{Gallant2013} 
+For this encoding phase, we follow the first two stages, namely \emph{preprocessing} and \emph{representation generation}, of the three-stages process established in \textcite{Gallant2013} 
 The third and final stage, \emph{output computation}, will be subject of subsequent chapters, where we investigate concrete applications and use cases.
 The preprocessing stage is the step of creating a suitable vector vocabulary, whereas the representation generation stage is the process of building up structured representations from the atomic vectors within the vocabulary.
 Furthermore, we analyze how different types of data could be encoded in such a representation, we show possible variations of how to encapsulate data in vectors and how they influence the final representation.
@@ -130,13 +130,13 @@ Consequently, it is impossible to encapsulate such semantic or contextual simila
 
 All of the aforementioned notions cover a certain aspect of similarity.
 Ideally, it is desirable for a vector vocabulary to encapsulate more than one notion of similarity comparable to a human understanding all these different aspects of similarity.
-However, it is not clear if it is helpful or even possible, to encapsulate several notions of similarity into one coherent vector vocabulary or if it is more suitable to have separate vocabularies for each similarity of interest and combine them in structured representations using the \ac{VSA}'s algebraic operations as mentioned e.g., in \cite{Crawford2016}.
+However, it is not clear if it is helpful or even possible, to encapsulate several notions of similarity into one coherent vector vocabulary or if it is more suitable to have separate vocabularies for each similarity of interest and combine them in structured representations using the \ac{VSA}'s algebraic operations as mentioned e.g., in \textcite{Crawford2016}.
 For the remainder of this section, we give an overview over different options of how to generate vector vocabularies encoding their own notion of similarity.
 
 \subsection{Random and manually engineered vocabularies}%
 \label{subsec:basic_random_vocabularies}
 
-The simplest possible option to generate a vocabulary of atomic vectors is to sample them randomly, in case of continuous \acp{VSA} such as the \ac{SPA}, from the $D$-dimensional unit sphere \cite{Voelker2017}.
+The simplest possible option to generate a vocabulary of atomic vectors is to sample them randomly, in case of continuous \acp{VSA} such as the \ac{SPA}, from the $D$-dimensional unit sphere \parencite{Voelker2017}.
 Naturally, randomly chosen atomic vectors do not carry semantic meaning or any intended notion of similarity.
 However, given a sufficiently large dimension $D$ of the chosen \ac{VSA} and its theoretical properties (see chapter~\ref{chap:introduction_to_vsas}), we can assume that randomly chosen vectors will be dissimilar enough to avoid accidentally mistaking them for one another.
 Another advantage of this simple approach is that is comparatively easy to create a vocabulary avoiding any complex learning system to embed the concepts of interest in semantic vectors.
@@ -164,22 +164,22 @@ Here, we focus our efforts of generating a visual vector vocabulary to items of 
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{imgs/CNN_GTSRB_performance_plot.png}
+    \includegraphics[width=1.\linewidth]{imgs/CNN_GTSRB_performance_plot.eps}
     \caption{Accuracy performance of the \ac{CNN} for traffic sign classification on the test part of the \ac{GTSRB} data set for all traffic signs (most left bar) and all individual traffic signs.}
     \label{fig:CNN_GTSRB_performance_plot}
 \end{figure}
 
-To achieve the task of encoding traffic signs encountered by an automated vehicle, we employ a variant of the state-of-the-art \ac{CNN} for traffic sign classification proposed in \cite{Ciresan2012}.
-We train a simplified version of this network on the \acf{GTSRB} \cite{Stallkamp2012}, which is a data set including a total of \num{51840} images of \num{43} different classes of traffic signs.
+To achieve the task of encoding traffic signs encountered by an automated vehicle, we employ a variant of the state-of-the-art \ac{CNN} for traffic sign classification proposed by \textcite{Ciresan2012}.
+We train a simplified version of this network on the \acf{GTSRB} \parencite{Stallkamp2012}, which is a data set including a total of \num{51840} images of \num{43} different classes of traffic signs.
 Although the \ac{GTSRB} data set does not contain all possible traffic signs, it is a suitable and sufficiently large data set for our purposes of learning a visual vector vocabulary.
-The original multi-column network proposed in \cite{Ciresan2012} combines several variants of the same network architecture trained on the original input images as well as four different, high-contrast normalized versions of the input images by averaging the predictions of all individual networks.
+The original multi-column network proposed by \textcite{Ciresan2012} combines several variants of the same network architecture trained on the original input images as well as four different, high-contrast normalized versions of the input images by averaging the predictions of all individual networks.
 For simplicity, we only use a single-column version of this network to generate a visual vector vocabulary. 
 Figure~\ref{fig:CNN_GTSRB_performance_plot} shows the classification accuracy of our network on the test part of the \ac{GTSRB} data set for all traffic signs (most left bar) and all individual signs.
 The network achieves competitive results with \SI{98}{\percent} classification accuracy on all traffic signs while detecting all but four traffic signs with accuracy values way above \SI{90}{\percent}, which is sufficient for our purposes.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{imgs/Visual_vocab_traffic_signs_similarity_with_representative_vecs.png}
+    \includegraphics[width=1.0\linewidth]{imgs/Visual_vocab_traffic_signs_similarity_with_representative_vecs.eps}
     \caption{Boxplots depicting the cosine similarities between the representative (mean) vector for each traffic sign class and all individual vector samples it has been created from.}
     \label{fig:visual_vocab_traffic_signs_similarity_with_representative_vecs}
 \end{figure}
@@ -197,7 +197,7 @@ As expected, we observe high similarity values close to the maximum value of \nu
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.8\linewidth]{imgs/visual_vocab_traffic_signs_internal_similarities.png}
+    \includegraphics[width=1.0\linewidth]{imgs/visual_vocab_traffic_signs_internal_similarities.eps}
     \caption{Pairwise similarities between representative vectors encoding traffic signs in a visual vector vocabulary.}
     \label{fig:visual_vocab_traffic_signs_internal_similarities}
 \end{figure}
@@ -224,7 +224,7 @@ Consequently, we conclude that it is possible to encode visual similarity with a
 \end{center}
 
 To encode the object categories for traffic participants \emph{Bicycle}, \emph{Car}, \emph{Motorcycle}, \emph{Pedestrian}, \emph{Truck} necessary to properly represent dynamic automotive scenes in visual vectors, we employ an approach similar to the one used for traffic signs.
-We adopt a general purpose image data set, the Imagenet data set \cite{Deng2009}, which includes suitable categories for all of these classes.
+We adopt a general purpose image data set, the Imagenet data set \parencite{Deng2009}, which includes suitable categories for all of these classes.
 As an additional advantage, Imagenet is a widely used data set, so there already exists a number of successful classification networks, which can be adapted for our purposes.
 Concretely, we employ the following categories as they appear visually most suitable for the objects categories we want to encode:
 We use the original labels 'SAFETY BICYCLE' to learn visual vectors for \emph{Bicycle}, 'USED CAR' for \emph{Car} (other car categories include ambulances and many sports / racing cars), 'MOTORCYCLE', 'PERSON' for \emph{Pedestrian} (since there is no special category for people in the vicinity of roads) and 'TRUCK'.
@@ -234,10 +234,10 @@ For each category, there are at least \num{1200} images available in the data se
     \centering
     \resizebox{.95\textwidth}{!}{%
         \subfloat[\label{subfig:visual_vocab_traffic_participants_similarity_with_representative_vecs}]{%
-            \includegraphics[height=3.5cm]{imgs/Visual_vocab_traffic_participants_similarity_with_representative_vecs.png}
+            \includegraphics[height=3.5cm]{imgs/Visual_vocab_traffic_participants_similarity_with_representative_vecs.eps}
         }
         \subfloat[\label{subfig:visual_vocab_traffic_participants_internal_similarities}]{%
-            \includegraphics[height=3.5cm]{imgs/visual_vocab_traffic_participants_internal_similarities.png}
+            \includegraphics[height=3.5cm]{imgs/visual_vocab_traffic_participants_internal_similarities.eps}
         }
     }
     \caption{Similarity plots for the visual vocabulary vectors representing traffic participants.~\protect\subref{subfig:visual_vocab_traffic_participants_similarity_with_representative_vecs} Boxplots depicting the cosine similarities between the representative (mean) vector for each traffic participant class and all individual vector samples it has been created from.~\protect\subref{subfig:visual_vocab_traffic_participants_internal_similarities} Pairwise similarities between representative
@@ -246,7 +246,7 @@ For each category, there are at least \num{1200} images available in the data se
 \end{figure}
 
 While there is a number of state-of-the-art classification networks available achieving good results on the Imagenet data set, we are looking for a network with only moderately complex structure for the sake of implementation simplicity and ease of adaptation, while performance is of secondary priority.
-VGG19 is a deep \acf{CNN} proposed in 2014 \cite{Simonyan2014} with a decent performance on the Imagenet data set (top 1 performance \SI{73}{\percent} and top 5 performance \SI{91}{\percent}) and a comparatively simple layer by layer architecture that allows easy extraction results from intermediate layers.
+VGG19 is a deep \acf{CNN} proposed by \textcite{Simonyan2014} with a decent performance on the Imagenet data set (top 1 performance \SI{73}{\percent} and top 5 performance \SI{91}{\percent}) and a comparatively simple layer by layer architecture that allows easy extraction results from intermediate layers.
 Our goal is to train a variant of the VGG19 network on these \num{5} classes and extract feature vectors of an intermediate layer to use them as vocabulary vectors.
 Therefore, we adapt the original network architecture in the following way:
 We cut off the last two fully connected layers as well as the classification layer and replace them with a fully connected, \num{300}-dimensional layer and a \num{5} dimensional classification layer. 
@@ -270,7 +270,7 @@ Consequently, we can conclude, that we are able to encode visual similarity of t
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.8\linewidth]{imgs/semantic_vocab_traffic_signs_internal_similarities.png}
+    \includegraphics[width=1.\linewidth]{imgs/semantic_vocab_traffic_signs_internal_similarities.eps}
     \caption{Pairwise similarities between representative vectors encoding traffic signs in a manually designed semantic vector vocabulary.}
     \label{fig:semantic_vocab_traffic_signs_internal_similarities}
 \end{figure}
@@ -339,10 +339,10 @@ Consequently, we were successful in manually designing a vocabulary encapsulatin
     \centering
     \resizebox{.9\textwidth}{!}{%
         \subfloat[\label{subfig:semantic_vocab_traffic_participants_word2vec_internal_similarities}]{%
-            \includegraphics[height=3cm]{imgs/semantic_vocab_traffic_participants_word2vec_internal_similarities.png}
+            \includegraphics[height=3cm]{imgs/semantic_vocab_traffic_participants_word2vec_internal_similarities.eps}
         }
         \subfloat[\label{subfig:semantic_vocab_traffic_participants_manual_internal_similarities}]{%
-            \includegraphics[height=3cm]{imgs/semantic_vocab_traffic_participants_manual_internal_similarities.png}
+            \includegraphics[height=3cm]{imgs/semantic_vocab_traffic_participants_manual_internal_similarities.eps}
         }
     }
     \caption{Pairwise similarities between representative vectors encoding traffic participants in a semantic vector vocabulary.~\protect\subref{subfig:semantic_vocab_traffic_participants_word2vec_internal_similarities} Learned with word2vec~\protect\subref{subfig:semantic_vocab_traffic_participants_manual_internal_similarities} manually designed.}
@@ -353,7 +353,7 @@ As discussed in section~\ref{subsec:what_types_of_data_to_encode_}, semantic sim
 We concluded that the general meaning of traffic participants is highly context-dependent, which in turn can only be learned from dynamic driving data of from a text corpus describing traffic situations.
 However, such data sets are either not available or do not even exist.
 Hence, as a first step towards the goal of encoding semantic similarity, we will therefore encapsulate the similarity between the five classes of traffic participants already discussed in section~\ref{subsec:visual_vocabularies}, namely \emph{Bicycle}, \emph{Car}, \emph{Motorcycle}, \emph{Pedestrian}, \emph{Truck}.
-Here, we employ two different approaches: an automated learning approach making use of the well-established word embedding of the word2vec algorithm \cite{Mikolov2013} trained on the Google News data set and, similar to the semantic vocabulary of traffic signs, manual design, which is only possible due to the small size of our vocabulary.
+Here, we employ two different approaches: an automated learning approach making use of the well-established word embedding of the word2vec algorithm \parencite{Mikolov2013} trained on the Google News data set and, similar to the semantic vocabulary of traffic signs, manual design, which is only possible due to the small size of our vocabulary.
 Word2vec is an unsupervised learning approach generating a word embedding, i.e., vectors representing every word encountered in the training text, where words that appear in similar context (close proximity within the text) are mapped to similar vectors. 
 For our purposes, we simply extract the (\num{300}-dimensional) vectors representing the objects of interest (traffic participants) from the learned vocabulary.
 The manually designed semantic vocabulary is generated similarly to the aforementioned vocabulary of traffic signs using the \ac{SPA}'s algebraic operation and the role-filler-pairs approach based on two key properties, which give good yet simple description of the traffic participant's semantic properties: speed and vulnerability represented by randomly chosen atomic vectors \textbf{SPEED} and \textbf{VULNERABILITY}.
@@ -394,7 +394,7 @@ Given the mathematical properties of the \ac{SPA}'s algebraic operations (cf.\ c
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.8\linewidth]{imgs/visual_semantic_vocab_traffic_signs_internal_similarities.png}
+    \includegraphics[width=1.0\linewidth]{imgs/visual_semantic_vocab_traffic_signs_internal_similarities.eps}
     \caption{Pairwise similarities between vectors encoding traffic signs in a visual-semantic vocabulary.}
     \label{fig:visual_semantic_vocab_traffic_signs_internal_similarities}
 \end{figure}
@@ -414,10 +414,10 @@ Generally, many signs from different groups with very low semantic similarity (t
     \centering
     \resizebox{.9\textwidth}{!}{%
         \subfloat[\label{subfig:visual_semantic_vocab_traffic_participants_word2vec_internal_similarities}]{%
-            \includegraphics[height=3cm]{imgs/visual_semantic_vocab_traffic_participants_word2vec_internal_similarities.png}
+            \includegraphics[height=3cm]{imgs/visual_semantic_vocab_traffic_participants_word2vec_internal_similarities.eps}
         }
         \subfloat[\label{subfig:visual_semantic_vocab_traffic_participants_manual_internal_similarities}]{%
-            \includegraphics[height=3cm]{imgs/visual_semantic_vocab_traffic_participants_manual_internal_similarities.png}
+            \includegraphics[height=3cm]{imgs/visual_semantic_vocab_traffic_participants_manual_internal_similarities.eps}
         }
     }
     \caption{Pairwise similarities between vocabulary vectors encoding traffic participants in a visual-semantic vocabulary, where the semantic part is~\protect\subref{subfig:semantic_vocab_traffic_participants_word2vec_internal_similarities} learned with word2vec~\protect\subref{subfig:semantic_vocab_traffic_participants_manual_internal_similarities} manually designed.}
@@ -443,7 +443,7 @@ This visual-semantic vocabulary appears to represent the expected similarity str
 It is worth noting however, that the manual generation process of the semantic vocabularies, as mentioned in~\ref{subsec:basic_random_vocabularies}, imposes a significant amount of design choices biased by the human engineer.
 However, the choice of generating some of the semantic vectors in this context manually is due to the fact, that one the one hand, the vocabulary is comparatively small while on the other hand, there are no suitable data sets available to learn the desired semantic structure from.
 Furthermore, the described procedure to fuse visual and semantic similarities into one coherent vocabulary is only one of several available options.
-It would have also been possible to try to automatically learn such a fusion process by projecting the visual vocabulary to the semantic one by combining visual properties and language descriptions like for instance in \cite{Karpathy2017}.
+It would have also been possible to try to automatically learn such a fusion process by projecting the visual vocabulary to the semantic one by combining visual properties and language descriptions like for instance in \textcite{Karpathy2017}.
 However, such a learning approach again would require a suitable, sufficiently large data set, which in turn is not available for the entities investigated here.
 
 Finally, the process of generating structured representations from an available vocabulary created with any of the techniques described in this section is independent from the particular vocabulary at hand.
@@ -454,9 +454,9 @@ Thus, we will investigate the influence of the vocabulary structure on the task 
 \section{Representation generation stage}%
 \label{sec:representation_generation_stage}
 
-After having created a vector vocabulary suitable for a specific application of interest as shown in section~\ref{sec:preprocessing_stage_generating_a_vocabulary}, we focus our attention in this section to the second stage of the encoding process proposed in \cite{Gallant2013}, the \emph{representation generation stage}.
+After having created a vector vocabulary suitable for a specific application of interest as shown in section~\ref{sec:preprocessing_stage_generating_a_vocabulary}, we focus our attention in this section to the second stage of the encoding process proposed by \textcite{Gallant2013}, the \emph{representation generation stage}.
 This second step is the process of actually generating structured vector representations from a given vocabulary of atomic vectors.
-As mentioned in \cite{Gallant2013}: "Although the preprocessing and output computation stage can involve significant machine learning, there are reasons for the representation generation stage to \emph{avoid} machine learning."
+As mentioned by \textcite{Gallant2013}: "Although the preprocessing and output computation stage can involve significant machine learning, there are reasons for the representation generation stage to \emph{avoid} machine learning."
 Using machine learning in the stage of representation generation means to adjust the representation to the specific set of applications, which restricts them to be used for different, but related sets of problems.
 Furthermore, involving learning in the representation generation might slow down the whole system prohibiting practical usage of the representation in application scenarios.
 However, in certain situations it could make sense to involve a learning step at the representation generation stage, for example if the system should detect novelties and assign them to new vectors or representations and/or needs to memorize them.
@@ -613,10 +613,10 @@ Hence, we indeed avoid the problem of growing vector norm posed by the scalar mu
 \begin{figure}[t]
     \centering
     \subfloat[\label{subfig:spa_power_representation_one_item}Convolutive power encoding for one two-dimensional numerical entity]{%
-        \includegraphics[width=0.9\linewidth]{imgs/spa_power_representation_one_item.png}
+        \includegraphics[width=0.9\linewidth]{imgs/spa_power_representation_one_item.eps}
     }\\
     \subfloat[\label{subfig:spa_power_representation_two_items}Convolutive power encoding for two two-dimensional numerical entities]{%
-        \includegraphics[width=0.9\linewidth]{imgs/spa_power_representation_two_items.png}
+        \includegraphics[width=0.9\linewidth]{imgs/spa_power_representation_two_items.eps}
     }
     \caption{
         Visualization of the convolutive power encoding scheme for \num{512}-dimensional representation vectors depicting the similarity between the representation vector and auxiliary comparison vectors created from a sequence of discrete values.
@@ -665,7 +665,7 @@ However, before we proceed to applying our vector representations to specific au
 
 In section~\ref{subsec:different_vector_representations_for_numerical_values} and on several other occasions, we have already seen that there are general and systematical limits for the amount of information that can be encoded in and effectively decoded from vector representations in \acp{VSA}.
 Such limits are a reoccurring theme and an essential feature of such architectures as they allow for the modeling of realistic cognitive phenomena.
-Considering human subjects for instance, the capacity to process and store information or concepts in short-term memory as well as other cognitive tasks is subject to numerical restrictions \cite{Miller1956}.
+Considering human subjects for instance, the capacity to process and store information or concepts in short-term memory as well as other cognitive tasks is subject to numerical restrictions \parencite{Miller1956}.
 Hence, numerical limitations of cognitive architectures like the \ac{SPA} or \acp{VSA} in general are one way of modeling the numerical restrictions to cognition observed in human subjects.
 In the context pf automated driving however, we need to analyze these restrictions imposed by the cognitive architecture applied to provide upper borders regarding the amount of information that can be stored in our vector representation.
 In this section, we analyze these limits with the goal of finding bounds for e.g.\ the number of concepts that can effectively be stored in a single vector before the accumulation of noise makes it impossible to retrieve the original individual vectors.
@@ -693,8 +693,8 @@ For sufficiently high-dimensional vectors, the similarity $\phi\left( \mathbf{s}
 However, the more vectors we add to the superposition vector $ \mathbf{s}$ accumulates noise in the representation and thus decreases the similarity between the superposition vector $ \mathbf{s}$ and its individual ingredients $ \mathbf{v}_i$.
 In order to analyze how many vectors can be added together by superposition before individual vectors become irretrievable, we conducted the following experiment: assuming we want to add $n$ vectors $ \mathbf{v}_i$ for $i=1, \ldots, n$ into a superposition vector $ \mathbf{s}$ as in equation~\eqref{eq:superposition}, we randomly generate a vocabulary of $2n$ vectors $ \mathbf{v}_i$ for $i=1, \ldots, 2n$ and sum up the first $n$ members to create our superposition vector $ \mathbf{s}$.
 Then we calculate the cosine similarity $\phi\left(\mathbf{s}, \mathbf{v}_i\right)$ between the superposition vector $ \mathbf{s}$ and every vector $ \mathbf{v}_{i}$ for $i=1,\ldots, 2n$ in the vocabulary.
-A similar but slightly different experiment has been conducted in \cite{Wahle2012}: the atomic vocabulary vectors (referred to as elemental vectors in \cite{Wahle2012}) are sparse in the sense, that they mostly contain \num{0} elements, and the superposed vectors are normalized after adding them.
-Furthermore, the authors in \cite{Wahle2012} only compare the similarity $\phi\left(\mathbf{s}, \mathbf{v}_1\right)$ between the superposition and the original vector with the similarity $\phi\left(\mathbf{v}_1, \mathbf{v}_n\right)$ between the original vector $ \mathbf{v}_1$ and the most recently added random vector $ \mathbf{v}_{n}$ as baseline for the expected similarity between randomly chosen vectors.
+A similar but slightly different experiment has been conducted by \textcite{Wahle2012}: the atomic vocabulary vectors,  referred to as elemental vectors in \textcite{Wahle2012}, are sparse in the sense, that they mostly contain \num{0} elements, and the superposed vectors are normalized after adding them.
+Furthermore, \textcite{Wahle2012} only compare the similarity $\phi\left(\mathbf{s}, \mathbf{v}_1\right)$ between the superposition and the original vector with the similarity $\phi\left(\mathbf{v}_1, \mathbf{v}_n\right)$ between the original vector $ \mathbf{v}_1$ and the most recently added random vector $ \mathbf{v}_{n}$ as baseline for the expected similarity between randomly chosen vectors.
 In contrast, although we have already analytically derived a threshold $\epsilon= \tfrac{c}{\sqrt{D}}$ for the expected similarity of randomly chosen vectors in definition~\ref{def:similar}, we calculate the similarity between the superposition vector and $n$ other random vectors for reference.
 
 Figure~\ref{fig:spa_superposition_capacity} shows the result of our experiment for \num{3} random vocabularies per superposition length containing vectors of dimension \num{256}, \num{512} and \num{1024}.
@@ -791,7 +791,7 @@ For instance, this upper bound for \num{256} dimensional vectors is \num{10} sup
 
 In this chapter, we presented the general approach of creating structured vector representations to encode automotive scenes.
 After showing the theoretical tool set in chapter~\ref{chap:introduction_to_vsas} independent of particular applications, we focused our attention to scene representation in automotive context.
-The chapter's structure followed the process established in \cite{Gallant2013} and is split in two main subsections focusing on the creation of vocabularies of atomic vectors (section~\ref{sec:preprocessing_stage_generating_a_vocabulary}) and generating structured, more complex representations from the atomic vectors in the vocabulary (section~\ref{sec:representation_generation_stage}).
+The chapter's structure followed the process established by \textcite{Gallant2013} and is split in two main subsections focusing on the creation of vocabularies of atomic vectors (section~\ref{sec:preprocessing_stage_generating_a_vocabulary}) and generating structured, more complex representations from the atomic vectors in the vocabulary (section~\ref{sec:representation_generation_stage}).
 We showed several approaches to generate vector vocabularies of entities encountered in automotive scenes such as traffic participants and traffic signs based on either manual design or automated learning.
 Thereby, we were able to encapsulate different similarity structures such as visual similarity, semantic similarity and a fusion of both.
 We were able to demonstrate, that we can successfully encapsulate the desired similarity structure within our vocabulary of atomic vectors.
