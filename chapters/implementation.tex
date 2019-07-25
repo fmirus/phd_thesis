@@ -19,7 +19,7 @@ In the evaluation stage, we will also investigate the influence of variations in
 \label{sec:data_and_preprocessing_context_classification}
 
 The input data used for training and evaluating the driving context classification models is real-world data gathered during test drives in the region of Munich, Germany.
-Depending on the test vehicle's sensor setup \cite{Aeberhard2015}, a subset of the following extrospective sensor systems is available: cameras, \ac{RADAR} and \ac{LIDAR} sensors.
+Depending on the test vehicle's sensor setup \parencite{Aeberhard2015}, a subset of the following extrospective sensor systems is available: cameras, \ac{RADAR} and \ac{LIDAR} sensors.
 Furthermore, the dynamics of the ego-vehicle such as velocity, acceleration or the steering angle are measured using introspective sensors.
 While all extrospective sensors provide preprocessed lists of dynamic objects such as cars or pedestrians, the camera system additionally detect static objects such as traffic signs.
 Furthermore, the raw images of both, the front and rear camera are also available. 
@@ -64,15 +64,19 @@ Finally, we describe the models trained to produce the actual context classifica
 
 \subsection{Scene representation in vectors}%
 \label{subsec:scene_representation_in_vectors_context_classification}
-\begin{figure}[th!]
+\begin{figure}[t]
     \centering
-    \subfloat[\label{subfig:Example_scene}]{%
-        \includegraphics[width=0.8\linewidth]{imgs/Example_scene.eps}
-    }\\
-    \subfloat[\label{subfig:system_overview_horizontal}]{%
-        \includegraphics[width=0.8\linewidth]{imgs/system_overview_horizontal.eps}
+    \resizebox{.9\textwidth}{!}{%
+        \subfloat[\label{subfig:Example_scene}]{%
+            \includegraphics[height=3cm]{imgs/Example_scene.eps}
+        }
+        \subfloat[\label{subfig:system_overview_horizontal}]{%
+            \includegraphics[height=3cm]{imgs/system_overview_horizontal.eps}
+        }
     }
-    \caption{Schematic system overview with one example scene.}
+    \caption{Overview of the driving context classification system.
+    ~\protect\subref{subfig:Example_scene} shows one example scene with objects of interest such as cars and traffic signs highlighted by colored bounding boxes.
+~\protect\subref{subfig:system_overview_horizontal} illustrates the learning system's architecture and flow of information.}
     \label{fig:context_class_sys_arch}
 \end{figure}
 
@@ -104,7 +108,7 @@ Furthermore, there are additional categories \emph{stationary} for stationary ob
 We generate vocabulary vectors for each traffic participant class.
 In the simplest form of a vector representation, we could simply add the vocabulary vector once for each appearence of the corresponding object in the scene to the current representation vector. 
 However, this representation just encodes that there are certain objects present somewhere in the current scene without any additional information.
-To encode a more detailed representation of the current scene with additional information on each traffic participants position, we use the function $\lambda$ from equation ~\eqref{eq:cosin_2d_enc} again to map each dynamic object's position $(p_x, p_y)$ in longitudinal ($x$) and lateral ($y$) direction relative to the ego-vehicle's coordinate system to vector form $ \lambda(p_x, p_y)$.
+To encode a more detailed representation of the current scene with additional information on each traffic participants position, we use the function $\lambda$ from equation~\eqref{eq:cosin_2d_enc} again to map each dynamic object's position $(p_x, p_y)$ in longitudinal ($x$) and lateral ($y$) direction relative to the ego-vehicle's coordinate system to vector form $ \lambda(p_x, p_y)$.
 Subsequently, we bind the resulting vector encoding the object's position to the vector representing the object's category.
 However, positional information for each traffic participant might not be informative enough regarding the task of distinguishing between several driving contexts.
 One quite unique feature of for instance, highway driving is the fact that almost all other traffic participants drive in similar direction as the ego-vehicle.
@@ -164,7 +168,7 @@ We us these scene vectors as input for our classification model to classify the 
 \label{subsec:classification_model}
 
 In this section, we describe the model we use for classifying the driving context based on the vector representation of the current scene.
-Our main model is a simple single-layer neural network implemented using the \ac{Nengo} \cite{Bekolay2014} software suite, which is typically used to create large-scale neural models \cite{Eliasmith2013} but also allows the implementation of traditional feed-forward neural networks.
+Our main model is a simple single-layer neural network implemented using the \ac{Nengo} \parencite{Bekolay2014} software suite, which is typically used to create large-scale neural models \parencite{Eliasmith2013} but also allows the implementation of traditional feed-forward neural networks.
 For the task of driving context classification, we use the \ac{LIF} neuron model and $N$ neurons in the hidden layer.
 We employ supervised learning, i.e., we present the model with the vector representation as input and our manually generated driving context labels as output.
 That is, we input the vectors encoding the current driving scene $\mathbf{v} = \left(v_{0}, \ldots, v{D-1}\right)$ into $N$ neurons (encoding), and the output of the network (decoding) will be the $\mathbf{c}$ classification of the current driving context.
@@ -193,14 +197,14 @@ Furthermore, we analyze the influence variations in the underlying vector vocabu
 
 To get a better understanding of the quality the driving context classification model achieves based on our vector representation, we compare it to several other performance baselines.
 In this section, we describe these reference models and the kind of data they use in comparison to the information encoded within our vector representation of the driving scene.
-We use three baselines to compare our models performance to: human performance, a multi-layer neural network implemented using the Keras library \cite{Chollet2015keras} using our vector representation as input data as well and a \ac{CNN} using raw images to classify the current driving context.
+We use three baselines to compare our models performance to: human performance, a multi-layer neural network implemented using the Keras library \parencite{Chollet2015keras} using our vector representation as input data as well and a \ac{CNN} using raw images to classify the current driving context.
 
 \subsubsection{Human performance}%
 \label{ssubsec:human_performance}
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.8\linewidth]{imgs/context_class_human_train_test.png}
+    \includegraphics[width=1.0\linewidth]{imgs/context_class_human_train_test.eps}
     \caption{Classification performance of \num{2} human subjects on \num{50} examples selected randomly from each the training and test set.}
     \label{fig:context_class_human_train_test}
 \end{figure}
@@ -261,14 +265,14 @@ In our case however, we found that dropping this regularization leads to improve
 \subsubsection{Multi-layer neural network training}%
 \label{ssubsec:multi_layer_neural_network_training}
 
-We implemented the multi-layer, feed-forward neural network as a reference model to compare our \ac{Nengo} classification model to using the Keras \cite{Chollet2015keras} library.
+We implemented the multi-layer, feed-forward neural network as a reference model to compare our \ac{Nengo} classification model to using the Keras library \parencite{Chollet2015keras}.
 We chose a simple feed-forward network architecture with two fully connected hidden layers consisting of \num{1500} and \num{500} \ac{ReLU} neurons respectively each followed by a dropout layer and a final classification layer.
 In contrast to the \ac{Nengo} model, we use backpropagation and stochastic gradient descent to adjust the networks neural weights.
 
 \subsubsection{\acs{CNN} training}%
 \label{ssubsec:cnn_training}
 
-The \ac{CNN} for image-based context classification is implemented using the Tensorflow \cite{Abadi2016} library.
+The \ac{CNN} for image-based context classification is implemented using the Tensorflow library \parencite{Abadi2016}.
 We use a similar architecture as the one used for traffic sign classification in section~\ref{subsec:visual_vocabularies} with \num{9} layers.
 \begin{center}
     \begin{tabular}{c|c|c|c}
@@ -287,7 +291,7 @@ We use a similar architecture as the one used for traffic sign classification in
 	\label{tab:context_class_cnn_arch}
     \captionof{table}{Layer by layer architecture of our reference \ac{CNN} for driving context classification.}
 \end{center}
-This architecture is shown in table ~\ref{tab:context_class_cnn_arch} consisting of three consecutive convolutional layers each followed by a max-pooling layer and two fully-connected layers for the final classification.
+This architecture is shown in table~\ref{tab:context_class_cnn_arch} consisting of three consecutive convolutional layers each followed by a max-pooling layer and two fully-connected layers for the final classification.
 The network has two additional dropout layers, one after the convolutional layer part of the network dropping \SI{25}{\percent} of the neurons activity and one before the final classification layer dropping \SI{50}{\percent} activity.
 The model is trained using backpropagation and the classical gradient descent algorithm.
 We also employed early stopping since the model's validation loss did not significantly decrease after roughly \num{3500} epochs and the model's performance did not improve for longer training phases.
@@ -297,7 +301,7 @@ We also employed early stopping since the model's validation loss did not signif
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{imgs/context_class_approaches.png}
+    \includegraphics[width=1.\linewidth]{imgs/context_class_approaches.eps}
     \caption{Visualization of the performance of our driving context classification model and the comparison baselines for reference.}
     \label{fig:context_class_approaches}
 \end{figure}
@@ -312,41 +316,39 @@ The second best classification performance achieves the Keras multi-layer neural
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{imgs/context_class_prediction_vs_true_label.png}
-    \caption{Predictions of the driving context made by the \ac{Nengo} model compared to the true labels.}
-    \label{fig:context_class_prediction_vs_true_label}
+    \subfloat[Complete test data set\label{subfig:context_class_prediction_vs_true_label}]{%
+        \includegraphics[width=0.5\linewidth]{imgs/context_class_prediction_vs_true_label.eps}
+    }
+    \subfloat[Subset of the test data set\label{subfig:context_class_prediction_vs_true_label_test_subset}]{%
+        \includegraphics[width=0.5\linewidth]{imgs/context_class_prediction_vs_true_label_test_subset.eps}
+    }\\
+    \subfloat[Complete vs. test subset\label{subfig:context_class_test_subset}]{%
+        \includegraphics[width=1.\linewidth]{imgs/context_class_test_subset.eps}
+    }
+    \caption{Visualization of the driving context predictions made by the \ac{Nengo} model compared to the true labels. 
+        Figure~\protect\subref{subfig:context_class_prediction_vs_true_label} shows the results for the complete test data set, while figure~\protect\subref{subfig:context_class_prediction_vs_true_label_test_subset} shows the model's predictions on the test subset compared to the true labels.
+    Figure~\protect\subref{subfig:context_class_test_subset} shows the model's performance on the subset in comparison to the complete test set.
+}
+    \label{fig:context_class_test_subset}
 \end{figure}
-
 However, analyzing these results in more detail, we observe that the decreased overall classification performance for both, the \ac{Nengo} and Keras models is due to their poor classification performance on the \emph{interurban} context category achieving only \SI{27}{\percent} and \SI{18.6}{\percent} in comparison to the \SI{87}{\percent} classification accuracy achieved on average by the human subjects.
 For the other context categories, \emph{city} and \emph{highway}, both models achieve competitive results comparable to the human classification performance baseline.
 In order to further analyze this performance issue, we have a look at the composition of our data set.
 The most critical problem is that our data is limited.
-The are only \SI{18}{\minute} of test data available, which are recorded from just two test drives.
+There are only \SI{18}{\minute} of test data available, which are recorded from just two test drives.
 The first are \SI{4}{\minute} are continuous, mostly in the 'city' environment, with \SI{30}{\second} of interurban, that are perfectly recognized.
 The second part of the test set, again a continuous drive, contains, after starting in the city, a long stretch of about \SI{8}{\minute} interurban with heavy stop-and-go traffic at low speed.
 The training set, however, does not contain data samples with driving situations comparable to that interurban part in the test set.
 Furthermore, the interurban category is probably the most difficult to predict since there are interurban samples that could be mistaken with either of the other two context classes depending on the situation.
-Figure~\ref{subfig:context_class_prediction_vs_true_label_test_subset} visualizes the amount predictions of the \ac{Nengo} network for all the context classes compared to the true label of the data sample and supports this observations.
+Figure~\ref{subfig:context_class_prediction_vs_true_label} visualizes the amount predictions of the \ac{Nengo} network for all the context classes compared to the true label of the data sample and supports this observations.
 Although the majority of false classifications of the interurban category is misclassified as \emph{city}, there is also a significant amount of samples mistaken for \emph{highway}.
 On the other hand, \emph{interurban} is the category with the least amount of samples in the training data set as only \SI{18.9}{\percent} of the training samples belong to the interurban class.
 Thus, we assume that a more balanced and/or larger data set could be essential to tackle this issue.
 
 Hence, we evaluated our classification model on a subset of the test set simply removing that interurban part both model variants struggle to predict.
-Figure~\ref{subfig:context_class_test_subset} shows the results of the original \ac{Nengo} classification network (i.e., trained without the memory-efficiency and regularization improvements) on the complete test set as well as on the subset, while figure~\ref{subfig:context_class_prediction_vs_true_label_test_subset} shows a similar evaluation for the subset of the training set as figure~\ref{fig:context_class_prediction_vs_true_label} for the complete test set.
+Figure~\ref{subfig:context_class_test_subset} shows the results of the original \ac{Nengo} classification network (i.e., trained without the memory-efficiency and regularization improvements) on the complete test set as well as on the subset, while figure~\ref{subfig:context_class_prediction_vs_true_label_test_subset} shows a similar evaluation for the subset of the training set as figure~\ref{subfig:context_class_prediction_vs_true_label} for the complete test set.
 We observe that, even for this non-optimized model variant, the classification accuracy of the \emph{interurban} category significantly increases from \SI{8.1}{\percent} to \SI{79.5}{\percent} when switching from the complete test set to the smaller subset.
 Thus, we consider this a strong hint that a more balanced and larger training data set will be able to improve the poor classification performance on the \emph{interurban} driving context category and therefore the overall accuracy of the model.
-\begin{figure}[t]
-    \centering
-    \subfloat[\label{subfig:context_class_test_subset}]{%
-        \includegraphics[width=0.5\linewidth]{imgs/context_class_test_subset.png}
-    }
-    \subfloat[\label{subfig:context_class_prediction_vs_true_label_test_subset}]{%
-        \includegraphics[width=0.5\linewidth]{imgs/context_class_prediction_vs_true_label_test_subset.png}
-    }
-    \caption{Visualization of the \ac{Nengo} classification model on a subset of the test data set. 
-    Figure~\protect\subref{subfig:context_class_test_subset} shows the model's performance on the subset on comparison to the complete test set, while figure ~\protect\subref{subfig:context_class_prediction_vs_true_label_test_subset} shows the model's predictions on the test subset compared to the true labels.}
-    \label{fig:context_class_test_subset}
-\end{figure}
 
 \begin{figure}[t]
     \centering
@@ -360,7 +362,7 @@ Thus, we consider this a strong hint that a more balanced and larger training da
     \label{fig:context_class_similar_image_examples}
 \end{figure}
 
-Revisiting figure ~\ref{fig:context_class_approaches}, the \ac{CNN} classification model based on the raw camera images performing poorly in comparison to the other models achieving only \SI{35.7}{\percent} overall classification accuracy is sort of an exception.
+Revisiting figure~\ref{fig:context_class_approaches}, the \ac{CNN} classification model based on the raw camera images performing poorly in comparison to the other models achieving only \SI{35.7}{\percent} overall classification accuracy is sort of an exception.
 While the model achieves \SI{90.7}{\percent} classification accuracy on the \emph{city} context label, its performance deteriorates down to \SI{19.2}{\percent} and \SI{10.5}{\percent} for the \emph{interurban} and \emph{highway} labels respectively.
 This is even the best classification performance we were able to achieve with this model: when training the network for a larger amount of epochs, which, in theory, should improve the model's performance, its performance even deteriorates further.
 Instead of generalizing better, the model tends to overfit and just learns to simply assign the same context label to all samples.
@@ -380,7 +382,7 @@ Here, we are interest how varying vector vocabularies encapsulating a similarity
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{imgs/context_class_random_512_vs_random_300_dim_vocab.png}
+    \includegraphics[width=1.\linewidth]{imgs/context_class_random_512_vs_random_300_dim_vocab.eps}
     \caption{Comparison of the driving context classification model for \num{300}-dimensional and \num{512}-dimensional vectors.}
     \label{fig:context_class_random_512_vs_random_300_dim_vocab}
 \end{figure}
@@ -397,14 +399,14 @@ Hence, we use the classification performance on the \num{300}-dimensional random
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{imgs/context_class_vocabularies_tp_and_ts.png}
+    \includegraphics[width=1.\linewidth]{imgs/context_class_vocabularies_tp_and_ts.eps}
     \caption{Visualization of the \ac{Nengo} model's classification performance for several structured vocabularies compared to the baseline performance on randomly generated vocabularies.}
     \label{fig:context_class_vocabularies_tp_and_ts}
 \end{figure}
 
 In this section, we analyze the impact of encapsulating a similarity structure within the vocabulary of atomic vectors used to generate the scene representation vectors.
 We hypothesize, that encapsulating a similarity structure within the vocabulary of atomic vectors is beneficial in terms of performance for our driving context classification model based on the scene representation built upon these vocabularies.
-We use the different vocabularies presented in section~\ref{sec:preprocessing_stage_generating_a_vocabulary} to impose different similarity structures to the vocabulary, namely a manually generated semantic vocabulary (see section ~\ref{subsec:semantic_vocabularies}), a learned visual vocabulary (see section ~\ref{subsec:visual_vocabularies}) as well as a fused visual-semantic vocabulary combining the visual and semantic similarity structures in one vocabulary (see section
+We use the different vocabularies presented in section~\ref{sec:preprocessing_stage_generating_a_vocabulary} to impose different similarity structures to the vocabulary, namely a manually generated semantic vocabulary (see section~\ref{subsec:semantic_vocabularies}), a learned visual vocabulary (see section~\ref{subsec:visual_vocabularies}) as well as a fused visual-semantic vocabulary combining the visual and semantic similarity structures in one vocabulary (see section
 ~\ref{subsec:visual_semantic_vocabularies}).
 However, the aforementioned structured vocabularies do not contain all entities encoded in the random vocabularies.
 For instance, the \ac{GTSRB} data set, which was used to generate the visual vocabulary for traffic signs, contains only \num{42} traffic sign classes, which covers only $\frac{1}{6}$ of the traffic signs the ego-vehicle's camera system is able to detect.
