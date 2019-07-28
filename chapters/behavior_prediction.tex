@@ -7,6 +7,9 @@ Predicting future behavior and positions of other traffic participants from obse
 Therefore, we picked behavior prediction as another task for investigating the potential of vector representations in automotive context.
 In contrast to the task of classifying the current driving context presented in chapter~\ref{chap:driving_context_classification}, predicting future positions of vehicles is a regression problem, i.e., we are predicting continuous values such as spatial positions instead of discrete class labels.
 However, future positions of vehicles not only depend on each vehicle's own past positions and dynamic data such as velocity and acceleration but also on the behavior of the other traffic participants in the vehicle's surroundings.
+For instance, in a situation as shown in Fig.~\ref{fig:on_board_data_example}, the behavior of the target vehicle, as depicted by a solid blue and dotted orange line for past and future positions respectively, is influenced by the surrounding vehicles, as illustrated by solid and dotted gray lines for past and future positions respectively.
+The target vehicle is approached from behind by a faster vehicle causing it to eventually change its lane to the right, which, for now, is still occupied by the ego-vehicle and another vehicle.
+All of these external influences have an impact on the target vehicle's motion (and vice versa).
 We hypothesize that structured vector representations will be able to capture these relations and mutual influence between traffic participants, which is necessary for reliable predictions.
 As we aim for a model-free data representation, we avoid introducing any physical constraints or restrictions regarding our data-representation or the predicting models.
 Although this allows for physically unrealistic or even impossible trajectory predictions, we want our neural network models to figure out the best predictions on their own without biasing them in any direction.
@@ -43,7 +46,7 @@ This is our main data-set used in this chapter.
 It contains real-world data gathered using the on-board sensors of an automated vehicle prototype, which we refer to as the \emph{ego-vehicle}, during test drives mainly on highways in the area of Munich, Germany.
 Therefore, er refer to this data set as the \emph{On-board} data set.
 The data set contains object-lists with a variety of features obtained by fusing different sensor sources.
-Apart from features about motion and behavior of the dynamic objects in the scene such as position, velocity and acceleration, which are estimated from \ac{LIDAR} sensors, there is also visual information like object type probabilities or lane information, which is acquired from additional camera sensors (see \cite{Aeberhard2015} for further information on the sensor setup).
+Apart from features about motion and behavior of the dynamic objects in the scene such as position, velocity and acceleration, which are estimated from \ac{LIDAR} sensors, there is also visual information like object type probabilities or lane information, which is acquired from additional camera sensors \parencite[see][for further information on the sensor setup]{Aeberhard2015}.
 Table~\ref{tab:target_data_features} gives an overview and detailed description of the data features available in this data-set, which are relevant for our models.
 \begin{center}
 	\begin{tabular}{|l | p{12cm}|}
@@ -80,14 +83,14 @@ In total, the \emph{On-board} data-set contains \num{3891} vehicles, which yield
 			\includegraphics[height=4cm]{imgs/ngsim_highway_top_view.jpg}
 		}
 		\subfloat[\label{subfig:ngsim_example_xy}]{%
-			\includegraphics[height=4cm]{imgs/ngsim_example_xy.png}
+			\includegraphics[height=4cm]{imgs/ngsim_example_xy.eps}
 		}
 	}
-    \caption{Visualization of \emph{\ac{NGSIM}} data set:~\protect\subref{subfig:ngsim_highway_top_view} depicts the highway segment from top view perspective indicating the camera's position (source \cite{NGSIM-US101})~\protect\subref{subfig:ngsim_example_xy} visualizes the data of one particular driving situation from the data-set.}\label{fig:ngsim_dataset}
+    \caption{Visualization of \emph{\ac{NGSIM}} data set:~\protect\subref{subfig:ngsim_highway_top_view} depicts the highway segment from top view perspective indicating the camera's position. Image source: \textcite{NGSIM-US101}.~\protect\subref{subfig:ngsim_example_xy} visualizes the data of one particular driving situation from the data-set.}\label{fig:ngsim_dataset}
 \end{figure}
 
-The \ac{NGSIM} US-101 data-set \cite{NGSIM-US101} is a publicly available data-set recorded on a segment of approximately \SI{640}{\meter} length with \num{6} lanes on the US-101 freeway in Los Angeles, California.
-Although the data set was originally intended for driver behavior analysis and traffic flow models \cite{He2017}, it has also been used to train trajectory predictions models \cite{Altche2018, Deo2018}.
+The \ac{NGSIM} US-101 data-set \parencite{NGSIM-US101} is a publicly available data-set recorded on a segment of approximately \SI{640}{\meter} length with \num{6} lanes on the US-101 freeway in Los Angeles, California.
+Although the data set was originally intended for driver behavior analysis and traffic flow models \parencite{He2017}, it has also been used to train trajectory predictions models, for instance by \textcite{Altche2018, Deo2018}.
 The data-set was recorded using cameras observing freeway traffic from rooftops with trajectory-data being extracted later from the obtained video footage.
 Figure~\ref{fig:ngsim_dataset} shows the recorded highway segment from top view perspective indicating the camera's position (figure~\ref{subfig:ngsim_highway_top_view}) as well as the visualization of one example driving situation (figure~\ref{subfig:ngsim_example_xy}).
 The data-set holds a total of \SI{45}{\minute} of driving data split into three \SI{15}{\minute} segments of mild, moderate and congesting traffic conditions.
@@ -139,7 +142,7 @@ Comparing this example to the one shown in figure~\ref{fig:on_board_data_example
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{imgs/data_set_lane_change_distribution.png}
+    \includegraphics[width=1.\linewidth]{imgs/data_set_lane_change_distribution.eps}
     \caption{Visualization of the composition of both data-sets regarding lane changes of the target vehicle.}
     \label{fig:data_set_lane_change_distribution}
 \end{figure}
@@ -194,7 +197,7 @@ For straight driving, linear prediction based on a constant velocity assumption 
 Hence, we use these linear prediction models based on a constant velocity assumption as the simplest baseline models to compare our neural models using our distributed vector representations as input.
 
 The analysis of related research on trajectory prediction in automotive context given in section~\ref{subsec:trajectory_prediction} suggests, that the most successful current state-of-the-art approaches rely mainly on \ac{LSTM}-based neural network architectures.
-They are typically combined with other neural networks such as convolutional layers or classification networks \cite{Deo2018a} to improve model performance.
+They are typically combined with other neural networks such as convolutional layers or classification networks \parencite{Deo2018a} to improve model performance.
 In this chapter, we use \ac{LSTM}-based models as well as simpler feed-forward neural networks to predict trajectories based on our semantic vector representation of the current driving situation.
 Hence, we use the same models just employing a different encoding (see section ~\ref{subsec:scene_representation_in_vectors} for further details on the reference encoding schemes) of the input data avoiding further complexity of additional networks or layers to make the models as comparable as possible.
 
@@ -280,13 +283,15 @@ Importantly, only the \emph{\ac{SPA}-power} representation variants $(\mathbf{S}
   \caption{Visualization of our \ac{LSTM}-based learning architecture. Modules that change with varying encoding scheme of the input data are highlighted through dashed red borders whereas parts that change when varying the data-set are highlighted through dashed blue borders.}\label{fig:lstm_arch}
 \end{figure}
 
-In this section, we use a \acf{LSTM} \cite{Hochreiter1997} network-architecture for the prediction of vehicle positions.
+In this section, we use a \acf{LSTM} \parencite{Hochreiter1997} network-architecture for the prediction of vehicle positions.
 Our network consists of one \ac{LSTM} encoder and decoder cell for sequence to sequence prediction, which means that the input and the final result of our model is sequential data.
 The encoder \ac{LSTM} takes positional data for $20$ past, equidistant time frames as input.
+That is, the input data is a sequence of \num{20} items of either positions of the target vehicle or a sequence of high-dimensional vectors encoding this positional data.
 The resulting embedding vector encodes the history of the input data over those time frames.
 This embedding vector is concatenated with additional auxiliary information to aid the model when predicting the future trajectory of the target vehicle.
-This auxiliary data should be information, that is available to the system when the prediction is to happen (see section~\ref{subsec:evaluation_of_the_lstm_based_prediction_models} for further details on this auxiliary data).
+This auxiliary data is information, that is available to the system when the prediction is to happen, i.e., sensory data available at prediction time or future data about the ego-vehicle such as its own planned trajectory (see section~\ref{subsec:evaluation_of_the_lstm_based_prediction_models} for further details on this auxiliary data).
 Finally, the embedding vector is used as input for the decoder \ac{LSTM} to predict future vehicle positions.
+The output of each model is a sequence of \num{20} positions of the target vehicle predicted over a certain temporal horizon into the future.
 We use the same network architecture for all encoding schemes of the input data and for both data-sets.
 However, the dimensionality of the input and the information used as auxiliary information to enrich the embedding vector vary over different encoding schemes and data-sets respectively.
 Figure~\ref{fig:lstm_arch} visualizes the architecture of our \ac{LSTM} models indicating modules that change when varying the encoding scheme by a dashed red border whereas parts that change with the data-set are highlighted through a dashed blue border.
@@ -294,9 +299,10 @@ Figure~\ref{fig:lstm_arch} visualizes the architecture of our \ac{LSTM} models i
 \subsection{Simple feed-forward \acs{NEF}-based prediction models}%
 \label{subsec:simple_feed_forward_nef_based_prediction_models}
 
-As an alternative to the \ac{LSTM}-models, we also considered a much simpler single-hidden-layer network defined using the Neural Engineering Framework (\ac{NEF}) \cite{Eliasmith2003}.
-While this is usually used for constructing large-scale biologically realistic neuron models \cite{Eliasmith2012}, the \ac{NEF} software toolkit \acs{Nengo} \cite{Bekolay2014} also allows for traditional feed-forward artificial neural networks using either spiking or non-spiking neurons.
+As an alternative to the \ac{LSTM}-models, we also considered a much simpler single-hidden-layer network defined using the \acf{NEF} \parencite{Eliasmith2003}.
+While this is usually used for constructing large-scale biologically realistic neuron models \parencite{Eliasmith2012}, the \ac{NEF} software toolkit \acs{Nengo} \parencite{Bekolay2014} also allows for traditional feed-forward artificial neural networks using either spiking or non-spiking neurons.
 For these \ac{NEF} networks, we use a single hidden layer, with randomly generated (and fixed) input weights, and use least-squares optimization to compute the output weights.
+We employ the principles of the \ac{NEF} as shown in ~\ref{sec:neural_eng} to 
 As with any traditional network, we can have any number of input, output, and hidden neurons, all following this same process.
 The goal here is to provide a simple baseline for comparison to the \ac{LSTM} networks, to see what (if any) performance gain is produced by the more complex network approach.
 However, these simpler networks are unable to process sequential data in the same way as the \ac{LSTM} models.
@@ -312,7 +318,7 @@ However, it is not clear if simply comparing vectors in terms of similarity to f
 A-prior, it might not even be clear what vectors belong to the baseline set of normal data or how to define vectors to be considered as inliers.
 One option could be to manually define metrics such as the number of vehicles in the scene or a threshold for the distance between the vehicles to detect crowded and potentially dangerous situations.
 However, such an approach suffers from the typical issues of manual engineering such as biases introduced by the human designer as well as poor scaling.
-Therefore, we employ an unsupervised learning approach based on fully-connected autoencoder neural networks similar to the one proposed in \cite{Chen2017}.
+Therefore, we employ an unsupervised learning approach based on fully-connected autoencoder neural networks similar to the one proposed in \textcite{Chen2017}.
 We train an autoencoder neural network on the latest vector in the sequence $(\mathbf{S}_{t})_{t_0}^{t_N}$ of our scene vectors based on the convolutive vector-power representation in unsupervised fashion.
 Thereby, the network is trained to reconstruct (i.e., generate replicas of) the data it is given.
 Once the network is trained on a sufficiently large data-set, we can calculate the element-wise error between the original vector $ \mathbf{v} = \left(v_{0}, \ldots, v_{D-1}\right)$ and the replica vector $ \tilde{\mathbf{v}} = \left(\tilde{v}_{0}, \ldots, \tilde{v}_{D-1}\right)$ generated by the neural network autoencoder, i.e.,
@@ -327,9 +333,11 @@ The threshold $c$ is generated from the percentage of examples we expect to be a
 \label{sec:experiments}
 
 In this section, we describe the training process and parameters of all our models and give a detailed analysis and evaluation of the results achieved.
-The \ac{LSTM} models are implemented in Tensorflow \cite{Abadi2016} whereas the \ac{NEF} models and the mixture-of-experts online learning model are implemented using the \acs{Nengo} software suite \cite{Bekolay2014}.
+The \ac{LSTM} models are implemented in Tensorflow \parencite{Abadi2016} whereas the \ac{NEF} models and the mixture-of-experts online learning model are implemented using the \acs{Nengo} software suite \parencite{Bekolay2014}.
 We use the \ac{RMSE} as our main metric for evaluation purposes.
 In contrast to earlier work, we inspect the \ac{RMSE} for lateral and longitudinal directions separately to give more detailed insights into the models' behavior.
+Calculating the \ac{RMSE} of the Euclidean distance would absorb the influence of the lateral \ac{RMSE} since it is an order of magnitude smaller than the longitudinal \ac{RMSE}, while we consider both directions to be at least equally important.
+The lateral \ac{RMSE} is even more informative regarding the models' performance on, for instance, lane change maneuvers.
 For all evaluations in this section, we refer to the longitudinal and lateral direction as $x$- and $y$-direction respectively.
 Furthermore, we investigate where the models shows their best performance looking for correlations between prediction accuracy and specific driving situations.
 
@@ -344,6 +352,43 @@ If not declared otherwise, all figures show the performance of the investigated 
 The training process however is intended to be kept as coherent as possible between the data-sets and differences having an impact on the training process will be highlighted where necessary.
 Finally, we evaluate both model types performance on both available data-sets and, especially for the \ac{LSTM}-based models, we give a thorough analysis on which model performs best depending on the current driving context.
 Thereby, we will identify strengths and weaknesses of each particular model.
+
+\begin{center}
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{cccccccc}
+            \toprule
+            \thead{Short name} & \thead{Input} & \thead{Position \\ encoding} & \thead{Network \\ architecture} & \thead{Training} & \thead{Number of \\ Units/Neurons} & \thead{Data set}\\ 
+            \midrule
+            linear & \makecell{current position \\ and velocity} & - & Linear regression & - & - & both \\ 
+            \midrule
+            LSTM numerical & sequence of positions & - & \makecell{\acs{LSTM} with one \\ encoder/decoder cell each} & \makecell{Offline, \\ backpropagation} & \makecell{\num{150} units \\ per cell} & both \\ \midrule
+            LSTM \acs{SPA} \num{1} & semantic vector sequence & convolutive power & \makecell{\acs{LSTM} with one \\ encoder/decoder cell each} & \makecell{Offline, \\ backpropagation} & \makecell{\num{150} units \\ per cell} &both \\ 
+            \midrule
+            LSTM \acs{SPA} \num{2} & semantic vector sequence & scalar multiplication & \makecell{\acs{LSTM} with one \\ encoder/decoder cell each} & \makecell{Offline, \\ backpropagation} & \makecell{\num{150} units\\  per cell} &both \\ 
+            \midrule
+            LSTM \acs{SPA} \num{3} & semantic vector sequence & \makecell{convolutive power \\ incl.\ ego-vehicle} & \makecell{\acs{LSTM} with one \\ encoder/decoder cell each} & \makecell{Offline, \\ backpropagation} & \makecell{\num{150} units \\ per cell} &\emph{On-board} \\ 
+            \midrule
+            \acs{NEF} numerical & sequence of positions & - & \acs{NEF} Single-layer & \makecell{Offline, \\ least-squares} & \num{3000} neurons & both \\ 
+            \midrule
+            \acs{NEF} \acs{SPA} \num{1} & semantic vector sum & \makecell{convolutive power \\ incl.\ ego-vehicle} & \acs{NEF} Single-layer & \makecell{Offline, \\ least-squares} & \num{3000} neurons  &\emph{On-board} \\ 
+            \midrule
+            \acs{NEF} \acs{SPA} \num{2} & semantic vector sum & convolutive power & \acs{NEF} Single-layer & \makecell{Offline, \\ least-squares} & \num{3000} neurons &\emph{\ac{NGSIM}}\\ 
+            \bottomrule
+        \end{tabular}
+    }
+	\label{tab:evaluated_models}
+	\captionof{table}{Summary of the evaluated models regarding architecture, input data, encoding and training.}
+\end{center}
+
+Table~\ref{tab:evaluated_models} summarizes the models evaluated in this section.
+The models \ac{LSTM} \ac{SPA} \num{1} - \num{3} as well as \ac{LSTM} numerical employ the same network architecture as described in Sec.~\ref{subsec:lstm_based_prediction_models} with sequential information as input data (using the different encoding schemes presented in Sec.~\ref{ssubsec:reference_encoding_schemes}) and are analyzed in Sec.~\ref{subsec:evaluation_of_the_lstm_based_prediction_models}.
+The models \ac{NEF} \ac{SPA} \num{1} and \num{2} employ the simpler, single-layer, feed-forward architecture as described in Sec.~\ref{subsec:simple_feed_forward_nef_based_prediction_models} with a vector obtained as partial sum of vectors from the whole sequence used as input for the \ac{LSTM} models (see Sec.~\ref{subsec:evaluation_of_nef_based_feed_forward_prediction_models} for further details).
+The models will be denoted in legends of the figures in this chapter by their short name given in table~\ref{tab:evaluated_models}.
+
+In Sec.~\ref{subsec:scene_representation_in_vectors}, we have described the different encoding schemes we will use to evaluate our models.
+We mentioned that the models employing the convolutive power to encode the input data are (i.e., \ac{LSTM} \ac{SPA} \num{1}, \num{3} and \ac{NEF} \ac{SPA} \num{1} and \num{2}) are the only ones having access to information about objects other than the target vehicle.
+Although these model therefore have access to more data than the other reference models such as \ac{LSTM} numerical, we are interested in evaluating the benefits of encoding the interconnections between vehicles implicitly in the input data using our semantic vector encoding instead of introducing a more complex network architecture.
+Therefore, we focus on the same network architecture for all encoding schemes in this paper and leave a comparison with more sophisticated network architectures, for instance, ones combining \acp{LSTM} with social pooling layers as in \textcite{Deo2018a} or \textcite{Alahi2016} for future work.
 
 \subsection{Evaluation of the \acs{LSTM}-based prediction models}%
 \label{subsec:evaluation_of_the_lstm_based_prediction_models}
@@ -360,13 +405,58 @@ In this section, we will investigate the \ac{LSTM}-based prediction models.
   \label{fig:lstm_input_data_analysis}
 \end{figure}
 
+\begin{center}
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{cccccccc}
+            \toprule
+            \multirow{2}{1in}{\thead{Setup \#}} & \multicolumn{3}{c|}{\thead{Included target vehicle data}} & \multicolumn{4}{|c}{\thead{Included ego-vehicle data}} \\ 
+            \cmidrule{2-8}
+             & \thead{Position} & \thead{Velocity} & \thead{Acceleration} & \thead{Acceleration} & \thead{Lane Border} & \thead{Lane Curvature} & \thead{Steering}\\ 
+            \midrule
+            1 & \checkmark & & & & & &  \\
+            \midrule
+            2 & \checkmark & & & \checkmark& & &  \\
+            \midrule
+            3 & \checkmark & & & \checkmark& \checkmark& &  \\
+            \midrule
+            4 & \checkmark & & & \checkmark& \checkmark& \checkmark&  \\
+            \midrule
+            5 & \checkmark & & & \checkmark& \checkmark& \checkmark& \checkmark \\
+            \midrule
+            6 & \checkmark & \checkmark& & & & &  \\
+            \midrule
+            7 & \checkmark & \checkmark& & \checkmark& & &  \\
+            \midrule
+            8 & \checkmark & \checkmark& & \checkmark& \checkmark& &  \\
+            \midrule
+            9 & \checkmark & \checkmark& & \checkmark& \checkmark& \checkmark&  \\
+            \midrule
+            10 & \checkmark & \checkmark& & \checkmark& \checkmark& \checkmark& \checkmark \\
+            \midrule
+            11 & \checkmark & \checkmark& \checkmark& & & &  \\
+            \midrule
+            12 & \checkmark & \checkmark& \checkmark& \checkmark& & &  \\
+            \midrule
+            13 & \checkmark & \checkmark& \checkmark& \checkmark& \checkmark& &  \\
+            \midrule
+            14 & \checkmark & \checkmark& \checkmark& \checkmark& \checkmark& \checkmark&  \\
+            \midrule
+            15 & \checkmark & \checkmark& \checkmark& \checkmark& \checkmark& \checkmark& \checkmark \\
+            \bottomrule
+        \end{tabular}
+    }
+	\label{tab:input_data_setups}
+    \captionof{table}{Summary of the input data setups of the different models evaluated in Fig.~\ref{fig:lstm_input_data_analysis}.}
+\end{center}
+
 For the \ac{LSTM}-models, we firstly investigated the composition of the input data to the model to get an idea, what kind of information is useful for the task of motion prediction.
 Therefore, we trained several instantiations of our \ac{LSTM}-network architecture on the \emph{On-board} data-set $D_1$ for different variations of the input data, for \num{8} epochs each.
-The simplest setting is using only the positional information of the target vehicle as input and its instantaneous velocity as additional information in the embedding without including any information about the ego-vehicle.
+Table ~\ref{tab:input_data_setups} summarizes the different setups and shows what kind of data is included in each setup shown in Fig.~\ref{fig:lstm_input_data_analysis}.
+The simplest setting (setup \num{1}) is using only the positional information of the target vehicle as input and its instantaneous velocity as additional information in the embedding without including any information about the ego-vehicle.
 We refer to this setting as the default setting in this section.
-In addition, we also analyze settings where additional information like velocity and acceleration of the target vehicle are available to the system.
+In addition, we also analyze settings where additional information like velocity (setups \num{6}-\num{15}) and acceleration (setups \num{11}-\num{15}) of the target vehicle are available to the system.
 Furthermore, if all dynamic information are available relative to the ego-vehicle, there are other features that could be useful for motion prediction such as the current curvature of the road or the current velocity or steering values of the ego-vehicle itself.
-For example, if the ego-vehicle performs a lane change or the road bends, this will influence the relative motion of all other vehicles while this information most likely will not be available from just the positions of the target vehicle. 
+For instance, if the ego-vehicle performs a lane change or the road bends, this will influence the relative motion of all other vehicles while this information most likely will not be available from just the positions of the target vehicle. 
 On the other hand, if such information is available to the system, it would improve the models capability of abstracting and inferring correlations between the available information in such situations.
 In this evaluation, we include the history of the ego-vehicle's information to the input data and future values to the embedding, whereas we include additional information about the target vehicle to the input data only. 
 
@@ -374,7 +464,8 @@ In this evaluation, we include the history of the ego-vehicle's information to t
 	\centering
     \subfloat[\label{subfig:lstm_units_analysis}]{%
         \includegraphics[width=\columnwidth]{imgs/lstm_units_analysis.eps}
-    }\\
+    }
+    \vspace{-0.3cm}
     \subfloat[\label{subfig:lstm_layers_analysis}]{%
         \includegraphics[width=\columnwidth]{imgs/lstm_layers_analysis.eps}
     }
@@ -382,35 +473,35 @@ In this evaluation, we include the history of the ego-vehicle's information to t
     \label{fig:lstm_units_layers_analysis}
 \end{figure}
 
-Figure~\ref{fig:lstm_input_data_analysis} depicts the \ac{RMSE} ($y$-axis) for each input data setup ($x$-axis) at each prediction time step.
+Figure~\ref{fig:lstm_input_data_analysis} depicts the \ac{RMSE} ($y$-axis) for each input data setup given in table ~\ref{tab:input_data_setups} on the $x$-axis at each prediction time step.
 Each tick on the $x$-axis corresponds to one input setup, whereas each group of \num{5} ticks from left to right correspond to one fixed setup for the target vehicle.
-The left group contains only the default data about the target vehicle, the middle group contains the history of the target vehicle's velocity and the right group contains additionally the history of the target vehicle's acceleration.
-The ticks within one group correspond to one setting for the ego-vehicle, whereas again from left to right the amount of available information increases.
-Therefore, the rightmost tick contains information about the ego-vehicles acceleration, distance to the lane border as well as the curvature of the current lane and its current steering values (information is added in this order from left to right). 
-In other words, the further we go from left to right on the $x$-axis in fig~\ref{fig:lstm_input_data_analysis}, the more information is available to the system.
+The left group contains only the default data about the target vehicle (setups \num{1}-\num{5} in table~\ref{tab:input_data_setups}), the middle group contains the history of the target vehicle's velocity (setups \num{6}-\num{10} in table~\ref{tab:input_data_setups}) and the right group contains additionally the history of the target vehicle's acceleration (setups \num{11}-\num{15} in table~\ref{tab:input_data_setups}).
+Each tick within one group corresponds to one setting for the ego-vehicle, whereas again from left to right the amount of available information increases.
+Therefore, the rightmost tick contains information about the ego-vehicles acceleration, distance to the lane border as well as the curvature of the current lane and its current steering values (setup \num{15} in table~\ref{tab:input_data_setups}). 
 We observe that adding more information about both, the ego- and target-vehicle, indeed improves prediction accuracy significantly: the difference between the best and worst setting is more than \SI{1}{\meter} in $x$-direction and more than \SI{0.1}{\meter} in $y$-direction.
-For both dimensions, the setting using all available information outperforms the simpler setups.
+For both dimensions, setup \num{15} using all available information outperforms the simpler setups.
 However, there are some interesting peculiarities visible in this analysis that are worth noting.
-For instance, the input information improving performance in $x$-direction the most appears to be the target vehicle's velocity. 
+For instance, the input information improving performance in $x$-direction the most appears to be the target vehicle's velocity (setups \num{1}-\num{5} vs setups \num{6}-\num{10}). 
 Furthermore, the target vehicle's acceleration does not yield further significant improvements given its velocity is available.
-Interestingly, the setting using only the target vehicle's velocity as additional information is closely behind the best setting in $x$-direction.
-Furthermore, the performance boost of the setting using all available information (the rightmost tick) over the prior setting comes from the ego-vehicle's steering, which only appears when its acceleration information is also available.
-For the $y$-direction we observe similar trends in that the target vehicle's acceleration does not yield significant improvements over its velocity.
-However, here the information about the ego-vehicle's distance to the lane borders appears to be the input that gives the most significant improvements in $y$-direction.
-That makes sense, as these inputs encode information about the ego-vehicle's motion in $y$-direction such as lane changes.
-As the setting using all available information (the rightmost tick in fig.~\ref{fig:lstm_input_data_analysis}) is by far outperforming all other settings in $x$-direction and is on par with the best in $y$-direction, we use this data-setup for further analyzing the hyperparameters of the \ac{LSTM}-model.
+Interestingly, setup \num{6} using only the target vehicle's velocity as additional information is closely behind the best setting in $x$-direction.
+Furthermore, the performance boost of the setting using all available information (setup \num{15} or the rightmost tick) over the prior setting comes from the ego-vehicle's steering, which only appears when its acceleration information is also available.
+For the $y$-direction, we observe similar trends in that the target vehicle's acceleration does not yield significant improvements if its velocity is already given.
+Here however, the information about the ego-vehicle's distance to the lane borders appears to be the input that gives the most significant improvements in $y$-direction (setup \num{2} vs \num{3}, setup \num{7} vs \num{8} and setup \num{12} vs \num{13}).
+That makes sense, since these inputs encode information about the ego-vehicle's motion in $y$-direction when, for instance, performing lane changes.
+As setup \num{15} using all available information (the rightmost tick in fig.~\ref{fig:lstm_input_data_analysis}) is by far outperforming all other settings in $x$-direction and is on par with the best in $y$-direction, we use this data-setup for further analyzing the hyperparameters of the \ac{LSTM}-model.
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{imgs/lstm_layers_epochs_analysis.eps}
+  \caption{Analysis of the \ac{RMSE} varying the number of layers and epochs of our \ac{LSTM} model trained on the \emph{On-board} data-set. The left column shows the \ac{RMSE} of a model with only one layer trained for \num{5}, \num{20} and \num{50} epochs, while the right column shows the \ac{RMSE} of a model with \num{10} layers trained for \num{5}, \num{20} and \num{50} epochs.}
+  \label{fig:lstm_layers_epochs_analysis}
+\end{figure}
 
 We continue our hyperparameter analysis by inspecting the number of dimensions within the \ac{LSTM} cells.
 In our initial experiment, we used \num{80} dimensions in each of the \ac{LSTM} encoder and decoder cell.
 Here, we investigate if adding more dimensions improves the models' prediction performance.
 Again, we train the model for \num{8} epochs.
 Figure~\ref{subfig:lstm_units_analysis} depicts the \ac{RMSE} for models with \num{80}, \num{150}, \num{200} and \num{500} dimensions in the \ac{LSTM} cells.
-\begin{figure}[t!]
-  \centering
-  \includegraphics[width=0.9\textwidth]{imgs/lstm_layers_epochs_analysis.eps}
-  \caption{Analysis of the \ac{RMSE} varying the number of layers and epochs of our \ac{LSTM} model trained on the \emph{On-board} data-set. The upper row shows the \ac{RMSE} of a model with only one layer trained for \num{5}, \num{20} and \num{50} epochs, the lower row shows the \ac{RMSE} of a model with \num{10} layers trained for \num{5}, \num{20} and \num{50} epochs.}
-  \label{fig:lstm_layers_epochs_analysis}
-\end{figure}
 We observe that the model with \num{150} dimensions performs best in $x$-direction whereas all models show comparable performance in $y$-direction.
 However, increasing the number of dimensions beyond \num{150} per \ac{LSTM} does not improve the models' accuracy but rather deteriorates the performance.
 Therefore, we fix the number of dimensions within the \ac{LSTM} cells to \num{150} for further investigation.
@@ -423,18 +514,20 @@ This analysis shows the model using only one layer performs best and that increa
 On the contrary, more layers lead to worse accuracy in both dimensions.
 However, we trained all models for a fixed number of \num{8} epochs whereas deeper network architectures might demand a longer training process.
 
+
+In the next step, we therefore analyze the number of layers and number of epochs jointly to investigate if larger network architectures trained for more epochs improve prediction performance.
+Figure~\ref{fig:lstm_layers_epochs_analysis} visualizes the results of this experiment: the left column depicts the \ac{RMSE} of a model with only one layer trained for \num{5}, \num{20} and \num{50} epochs, whereas the right column shows the \ac{RMSE} of a model with \num{10} layers trained for \num{5}, \num{20} and \num{50} epochs. 
+We observe that training a deeper model for more epochs does improve its accuracy.
+However, if we compare the left and right plots in fig.~\ref{fig:lstm_layers_epochs_analysis}, we also find that by training a model with \num{10} layers for \num{50} epochs we only achieve the accuracy of the simpler single-layer \ac{LSTM} model trained for \num{5} epochs.
+We conclude, that using more layers even with a longer training process (i.e., increased number of epochs) does not lead to improved prediction results.
+Thus, a \ac{LSTM} model with one encoder and decoder cell each is not only the simplest network architecture but also the best in terms of accuracy and time needed for training.
+
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.95\textwidth]{imgs/rmse_dev_over_epochs.eps}
-  \caption{Development of the \ac{RMSE} at every prediction time step during the training process of the \ac{LSTM} model using the \ac{SPA}-power-with-ego vector representation after each epoch on the training (upper row) and validation part (lower row) of the \emph{On-board} data-set. One observes comparable trends on both training and validation set and that the \ac{RMSE} does not significantly decrease after \num{10} epochs.}\label{fig:rmse_dev_over_epochs}
+  \caption{Development of the \ac{RMSE} at every prediction time step during the training process of the \ac{LSTM} \acs{SPA} \num{3} model each epoch on the training (left column) and validation part (right column) of the \emph{On-board} data-set.
+  One observes comparable trends on both training and validation set and that the \ac{RMSE} does not significantly decrease after \num{10} epochs.}\label{fig:rmse_dev_over_epochs}
 \end{figure}
-
-In the next step, we therefore analyze the number of layers and number of epochs jointly to investigate if larger network architectures trained for more epochs improve prediction performance.
-Figure~\ref{fig:lstm_layers_epochs_analysis} visualizes the results of this experiment: the upper row depicts the \ac{RMSE} of a model with only one layer trained for \num{5}, \num{20} and \num{50} epochs, whereas the lower row shows the \ac{RMSE} of a model with \num{10} layers trained for \num{5}, \num{20} and \num{50} epochs. 
-We observe that training a deeper model for more epochs does improve its accuracy.
-However, if we compare the upper and lower row in fig.~\ref{fig:lstm_layers_epochs_analysis}, we also find that by training a model with \num{10} layers for \num{50} epochs we only achieve the accuracy of the simpler single-layer \ac{LSTM} model trained for \num{5} epochs.
-We conclude, that using more layers even with a longer training process (i.e., increased number of epochs) does not lead to improved prediction results.
-Thus, a \ac{LSTM} model with one encoder and decoder cell each is not only the simplest network architecture but also the best in terms of accuracy and time needed for training.
 
 We briefly summarize the findings of this section and fix the following set of parameters for subsequent sections: we use a \ac{LSTM} model with one encoder and one decoder cell with \num{150} hidden dimensions each.
 
@@ -450,8 +543,10 @@ As there is no ego-vehicle present in the \emph{\ac{NGSIM}} data-set $D_2$, we u
 For the \emph{On-board} data-set $D_1$, we use the ego-vehicle's predicted acceleration and the estimated curvature of the ego-vehicle's current lane.
 Although this is future information, we argue that it is solely about the ego-vehicle, which we expect to be available at the time the prediction is to happen.
 We assume, that an automated vehicle, in order to safely navigate, will have an estimation of the future lane curvature as well as the acceleration values of its own planned trajectory.
-We trained our models for \num{10} epochs as we found that training for more epochs up until \num{20} does not significantly improve the models' performance (see also the results of the hyperparameter analysis shown in the previous section).
-Figure~\ref{fig:rmse_dev_over_epochs} visualizes this result by showing the development of the \ac{RMSE} of the \ac{LSTM} model using the \ac{SPA}-power-with-ego vector representation $(\mathbf{S}_{t}^{ego})_{t_0}^{t_N}$ as input for the training (figure~\ref{fig:rmse_dev_over_epochs} upper row) and validation part (figure~\ref{fig:rmse_dev_over_epochs} lower row) of the \emph{On-board} data-set $D_1$.
+Furthermore, we employed early stopping, that is, we trained our models for \num{10} epochs as we found that the models' performance stagnate on both, training and validation data sets, when training for up until a total \num{20} epochs.
+Figure~\ref{fig:rmse_dev_over_epochs} visualizes this result by showing the development of the \ac{RMSE} of the \ac{LSTM} \acs{SPA} \num{3} model using the \ac{SPA}-power-with-ego vector representation $(\mathbf{S}_{t}^{ego})_{t_0}^{t_N}$ as input for the training (figure~\ref{fig:rmse_dev_over_epochs} left column) and validation part (figure~\ref{fig:rmse_dev_over_epochs} right column) of the \emph{On-board} data-set $D_1$.
+On the $y$-axis of each sub-figure, we have the \ac{RMSE} while the $x$-axis from left to right depicts the result after each epoch during the training process.
+Each colored line illustrates the \ac{RMSE} of the model for one particular prediction time step while all points with the same value on the $x$-axis depict the model's performance after the respective epoch during the training process.
 
 \subsubsection{Evaluation}%
 \label{ssubsec:evaluation_lstms}
@@ -459,11 +554,11 @@ Figure~\ref{fig:rmse_dev_over_epochs} visualizes this result by showing the deve
 \begin{figure}[t!]
 	\centering
     \subfloat[\label{subfig:lstm_rmse_all_on_board}]{%
-        \includegraphics[width=\columnwidth]{imgs/rmse_large_all.eps}
+        \includegraphics[width=0.5\columnwidth]{imgs/rmse_large_all.eps}
     }
-    \vspace{-0.3cm}
+    %\vspace{-0.3cm}
     \subfloat[\label{subfig:lstm_rmse_subset_on_board}]{%
-        \includegraphics[width=\columnwidth]{imgs/rmse_large_subset.eps}
+        \includegraphics[width=0.5\columnwidth]{imgs/rmse_large_subset.eps}
     }
     \caption{Visualization of the \ac{RMSE} of all \ac{LSTM} models on the \emph{On-board} data-set:~\protect\subref{subfig:lstm_rmse_all_on_board} shows the complete validation set $V_1 \subset D_1$~\protect\subref{subfig:lstm_rmse_subset_on_board} shows the subset of situations with at least \num{3} other vehicles present and distance between the target and ego vehicle lower than  \SI{20}{\meter} and between target and closest other vehicle lower than \SI{10}{\meter}.}\label{fig:rmse_on_board_all}
 \end{figure}
@@ -471,71 +566,74 @@ Figure~\ref{fig:rmse_dev_over_epochs} visualizes this result by showing the deve
 Figure~\ref{fig:rmse_on_board_all} visualizes the \ac{RMSE} of all \ac{LSTM}-based models on the validation-set $V_1 \subset D_1$ of the \emph{On-board} data-set using \num{512}-dimensional vectors.
 Figure~\ref{fig:rmse_on_board_all} \textbf{(A)} shows the performance on the complete validation-set, whereas figure~\ref{fig:rmse_on_board_all} \textbf{(B)} depicts only situations with at least \num{3} other vehicles present, the distance between the target and the ego-vehicle being lower than \SI{20}{\meter} and the distance between the target and the closest other vehicle being less than \SI{10}{\meter}.
 We observe that all approaches yield comparable results with notable differences in certain situations.
-Although the \ac{SPA}-power encoding schemes tends to perform worst in $x$-direction, we observe that they perform better in $y$-direction in crowded situations with closely driving vehicles with the \ac{SPA}-power-with-ego representation ranking best along the numerical encoding scheme.
+Although the models employing the \ac{SPA}-power encoding schemes tend to perform worst in $x$-direction, we observe that they perform better in $y$-direction in crowded situations with closely driving vehicles with the \acs{LSTM} \acs{SPA} \num{3} model ranking best along the \acs{LSTM} numerical model.
 
 \begin{figure}[t!]
   \centering
   \includegraphics[width=0.95\textwidth]{imgs/histogram_on_board_revised.eps}
-  \caption{Metric evaluation specifying situations where the \ac{LSTM} model using \ac{SPA}-power-with-ego representation outperforms all other approaches regarding the \acs{RMSE} in $y$-direction on the \emph{On-board} data-set $D_1$.}\label{fig:histograms_on_board}
+  \caption{Metric evaluation specifying situations where the \ac{LSTM} \acs{SPA} \num{3} model outperforms all other approaches regarding the \acs{RMSE} in $y$-direction on the \emph{On-board} data-set $D_1$.}\label{fig:histograms_on_board}
 \end{figure}
 
-To further investigate this result, we evaluated certain metrics, chosen to characterize crowded and potentially dangerous situations, for items in the validation-set, where the \ac{SPA}-power-with-ego approach outperforms all other approaches with respect to the \ac{RMSE} in $y$-direction (see figure~\ref{fig:histograms_on_board}).
-We observe that the ratio of situations, where the distance between the target and the ego vehicle and/or the closest other object being small is significantly higher when the \ac{SPA}-power-with-ego representation outperforms all other approaches.
-Furthermore, the ratio of situations with at least \num{3} other vehicles present is also higher.
+To further investigate this result, we evaluated certain metrics, chosen to characterize crowded and potentially dangerous situations, for items in the validation-set, where the \acs{LSTM} \acs{SPA} \num{3} model outperforms all other approaches with respect to the \ac{RMSE} in $y$-direction (see figure~\ref{fig:histograms_on_board}).
+We observe that the ratio of situations, where the distance between the target and the ego vehicle and/or the closest other object being small is significantly higher when the \ac{LSTM} \ac{SPA} \num{3} model outperforms all other approaches.
+For samples where the \ac{LSTM} \ac{SPA} \num{3} model performs best, the ratio of samples with a distance less than \SI{20}{\meter} between the target- and ego-vehicle is \SI{50.5}{\percent} higher compared to samples where any of the other models performs best.
+For distances less than \SI{20}{\meter} between the target vehicle and the closest other vehicle, the ratio is still \SI{11.4}{\percent} higher when the \ac{LSTM} \ac{SPA} \num{3} model performs best.
+Finally, the ratio of situations with at least \num{3} other vehicles present is also \SI{7.8}{\percent} higher compared to samples where any other model performs best.
 Thus, we consider these characteristics suitable candidates to serve as context variables on which our online-learning mixture-of-experts system could base its weighting decision on.
+
 \begin{figure}[t!]
 	\centering
     \subfloat[\label{subfig:lstm_rmse_512_ngsim}]{%
-        \includegraphics[width=\columnwidth]{imgs/rmse_ngsim_512_10epochs.eps}
+        \includegraphics[width=0.5\columnwidth]{imgs/rmse_ngsim_512_10epochs.eps}
     }
-    \vspace{-0.3cm}
     \subfloat[\label{subfig:lstm_rmse_1024_ngsim}]{%
-        \includegraphics[width=\columnwidth]{imgs/rmse_ngsim_1024_10epochs.eps}
+        \includegraphics[width=0.5\columnwidth]{imgs/rmse_ngsim_1024_10epochs.eps}
     }
 
     \caption{Visualization of the \ac{RMSE} of all \ac{LSTM} models on the \emph{\ac{NGSIM}} validation set $V_2 \subset D_2$ using~\protect\subref{subfig:lstm_rmse_512_ngsim} vectors of dimension $512$ for the \ac{SPA}-based models and~\protect\subref{subfig:lstm_rmse_1024_ngsim} using vectors of dimension $1024$ for the \ac{SPA}-based models.}\label{fig:rmse_ngsim_all}
 
 \end{figure}
 
-Figure~\ref{fig:rmse_ngsim_all} visualizes the \ac{RMSE} of all \ac{LSTM}-based models on the validation-set $V_2 \subset D_2$ of the \emph{\ac{NGSIM}} data-set for \num{512}-dimensional vectors (figure~\ref{fig:rmse_ngsim_all} \textbf{(A)}) and for \num{1024}-dimensional vectors (figure~\ref{fig:rmse_ngsim_all} \textbf{(B)}).
-We observe, that all \ac{LSTM} models achieve a very similar performance (almost identical in $y$-direction) with the \ac{SPA}-power representation achieving the best performance in $x$-direction being on par with the numerical encoding for \num{512}-dimensional vectors.
-For \num{1024}-dimensional vectors, the \ac{LSTM} model using the \ac{SPA}-power encoding scheme even slightly outperforms all other approaches in $x$-direction, whereas we do not observe significant improvements in $y$-direction.
+Figure~\ref{fig:rmse_ngsim_all} visualizes the \ac{RMSE} of all \ac{LSTM}-based models on the validation-set $V_2 \subset D_2$ of the \emph{\ac{NGSIM}} data-set for \num{512}-dimensional vectors (figure~\ref{subfig:lstm_rmse_512_ngsim}) and for \num{1024}-dimensional vectors (figure~\ref{subfig:lstm_rmse_1024_ngsim}).
+We observe, that all \ac{LSTM} models achieve a very similar performance (almost identical in $y$-direction) with \ac{LSTM} \ac{SPA} \num{1} achieving the best performance in $x$-direction being on par with the numerical encoding for \num{512}-dimensional vectors.
+For \num{1024}-dimensional vectors, \ac{LSTM} \ac{SPA} \num{1} even slightly outperforms all other approaches in $x$-direction, whereas we do not observe significant improvements in $y$-direction.
 
 \paragraph{Evaluation of models trained on data set variations}%
 \label{par:evaluation_of_models_trained_on_data_set_variations}
 
 \begin{figure}[th!]
     \centering
-    \subfloat[\label{subfig:rmse_large_all} Trained and evaluated on complete data set]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_all.eps}
+    \subfloat[\label{subfig:rmse_large_all}Trained and evaluated on complete data set]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_trained_on_all.eps}
     }
-    \subfloat[\label{subfig:rmse_large_all_trained_on_lc} Trained on lane change samples only, evaluated on complete data set]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_all_trained_on_lc.png}
+    \subfloat[\label{subfig:rmse_large_all_trained_on_lc}Trained on lane change samples, evaluated on complete data set]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_trained_on_lc.eps}
+    }
+    \subfloat[\label{subfig:rmse_large_all_lc_only}Trained on complete data set, evaluated on lane changes samples]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_trained_on_all_evaluated_on_lc.eps}
+    }
+    \subfloat[\label{subfig:rmse_large_all_lc_only_trained_on_lc}Trained and evaluated on lane change samples ]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_trained_on_lc_evaluated_on_lc.eps}
     }\\
-    \subfloat[\label{subfig:rmse_large_subset} Trained on complete data set, evaluated on crowded situations]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_subset.eps}
+    \subfloat[\label{subfig:rmse_large_subset}Trained on complete data set, evaluated on crowded situations]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_trained_on_all.eps}
     }
-    \subfloat[\label{subfig:rmse_large_subset_trained_on_lc} Trained on lane change samples only, evaluated on crowded situations]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_subset_trained_on_lc.png}
-    }\\
-    \subfloat[\label{subfig:rmse_large_all_lc_only} Trained on complete data set, evaluated on lane changes samples only]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_all_lc_only.png}
+    \subfloat[\label{subfig:rmse_large_subset_trained_on_lc}Trained on lane change samples, evaluated on crowded situations]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_trained_on_lc.eps}
     }
-    \subfloat[\label{subfig:rmse_large_all_lc_only_trained_on_lc} Trained on lane change samples only, evaluated on lane change samples only]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_all_lc_only_trained_on_lc.png}
-    }\\
-    \subfloat[\label{subfig:rmse_large_subset_lc_only} Trained on complete data set, evaluated on crowded situations with lane changes only]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_subset_lc_only.png}
+    \subfloat[\label{subfig:rmse_large_subset_lc_only}Trained on complete data set, evaluated on crowded situations with lane changes]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_trained_on_all_evaluated_on_lc.eps}
     }
-    \subfloat[\label{subfig:rmse_large_subset_lc_only_trained_on_lc} Trained on lane change samples only, evaluated on crowded situations with lane changes only]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_subset_lc_only_trained_on_lc.png}
+    \subfloat[\label{subfig:rmse_large_subset_lc_only_trained_on_lc}Trained on lane change samples, evaluated on crowded situations with lane changes]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_trained_on_lc_evaluated_on_lc.eps}
     }
     \caption{Visualization of the \ac{RMSE} performance of our \ac{LSTM} models for different data setups.
-    The left column of figures shows the \ac{RMSE} for models trained on the complete data (figures~\protect\subref{subfig:rmse_large_all},~\protect\subref{subfig:rmse_large_subset},~\protect\subref{subfig:rmse_large_all_lc_only} and~\protect\subref{subfig:rmse_large_subset_lc_only}) set while the right columns shows the same models evaluated on the same samples but trained on the samples including a target vehicle lane change only (figures~\protect\subref{subfig:rmse_large_all_trained_on_lc},~\protect\subref{subfig:rmse_large_subset_trained_on_lc},~\protect\subref{subfig:rmse_large_all_lc_only_trained_on_lc},~\protect\subref{subfig:rmse_large_subset_lc_only_trained_on_lc}).}
+    Figures~\protect\subref{subfig:rmse_large_all},~\protect\subref{subfig:rmse_large_all_lc_only},~\protect\subref{subfig:rmse_large_subset} and~\protect\subref{subfig:rmse_large_subset_lc_only} show the \ac{RMSE} for models trained on the complete data set, while
+figures~\protect\subref{subfig:rmse_large_all_trained_on_lc},~\protect\subref{subfig:rmse_large_all_lc_only_trained_on_lc},~\protect\subref{subfig:rmse_large_subset_trained_on_lc},~\protect\subref{subfig:rmse_large_subset_lc_only_trained_on_lc} show the same models evaluated on the same samples but trained only on the samples including a target vehicle lane change.}
     \label{fig:rmse_on_board_training_data_variation}
 \end{figure}
 
-In section~\ref{subsec:data_set_peculiarities}, we have already seen that our prediction models using neural network have to deal with imbalanced data sets containing significantly more straight driving than lane changes performed by the target vehicle.
+In section~\ref{subsec:data_set_peculiarities}, we have already seen that our prediction models using neural networks have to deal with imbalanced data sets containing significantly more straight driving than lane changes performed by the target vehicle.
 Hence, training any learning system on all the samples of both our data sets will expose the system to a significantly higher amount of data, in which most likely already a simple linear prediction model performs reasonably well. 
 In this section, we therefore analyze the influence of the training data set on our \ac{LSTM} models and if there are significant differences in the performance of model trained on the complete data sets and on subsets consisting only of such samples that contain a lane change of the target vehicle.
 We conduct this analysis on the \emph{On-board} data set only.
@@ -543,35 +641,36 @@ Figure~\ref{fig:rmse_on_board_all} showed the performance of our \ac{LSTM}-based
 Here, we train models with the exact same neural network architectures and encoding schemes of the input just on different data sets, namely the subset of samples containing a lane change performed by the target vehicle.
 We consider both types of target vehicle lane changes performed during the trajectory history used as input to the models as well as lane changes performed in the future trajectory to be predicted.
 Figure~\ref{fig:rmse_on_board_training_data_variation} shows a comparison of different setups regarding training and evaluation data for our \ac{LSTM}-based trajectory prediction models.
-We also keep the simple linear prediction model based on a constant velocity assumption as reference in the figures, since it is not a data-driven learning model and as invariant under the changes of the training data.
-The left column of sub-figures shows the \ac{RMSE} for models trained on the complete data (figures~\ref{subfig:rmse_large_all},~\ref{subfig:rmse_large_subset},~\ref{subfig:rmse_large_all_lc_only} and~\ref{subfig:rmse_large_subset_lc_only}) set while the right columns shows the same models evaluated on the same samples but trained on the samples including a target vehicle lane change only (figures~\ref{subfig:rmse_large_all_trained_on_lc},~\ref{subfig:rmse_large_subset_trained_on_lc},~\ref{subfig:rmse_large_all_lc_only_trained_on_lc},~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc}).
-On the other hand, the first four sub-figures (figures~\ref{subfig:rmse_large_all} -~\ref{subfig:rmse_large_subset_trained_on_lc}) illustrates the performance of the models trained on either the complete data set or on only the lane changes on all data samples, while the last four sub-figures (figures~\ref{subfig:rmse_large_all_lc_only} -~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc}) show the performance of the models trained on either the complete data set or on only the lane changes only on data samples containing a target vehicle lane change.
+We also keep the simple linear prediction model based on a constant velocity assumption as reference in the figures, since it is not a data-driven learning model and as such invariant under the changes of the training data.
+Figures figures~\ref{subfig:rmse_large_all},~\ref{subfig:rmse_large_all_lc_only},~\ref{subfig:rmse_large_subset} and~\ref{subfig:rmse_large_subset_lc_only} show the \ac{RMSE} for models trained on the complete data set while figures~\ref{subfig:rmse_large_all_trained_on_lc},~\ref{subfig:rmse_large_all_lc_only_trained_on_lc},~\ref{subfig:rmse_large_subset_trained_on_lc} and~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc} show the same models evaluated on the same samples but trained
+only on data samples including a target vehicle lane change.
+On the other hand, the upper row of figures~\ref{subfig:rmse_large_all} -~\ref{subfig:rmse_large_subset_trained_on_lc} illustrates the performance of the models trained on either the complete data set or on only the lane changes on all data samples, while the lower row of figures~\ref{subfig:rmse_large_all_lc_only} -~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc} show the performance of the models trained on either the complete data set or on only the lane changes only on data samples containing a target vehicle lane change.
 
-\begin{figure}[th!]
+\begin{figure}[t!]
     \centering
-    \subfloat[\label{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all} \ac{SPA}-based models trained on all samples vs. lane changes only, evaluated on complete data set]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all.png}
+    \subfloat[\label{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all}All samples]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all.eps}
     }
-    \subfloat[\label{subfig:rmse_large_all_lc_only_spa_power_trained_on_lc_vs_trained_on_all} \ac{SPA}-based models trained on all samples vs. lane changes only, evaluated on lane change samples only]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_all_lc_only_spa_power_trained_on_lc_vs_trained_on_all.png}
+    \subfloat[\label{subfig:rmse_large_all_lc_only_spa_power_trained_on_lc_vs_trained_on_all}Lane changes]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_lc_only_spa_power_trained_on_lc_vs_trained_on_all.eps}
+    }
+    \subfloat[\label{subfig:rmse_large_subset_spa_power_trained_on_lc_vs_trained_on_all}Crowded]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_spa_power_trained_on_lc_vs_trained_on_all.eps}
+    }
+    \subfloat[\label{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all}Crowded lane changes]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all.eps}
     }\\
-    \subfloat[\label{subfig:rmse_large_subset_spa_power_trained_on_lc_vs_trained_on_all} \ac{SPA}-based models trained on all samples vs. lane changes only, evaluated on crowded situations]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_subset_spa_power_trained_on_lc_vs_trained_on_all.png}
+    \subfloat[\label{subfig:rmse_large_all_numerical_trained_on_lc_vs_trained_on_all}All samples]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_numerical_trained_on_lc_vs_trained_on_all.eps}
     }
-    \subfloat[\label{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all} \ac{SPA}-based models trained on all samples vs. lane changes only, evaluated on crowded situations with lane changes only]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all.png}
-    }\\
-    \subfloat[\label{subfig:rmse_large_all_numerical_trained_on_lc_vs_trained_on_all} Numerical models trained on all samples vs. lane changes only, evaluated on complete data set]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_all_numerical_trained_on_lc_vs_trained_on_all.png}
+    \subfloat[\label{subfig:rmse_large_all_lc_only_numerical_trained_on_lc_vs_trained_on_all}Lane changes]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_lc_only_numerical_trained_on_lc_vs_trained_on_all.eps}
     }
-    \subfloat[\label{subfig:rmse_large_all_lc_only_numerical_trained_on_lc_vs_trained_on_all} Numerical models trained on all samples vs. lane changes only, evaluated on lane change samples only]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_all_lc_only_numerical_trained_on_lc_vs_trained_on_all.png}
-    }\\
-    \subfloat[\label{subfig:rmse_large_subset_numerical_trained_on_lc_vs_trained_on_all} Numerical models trained on all samples vs. lane changes only, evaluated on crowded situations]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_subset_numerical_trained_on_lc_vs_trained_on_all.png}
+    \subfloat[\label{subfig:rmse_large_subset_numerical_trained_on_lc_vs_trained_on_all}Crowded]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_numerical_trained_on_lc_vs_trained_on_all.eps}
     }
-    \subfloat[\label{subfig:rmse_large_subset_lc_only_numerical_trained_on_lc_vs_trained_on_all} Numerical models trained on all samples vs. lane changes only, evaluated on crowded situations with lane changes only]{%
-        \includegraphics[width=0.5\linewidth]{imgs/rmse_large_subset_lc_only_numerical_trained_on_lc_vs_trained_on_all.png}
+    \subfloat[\label{subfig:rmse_large_subset_lc_only_numerical_trained_on_lc_vs_trained_on_all}Crowded lane changes]{%
+        \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_lc_only_numerical_trained_on_lc_vs_trained_on_all.eps}
     }
     \caption{Visualization of the changing \ac{RMSE} performance of particular prediction models depending on the data they have been trained on.
         The first four figures~\protect\subref{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all} -~\protect\subref{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all} illustrate the difference between the \ac{LSTM} models employing the \ac{SPA}-power encoding when changing their training data, while the last four figures ~\protect\subref{subfig:rmse_large_all_numerical_trained_on_lc_vs_trained_on_all} -
@@ -580,19 +679,20 @@ On the other hand, the first four sub-figures (figures~\ref{subfig:rmse_large_al
     \label{fig:rmse_on_board_training_all_vs_training_on_lc_only}
 \end{figure}
 
-We observe that the models that have been trained only on the samples containing a lane change performed by the target vehicle tend to achieve worse results than the models trained on the complete data set, when being evaluated on the entirety of all data samples (figures~\ref{subfig:rmse_large_all},~\ref{subfig:rmse_large_subset},~\ref{subfig:rmse_large_all_lc_only} and~\ref{subfig:rmse_large_subset_lc_only}).
-Interestingly, the performance of the models based on the convolutive power encoding scheme deteriorates more significantly compared to the other data-driven models as well as the simple linear predictor, especially in lateral ($y$) direction.
+We observe that the models that have been trained only on samples containing a lane change performed by the target vehicle tend to achieve worse results than the models trained on the complete data set, when being evaluated on the entirety of all data samples (figures~\ref{subfig:rmse_large_all},~\ref{subfig:rmse_large_subset},~\ref{subfig:rmse_large_all_lc_only} and~\ref{subfig:rmse_large_subset_lc_only}).
+Interestingly, the performance of the models based on the convolutive power encoding scheme (\acs{LSTM} \acs{SPA} \num{1} and \num{3}) deteriorates more significantly compared to the other data-driven models, especially in lateral ($y$) direction.
 However, if we evaluate the same models only on the samples containing a target vehicle lane change, their performance changes significantly (figures~\ref{subfig:rmse_large_all_lc_only} -~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc}).
-Recapitulating the findings of section~\ref{subsec:data_set_peculiarities} that lane changes influence the lateral ($y$) position values more severely than the longitudinal ($x$) position compared to straight driving samples, the performance difference between the models trained on lane changes only and the models trained on all samples, as we would expect, is also not that significant in longitudinal direction.
+We recapitulate the findings of section~\ref{subsec:data_set_peculiarities} that lane changes influence the lateral ($y$) position values more severely than the longitudinal ($x$) position compared to straight driving samples.
+Therefore, the performance difference between the models trained on lane changes only and models trained on the complete data set, as we would expect, is also not that significant in longitudinal direction.
 Considering the lateral ($y$) direction however, we observe a significant change between both model and evaluation variants.
-If the models are trained on lane change samples only, the \ac{LSTM}-models employing the \ac{SPA}-based encoding schemes clearly outperform all other models in lateral direction when evaluated only on the data samples containing a lane change while their performance in longitudinal direction does not change significantly compared to the models trained on the complete data set.
+If the models are trained only on lane change samples, the \ac{LSTM} \acs{SPA} \num{1} and \num{3} models outperform all other models in lateral direction when evaluated only on the data samples containing a lane change while their performance in longitudinal direction does not change significantly compared to the models trained on the complete data set.
 
 So far, we have only compared either all models trained on the complete data set or all models trained only on the lane change samples.
 However, we are also interested in how the performance for particular models changes when modifying the training data set.
-Figure~\ref{fig:rmse_on_board_training_all_vs_training_on_lc_only} shows a comparison of the \ac{LSTM}-based models using the convolutive power encoding scheme when modifying the training data for the \ac{LSTM} models using the \ac{SPA}-power encoding scheme (figures ~\ref{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all} - ~\ref{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all}) as well as the numerical \acp{LSTM} (figures
+Figure~\ref{fig:rmse_on_board_training_all_vs_training_on_lc_only} shows a comparison of the \ac{LSTM}-based models when modifying the training data for the \ac{LSTM} \acs{SPA} \num{3} model (figures ~\ref{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all} - ~\ref{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all}) as well as the \acs{LSTM} numerical model (figures
 ~\ref{subfig:rmse_large_all_numerical_trained_on_lc_vs_trained_on_all} -~\ref{subfig:rmse_large_subset_lc_only_numerical_trained_on_lc_vs_trained_on_all}).
-In this direct comparison, we observe that there is no significant difference in the performance of the numerical \ac{LSTM} models trained on different samples for both evaluation set containing either the complete data set or only the target lane changes.
-For the \ac{LSTM} models employing the convolutive power representation of the input data however, there are significant improvements visible for the model trained on the lane change samples only when compared to the model trained on all data samples, when evaluated on the lane changes performed by the target vehicle.
+In this direct comparison, we observe that there is no significant difference in the performance of the numerical \ac{LSTM} models trained on different samples for both evaluation sets containing either the complete data set or only the target vehicle lane changes.
+For the \ac{LSTM} \acs{SPA} \num{3} model however, we observe significant improvements for the model trained on the lane change samples when evaluated on the lane changes performed by the target vehicle the model trained on all data samples.
 This result indicates that either the numerical model trained on all samples generalizes sufficiently well to all possible situations compared to the convolutive power based model.
 However, we have already seen, that both trajectory data sets show a significant imbalance towards straight driving compared to lane change maneuvers (cf.\ section~\ref{subsec:data_set_peculiarities}), which is the same for all models.
 On the other hand, the results shown here could also hint, that the convolutive power model encapsulating the prior motion not only of the target vehicle but also other vehicles in its surroundings is better suited to predict lane change maneuvers given a more balanced data set.
@@ -613,10 +713,10 @@ In this section, we evaluate the simpler, feed-forward neural networks for traje
   \label{fig:nef_num_neurons_analysis}
 \end{figure}
 
-For our \ac{NEF} networks, the main parameter influencing the models' performance is the number of neurons in the learning population (i.e., the hidden layer in terms of traditional neural networks), and the neuron model.
+For our \ac{NEF} networks, the main parameter influencing the models' performance is the number of neurons in the learning population, i.e., the hidden layer in terms of traditional neural networks, as well as the neuron model.
 For simplicity, we use \acs{Nengo}'s rate-variant of the \ac{LIF} neuron model.
 Here, we inspect the number of neurons in the learning population in more detail.
-From the \ac{NEF}-theory \cite{Eliasmith2003}, we know that increasing the number of neurons in a population yields a more accurate representation of the data encoded in the population's activity.
+From the \ac{NEF}-theory \parencite{Eliasmith2003}, we know that increasing the number of neurons in a population yields a more accurate representation of the data encoded in the population's activity.
 Thus, we expect more accurate predictions when increasing the number of neurons.
 Figure~\ref{fig:nef_num_neurons_analysis} shows the \ac{RMSE} of different model instantiations with varying number of neurons, namely \num{1000}, \num{3000}, \num{5000} and \num{8000} neurons.
 We observe that a number of \num{3000} spiking neurons is sufficient and further increasing the number of neurons does not improve the model's prediction accuracy.
@@ -627,10 +727,11 @@ Here, we are only interested to find the best possible parameter setup, whereas 
 \subsubsection{Model training}%
 \label{ssubsec:model_training_nef}
 
-We train two different variants of our simpler \ac{NEF}-models using numerical input as well as the \ac{SPA}-power-with-ego and \ac{SPA}-power encoding for the \emph{On-board} and the \emph{\ac{NGSIM}} data-set respectively.
+We train two different variants of our simpler \ac{NEF}-models using numerical input (\acs{NEF} numerical) as well as the \ac{SPA}-power-with-ego (\acs{NEF} \acs{SPA} \num{1}) and \ac{SPA}-power encoding (\acs{NEF} \acs{SPA} \num{2}) for the \emph{On-board} and the \emph{\ac{NGSIM}} data-set respectively.
 The neural weights are calculated using \acs{Nengo}'s default least-squares-optimization method with the exception, that we calculate the weights over smaller subsets of the input data for computational reasons.
 Here, we adapt the input data such that for the numerical \ac{NEF}-model, we use the vector $(x_{t_{0}}, \ldots, x_{t_{N}}, y_{t_{0}}, \ldots, y_{t_{N}}, v)$ as input with $v$ denoting the instantaneous velocity of the target vehicle.
 For the \ac{SPA}-power encoding schemes, instead of flattening the whole sequence of vectors into one giant single vector, we created a single semantic vector by summing the first, middle and last element of the original vector sequences
+
 \begin{equation}
   \hat{\mathbf{S}} =  \mathbf{S}_{t_0} \oplus \mathbf{S}_{t_{\nicefrac{N}{2}}} \oplus \mathbf{S}_{t_N} = (\hat{s}_0, \ldots, \hat{s}_{D-1}).
 \end{equation}
@@ -645,23 +746,21 @@ To make these simpler models as comparable as possible to the \ac{LSTM} models i
 \begin{figure}[t!]
 	\centering
     \subfloat[\label{subfig:nef_rmse_512_onboard}]{%
-        \includegraphics[width=\columnwidth]{imgs/nef_nets_on_board.eps}
+        \includegraphics[width=0.5\columnwidth]{imgs/rmse_on_board_nef_nets.eps}
     }
-    \vspace{-0.3cm}
     \subfloat[\label{subfig:nef_rmse_1024_ngsim}]{%
-        \includegraphics[width=\columnwidth]{imgs/nef_nets_ngsim.eps}
+        \includegraphics[width=0.5\columnwidth]{imgs/rmse_ngsim_nef_nets.eps}
     }
     \caption{Visualization of the \ac{RMSE} of all \ac{NEF}-network models~\protect\subref{subfig:nef_rmse_512_onboard} on the \emph{On-board} validation set $V_1 \subset D_1$ using \num{512}-dimensional vectors for the \ac{SPA}-power vectors and~\protect\subref{subfig:nef_rmse_1024_ngsim} on the \emph{\ac{NGSIM}} data-set $D_2$ using \num{1024}-dimensional vectors for the \ac{SPA}-power vectors.}\label{fig:rmse_nef_nets}
 
 \end{figure}
 
 Figure~\ref{fig:rmse_nef_nets} visualizes the \ac{RMSE} of our \ac{NEF}-network models on both data-sets.
-The \ac{NEF}-network using the \ac{SPA}-power encoding schemes processes \num{512}-dimensional  for the \emph{On-board} and \num{1024}-dimensional vectors for the \emph{\ac{NGSIM}} data-set.
-For reference, we included the performance of the most relevant \ac{LSTM} models in figure~\ref{fig:rmse_nef_nets} as well.
-We observe that, despite a simpler network architecture and learning algorithm, the \ac{NEF}-networks achieve a performance comparable to the more sophisticated \ac{LSTM} models on both data-sets.
-For the \emph{\ac{NGSIM}} data-set, the \ac{NEF}-network using the \ac{SPA}-power encoding scheme performs on par with its \ac{LSTM} model counterpart.
+The \ac{NEF}-network using the \ac{SPA}-power encoding schemes processes \num{512}-dimensional for the \emph{On-board} (\ac{NEF} \ac{SPA} \num{1}) and \num{1024}-dimensional vectors for the \emph{\ac{NGSIM}} data set (\ac{NEF} \ac{SPA} \num{2}).
+For reference, we included the performance of the most relevant \ac{LSTM} models, namely \ac{LSTM} \ac{SPA} \num{1} and \num{3} for the \emph{\ac{NGSIM}} and \emph{On-board} data set respectively as well as \ac{LSTM} numerical, in Fig.~\ref{fig:rmse_nef_nets} as well.
+We observe that, despite a simpler network architecture and learning algorithm, the \ac{NEF}-networks achieve a performance comparable to the more sophisticated \ac{LSTM} models on both data sets.
+For the \emph{\ac{NGSIM}} data set, the \ac{NEF} \ac{SPA} \num{1} model performs on par with its \ac{LSTM} model counterpart \ac{LSTM} \ac{SPA} \num{3}.
 In this case, the \ac{NEF}-model is not only simpler, but also has access to less information as its input data is a sum of a subset of the input sequence used for the corresponding \ac{LSTM}-model.
-
 
 \subsection{Evaluation of the unsupervised anomaly detection}%
 \label{subsec:evaluation_of_the_unsupervised_anomaly_detection}
@@ -669,16 +768,16 @@ In this case, the \ac{NEF}-model is not only simpler, but also has access to les
 \begin{figure}[t]
     \centering
     \subfloat[\label{subfig:anomalies_on_board_boxplots_distances}]{%
-        \includegraphics[width=0.5\linewidth]{imgs/anomalies_on_board_boxplots_distances.png}
+        \includegraphics[width=0.5\linewidth]{imgs/anomalies_on_board_boxplots_distances.eps}
     }
     \subfloat[\label{subfig:anomalies_on_board_boxplots_other_vehicles}]{%
-        \includegraphics[width=0.5\linewidth]{imgs/anomalies_on_board_boxplots_other_vehicles.png}
+        \includegraphics[width=0.5\linewidth]{imgs/anomalies_on_board_boxplots_other_vehicles.eps}
     }\\
     \subfloat[\label{subfig:anomalies_on_board_histograms_distances}]{%
-        \includegraphics[width=0.5\linewidth]{imgs/anomalies_on_board_histograms_distances.png}
+        \includegraphics[width=0.5\linewidth]{imgs/anomalies_on_board_histograms_distances.eps}
     }
     \subfloat[\label{subfig:anomalies_on_board_histograms_other_vehicles}]{%
-        \includegraphics[width=0.5\linewidth]{imgs/anomalies_on_board_histograms_other_vehicles.png}
+        \includegraphics[width=0.5\linewidth]{imgs/anomalies_on_board_histograms_other_vehicles.eps}
     }
     \caption{Visualization of the results of the autoencoder neural network used for unsupervised anomaly detection on the \emph{On-board} data set.
         The figures show the distribution of certain characteristic values, namely distances between the target and other vehicles (figures~\protect\subref{subfig:anomalies_on_board_boxplots_distances} and~\protect\subref{subfig:anomalies_on_board_histograms_distances}) as well as the number of other vehicles (figures~\protect\subref{subfig:anomalies_on_board_boxplots_other_vehicles} and~\protect\subref{subfig:anomalies_on_board_histograms_other_vehicles}), for situations classified as anomalies and for the complete data set.
@@ -700,6 +799,30 @@ Figure~\ref{fig:anomaly_on_board} visualizes the distribution of these metrics o
 Figure~\ref{subfig:anomalies_on_board_boxplots_distances} shows box plots of the distances between the target and the closest other vehicle (left plot in figure~\ref{subfig:anomalies_on_board_boxplots_distances}) as well the target and the closest other vehicle (right plot in figure~\ref{subfig:anomalies_on_board_boxplots_distances}) while figure~\ref{subfig:anomalies_on_board_histograms_distances} shows the same data, but illustrated as histograms.
 Figure~\ref{subfig:anomalies_on_board_boxplots_other_vehicles} and~\ref{subfig:anomalies_on_board_histograms_other_vehicles} visualize a similar evaluation for the number of other vehicles within a certain distance (left plots), namely \SI{40}{\meter}, and all other vehicles in the scene (right plots).
 
+\begin{figure}[t]
+    \centering
+    \resizebox{.9\textwidth}{!}{%
+        \subfloat[\label{subfig:anomalies_ngsim_boxplot_distance}]{%
+            \includegraphics[height=3cm]{imgs/anomalies_ngsim_boxplot_distance.eps}
+        }
+        \subfloat[\label{subfig:anomalies_ngsim_histogram_distance}]{%
+            \includegraphics[height=3cm]{imgs/anomalies_ngsim_histogram_distance.eps}
+        }
+    }\\
+    \resizebox{.9\textwidth}{!}{%
+        \subfloat[\label{subfig:anomalies_ngsim_boxplot_other_vehicles}]{%
+            \includegraphics[height=3cm]{imgs/anomalies_ngsim_boxplot_other_vehicles.eps}
+        }
+        \subfloat[\label{subfig:anomalies_ngsim_histogram_other_vehicles}]{%
+            \includegraphics[height=3cm]{imgs/anomalies_ngsim_histogram_other_vehicles.eps}
+        }
+    }
+    \caption{Visualization of the results of the autoencoder neural network used for unsupervised anomaly detection on the \emph{\ac{NGSIM}} data set.
+        The figures show the distribution of distances between the target and other vehicles (figures~\protect\subref{subfig:anomalies_ngsim_boxplot_distance} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}) as well as the number of other vehicles (figures~\protect\subref{subfig:anomalies_ngsim_boxplot_other_vehicles} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}), for situations classified as anomalies and for the complete data set.
+    The left figures (figure~\protect\subref{subfig:anomalies_ngsim_boxplot_distance} and~\protect\subref{subfig:anomalies_ngsim_boxplot_other_vehicles}) show box plots to visualize the difference between anomalies and the complete data set, whereas the right figures (figure~\protect\subref{subfig:anomalies_ngsim_histogram_distance} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}) show histograms for a more in-depth visualization of the metrics' distribution.}
+    \label{fig:anomaly_ngsim}
+\end{figure}
+
 We observe a clear difference for both, the evaluation of the distances and the number of other vehicles, between the anomalies detected by our neural network and the complete set of data samples.
 Regarding the distances, the amount of situation with smaller distances from the ego-vehicle and the closest other vehicle to the target is significantly higher for the anomalies than for the complete data set.
 While the mean distance between the target and closest other vehicle is slightly below \SI{20}{\meter} for the complete data set, the mean distance for the anomalies is \SI{10}{\meter} (cf.\ figure~\ref{subfig:anomalies_on_board_boxplots_distances}) with clear concentration below \SIrange{0}{15}{\meter} (cf.\ figure~\ref{subfig:anomalies_on_board_histograms_distances}).
@@ -712,29 +835,6 @@ Looking at the distribution shown in the histograms in figure~\ref{subfig:anomal
 There are no situations with less then \num{3} other vehicles within \SI{40}{\meter} to the target vehicle in the set of anomalies, whereas in this same range fall the majority of samples of the complete data set.
 We observe a similar distribution for the total number of other vehicles in the scene with the anomaly samples having at least \num{3} and the majority of examples having at least \num{4} other vehicles present in the scene.
 In contrast, the great majority of samples from the complete data set has at most \num{7} other vehicles present and the overall distribution is somewhat inverse to that of the anomalies.
-\begin{figure}[t]
-    \centering
-    \resizebox{.9\textwidth}{!}{%
-        \subfloat[\label{subfig:anomalies_ngsim_boxplot_distance}]{%
-            \includegraphics[height=3cm]{imgs/anomalies_ngsim_boxplot_distance.png}
-        }
-        \subfloat[\label{subfig:anomalies_ngsim_histogram_distance}]{%
-            \includegraphics[height=3cm]{imgs/anomalies_ngsim_histogram_distance.png}
-        }
-    }\\
-    \resizebox{.9\textwidth}{!}{%
-        \subfloat[\label{subfig:anomalies_ngsim_boxplot_other_vehicles}]{%
-            \includegraphics[height=3cm]{imgs/anomalies_ngsim_boxplot_other_vehicles.png}
-        }
-        \subfloat[\label{subfig:anomalies_ngsim_histogram_other_vehicles}]{%
-            \includegraphics[height=3cm]{imgs/anomalies_ngsim_histogram_other_vehicles.png}
-        }
-    }
-    \caption{Visualization of the results of the autoencoder neural network used for unsupervised anomaly detection on the \emph{\ac{NGSIM}} data set.
-        The figures show the distribution of distances between the target and other vehicles (figures~\protect\subref{subfig:anomalies_ngsim_boxplot_distance} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}) as well as the number of other vehicles (figures~\protect\subref{subfig:anomalies_ngsim_boxplot_other_vehicles} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}), for situations classified as anomalies and for the complete data set.
-    The left figures (figure~\protect\subref{subfig:anomalies_ngsim_boxplot_distance} and~\protect\subref{subfig:anomalies_ngsim_boxplot_other_vehicles}) show box plots to visualize the difference between anomalies and the complete data set, whereas the right figures (figure~\protect\subref{subfig:anomalies_ngsim_histogram_distance} and~\protect\subref{subfig:anomalies_ngsim_histogram_other_vehicles}) show histograms for a more in-depth visualization of the metrics' distribution.}
-    \label{fig:anomaly_ngsim}
-\end{figure}
 
 Figure~\ref{fig:anomaly_ngsim} shows a similar analysis for the \emph{\ac{NGSIM}} data set with a few systematic differences.
 Since the \emph{\ac{NGSIM}} data set is recorded with external cameras observing highway traffic, there is no ego-vehicle to evaluate regarding the distance to the target vehicle.
@@ -747,7 +847,6 @@ For the number of other vehicles however, we also observe that the samples detec
 In conclusion, our autoencoder neural network is able to detect a subset of anomalies consistently for both, the \emph{On-board} and \emph{\ac{NGSIM}} data set, which show sufficiently significant differences to the complete data set regarding certain metrics.
 The results indicate, that the anomalies detected by the network have a tendency towards crowded situations with rather small distances between the target vehicle and the other vehicles in its surroundings.
 Since these are the kind of situations, where our prediction models based on the \ac{SPA}-based convolutive power encoding tend to perform better than the other reference models, these results offer interesting directions for future research.
-
 
 \section{Summary}%
 \label{sec:summary_behavior_prediction}
