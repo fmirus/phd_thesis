@@ -4,14 +4,14 @@
 This thesis presented a novel perspective on several automotive tasks with regard to cognitive modeling and/or neuromorphic principles, particularly representation of the environment around the vehicle.
 After giving an overview on recent research in the field of neuromorphic engineering regarding both hardware and software, cognitive modeling as well as automated driving in chapter~\ref{chap:research_context}, we proceeded to the theoretical background in chapter~\ref{chap:introduction_to_vsas}, the backbone of the thesis.
 We established a coherent mathematical formalism to describe the theory and properties behind \acp{VSA}, a family of modeling techniques deploying representations based on high-dimensional vectors.
-In this coherence, such a description is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \cite{Plate1994}, \cite{Gayler1998} or \cite{Kanerva2009}.
+In this coherence, such a description is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \textcites{Plate1994}{Gayler1998}{Kanerva2009}.
 We proceeded to describe the theory of the \ac{SPA}, a special case of the general construct of \acp{VSA}.
 We presented essential features like circular convolution, unitary vectors and convolutive powers, which form the basis of structured representations used in later chapters.
-Following \cite{Eliasmith2003}, we presented a brief introduction to the \ac{NEF} and showed how its principles can be applied to implement the \ac{SPA} in a spiking neuron substrate.
+Following \textcite{Eliasmith2003}, we presented a brief introduction to the \ac{NEF} and showed how its principles can be applied to implement the \ac{SPA} in a spiking neuron substrate.
 Finally, we introduced established approaches to generate structured representations to build cognitive models from them to be used in later chapters.
 
 In chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes}, we established our general approach to represent automotive scenes in the representational substrate of the \ac{SPA}.
-Following the workflow of \cite{Gallant2013}, we present first present different options to generate vocabularies of atomic vectors and secondly, how to generate structured representations from them. 
+Following the workflow of \textcite{Gallant2013}, we present first present different options to generate vocabularies of atomic vectors and secondly, how to generate structured representations from them. 
 We proposed several approaches to encapsulate different structures such as visual similarity, semantic similarity and a combination of both in vector vocabularies.
 We focus on encoding entities typically occurring in automotive context, namely traffic signs and traffic participants.
 While manual vocabulary design is feasible and demonstrated in this context of such rather small vocabularies, we also successfully demonstrated approaches to automatically learn such vocabularies based on \ac{CNN} learning systems for visual similarity and unsupervised word embedding algorithms like word2vec for semantic similarity.
@@ -20,7 +20,7 @@ The main contribution was the introduction of a representation for spatial infor
 We concluded the chapter with an experimental analysis of the amount of information, that can effectively be stored in structured vector representations.
 We analyzed the capacity of such representations for simple superposition of concepts as well as superpositions of vector encapsulating spatial information using the convolutive power yielding upper bounds for the total number of concepts or objects being encoded.
  
-Starting with chapter~\ref{chap:driving_context_classification}, we proceeded to the third stage as proposed in \cite{Gallant}, which was omitted in chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes}: the output computation stage or, in other words, applying our vector representations to particular tasks.
+Starting with chapter~\ref{chap:driving_context_classification}, we proceeded to the third stage as proposed in \textcite{Gallant}, which was omitted in chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes}: the output computation stage or, in other words, applying our vector representations to particular tasks.
 We presented a spiking neuron model learning to classify the current driving context based on a vector representation of the current scene from real-world driving data.
 This model made use of one of the key strengths of vector representations, namely being able to combine symbol-like manipulation with neural network learning.
 We demonstrated that our model is able to capture the semantics of the scene to successfully classify the current driving context.
@@ -114,7 +114,7 @@ Furthermore, although both proof-of-concept implementations translated sensory s
 
 In conclusion, higher level cognition and lower level perception/action are not two separate aspects of the same system, but tightly coupled and integrated in biological organisms.
 While artificial systems already show advanced capabilities regarding perception and action, the principles and functions in humans are less well understood.
-The first coherent integration of both aspects into a large-scale cognitive model making sense out of complex sensor stream into active motion was presented in \cite{Eliasmith2012}.
+The first coherent integration of both aspects into a large-scale cognitive model making sense out of complex sensor stream into active motion was presented in \textcite{Eliasmith2012}.
 However the overall question of how biological organism effectively integrate and combine low-level behaviors and higher-level cognitive functions is still and unsolved scientific problem.
 However, an complete integration of such a \emph{brain model} in an actual \emph{body} of hardware is yet to be developed.
 The goal of this thesis was to propose a first step into the direction of cognitive automated vehicles.
