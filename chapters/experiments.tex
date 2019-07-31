@@ -1,5 +1,6 @@
 \chapter{Closed-loop neuromorphic control systems}%
 \label{chap:closed_loop_neuromorphic_control_systems}
+
 In this chapter, we present a first step towards a neuromorphic control architecture, that can be used to implement generic control algorithms in the language of \acp{SNN}.
 This offers the advantage, that the overall task can be divided into several sub-networks.
 We develop two sample instantiations of neurally-inspired control algorithms, namely for mobile robot manipulation and vehicle trajectory control based on reinforcement learning.
@@ -7,7 +8,7 @@ Here, we partly depart from the application of automated driving using real-worl
 As mentioned earlier, control of an automated vehicle is an extremely safety-critical task.
 Furthermore, current vehicle hardware architectures are designed neither to include neuromorphic hardware nor to efficiently process \acp{SNN}.
 Therefore, we demonstrate the general feasibility of this neuromorphic control architecture on the task of bringing order in a sequence of unordered visual stimuli detected using a neuromorphic vision sensor, the \ac{DVS} (section~\ref{sec:sensorimotor_adaptation_for_mobile_robotic_manipulation}). 
-The second demonstration scenario is closer to automotive context, presenting system employing reinforcement learning for short-term vehicle trajectory planning evaluated in the simulated environment of the \acf{TORCS} \cite{TORCS}.
+The second demonstration scenario is closer to automotive context, presenting system employing reinforcement learning for short-term vehicle trajectory planning evaluated in the simulated environment of the \acf{TORCS} \parencite{TORCS}.
 Both applications demonstrate certain aspects of the control architecture: the mobile manipulation tasks shows how the principles of neural engineering can be used to manually program non-trivial tasks in a spiking neural substrate.
 This can be useful, to either bootstrap learning to improve task performance without having to start the process from an initial blank state or to complement learning networks with manually designed networks involving human expert knowledge.
 The second task presents such a combination in an instantiation of the neuromorphic control architecture, with a trajectory selection module employing reinforcement learning while all other modules are manually designed for simplicity.
@@ -63,7 +64,7 @@ The software architecture is comprised of an embedded sensorimotor platform runn
 The embedded platform is responsible with the low-level sensory perception, low-level motor control, and the bi-directional communication (i.e., outgoing data streaming and incoming commands) with the neurocomputing platform. 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.8\linewidth]{imgs/neurocomputing_platform.png}
+    \includegraphics[width=0.8\linewidth]{imgs/neurocomputing_platform.eps}
     \caption{Generic architecture: Embedded Robotic Platform and Neurocomputing Platform}
     \label{fig:neurocomputing_platform}
 \end{figure}
@@ -94,7 +95,7 @@ These individual neural networks can then be combined into one large neural netw
 This final network can then be implemented in neuromorphic hardware, and it could also be used as the starting point for further learning.
 Crucially, it should be noted that we are not trying to implement a perfect version of a task. 
 Rather, we want to program a somewhat competent, initial version of a task that could then be further refined using a variety of neural network learning algorithms. 
-In particular, \cite{Duan2016} provide a comprehensive survey of Deep Reinforcement Learning algorithms that are suitable for robotic control learning. 
+In particular, \textcite{Duan2016} provide a comprehensive survey of Deep Reinforcement Learning algorithms that are suitable for robotic control learning. 
 Most of these algorithms are based around adjusting the connection weights of a neural network in order to improve performance on a task, based on occasional “positive” and “negative” reward values. 
 Our long-term research goal is to apply these learning systems to the programmed neural networks that we describe in this section.
 
@@ -169,14 +170,14 @@ In the current instantiation of our framework, we want to solve a non-trivial mo
 Using our mobile platform the task is to manipulate objects with LED stimuli blinking at different frequencies to bring them in order. 
 More precisely, the task can be seen as a grasp and sort task, in which the robot will select a certain control policy depending on the current sensory streams (mainly visual input) to find the misplaced stimulus and place it in the correct location. 
 Action selection is performed using a model of a biologically plausible neural circuit, namely the Basal Ganglia. 
-The Basal Ganglia, according to \cite{Stewart2010}, is an action selector that chooses whatever action has the best "salience" or "goodness". 
+The Basal Ganglia, according to \textcite{Stewart2010}, is an action selector that chooses whatever action has the best "salience" or "goodness". 
 Selection is done on the basis of a context dependent utility signal for each possible action. 
 Actions that are inappropriate for the current context may have low utility, and the task of the Basal Ganglia is to select the action that currently has the highest utility value.
 The Basal Ganglia will choose between the four possible behavior stacks: Grab, Hold And Move Side, Put Down or Finish.
 We design our control network by defining a set of intermediate-level networks, namely Grab, Hold And Move Side, Put Down and Finish that are composed of various different low-level behaviors, and then we create a high-level network whose outputs activate and deactivate the low-level networks. 
 To accomplish this, each of the low-level networks will have an input $a$ which indicates its level of activation. 
 If $a$ is $0$ then the output from that network should be $0$, and if $a$ is $1$ then it should perform its basic activity. 
-It should be noted that this sort of control system design is strongly reminiscent of the classic subsumption architecture \cite{Brooks1986}.
+It should be noted that this sort of control system design is strongly reminiscent of the classic subsumption architecture \parencite{Brooks1986}.
 For each of these behaviors, we used \ac{Nengo} to take the functions provided, generate input and output training data, use that data to generate individual neural networks.
 
 \subsubsection{Perception and motor-control: low-level reflex behaviors}%
@@ -237,7 +238,7 @@ This behavior simply moves the arm from its holding position to a position suita
     }
     \caption{Schematic visualization of two sub-networks of our model with sets of white circles indicating neural populations while boxes depict sub-networks.
        ~\protect\subref{subfig:omni_bot_out_of_order_net} shows the \emph{Out of Order} network, which detects if one frequency does not fit the assumed order as target and keeps this object’s information in a memory.
-~\protect\subref{subfig:omni_bot_grab_net} illustrates the \emph{TaskGrab} network, which finds an object and grabs it.
+~\protect\subref{subfig:omni_bot_grab_net} illustrates the \emph{Perform Grasping Action} network, which finds an object and grabs it.
 }
     \label{fig:omni_bot_nets}
 \end{figure}
@@ -259,10 +260,11 @@ However, the evidence networks - as desired - still keep the information about t
 \begin{figure}[th!]
     \centering
     \subfloat[\label{subfig:omni_bot_out_of_order_net_behavior}Decoded output of the \emph{Out of Order} network's neural components based on \ac{DVS} input data from embedded tracking]{%
-        \includegraphics[width=0.9\linewidth]{imgs/omni_bot_out_of_order_net_behavior.png}
-    }\\
+        \includegraphics[width=0.9\linewidth]{imgs/omni_bot_out_of_order_net_behavior.eps}
+    }
+    \vspace{-0.3cm}
     \subfloat[\label{subfig:omni_bot_grab_net_behavior}Decoded output of the \emph{Grab} network's neural components]{%
-        \includegraphics[width=0.9\linewidth]{imgs/omni_bot_grab_net_behavior.png}
+        \includegraphics[width=0.9\linewidth]{imgs/omni_bot_grab_net_behavior.eps}
     }
     \caption{Illustration of the \emph{Out of Order} and \emph{Grab} networks neural populations decoded output.}
     \label{fig:omni_bot_nets_results}
@@ -327,17 +329,18 @@ After stopping the base - implicitly by deactivating all other behaviors - the a
 \begin{figure}[th!]
     \centering
     \subfloat[\label{subfig:omni_bot_hold_and_move_behavior}Decoded output of the \emph{HoldAndMove} network's neural components]{%
-        \includegraphics[width=0.9\linewidth]{imgs/omni_bot_hold_and_move_behavior.png}
-    }\\
+        \includegraphics[width=0.9\linewidth]{imgs/omni_bot_hold_and_move_behavior.eps}
+    }
+    \vspace{-0.3cm}
     \subfloat[\label{subfig:omni_bot_grab_and_sort_net_behavior}Decoded output of the \emph{Sorting} network's neural components]{%
-        \includegraphics[width=0.9\linewidth]{imgs/omni_bot_grab_and_sort_behav.png}
+        \includegraphics[width=0.9\linewidth]{imgs/omni_bot_grab_and_sort_behav.eps}
     }
     \caption{Illustration of the \emph{HoldAndMove} and \emph{Sorting} networks neural populations decoded output.}
     \label{fig:omni_bot_nets_sort_results}
 \end{figure}
 
 This is a high-level behavior combining all the other behaviors described so far to complete the whole task of moving the target object to its correct position in the sequence of frequencies. 
-To choose the appropriate action to take, we used models of the Basal Ganglia and Thalamus \cite{Stewart2010}, which are available as pre-implemented networks in \ac{Nengo}.
+To choose the appropriate action to take, we used models of the Basal Ganglia and Thalamus proposed by \textcite{Stewart2010}, which are available as pre-implemented networks in \ac{Nengo}.
 Corresponding to each of the high-level behaviors, we created input values for the Basal Ganglia network to choose from. 
 Initially, \emph{Perform Grasping Action} is enabled. 
 Once the robot picked up the target object and built up sufficient evidence, the Basal Ganglia network activates the behavior to hold the (target) object and navigate the robot to the goal position. 
@@ -353,10 +356,10 @@ A clear indicator for successful pick-up is the decrease of certainty in the bas
 Once the robot reached its goal position between the neighboring objects, the \emph{PutDown} behavior is activated (Fig. \ref{fig:omni_bot_example_run} f-g). 
 Finally the whole task is wrapped up by the Finish behavior and all other behaviors are deactivated (Fig. \ref{fig:omni_bot_example_run} h) to put the robot back into resting position.
 
-\begin{figure}[t]
+\begin{figure}[t!]
     \centering
-    \includegraphics[width=0.8\linewidth]{imgs/omni_bot_example_run.png}
-    \caption{Selected stages of an example run of the Grab and Sort Task.}
+    \includegraphics[width=0.85\linewidth]{imgs/omni_bot_example_run.png}
+    \caption{Selected stages of an example run of the \emph{Perform Sorting Task}.}
     \label{fig:omni_bot_example_run}
 \end{figure}
 \subsection{Summary}%
@@ -388,7 +391,7 @@ One possibility could be detect one neighbor and to use the maximum of the pairw
 A long-term goal is to use the current implementation as a starting point for self-improving learning systems. 
 As the current implementation is built in the framework of \acrlong{SNN} it naturally supports learning. 
 One direction for future research could be to use the current low-level behaviors for initialization and to let the system learn and improve them incrementally by experience. 
-For instance, one problem in learning robotic systems such as policy search for motor control \cite{Levine2015}, is the acquisition of sufficiently large training data sets. 
+For instance, one problem in learning robotic systems such as policy search for motor control \parencite{Levine2015}, is the acquisition of sufficiently large training data sets. 
 Recording large amounts of training data by repeating one specific task with real robotic systems is time-consuming and often infeasible, while training-data from simulation is usually not realistic enough to capture the complexity of noisy real-world data. 
 In these cases, a system which is able to use expert-knowledge for certain (sub-) tasks as a starting point could significantly speed-up the learning process. 
 We believe that our current approach is a promising first step for further research in this direction.
@@ -398,11 +401,11 @@ We believe that our current approach is a promising first step for further resea
 \label{sec:neuromorphic_reinforcement_learning_for_vehicle_trajectory_control}
 
 In this section, we propose a neuromorphic system for vehicle control.
-Our system is implemented entirely in a spiking neuron substrate using the \ac{Nengo} simulator \cite{Bekolay2014} and is designed to be both distributed and hierarchical.
+Our system is implemented entirely in a spiking neuron substrate using the \ac{Nengo} simulator \parencite{Bekolay2014} and is designed to be both distributed and hierarchical.
 In a sample instantiation, we train a trajectory selection module using reinforcement learning to investigate the feasibility of a learnable, neuromorphic control system in an automotive context.
 This approach has been selected in order to be decoupled from the quality of training data in this first investigation.
 We evaluate our approach in \ac{TORCS}, which allows us to generate training data in a safe and controlled simulation environment.
-Furthermore, \ac{TORCS} offers an advanced vehicle physics simulation as well as a variety of sensors and actors for interaction \cite{TORCS}.
+Furthermore, \ac{TORCS} offers an advanced vehicle physics simulation as well as a variety of sensors and actors for interaction \parencite{TORCS}.
 
 \subsection{Neuromorphic control architecture}%
 \label{subsec:neuromorphic_control_architecture}
@@ -414,7 +417,7 @@ Furthermore, \ac{TORCS} offers an advanced vehicle physics simulation as well as
 \end{figure}
 
 The architecture of our proposed system is visualized in Fig.~\ref{fig:architecture}.
-Interactions with the \ac{TORCS} environment (for detailed information on the sensor and actuator setup see \cite{Loiacono2010}) are channeled over several \ac{ROS} nodes used for the gateway communication.
+Interactions with the \ac{TORCS} environment (for detailed information on the sensor and actuator setup \parencite[see][]{Loiacono2010}) are channeled over several \ac{ROS} nodes used for the gateway communication.
 For evaluation and training purposes, a controller using the global position and orientation of the vehicle is implemented in \ac{ROS} to determine control signals to follow a given trajectory or the roadways centerline at a fixed speed\footnote{The \ac{TORCS}-to-\ac{ROS} interface can be found at \url{https://github.com/fmirus/torcs_ros}.
 The Nengo and \ac{ROS} implementation of the trajectory selection module and the framework that is built upon it can be found at \url{https://github.com/fmirus/torcs_neural_trajectory_ctrl}}.\par
 
@@ -428,7 +431,7 @@ Some of the depicted modules are heavily dependent on each other and will have t
 Here, we focus on the \emph{trajectory selection} module to be the only learning module for simplicity.
 Therefore, gear selection and acceleration are determined from the engine's rpm and a desired velocity set to a fixed value for now.
 The \emph{trajectory following} module determines the control values for steering from the chosen trajectory.
-% Implicitly,  \emph{trajectory selection} and \emph{trajectory following} achieve a similar goal to the sweep for a trajectory's lateral and longitudinal characteristics in \cite{Werling2010}.
+% Implicitly,  \emph{trajectory selection} and \emph{trajectory following} achieve a similar goal to the sweep for a trajectory's lateral and longitudinal characteristics in \textcite{Werling2010}.
 We envision the \emph{time horizon} module to estimate the time window for the next trajectory to be followed.
 Assuming a perfect control algorithm and the desired speed to be the actual speed, this equates to determining the trajectory's end point's longitudinal position.
 Accordingly, the \emph{trajectory selection} module is an action selection module for the agent to choose a trajectory type as well as the lateral component of the trajectory's end point from a set of predefined options.
@@ -456,7 +459,7 @@ The latter trajectories are intended for driving curves or to correct slight mis
 \label{subsec:reinforcement_learning_network}
 
 The core of this work is the learning \acl{SNN} for \emph{trajectory selection}, which  is visualized in Fig. \ref{fig:snn} and consists of two sub-networks.
-It was built using the Nengo neural simulator \cite{Bekolay2013}, which implements the principles of the \ac{NEF} \cite{Eliasmith2003}.
+It was built using the Nengo neural simulator \parencite{Bekolay2013}, which implements the principles of the \ac{NEF} \parencite{Eliasmith2003}.
 The first sub-network $A$ (yellow components in Fig. \ref{fig:snn}) encodes the current state in a neural population.
 This population feeds its output to an array of downstream populations, each representing the utility value $Q$ associated to one of the possible actions.
 Unless an exploration step is enforced, the highest filtered utility value determines the next action to be performed.
@@ -466,6 +469,17 @@ From this reward, the offset to the current utility values is calculated, which 
 
 \subsubsection{Learning rule}%
 \label{ssubsec:learning_rule}
+
+The associative learning process is implemented using the \ac{PES} \parencite{Bekolay2013} learning rule, which modifies connection weights based on a (multi-dimensional) error signal $\textbf{e}$.
+We calculate the error from the reward function
+\begin{align}
+r(t) = \lvert p(t) \rvert~\beta_1 \cdot \lvert \theta(t) \rvert ~ \beta_2+ \lvert p(t)-p(t-1) \rvert ~ \beta_3+ \lvert \theta(t)-\theta(t-1) \rvert ~ \beta_4 \text{,}
+\label{eq:reward}
+\end{align}
+where $p$ describes the vehicle's lateral position along the road at successive time steps $t$ and $t-1$ (a value of \num{1} being centered and \num{0} being at the track boundary), $\theta$ describes the vehicle's orientation with respect to the road's centerline (values of \num{1} resp. \num{0} indicate parallel resp.\ perpendicular alignment) and $\beta_k$ being scalar weights.
+Thus, the reward function is designed to blend the two objectives of driving aligned with and centered on the road.
+
+With each ensemble representing a utility value $Q(s,a_j)$ of the state $s$  when taking action $a_j$, we define the error for dimension $j$ as
 
 \begin{figure}[t!]
 \centering
@@ -479,16 +493,6 @@ From this reward, the offset to the current utility values is calculated, which 
 \caption{Visualization of the chosen training and validation tracks.}
 \label{fig:tracks}
 \end{figure}
-The associative learning process is implemented using the \ac{PES} \cite{Bekolay2013} learning rule, which modifies connection weights based on a (multi-dimensional) error signal $\textbf{e}$.
-We calculate the error from the reward function
-\begin{align}
-r(t) = \lvert p(t) \rvert~\beta_1 \cdot \lvert \theta(t) \rvert ~ \beta_2+ \lvert p(t)-p(t-1) \rvert ~ \beta_3+ \lvert \theta(t)-\theta(t-1) \rvert ~ \beta_4 \text{,}
-\label{eq:reward}
-\end{align}
-where $p$ describes the vehicle's lateral position along the road at successive time steps $t$ and $t-1$ (a value of \num{1} being centered and \num{0} being at the track boundary), $\theta$ describes the vehicle's orientation with respect to the road's centerline (values of \num{1} resp. \num{0} indicate parallel resp.\ perpendicular alignment) and $\beta_k$ being scalar weights.
-Thus, the reward function is designed to blend the two objectives of driving aligned with and centered on the road.
-
-With each ensemble representing a utility value $Q(s,a_j)$ of the state $s$  when taking action $a_j$, we define the error for dimension $j$ as
 
 \begin{align}
 e_j = \begin{cases}
