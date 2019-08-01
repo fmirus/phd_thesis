@@ -331,7 +331,7 @@ The upper row in each plot shows the predictions of all input predictors, the mi
 For instance, the upper row in figure~\ref{subfig:mix_train_0_2} illustrates the predictions of all models for \SI{0.75}{\second} into the future over the complete time the target vehicle is visible.
 The lower row in each plot illustrates the \ac{RMSE} of the models for all prediction time steps with the particular time step shown in the upper row highlighted by a dotted vertical line.
 Figures~\ref{subfig:mix_train_0_2} and~\ref{subfig:mix_train_0_18} show the prediction time steps \SIlist{0.75;4.75}{\second} into the future respectively of the first vehicle during the ramp-up phase while figure~\ref{subfig:mix_train_4_18} shows the prediction time step \SI{4.75}{\second} into the future for the last vehicle of the ramp-up phase.
-We observe, that the even distributed weights are a reasonable initialization for our further adaptation by our model , since already for the first presented vehicle is achieves decent prediction accuracy.
+We observe, that the even distributed weights are a reasonable initialization for further adaptation by our model , since already for the first vehicle presented to the model achieves a decent prediction accuracy.
 Reaching the fifth training vehicle, the mixture model already achieves improvements for prediction time-steps further into the future in $x$-direction and equal to the best performing input predictor.
 
 \subsubsection{Parameter analysis}%
