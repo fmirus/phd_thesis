@@ -1,5 +1,6 @@
 \chapter{A mixture-of-experts online learning system for adaptive behavior prediction}
 \label{chap:mix_online_learning}
+
 In this chapter, we continue our work on behavior prediction from chapter~\ref{chap:behav_pred}.
 Although the various models developed there show already promising results, our analysis has shown, that each of the developed models has its own strengths and weaknesses in particular driving situations or even perform differently regarding the direction of motion (lateral or longitudinal) of the target vehicle.
 Furthermore, they are intended to be trained offline and remain unchanged during deployment without any adaptation at run time.
@@ -27,7 +28,7 @@ Therefore, we need to find a mechanism to propagate the error between the actual
 In this work, we address this issue through a temporal spreading of the error signal, i.e., we use the error of earlier prediction steps to update the weights of predictions further into the future.
 Furthermore, we need to deal with the problem of over-fitting meaning that the model could just learn to predict the current vehicle particularly well but when switching to another vehicle with a potentially very different situational context and/or dynamics, the model's performance could deteriorate due to over-fitting the previous vehicle.
 We evaluate our online learning model on real-world driving data and show, that the model is able to improve over the individual offline models already after being presented just a few vehicles.
-Finally, while the type of online learning approach presented here has been shown to be successful in adaptive robot arm control \cite{DeWolf2016}, to the best of our knowledge, our approach is the first trajectory prediction model to be trained during deployment for choosing from several pre-trained prediction models to achieve the best possible forecast.  
+Finally, while the type of online learning approach presented here has been shown to be successful in adaptive robot arm control \parencite{DeWolf2016}, to the best of our knowledge, our approach is the first trajectory prediction model to be trained during deployment for choosing from several pre-trained prediction models to achieve the best possible forecast.  
 
 
 \section{Mixture-of-experts online learning models}%
@@ -73,7 +74,7 @@ While any neural network learning algorithm could be used to do this, we adapt t
 
 \begin{equation}
   \label{eq:mix_learning1}
-  \Delta\mathbf{W}_{ p ,t} = \kappa \nu_{t} \underbrace{ \left(\mathbf{v}_{observed,t}-\mathbf{v}_{mix,t}\right)}_{=: \epsilon_t} = \kappa \nu_{t} \epsilon_{t}, 
+\Delta\mathbf{W}_{p,t} = \kappa \nu_{t} \mathbf{v}_{p,t} \underbrace{(\mathbf{v}_{observed,t}-\mathbf{v}_{mix,t})}_{=\epsilon_t} = \kappa \nu_{t} \mathbf{v}_{p,t} \epsilon_t.
 \end{equation}
 where $\kappa$ is the learning rate and $\nu_{t}$ is a factor to scale the learning rate $\kappa$ differently for each prediction time step.
 
@@ -105,8 +106,8 @@ The encoding process (the input weights for the neural network) is shown in equa
 \end{equation}
 
 $\mathbf{G}$ is the neuron non-linearity (here we use the rate-approximation of the Leaky Integrate and Fire neuron, although any other neuron model is likely to have similar behavior).
-$\mathbf{e}_{i,j}$ and $\beta_i$ are randomly generated to produce a uniformly distributed range of maximum firing rates and intercepts (the $\mathbf{z}$ value at which the neuron starts firing), as per \cite{Eliasmith2013}. 
-This has been shown to be a good distribution of values for a wide variety of situations, and is consistent with what is observed in mammalian brains \cite{Eliasmith2013}.
+$\mathbf{e}_{i,j}$ and $\beta_i$ are randomly generated to produce a uniformly distributed range of maximum firing rates and intercepts (the $\mathbf{z}$ value at which the neuron starts firing), as per \textcite{Eliasmith2013}. 
+This has been shown to be a good distribution of values for a wide variety of situations, and is consistent with what is observed in mammalian brains \parencite{Eliasmith2013}.
 Unlike most neural network models, since these input weights are a reasonable distribution, we do not change $\mathbf{e}_{i,j}$ and $\beta_i$ at any time, leaving them at their initial randomly generated values.
 In other words, we just adjust the weights between the hidden layer and the output layer, and leave the other set of weights at their initial randomly generated values.
 This greatly reduces the computation cost of performing the online learning.
@@ -126,13 +127,13 @@ As with the context-free model variant, we use the delta learning rule given in 
 
 \begin{equation}
     \tag{\eqref{eq:mix_learning1} revisited}
-    \Delta\mathbf{W}_{ p ,t} = \kappa \nu_{t} \underbrace{ \left(\mathbf{v}_{observed,t}-\mathbf{v}_{mix,t}\right)}_{=: \epsilon_t} = \kappa \nu_{t} \epsilon_{t}, 
+    \Delta\mathbf{W}_{p,t} = \kappa \nu_{t} \mathbf{v}_{p,t} \underbrace{(\mathbf{v}_{observed,t}-\mathbf{v}_{mix,t})}_{=\epsilon_t} = \kappa \nu_{t} \mathbf{v}_{p,t} \epsilon_t.
 \end{equation}
 that would determine how much to adjust $\mathbf{W}$ given the current error between the mixture-of-experts prediction and the observed actual position of the vehicle (i.e., the error in $\mathbf{v}$).  
 $\kappa$ is the learning rate and $\nu_{t}$ is a factor to scale the learning rate $\kappa$ differently for each prediction time step.
 However, rather than applying that change to $\mathbf{W}$ directly, we instead use that as the error signal for the delta rule applied to the decoding network, turning an adjustment to $\mathbf{W}$ into an adjustment to $\mathbf{d}$:
 \begin{equation}
-  \Delta\mathbf{d}_{ p ,t,i} = \kappa a_i \nu_{t} \left(\mathbf{v}_{observed,t}-\mathbf{v}_{mix,t}\right) = \kappa a_i \nu_{t} \epsilon_{t} = a_i \Delta\mathbf{W}_{ p ,t}.
+\Delta\mathbf{d}_{p,t,i} = \kappa \mathbf{a}_i \nu_{t} \mathbf{v}_{p,t} \epsilon_t = \mathbf{a}_i \Delta\mathbf{W}_{p,t}
   \label{eq:learning2}
 \end{equation}
 Figure~\ref{fig:mix_context_sensitive_system_arch} shows a schematic visualization of our model's architecture.
@@ -157,7 +158,7 @@ Since this is just an estimation, we want the predictions for time steps $ \tild
 Hence, we exponentially scale down the amount of adjustment of $\mathbf{d}$ by the difference in time $ \tilde{t}-t$, leading to our final learning rule:
 
 \begin{equation}
-  \Delta\mathbf{d}_{p, \tilde{t} ,i} = \kappa \mathbf{a}_i \nu_{t} (\mathbf{v}_{observed,t}-\mathbf{v}_{mix,t}) e^{-{( \tilde{t} - t)}/\tau}~~~~~~ \textrm{for all}~ \tilde{t}  \geq t.
+    \Delta\mathbf{d}_{p, \tilde{t} ,i} = \kappa \mathbf{a}_i \nu_{t} \mathbf{v}_{p,t} (\mathbf{v}_{observed,t}-\mathbf{v}_{mix,t}) e^{-{( \tilde{t} - t)}/\tau} ~~~~~~ \textrm{for all}~ \tilde{t}  \geq t.
   \label{eq:learning3}
 \end{equation}
 
@@ -181,7 +182,7 @@ The benefit of this prior evaluation is two-fold: on the one hand, we get an imp
 On the other hand, a model having immediate access to the future error signal serves as an upper bound for the performance to be expected from models that have to deal with temporally delayed error signals. 
 We present the results of this prior evaluation in section~\ref{subsec:comparing_timing_agnostic_context_free_and_context_sensitive_mixture_models}, whereas the evaluation of the model tackling temporally delayed error signals is shown in section~\ref{subsec:evaluation_of_the_context_sensitive_model_variant_with_temporal_spreading}.
 
-All model variants in this chapter are implemented using the neural simulator Nengo \cite{Bekolay2014}, which is typically used for constructing large-scale biologically realistic neural models \cite{Eliasmith2013}, but also allows for traditional feed-forward artificial neural networks using either spiking or non-spiking neurons.
+All model variants in this chapter are implemented using the neural simulator Nengo \parencite{Bekolay2014}, which is typically used for constructing large-scale biologically realistic neural models \parencite{Eliasmith2013}, but also allows for traditional feed-forward artificial neural networks using either spiking or non-spiking neurons.
 Here, we use the rate-approximation of the Leaky Integrate and Fire neuron, although we expect any other neuron model to have similar behavior.
 Spiking neurons are of considerable interest for automotive applications due to the potential for reduced power consumption when deployed on dedicated neuromorphic hardware. 
 
@@ -239,17 +240,16 @@ To translate these context values to a common order of magnitude, we use the tra
 \begin{figure}[t]
     \centering
     \subfloat[\label{subfig:mix_start_on_board}]{%
-        \includegraphics[width=0.48\linewidth]{imgs/mix_start_on_board.eps}
+        \includegraphics[width=0.25\linewidth]{imgs/mix_start_on_board.eps}
+    }
+    \subfloat[\label{subfig:mix_on_board}]{%
+        \includegraphics[width=0.25\linewidth]{imgs/mix_on_board.eps}
     }
     \subfloat[\label{subfig:mix_start_ngsim}]{%
-        \includegraphics[width=0.48\linewidth]{imgs/mix_start_ngsim.eps}
-    }
-    \\ 
-    \subfloat[\label{subfig:mix_on_board}]{%
-        \includegraphics[width=0.48\linewidth]{imgs/mix_on_board.eps}
+        \includegraphics[width=0.25\linewidth]{imgs/mix_start_ngsim.eps}
     }
     \subfloat[\label{subfig:mix_ngsim}]{%
-        \includegraphics[width=0.48\linewidth]{imgs/mix_ngsim.eps}
+        \includegraphics[width=0.25\linewidth]{imgs/mix_ngsim.eps}
     }
     \caption{Visualization of the \ac{RMSE} of the timing-agnostic variants of our mixture-of-experts model, both context-free and context-sensitive, on both data sets.
 ~\protect\subref{subfig:mix_start_on_board} shows the performance at the start of the training process on the \emph{On-board} data set. 
@@ -268,13 +268,15 @@ Furthermore, a model having immediate access to the future error signal serves a
 \begin{figure}[t!]
     \centering
     \subfloat[\label{subfig:mix_train_0_2} Predictions for first training vehicle \SI{0.75}{\second} into the future]{%
-        \includegraphics[width=0.75\linewidth]{imgs/mix_train_0_2.eps}
-    }\\
+        \includegraphics[width=0.8\linewidth]{imgs/mix_train_0_2.eps}
+    }
+    \vspace{-0.5cm}
     \subfloat[\label{subfig:mix_train_0_18}Predictions for first training vehicle \SI{4.75}{\second} into the future]{%
-        \includegraphics[width=0.75\linewidth]{imgs/mix_train_0_18.eps}
-    }\\
+        \includegraphics[width=0.8\linewidth]{imgs/mix_train_0_18.eps}
+    }
+    \vspace{-0.5cm}
     \subfloat[\label{subfig:mix_train_4_18}Predictions for fifth training vehicle \SI{4.75}{\second} into the future]{%
-        \includegraphics[width=0.75\linewidth]{imgs/mix_train_4_18.eps}
+        \includegraphics[width=0.8\linewidth]{imgs/mix_train_4_18.eps}
     }
     \caption{Visualization of the mixture-of-experts model's performance on vehicles it is presented during the ramp up phase.
     The upper row in each plot shows the predictions of all input predictors, the mixture model as well as the actual motion of the target vehicle for one particular prediction time step.
