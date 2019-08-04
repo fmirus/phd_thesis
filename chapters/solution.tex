@@ -66,7 +66,7 @@ However, there are several possible notions of similarity that can be encoded in
 \subsubsection{Visual similarity}%
 \label{ssubsec:visual_similarity}
 
-A first simple and comprehensible notion of similarity is visual similarity between two entities: "do they look similar". 
+A first simple and comprehensible notion of similarity is visual similarity between two entities: \enquote{do they look similar}. 
 Encoding this notion in vectors, we would expect the vector representations to represent this type of similarity within the relation between the vectors, meaning that vectors representing visually similar entities will have large cosine similarity.
 In conjunction with other information, this type of similarity could be useful to detect a wrong classification, in case it has high similarity to another one that makes more sense in the situation or context at hand.
 An example would the German traffic signs indicating a speed limit of \SI[per-mode=symbol]{30}{\kilo\meter\per\hour} and \SI[per-mode=symbol]{80}{\kilo\meter\per\hour}, which are both circular with a red frame and a similar looking black number on white background in the middle.
@@ -101,7 +101,7 @@ In the field of generating word embeddings for natural language processing, the 
 This assumption could be transferred to automotive context as well, for instance thinking of traffic signs indicating speed limits appearing in similar contexts or driving situations such as urban driving compared to higher speed limit signs.
 However, on the one hand it is not clear how to transfer this approach to other object classes such as traffic participants whose appearance probability is less context dependent than for traffic signs. 
 On the other hand the process of automatically training a system to learn this form of embedding is not clear as it would probably demand for another learning model to extract contextual information from the rich features of driving contexts.
-Therefore, will now focus on the potential meaning of objects appearing in an automotive environment and how their semantic meaning could be embedded into a vector representation while leaving aside intangible concepts representing vehicle dynamics such as "velocity" or "acceleration".
+Therefore, will now focus on the potential meaning of objects appearing in an automotive environment and how their semantic meaning could be embedded into a vector representation while leaving aside intangible concepts representing vehicle dynamics such as \emph{velocity} or \emph{acceleration}.
 
 \paragraph{Traffic signs}%
 \label{par:traffic_signs}
@@ -121,7 +121,7 @@ While the meaning of traffic signs is clear and explicit, it is far more difficu
 It is unclear if a truck is semantically more similar to a motorcycle or to a car without considering any contextual information while ignoring similarity of motion properties, which have already been discussed in section~\ref{ssubsec:similarity_of_motion}.
 However, if we do consider contextual information, we as humans decide intuitively if a truck and a motorcycle are more similar when compared to a pedestrian by e.g., considering their velocity of motion or their vulnerability.
 We also know from experience that the meaning of a car approaching from the right potentially means that it has the right of way when we encounter a situation at a crossroads without traffic signs indicating other right of way rules. 
-Hence, the situational context has a significant impact on comprehending the "meaning" of traffic participants, which in most cases directly results in appropriate driving actions to take such as decelerating or changing the lane.
+Hence, the situational context has a significant impact on comprehending the \emph{meaning} of traffic participants, which in most cases directly results in appropriate driving actions to take such as decelerating or changing the lane.
 However, such a situational understanding is impossible to derive without additional information such as position, velocity or direction of each traffic participant.
 Consequently, it is impossible to encapsulate such semantic or contextual similarity in a vector vocabulary directly but rather encode another notion of similarity for atomic vectors of traffic participants and built situational similarity through structured representations using the \ac{VSA}'s algebraic operations.
 
@@ -207,7 +207,7 @@ To confirm this inherent similarity structure, we calculate pairwise similaritie
 We observe similarities in groups of signs indicated by green areas in the heat map visualization.
 Most prominent are the high similarities in three groups of traffic signs forming green triangles in the heat map.
 These groups are round signs with red borders (top left corner), triangular warning signs with red borders (middle right) and blue signs indicating driving directions (close to bottom right).
-Furthermore, several signs stand out particularly: The traffic sign indicating "Priority ahead", which is a red triangle just like any warning signs, indeed shows high similarity to all warning signs.
+Furthermore, several signs stand out particularly: The traffic sign indicating \enquote{Priority ahead}, which is a red triangle just like any warning signs, indeed shows high similarity to all warning signs.
 Similarly, the traffic sign indicating no entry for trucks, a red circle with a black truck inside, looks a lot like speed limit signs and indeed shows a high similarity to all speed limit signs.
 Consequently, we conclude that it is possible to encode visual similarity with an automatic learning approach using \acp{CNN} to encapsulate the visual features of a given data set into a vocabulary of semantic vectors.
 
@@ -449,14 +449,14 @@ However, such a learning approach again would require a suitable, sufficiently l
 Finally, the process of generating structured representations from an available vocabulary created with any of the techniques described in this section is independent from the particular vocabulary at hand.
 Hence, although it seems intuitive and useful to encode similarities of potential interest to the task to be solved using the vector representation, it remains to be seen, if using a vocabulary encapsulating any form of similarity actually improves task performance.
 Furthermore, the choice which similarity structure to use naturally appears to be heavily task-dependent.
-Thus, we will investigate the influence of the vocabulary structure on the task performance for the selected task of driving context classification in chapter ~\ref{chap:driving_context_classification} by simply evaluating the same models with changing underlying vocabularies.
+Thus, we will investigate the influence of the vocabulary structure on the task performance for the selected task of driving context classification in chapter~\ref{chap:driving_context_classification} by simply evaluating the same models with changing underlying vocabularies.
 
 \section{Representation generation stage}%
 \label{sec:representation_generation_stage}
 
 After having created a vector vocabulary suitable for a specific application of interest as shown in section~\ref{sec:preprocessing_stage_generating_a_vocabulary}, we focus our attention in this section to the second stage of the encoding process proposed by \textcite{Gallant2013}, the \emph{representation generation stage}.
 This second step is the process of actually generating structured vector representations from a given vocabulary of atomic vectors.
-As mentioned by \textcite{Gallant2013}: "Although the preprocessing and output computation stage can involve significant machine learning, there are reasons for the representation generation stage to \emph{avoid} machine learning."
+As mentioned by \textcite{Gallant2013}: \enquote{Although the preprocessing and output computation stage can involve significant machine learning, there are reasons for the representation generation stage to \emph{avoid} machine learning}.
 Using machine learning in the stage of representation generation means to adjust the representation to the specific set of applications, which restricts them to be used for different, but related sets of problems.
 Furthermore, involving learning in the representation generation might slow down the whole system prohibiting practical usage of the representation in application scenarios.
 However, in certain situations it could make sense to involve a learning step at the representation generation stage, for example if the system should detect novelties and assign them to new vectors or representations and/or needs to memorize them.
@@ -620,7 +620,7 @@ Hence, we indeed avoid the problem of growing vector norm posed by the scalar mu
     }
     \caption{
         Visualization of the convolutive power encoding scheme for \num{512}-dimensional representation vectors depicting the similarity between the representation vector and auxiliary comparison vectors created from a sequence of discrete values.
-        The left plot in both rows shows a two-dimensional grid of the similarities, while the middle and right plot shows the individual entities respectively.
+        The left plot in both rows shows a two-dimensional grid of the similarities, while the middle and right plot show the individual entities respectively.
         The red circles in the left and the dashed blue lines in the middle and right plots indicate the
     actual encoded values.}
     \label{fig:spa_power_encoding}
@@ -640,7 +640,7 @@ To encode a sequence $ \left(x_{i}, y_{i}\right) $ for $i=1, \ldots, n$ of two-d
 Figure~\ref{fig:spa_power_encoding} visualizes vectors encoding one (cf.\ figure~\ref{subfig:spa_power_representation_one_item} and equation~\eqref{eq:conv_power_2d}) and two numerical entities (cf.\ figure~\ref{subfig:spa_power_representation_two_items} and equation~\eqref{eq:conv_power_sum}) given by two units within one vector.
 To generate the similarities shown in figure~\ref{fig:spa_power_encoding}, we calculate the dot product between the vectors actually representing the encoded values and vectors $ \tilde{\mathbf{V}}_{i} = \mathbf{X}^{\tilde{x}_{i}} \varoast \mathbf{Y}^{\tilde{y}_i} $ encoding a sequence of discrete sample values $ \left( \tilde{x}_{i}, \tilde{y}_{i} \right)$ for $i=1, \ldots, m$.
 The left plot in each row of figure~\ref{fig:spa_power_encoding} depicts the similarities as heat map over a two-dimensional grid. 
-The middle and right plots in figure~\ref{fig:spa_power_encoding} visualize the similarities of each individual unit, which is similar to plotting the heat map in three dimensions as ridges and slicing them through one of the ground axes.
+The middle and right plots in figure~\ref{fig:spa_power_encoding} visualize the similarities of each unit, which is similar to plotting the heat map in three dimensions as ridges and slicing them through one of the ground axes.
 In both rows, we observe high similarity peaks way above both similarity thresholds at the actual encoded values and significantly lower similarity values everywhere else.
 However, we already encounter one of the problems of this encoding scheme.
 Comparing the similarities at the positions of the encoded values, we observe a drop of similarity values from roughly \num{0.7} to \num{0.5} when encoding two two-dimensional numerical values instead of only one.
@@ -698,7 +698,7 @@ Furthermore, \textcite{Wahle2012} only compare the similarity $\phi\left(\mathbf
 In contrast, although we have already analytically derived a threshold $\epsilon= \tfrac{c}{\sqrt{D}}$ for the expected similarity of randomly chosen vectors in definition~\ref{def:similar}, we calculate the similarity between the superposition vector and $n$ other random vectors for reference.
 
 Figure~\ref{fig:spa_superposition_capacity} shows the result of our experiment for \num{3} random vocabularies per superposition length containing vectors of dimension \num{256}, \num{512} and \num{1024}.
-The blue boxes in each figure illustrate the similarity between the superposition vector $ \mathbf{s}$ and each individual vectors $ \mathbf{v}_i$ for $i=1, \ldots, n$ it contains, i.e., the members of the unordered superposition set, whereas the orange boxes depict the similarity between $ \mathbf{s}$ and the other vocabulary vectors $ \mathbf{v}_i$ for $i=n+1, \ldots, 2n$ it does not contain, i.e., the non-members.
+The blue boxes in each figure illustrate the similarity between the superposition vector $ \mathbf{s}$ and each of the individual vectors $ \mathbf{v}_i$ for $i=1, \ldots, n$ it contains, i.e., the members of the unordered superposition set, whereas the orange boxes depict the similarity between $ \mathbf{s}$ and the other vocabulary vectors $ \mathbf{v}_i$ for $i=n+1, \ldots, 2n$ it does not contain, i.e., the non-members.
 The dotted red and green lines indicate the \ac{SPA}'s weak and strong similarity threshold depending on the dimension of the vector space.
 Considering the weak similarity threshold $\epsilon_{weak} = \tfrac{2}{\sqrt{D}}$, we observe that for a vector dimension of \num{256} the \ac{SPA} allows roughly \num{50} items to be stored in a superposition vector.
 For higher vector dimensions \num{512} and \num{1024}, the number of items that can be superposed increases to roughly \num{100} and \num{200} respectively.
@@ -706,7 +706,7 @@ Considering the strong similarity threshold $\epsilon_{strong} = \tfrac{3}{\sqrt
 We also observe in our experiments that the similarity between the superposition vector and non-member random vectors is consistently below the weak similarity threshold $\epsilon_{weak}$ for the majority of the samples.
 However, once the similarity between the superposition vector and its members drops below either of the similarity thresholds for the majority of the samples, we can not distinguish between members and non-members with a sufficiently high probability,
 For \num{256} dimensional vectors for instance, we even observe that the members and non-members become nearly indistinguishably when adding more than \num{80} vectors.
-Thus, we have to chose rather conservative bounds for the number of items to be encoded in a superposition vector.
+Thus, we have to choose rather conservative bounds for the number of items to be encoded in a superposition vector.
 
 \subsubsection{Capacity of structured representations involving convolutive powers}%
 \label{ssubsec:capacity_of_structured_representations_involving_convolutive_powers}
@@ -780,8 +780,8 @@ The dotted red and green lines visualize the weak and strong similarity threshol
 Similar to figure~\ref{fig:spa_power_encoding}, we observe that the similarity of the non-members is in the order of magnitude of the similarity thresholds while the similarity for the member position decreases with a growing number of spatial items encoded in the vector.
 
 Figure~\ref{fig:spa_power_capacity_superpositions_per_class} shows a different evaluation of the same data showing the number of addition operations per class on the $x$-axis.
-In contrast to figure~\ref{fig:spa_power_capacity}i, figure~\ref{fig:spa_power_capacity_superpositions_per_class} illustrates the similarity for vectors containing spatial information for several objects of the same class.
-That is, figure~\ref{fig:spa_power_capacity_superpositions_per_class} illustrates the similarity of vectors containing a specific number $n$ of superpositions per class on its $x$-acis independent of the total number of superpositions.
+In contrast to figure~\ref{fig:spa_power_capacity}, figure~\ref{fig:spa_power_capacity_superpositions_per_class} illustrates the similarity for vectors containing spatial information for several objects of the same class.
+That is, figure~\ref{fig:spa_power_capacity_superpositions_per_class} illustrates the similarity of vectors containing a specific number $n$ of superpositions per class on its $x$-axis independent of the total number of superpositions.
 We observe, that not only the similarity of the members decreases with growing number of superpositions per class, but the similarity of the non-member increases beyond the weak similarity threshold.
 Similar to the simple superposition capacity analysis, we consider the point in the plots where the member similarities fall below the strong similarity threshold the upper border for the maximal number of spatial objects per class to be encoded in this representational substrate.
 For instance, this upper bound for \num{256} dimensional vectors is \num{10} superpositions per class, which is roughly half of the upper bound for the number of simple superpositions.
@@ -796,13 +796,13 @@ We showed several approaches to generate vector vocabularies of entities encount
 Thereby, we were able to encapsulate different similarity structures such as visual similarity, semantic similarity and a fusion of both.
 We were able to demonstrate, that we can successfully encapsulate the desired similarity structure within our vocabulary of atomic vectors.
 Finally, we pointed out advantages and problems for both approaches to generate these structured vocabularies with the bias imposed by human engineers and limits regarding sufficiently large and available data sets being the main issues for manual and learned vocabularies respectively.
-Since we consider the choice of a suitable vocabulary to be highly dependent on the particular task to be solved, we analyze the influence of varying the underlying vocabulary for the specific task of classifying the current driving context based on a vector representation of the current scene in section ~\ref{subsec:the_influence_of_varying_vocabularies}.
+Since we consider the choice of a suitable vocabulary to be highly dependent on the particular task to be solved, we analyze the influence of varying the underlying vocabulary for the specific task of classifying the current driving context based on a vector representation of the current scene in section~\ref{subsec:the_influence_of_varying_vocabularies}.
 
-In section ~\ref{sec:representation_generation_stage}, we proceeded to investigate the creation of more complex, structured representations from atomic vocabulary vectors.
+In section~\ref{sec:representation_generation_stage}, we proceeded to investigate the creation of more complex, structured representations from atomic vocabulary vectors.
 One of the most important aspects was the representation of numerical values in high-dimensional vectors, where we presented three different approaches and showed their individual strengths and limitations.
 Particularly, we presented a novel approach to encode numerical values based the convolutive power of vectors.
 The biggest advantage of this representation of numerical values is that it in turn can be bound further to other vectors as well as be used to query representation vectors about location information using pseudo-inverse elements.
-This approach is the main building block of the scene representation used as input to the learning models for vehicle trajectory prediction proposed in chapter ~\ref{chap:behav_pred}.
+This approach is the main building block of the scene representation used as input to the learning models for vehicle trajectory prediction proposed in chapter~\ref{chap:behav_pred}.
 Finally, we analyzed the capacity of structured vector representations based on simple superposition and superposition combined with the convolutive power encoding of spatial information.
 Thereby, we found upper bounds for the amount of information that can effectively be encoded in such representations.
 These bounds have to considered in subsequent chapters to evaluate if the amount of information to be encoded in the vector representation is compliant with the bounds.

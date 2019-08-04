@@ -22,7 +22,7 @@ One of the most important properties of high-dimensional vector spaces enabling 
 In the following, we will show what we mean by fuzzy terms like \emph{dissimilar} or \emph{likely} and provide more precise statements.
 
 One main requirement in the context of cognitive modeling is the ability of the modeling framework to address the binding problem \parencite{Treisman1999}.
-\textcite{Jackendoff2002} phrases this as the problem of "combining independent bits into a single coherent percept".
+\textcite{Jackendoff2002} phrases this as the problem of \enquote{combining independent bits into a single coherent percept}.
 One strength of \acp{VSA} is that they offer the possibility to manipulate their entities (i.e., vectors) through algebraic operations, usually at least one \emph{addition-like} and \emph{multiplication-like} operation each.
 Typically, the multiplication operation is used for binding different representations into a new vector.
 This operation, depending on the vector representation, is constructed with some desirable properties in mind (see Definition~\ref{def:binding}).
@@ -222,7 +222,7 @@ Theorem~\ref{theorem:VSA_cossim_distribution} states, that the probability of fi
     \label{fig:distributions_cosine_sims}
 \end{figure}
 Figure~\ref{fig:distributions_cosine_sims}, which shows the probability distributions of cosine similarity for different vector dimensions, illustrates this result.
-Furthermore, Theorem~\ref{theorem:VSA_cossim_distribution} allows us to give a more formal definition of the term "dissimilar".
+Furthermore, Theorem~\ref{theorem:VSA_cossim_distribution} allows us to give a more formal definition of the term \emph{dissimilar}.
 \begin{defn}
 	\label{def:similar}
 	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$ and $c \in \mathbb{N}$ a constant. We call any two vectors $ \mathbf{v}, \mathbf{w} \in v_{d}(n)$ \emph{dissimilar}, if
@@ -245,7 +245,7 @@ Given Definition~\ref{def:similar}, the probability of two randomly chosen vecto
 Hence, we denote the weaker version of definition~\ref{def:similar} by $\epsilon_{weak} = \tfrac{2}{\sqrt{D}}$ as \emph{weak similarity threshold} and the stronger version by $\epsilon_{strong} = \tfrac{2}{\sqrt{D}}$ as \emph{strong similarity threshold}.
 For lower \ac{VSA} dimensions such as $D \leq 50$, it can be beneficial to work with the weak similarity threshold, whereas for higher dimensions the stronger version can be used.
 
-Based on the definition of similarity, we derive criteria for "good" multiplication functions in \acp{VSA}.
+Based on the definition of similarity, we derive criteria for \enquote{good} multiplication functions in \acp{VSA}.
 \begin{defn}
 	\label{def:binding}
 	Let $(V_{D}(N), \varoast, \oplus, \phi)$ be a \acrfull{VSA} of dimension $D$. We call its multiplication function
@@ -437,7 +437,7 @@ Here, we give a brief introduction to the \ac{NEF}'s principles and refer to \te
 \subsection{Representation}
 \label{subsec:nef_representation}
 The first principle of the \ac{NEF}, representation, provides mathematical tools to encode information, namely time-varying real-valued vectors, in the activity of neural populations.
-It is based on the assumption, that neurons have a "preferred direction vector" in the represented space, each neuron responds most strongly to.
+It is based on the assumption, that neurons have a \enquote{preferred direction vector} in the represented space, each neuron responds most strongly to.
 This assumption is grounded by the findings of \textcite{Georgopoulos1989} that each neuron in motor cortex of rhesus monkeys has a different preferred arm direction.
 The \ac{NEF} expands this idea to neural representations in general.
 \begin{figure}[t!]
@@ -611,7 +611,7 @@ Furthermore, we will see how these representations can be implemented in \acp{SN
 	\subfloat[\label{subfig:constructed_vocab_sims}]{%
 		\includegraphics[width=0.45\textwidth]{imgs/SPA_constructed_vocab_sim.eps}
 	}
-	\caption{Aspects of vector vocabularies:~\ref{subfig:conceptual_golfball} "Conceptual golf ball" depicting the idea of semantic vectors. Image source: \textcite{Eliasmith2013}.~\ref{subfig:constructed_vocab_sims} Cosine similarities in a small, manually engineered vector vocabulary of dimension $256$.}
+	\caption{Aspects of vector vocabularies:~\ref{subfig:conceptual_golfball} \enquote{Conceptual golf ball} depicting the idea of semantic vectors. Image source: \textcite{Eliasmith2013}.~\ref{subfig:constructed_vocab_sims} Cosine similarities in a small, manually engineered vector vocabulary of dimension $256$.}
     \label{fig:vector vocabs}
 \end{figure}
 
@@ -643,7 +643,7 @@ However, not only does this approach become impracticable with increasing number
 A more sophisticated way to create a vector vocabulary is to learn it automatically from data.
 In contrast to purely random vocabularies, the idea here is that the learning system is able to capture the intrinsic similarity between objects in the vector representation.
 Again, the choice of learning paradigm (supervised vs.\ unsupervised) and architecture (e.g. \acp{CNN} or \acp{SOM}) depends not only on the given task, but also on the kind of similarity the vectors should encapsulate.
-This can be visual similarity (e.g.\ items or objects that "look" similar), auditory similarity (e.g.\ objects producing similar sound), semantic similarity (e.g.\ words with similar meaning) or similarity in characteristics (e.g.\ similar motion characteristics).
+This can be visual similarity (e.g., items or objects that \enquote{look} similar), auditory similarity (e.g.\ objects producing similar sound), semantic similarity (e.g.\ words with similar meaning) or similarity in characteristics (e.g.\ similar motion characteristics).
 
 \begin{figure}[t]
 	\centering
@@ -752,7 +752,7 @@ The phrase \textit{The dog chases the boy} could be encoded in a vector as
 	\mathbf{agent} \varoast \mathbf{dog} + \mathbf{verb} \varoast \mathbf{chase} + \mathbf{theme} \varoast \mathbf{boy},
 \end{equation*}
 assuming we already have a vocabulary containing atomic vectors representing those items.
-Another typical example of this approach is the encoding of relations between items, such as "$\mathbf{A}$ is the mother of $\mathbf{B}$".
+Another typical example of this approach is the encoding of relations between items, such as \enquote{$\mathbf{A}$ is the mother of $\mathbf{B}$}.
 This relation could be represented in vectors through
 \begin{equation*}
 	m \left(\mathbf{A}, \mathbf{B} \right) = \mathbf{motherof} + \mathbf{mother} \varoast \mathbf{A} + \mathbf{child} \varoast \mathbf{B}.
@@ -822,7 +822,7 @@ C_{pinv} = \left(
     \end{matrix}
 \right),
 \end{equation}
-which allows us to transform equation ~\eqref{eq:circ_conv_mat} into
+which allows us to transform equation~\eqref{eq:circ_conv_mat} into
 \begin{equation}
 \label{eq:unbind_mat}
 \mathbf{v} \approx \mathbf{z} \varoast \bar{ \mathbf{w}} = W^{-1} \left( \left(W \mathbf{z}\right) \cdot \left(W \cdot C_{pinv} \mathbf{w}\right)\right).
@@ -844,7 +844,7 @@ Since these novel computing devices are not yet available as commercial products
 
 \section{Summary}
 In this chapter, we have introduced the theoretical background and mathematical properties of \aclp{VSA}, which is the basis for subsequent chapters.
-Furthermore, we established a formal, mathematical notion for \acp{VSA} in general (section ~\ref{sec:math_prop_vsas}), which, to the best or our knowledge, is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \textcites{Plate1994}{Gayler1998}{Kanerva2009}.
+Furthermore, we established a formal, mathematical notion for \acp{VSA} in general (section~\ref{sec:math_prop_vsas}), which, to the best or our knowledge, is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \textcites{Plate1994}{Gayler1998}{Kanerva2009}.
 The we shifted our focus to one particular \ac{VSA}, the \ac{SPA}, presenting its most important aspects and properties with respect to subsequent chapters of the thesis.
 Furthermore, we gave a brief description of the \acl{NEF}, which is typically used to implement large-scale neural models of spiking neurons such as the one presented in \textcite{Eliasmith2012}.
 Finally, we have introduced the basic principles of cognitive modeling using \acp{VSA} in general and the \ac{SPA} in particular.

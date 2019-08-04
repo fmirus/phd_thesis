@@ -16,7 +16,7 @@ However, we aim to cover the most significant results from all areas at least br
 To fully understand biological systems like the brain, which evolved over millions of years, is an ongoing yet unsolved challenge in biology and neuroscience.
 Even small animals like insects or rodents show remarkable behavioral flexibility and the ability to constantly adapt to a rapidly changing and noisy world, which is unmatched by modern computing machines.
 Mammals and primates are able to perform more sophisticated behaviors culminating in complex cognitive computations humans are capable of doing like thinking, problem solving, memory, reasoning, decision-making, strategic planning, knowledge representation, learning etc.
-The "biological computer" enabling these behaviors and cognitive abilities is the brain consisting of large networks of neural cells (or neurons), which communicate by sending and receiving electric signals via synapses.
+The \enquote{biological computer} enabling these behaviors and cognitive abilities is the brain consisting of large networks of neural cells (or neurons), which communicate by sending and receiving electric signals via synapses.
 At the same time, brains are comparably small and efficient: the human brain for example consumes only \SI{20}{\watt} of power (equivalent to a compact fluorescent light bulb) and comprises \SI{2}{\percent} of the body weight \parencite[Chap. 2.1]{Eliasmith2013}. 
 
 Several research fields like computational neuroscience, neuromorphic engineering and neurorobotics try to reverse engineer biological systems to achieve similar performance and computational power.
@@ -99,7 +99,7 @@ The simplest spiking neuron model is the \acf{LIF} model with
 \label{eq:LIF}
 \end{equation}
 describing the sub-threshold behavior of the neuron, where $V$ is the voltage across the membrane, $I(t)$ is the input current, $R$ is the passive membrane resistance and $\tau_{m}$ is the membrane time constant.
-In other words, equation \ref{eq:LIF} states as follows: the membrane voltage increases in the presence of input current $I(t)$ depending on the membrane resistance $R$ while at the same time, especially in the absence of input current ($I(t)=0$), the voltage decreases or "leaks out" depending on the membrane time constant $\tau_{m}$.
+In other words, equation \ref{eq:LIF} states as follows: the membrane voltage increases in the presence of input current $I(t)$ depending on the membrane resistance $R$ while at the same time, especially in the absence of input current ($I(t)=0$), the voltage decreases or \enquote{leaks out} depending on the membrane time constant $\tau_{m}$.
 When the voltage $V(t)$ passes a certain threshold $\vartheta$, the neuron produces a spike and the voltage is reset to a resting state $c$ for a certain refractory time interval $\tau_{ref}$ during which incoming spikes have no impact on the membrane potential.
 Figure \ref{subfig:lif_neuron_model} visualizes the spiking behavior of the \ac{LIF} model.
 It shows an example curve of the membrane potential of one \ac{LIF} neuron based on six incoming spikes whereas only the third, fourth and fifth incoming spike are appearing closely enough for the membrane potential to surpass it threshold and, therefore, cause the neuron to emit a spike itself.
@@ -132,7 +132,7 @@ Originally written in Java, \ac{Nengo} was re-implemented in Python \parencite{B
 
 Another Python-based tool is \ac{PyNN} \parencite{Davies2010}, which was developed during the \ac{FACETS} \footfullcite{FACETS-proj} and \ac{BrainScaleS} \footfullcite{BrainScaleS-proj} projects and aims for building \ac{SNN} models independent of actual simulation tools.
 The level of abstraction is lower than \ac{Nengo}, but therefore it allows the creation of arbitrary neuron populations and connections, while the properties and synaptic weights need to be specified by the user or acquired using a learning algorithm.
-\ac{PyNN} implements a number of standard models of neurons like \ac{LIF} or Izhikevich, connection algorithms like "one to one", "all to all" or connection matrices, static and plastic synapse types as well as several \ac{STDP} rules supported by the simulation and hardware back-ends.
+\ac{PyNN} implements a number of standard models of neurons like \ac{LIF} or Izhikevich, connection algorithms like \emph{one to one}, \emph{all to all} or connection matrices, static and plastic synapse types as well as several \ac{STDP} rules supported by the simulation and hardware back-ends.
 Furthermore, \ac{PyNN} enables the user to implement custom models, connections and learning rules for advanced simulations and thereby extend the neural modeling toolkit.
 \ac{PyNN} currently supports several different simulators such as \ac{NEST} \parencite{Gewaltig2007}, Brian \parencite{Goodman2009} and NEURON  \parencite{Carnevale2009} as well as neuromorphic hardware as back-ends.
 \ac{PyNN} is currently the preferred development environment for the creation of \ac{SNN} models to run on the \ac{SpiNNaker} system \parencite{Furber2014}.
@@ -363,7 +363,7 @@ Both approaches are implemented on a small robot with the \ac{DVS} as sensory in
 \label{sec:cognitive_modeling}
 
 Over the last decades, understanding and building cognitive systems has seen extensive research leading to the development of several cognitive architectures.
-A cognitive architecture is a "general proposal about the representation and processes that produce intelligent thought" \parencite{Thagard2012}.
+A cognitive architecture is a \enquote{general proposal about the representation and processes that produce intelligent thought} \parencite{Thagard2012}.
 On the one hand, these architectures are used to explain and better understand important aspects of human behavior and intelligence.
 However, they are also used to design computers and robots mimicking certain cognitive abilities of humans.
 In this respect, cognitive architectures are typically clustered in three main categories, namely symbolism, connectionism and dynamicism \parencite{Eliasmith2013}.
@@ -382,10 +382,10 @@ Therefore, we put emphasis on the different aspects of knowledge representation 
 \subsection{Symbolic approaches}%
 \label{subsec:symbolic_approaches}
 
-Symbolic approaches are often referred to as the "classical approach" to cognitive modeling or \acf{GOFAI}.
-Most of the approaches rely on the metaphor of the "mind as computer", supposing that cognitive systems have a symbolic "language of thought" \parencite{Fodor1975}, that expresses the rationale and rules the systems follow.
+Symbolic approaches are often referred to as the \emph{classical approach} to cognitive modeling or \acf{GOFAI}.
+Most of the approaches rely on the metaphor of the \emph{mind as computer}, supposing that cognitive systems have a symbolic \enquote{language of thought} \parencite{Fodor1975}, that expresses the rationale and rules the systems follow.
 The corresponding analogue for computers are programming languages.
-The dominant paradigm of such approaches is "the manipulation of discrete atomic symbols by explicit rules" \parencite{Levy2008}.
+The dominant paradigm of such approaches is \enquote{the manipulation of discrete atomic symbols by explicit rules} \parencite{Levy2008}.
 The most prominent approaches in this category are production systems, which typically rely on if-then-rules (or productions) and a control structure.
 One of the first and most influential achievements in this field is a program called the \ac{CogGPS}, which was able to to solve elementary problems in symbolic logic on its own.
 The steps \ac{CogGPS} performed to solve a given problem often matched the steps reported by people solving the same problem.
@@ -398,12 +398,12 @@ However, these approaches are rarely used when it comes to real-time critic syst
 \subsection{Connectionist approaches}%
 \label{subsec:connectionist_approaches}
 
-One of the first theories challenging the paradigm of \ac{GOFAI} was the "Society of Mind" view of specialized individual agents cooperating to accomplish a certain goal proposed by \textcite{Minsky1986}.
+One of the first theories challenging the paradigm of \ac{GOFAI} was the \enquote{Society of Mind} view of specialized individual agents cooperating to accomplish a certain goal proposed by \textcite{Minsky1986}.
 The strongest challenge however, was the emergence of connectionism \parencite{Rumelhart1986a} (popularly referred to as neural networks), which offered novel learning algorithms such as backpropagation \parencite{Rumelhart1986} to solve a wide variety of problems.
 Connectionism explains cognitive phenomena by constructing models consisting of large networks of interconnected nodes performing rather simple input/output mappings.
 If these nodes, however, are connected to sufficiently large networks, the nodes' activity is able to implement cognitive behavior such as rules or analyzing patterns.
 We already gave a brief historical overview over the research conducted related to \acp{ANN} in section~\ref{subsec:history_neural_nets}. 
-The metaphor behind connectionist approaches to cognitive modeling is that of the "mind as brain", as the processing employed in connectionism is often referred to as "brain-like" or "brain-inspired".
+The metaphor behind connectionist approaches to cognitive modeling is that of the \emph{mind as brain}, as the processing employed in connectionism is often referred to as \emph{brain-like} or \emph{brain-inspired}.
 Connectionism has shown remarkable results in diverse applications such as computer vision, pattern recognition, sequential data analysis and language processing just to name a few.
 However, the most serious criticism of connectionist approaches are that they could not exploit systematic, compositional representations or logical reasoning of the form used in \ac{GOFAI}. 
 Furthermore, the nodes in connectionist networks typically simplify the computational and representational properties of biological neurons, which in addition to the biological implausibility of the backpropagation algorithm, concerns cognitive modelers interested in biological realism.
@@ -417,7 +417,7 @@ In chapter~\ref{chap:introduction_to_vsas}, we give an in-depth introduction to 
 Here, we give a brief overview of the different variants of such architectures, their similarities and differences, related work and some applications.
 All of the modeling approaches presented in this section employ (high-dimensional) vectors as representational units.
 Similar to the representations derived from connectionist approaches, these are distributed representations, which offer nice properties such as robustness to noise and the support of distance metrics.
-Additionally, all of the approaches allow to treat such vectors as "symbol-like" entities, which can be manipulated through the architecture's algebraic operations (see chapter~\ref{chap:introduction_to_vsas} for details).
+Additionally, all of the approaches allow to treat such vectors as \emph{symbol-like} entities, which can be manipulated through the architecture's algebraic operations (see chapter~\ref{chap:introduction_to_vsas} for details).
 The first attempt on structured vector representations proposed by \textcite{Smolensky1990} used the tensor product as multiplication operation to bind two different vector together.
 The tensor product approach already allows for an sufficiently complex embedded structure to do linguistic processing.
 However, scaling becomes a problematic issue as each uncompressed tensor product operation of two high-dimensional vectors increases the result's dimension, which quickly becomes impracticable.
@@ -442,12 +442,12 @@ One key difference to other cognitive architectures like the \ac{SPA} is that th
 \section{Automated Driving}
 \label{sec:automated_driving}
 
-"Robotics is the science of building computer-controlled mechanical devises, which are able to perceive and manipulate the physical world" \parencite{Thrun2005}.
+\enquote{Robotics is the science of building computer-controlled mechanical devises, which are able to perceive and manipulate the physical world} \parencite{Thrun2005}.
 Automated driving in automotive context is a special case of robotics, since an autonomous vehicle can be considered a wheeled mobile robot, which is able to fulfill the transportation capabilities of a traditional car without human input.
-In order to navigate safely to a desired goal, a mobile robot needs to solve several problems like localization ("where am I?"), path planning ("how do I get from A to B?"), environment perception ("where is everyone else?"), knowledge representation and reasoning ("which decisions to infer from available information?") as well as motion control ("how to move my actuators?").
-In automotive context, an automated vehicle furthermore needs to detect the current state of the driver ("what is the driver up to") to ensure that he can take over control in safety-critical situations or in case of malfunctions.
+In order to navigate safely to a desired goal, a mobile robot needs to solve several problems like localization (\enquote{where am I?}), path planning (\enquote{how do I get from A to B?}), environment perception (\enquote{where is everyone else?}), knowledge representation and reasoning (\enquote{which decisions to infer from available information?}) as well as motion control (\enquote{how to move my actuators?}).
+In automotive context, an automated vehicle furthermore needs to detect the current state of the driver (\enquote{what is the driver up to?}) to ensure that he can take over control in safety-critical situations or in case of malfunctions.
 The human driver as a fallback option in such situations is of crucial importance, since the level of driving automation is likely to gradually increase instead of a hard transition from manual driving to fully automated driving systems.
-In their J3016 standard \footfullcite{SAE_J3016}, the \ac{SAE} delivers a classification system identifying six different levels of driving automation from "no automation" to "full automation".
+In their J3016 standard \footfullcite{SAE_J3016}, the \ac{SAE} delivers a classification system identifying six different levels of driving automation from \enquote{no automation} to \enquote{full automation}.
 Table \ref{tab:autonomy_levels} gives an overview of the particular automation levels according to the \textcite{SAE_J3016} in more detail.
 
 \begin{center}
@@ -564,7 +564,7 @@ Furthermore, as many sensors already employ on-board processing and provide data
 This gives a more abstract interface and allows for easier replacement of individual sensor units in case the overall setup changes.
 On the other hand, high-level fusion ignores potentially useful information, as it might be discarded at sensor level before the fusion is performed.
 In summary, high-level sensor fusion is arguably the most popular and frequently used approach for combining information from different sensor sources in automated driving.
-The objects are typically represented as "point objects" using a unique identifier and a state vector for dynamic information such as position, velocity and acceleration.
+The objects are typically represented as \emph{point objects} using a unique identifier and a state vector for dynamic information such as position, velocity and acceleration.
 For certain application types, additional information such as the objects' size, shape and type need to be known (e.g., pedestrians have different dimensions and motion characteristics compared to trucks or vehicles).
 For other objects of interest (e.g., traffic signs or traffic lights), color and shape information might be important.
 While this type of representation is compact and abstract enough and thus well-suited for high-level fusion, the content and thus the represented values might vary depending on the sensor providing the information.
@@ -583,7 +583,7 @@ Another example of an alternative knowledge representation approach is the work 
 
 Classification of the current driving context, i.e., if the vehicle is currently driving on a highway or in an urban area, has been investigated mainly in the earlier days of \ac{ADAS} research before digital maps were available at a large scale, which could be used in combination with the vehicle's current position measured using \ac{SensGPS} to detect the driving context.
 However, inferring contextual information from on-board sensory data is appealing as either a fallback option in situations when \ac{SensGPS} is not available of if keeping an updated map with driving context information is not feasible.
-Another simple approach is to classify the current driving context based on a set of conditional, logical rules using if-else statements such as "if the current velocity is greater than \SI{100}{\kilo\meter\per\hour}, then the current context is \emph{highway}".
+Another simple approach is to classify the current driving context based on a set of conditional, logical rules using if-else statements such as \enquote{if the current velocity is greater than \SI{100}{\kilo\meter\per\hour}, then the current context is \emph{highway}}.
 However, this simple approach suffers from poor scaling and the difficulty to formulate exact definitions of all possible target categories in advance.
 Improving on a logical rule set, the approach proposed in \textcite{Hauptmann1996} employs a combination of a fuzzy-logic system based on the ego-vehicle's dynamics such as velocity, active gear and acceleration and a data-driven feed-forward neural network, which additional uses a front-facing camera.
 \textcite{Engstrom2001} apply statistical pattern recognition and a simple feed-forward neural network using solely the ego-vehicle's dynamics to classify four different different driving context categories.

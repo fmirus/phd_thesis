@@ -81,7 +81,7 @@ Finally, we describe the models trained to produce the actual context classifica
 \end{figure}
 
 For the task of classifying the current driving context from measurements provided by the ego-vehicle's on-board sensors, we encapsulate three types of information in our vector-based scene representation, namely certain dynamics of the ego-vehicle, dynamic objects and traffic signs.
-Information on all of these entities if provided as preprocessed object-lists as described in section ~\ref{sec:data_and_preprocessing_context_classification}.
+Information on all of these entities if provided as preprocessed object-lists as described in section~\ref{sec:data_and_preprocessing_context_classification}.
 In subsequent sections, we describe the process of converting the input data into a vector representation for each of these categories of information.
 
 \subsubsection{Ego-vehicle dynamics}
@@ -217,7 +217,7 @@ However, the vector representation of the driving scene abstracts away most of t
 On the other hand, the raw numerical values of the vector representation are hard if not impossible to comprehend for human subjects.
 Another intuitive way for human to perceive information is language.
 Therefore, we created human-readable versions of our input vectors in the form of written text by concatenating the label of the vocabulary vector followed by the encoded numerical value.
-We presented a subset of \num{50} random samples for each data set to two human subjects asking for their classification guess.]
+We presented a subset of \num{50} random samples for each data set to two human subjects asking for their classification guess.
 To make this process as similar to the automated learning process pursued by the neural network, the human subjects had to classify samples from the training data set first.
 After every sample, the subject was informed if the provided classification was correct or, in case of wrong classifications, which label would have been the correct answer.
 In this way, we aim to provoke a steep learning curve for the human subjects before switching to the test set and replicate the learning process of the neural models as closely as possible.
@@ -428,8 +428,8 @@ For the most pronounced example accuracy decreases in all three classes, with a 
 
 In conclusion, encapsulating visual semantic structure produces a measurable effect on the model's classification performance for several vocabularies and improves average results compared to the vocabularies encoding individual parts of the structure (i.e., only visual or semantic).
 We observe a difference in classification accuracy of up to \SI{7}{\percent}.
-However the impact varies depending on the underlying original vocabulary: for some vocabularies, accuracy decreases over all classes, in others it decreases.
-However, since this average is only based on \num{10} vocabularies (due to computational limitations), this visual-semantic structure does not perform significantly better than the baseline case.
+However, the impact varies depending on the underlying original vocabulary: for some vocabularies, accuracy decreases over all classes, in others it decreases.
+On the other hand, since this average is only based on \num{10} vocabularies (due to computational limitations), this visual-semantic structure does not perform significantly better than the baseline case.
 Furthermore, there is no  clear pattern, such as an increase in accuracy especially for vocabularies that underperformed without additional structure, or a decrease for vocabularies that performed well using the original randomly generated vectors.
 
 \section{Summary}%
@@ -437,13 +437,13 @@ Furthermore, there is no  clear pattern, such as an increase in accuracy especia
 
 In this chapter, we have presented a novel approach to a data-driven driving context classification model based on our vector representation of driving scenes.
 We proposed a vector representation of the current driving situation encapsulating a mixture of symbol-like information such as traffic signs or the type of traffic participants as well as numerical information such as position or velocity.
-We showed that our learning model using \acp{SNN} in the \ac{Nengo} framework outperform the feed-forward reference neural network implemented in Keras as well as a \ac{CNN} based on raw camera images.
+We showed that our learning model using \acp{SNN} in the \ac{Nengo} framework outperformed the feed-forward reference neural network implemented in Keras as well as a \ac{CNN} based on raw camera images.
 We assume, that we successfully abstracted away unnecessary and too complex visual features from the representation for being able to learn driving context classification from a rather small vocabulary.
 The \ac{CNN} would most likely require a much larger training data set containing a great variety of different examples of driving context examples under several conditions (e.g., daylight and night, heavy or flowing traffic etc.).
 All data-driven models presented here performed worse than the baseline of human level performance, but mainly because of the \emph{interurban} category.
 For this category, the test data set contains a significant amount of samples, which are unlike any samples present in the training data such that all models, unlike our human subjects, are unable to make sense out of them.
 Therefore, we evaluated the models' performance on a subset of the test set removing this chunk of data boosting the classification accuracy of our model.
-Therefore, we conclude that, on the one hand, our data set is too small and too limited for our model to generalize sufficiently from it.
+Thus, we conclude that on the one hand, our data set is too small and too limited for our model to generalize sufficiently from it.
 On the other hand, we assume that a larger and more balanced data set will improve the performance of all models (including the \ac{CNN}). 
 However, there are also general issues regarding the process of encoding the current driving scene into a vector representation.
 For instance, while we encode many traffic signs (\num{243} of the total \num{258} atomic entities), the great majority of them is not that useful for driving context classification, as they occur rather rarely.
