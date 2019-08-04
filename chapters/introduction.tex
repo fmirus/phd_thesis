@@ -56,13 +56,13 @@ We refer to those different hierarchical levels as \emph{physical} and \emph{men
 Considering the physical/lower level of the perception-action-cycle, \acp{DNN} have recently shown significant progress and success at perception tasks like object detection and classification.
 Therefore, we believe a lot more research is necessary until neuromorphic approaches using \acp{SNN} are sufficiently mature to compete with those traditional approaches, although current work in this directions shows promising results \parencite{Hunsberger2015}.
 Similar arguments hold true for automated learning approaches regarding vehicle control.
-Although sophisticated learning techniques show promise to improve motor control, to date most controllers for automated vehicles or robots in general are "designed and tuned by human engineers" \parencite{Deisenroth2013}.
+Although sophisticated learning techniques show promise to improve motor control, to date most controllers for automated vehicles or robots in general are \enquote{designed and tuned by human engineers} \parencite{Deisenroth2013}.
 One of the main reasons is the fact that control of an automated vehicle is an extremely safety-critical domain, while at the same time machine learning approaches in general pose additional challenges regarding safety validation \parencite{Koopman2016}.
 Furthermore, those tasks on the physical level of the perception-action-cycle are solved effortlessly by humans and therefore, according to Moravec's paradox, we should expect them to be hard to master for artificial learning systems.
 Therefore, we decided to focus on the mental/upper part of the perception-action-cycle in this thesis.
 On the one hand, we believe that tasks in this part of the cycle show promise to benefit most from neuromorphic approaches.
-On the other hand, "mental" tasks do not necessarily need to be performed and evaluated in closed-loop systems, which make them less problematic regarding safety issues, and therefore ideal candidates for further investigations.
-It should be clear however, that "perception/action and higher level cognition are not two independent parts of one systems, but rather two integrated aspects of cognitive beings such as as ourselves" \parencite{Eliasmith2013}.
+On the other hand, \enquote{mental} tasks do not necessarily need to be performed and evaluated in closed-loop systems, which make them less problematic regarding safety issues, and therefore ideal candidates for further investigations.
+It should be clear however, that \enquote{perception/action and higher level cognition are not two independent parts of one systems, but rather two integrated aspects of cognitive beings such as as ourselves} \parencite{Eliasmith2013}.
 Current artificial systems are still far away from integrating both aspect effectively and more research will be necessary to close this gap.
 
 Precise knowledge about the current state of its environment is essential for any autonomous agent and biological organism alike to plan a secure path for navigation and to safely interact with the world.
@@ -70,7 +70,7 @@ In case of highly automated vehicles, perception of the outside world usually ha
 This observed information needs to be collected and combined into a central environment model, which is the (mental) basis for further reasoning and decisions.
 One essential ingredient for such a model of the environment, or mental tasks in general, is knowledge or information representation.
 It is an open research question to date, how the human brain represents knowledge and what underlying neural or computational substrate it uses to encode information \parencite{Wang2003, Samsonovich2012, Handjaras2016}.
-Most modern approaches to reasoning or cognitive tasks in context of robotics or automated driving are built upon Bayesian probability theory and use "computer-scientific" approaches to knowledge representation.
+Most modern approaches to reasoning or cognitive tasks in context of robotics or automated driving are built upon Bayesian probability theory and use \enquote{computer-scientific} approaches to knowledge representation.
 This could be lists of objects (cf. Fig. \ref{subfig:urban_object_lists}) with numerical encoding of properties when working on a higher level of abstraction.
 On a lower level, another common approach especially in context of neural-network learning, is to label raw sensory data, for example individual pixels of images (cf. Fig. \ref{subfig:urban_semantic_labels}).
 However, when we as humans observe a particular scene (e.g., while driving), our mental representation will probably be very different from those aforementioned approaches.
@@ -152,7 +152,7 @@ To avoid potentially long delays in the online learning process, we propose a no
 Revisiting the data sets used in chapter~\ref{chap:behav_pred}, we evaluate two different variants of the mixture models adapting their weights either solely based on the prediction error or the current context of the scene.
 We show, that our online learning model is able to improve over the individual predictors already after being exposed to a small set of example vehicles.
 
-Chapter ~\ref{chap:closed_loop_neuromorphic_control_systems} presents a first step towards a neuromorphic control architecture by developing two sample instantiations of neurally-inspired control algorithms.
+Chapter~\ref{chap:closed_loop_neuromorphic_control_systems} presents a first step towards a neuromorphic control architecture by developing two sample instantiations of neurally-inspired control algorithms.
 We establish neuromorphic control architectures, that can be used to implement generic control algorithms in the language of \acp{SNN} with the advantage, that the overall task can be divided into several sub-networks.
 This approach gives the opportunity to combine manual programming with the advantages of neural network learning.
 Manually programmed sub-tasks can either complement learning networks within the system or serve as an initial approximation of the desired function, which allows more directed learning to improve task performance avoiding the need to start learning from a completely blank state.
@@ -168,7 +168,7 @@ We conclude the thesis by proposing a series of extensions and improvements whic
 
 This thesis presents a first step towards a cognitive environment model for automated vehicles and thereby a provides a novel perspective to knowledge representation in automotive context.
 The two key ingredients for our approach are distributed representations and \acp{SNN}, which in combination offer a promising modeling substrate for cognitive tasks as shown in \textcite{Eliasmith2013, Eliasmith2012}. 
-The possibility to implement distributed representations in a spiking neuron substrate offers an interesting possibility to combine symbol-like processing with the strength of neural network learning.
+The possibility to implement distributed representations in a spiking neuron substrate offers the potential to combine symbol-like processing with the strength of neural network learning.
 Additionally, \acp{SNN} are one option to tackle increasing energy-efficiency requirements in future automated vehicles equipped with a plethora of sensor and computing systems.
 This thesis presents a strict mathematical formalism regarding the theory of distributed representations, summarizing their key features in a generic framework.
 Thereby, we lay the foundation for our novel approach to build structured representations of automotive scenes.
@@ -184,7 +184,7 @@ Therefore, parts of the literature review and text that presents the research co
 The research on the mobile manipulation task was conducted during a collaboration project between \ac{TUM} and University of Waterloo while the work on vehicle trajectory control was supported by Benjamin Zorn during his internship at \ac{BMW}.
 The approaches, principles and models presented in the sections on structured vocabularies in chapters~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes} and~\ref{chap:driving_context_classification} were developed in collaboration with Robert Darius during the preparation of his Master's thesis \parencite{Darius2018} under my supervision at \ac{BMW} Group.
 Many of the novel approaches presented in this thesis arose from discussions with researchers from the \ac{CNRG} at University of Waterloo, where I spent a six week research visit in summer 2017.
-This research visit spawned a follow-up collaboration project between \ac{BMW} and \ac{CNRG}, during which parts of chapters~\ref{chap:behav_pred} and~\ref{chap:mix_online_learning} were developed in collaboration.
+This research visit spawned a follow-up collaboration project between \ac{BMW} and \ac{ABR}, during which parts of chapters~\ref{chap:behav_pred} and~\ref{chap:mix_online_learning} were developed in collaboration.
 This collaboration covered mainly the implementation of the \ac{LSTM} model based on numerical input in chapter~\ref{chap:behav_pred} as well as discussions about the online learning approach presented in chapter~\ref{chap:mix_online_learning}.
 Researchers involved in this collaboration co-authored some of the publications listed in~\ref{subsec:list_of_publications}.
 Finally, figures displayed in this thesis, which have been reprinted or adapted from others or quotations are clearly marked as such.

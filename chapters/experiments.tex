@@ -8,7 +8,7 @@ Here, we partly depart from the application of automated driving using real-worl
 As mentioned earlier, control of an automated vehicle is an extremely safety-critical task.
 Furthermore, current vehicle hardware architectures are designed neither to include neuromorphic hardware nor to efficiently process \acp{SNN}.
 Therefore, we demonstrate the general feasibility of this neuromorphic control architecture on the task of bringing order in a sequence of unordered visual stimuli detected using a neuromorphic vision sensor, the \ac{DVS} (section~\ref{sec:sensorimotor_adaptation_for_mobile_robotic_manipulation}). 
-The second demonstration scenario is closer to automotive context, presenting system employing reinforcement learning for short-term vehicle trajectory planning evaluated in the simulated environment of the \acf{TORCS} \parencite{TORCS}.
+The second demonstration scenario is closer to automotive context, presenting a system employing reinforcement learning for short-term vehicle trajectory planning evaluated in the simulated environment of the \acf{TORCS} \parencite{TORCS}.
 Both applications demonstrate certain aspects of the control architecture: the mobile manipulation tasks shows how the principles of neural engineering can be used to manually program non-trivial tasks in a spiking neural substrate.
 This can be useful, to either bootstrap learning to improve task performance without having to start the process from an initial blank state or to complement learning networks with manually designed networks involving human expert knowledge.
 The second task presents such a combination in an instantiation of the neuromorphic control architecture, with a trajectory selection module employing reinforcement learning while all other modules are manually designed for simplicity.
@@ -170,7 +170,7 @@ In the current instantiation of our framework, we want to solve a non-trivial mo
 Using our mobile platform the task is to manipulate objects with LED stimuli blinking at different frequencies to bring them in order. 
 More precisely, the task can be seen as a grasp and sort task, in which the robot will select a certain control policy depending on the current sensory streams (mainly visual input) to find the misplaced stimulus and place it in the correct location. 
 Action selection is performed using a model of a biologically plausible neural circuit, namely the Basal Ganglia. 
-The Basal Ganglia, according to \textcite{Stewart2010}, is an action selector that chooses whatever action has the best "salience" or "goodness". 
+The Basal Ganglia, according to \textcite{Stewart2010}, is an action selector that chooses whatever action has the best \enquote{salience} or \enquote{goodness}. 
 Selection is done on the basis of a context dependent utility signal for each possible action. 
 Actions that are inappropriate for the current context may have low utility, and the task of the Basal Ganglia is to select the action that currently has the highest utility value.
 The Basal Ganglia will choose between the four possible behavior stacks: Grab, Hold And Move Side, Put Down or Finish.

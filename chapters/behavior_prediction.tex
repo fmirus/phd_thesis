@@ -131,7 +131,7 @@ Those training and validation subsets contain \SI{90}{\percent} and \SI{10}{\per
     \label{fig:on_board_lane_change_example_with_imgs}
 \end{figure}
 
-In this section, we analyze the composition of our data sets regarding the amount of "interesting" behavior of the target vehicle.
+In this section, we analyze the composition of our data sets regarding the amount of \enquote{interesting} behavior of the target vehicle.
 Both, the \emph{On-board} and \emph{\ac{NGSIM}} data set consist of mainly highway driving, where we would expect mainly straight driving with the most interesting situations being the target vehicle, i.e., the vehicle whose motion we aim to predict, performing a lane change.
 Hence, we are interested in the amount of situations where the target vehicle actually performs a lane change and how much more prominent normal straight driving is in both our data sets.
 For the \emph{On-board} data set, we have information about the current lane as well as the distance to the lane borders estimated from the ego-vehicle's cameras available for all vehicles.
@@ -199,7 +199,7 @@ Hence, we use these linear prediction models based on a constant velocity assump
 The analysis of related research on trajectory prediction in automotive context given in section~\ref{subsec:trajectory_prediction} suggests, that the most successful current state-of-the-art approaches rely mainly on \ac{LSTM}-based neural network architectures.
 They are typically combined with other neural networks such as convolutional layers or classification networks \parencite{Deo2018a} to improve model performance.
 In this chapter, we use \ac{LSTM}-based models as well as simpler feed-forward neural networks to predict trajectories based on our semantic vector representation of the current driving situation.
-Hence, we use the same models just employing a different encoding (see section ~\ref{subsec:scene_representation_in_vectors} for further details on the reference encoding schemes) of the input data avoiding further complexity of additional networks or layers to make the models as comparable as possible.
+Hence, we use the same models just employing a different encoding (see section~\ref{subsec:scene_representation_in_vectors} for further details on the reference encoding schemes) of the input data avoiding further complexity of additional networks or layers to make the models as comparable as possible.
 
 \section{Representation and models}
 \label{sec:repr_models}
@@ -234,7 +234,7 @@ We also apply two other encoding scheme using the scalar multiplication encoding
 In this section, we investigate the expressive power of encoding the spatial positions of multiple vehicles using the convolutive vector-power introduced in Def.~\ref{def:conv_power}.
 Given the results of section~\ref{subsec:the_influence_of_varying_vocabularies}, that the impact of similarity structures in rather small vocabularies is neglectable, we create a random vocabulary $V$ of atomic vectors here.
 We assign a random real-valued vector from the unit sphere to each category of dynamic objects (e.g.\ car, motorcycle, truck) as well as random unitary vectors (c.f.\ def.~\ref{def:unitary_vec}) $\mathbf{X}$ and $\mathbf{Y}$ to encode the units of spatial positions in vectors.
-We use unitary vectors $\mathbf{X}$ and $\mathbf{Y}$ since they have unit length and are closed under convolutive exponentiation as shown in Lemma ~\ref{lemma:unitary_vec}.
+We use unitary vectors $\mathbf{X}$ and $\mathbf{Y}$ since they have unit length and are closed under convolutive exponentiation as shown in Lemma~\ref{lemma:unitary_vec}.
 Therefore, by encoding spatial positions with powers of unitary vectors, we avoid exploding lengths of our final scene vectors, which would lead to additional noise and unwanted behavior when using them as input for neural networks.
 Furthermore, we use additional random ID-vectors $\mathbf{TARGET}$ and $\mathbf{EGO}$ representing the target object to be predicted and, if applicable, the ego-vehicle.
 Given a situation as shown in figure~\ref{fig:on_board_data_example} with a sequence of prior positions $(x_{t}, y_{t})$ for the target vehicle at time step $t \in \left\{t_{0}, \ldots, t_{N} \right\}$ and equivalent sequences $(x_{obj,t}, y_{obj,t})$ for other traffic participants, we encapsulate this information in a scene vector
@@ -268,7 +268,7 @@ As the \emph{\ac{NGSIM}} data-set $D_2$ does not contain an ego-vehicle, we only
 \subsubsection{Reference encoding schemes}%
 \label{ssubsec:reference_encoding_schemes}
 
-For a simple reference vector-representation, we employ the scalar multiplication encoding for numerical values shown in section ~\ref{subsec:different_vector_representations_for_numerical_values}.
+For a simple reference vector-representation, we employ the scalar multiplication encoding for numerical values shown in section~\ref{subsec:different_vector_representations_for_numerical_values}.
 Therefore, we add the positional vectors $\mathbf{X}$ and $\mathbf{Y}$ scaled with the target vehicle's prior positions $(x_{t}, y_{t})$ at each time step $t$, yielding the sequence $\tilde{\mathbf{S}}_{t} =  x_{t} \cdot \mathbf{X} + y_{t}\cdot \mathbf{Y}$.
 We refer to this simpler encoding scheme based on the scalar multiplication encoding as \emph{\ac{SPA}-simple}.
 Finally, we also use plain numerical position values $p_t = (x_{t}, y_{t})$ as another reference encoding scheme of the input data to our learning models, which we refer to as \emph{numerical}.
@@ -302,7 +302,7 @@ Figure~\ref{fig:lstm_arch} visualizes the architecture of our \ac{LSTM} models i
 As an alternative to the \ac{LSTM}-models, we also considered a much simpler single-hidden-layer network defined using the \acf{NEF} \parencite{Eliasmith2003}.
 While this is usually used for constructing large-scale biologically realistic neuron models \parencite{Eliasmith2012}, the \ac{NEF} software toolkit \acs{Nengo} \parencite{Bekolay2014} also allows for traditional feed-forward artificial neural networks using either spiking or non-spiking neurons.
 For these \ac{NEF} networks, we use a single hidden layer, with randomly generated (and fixed) input weights, and use least-squares optimization to compute the output weights.
-We employ the principles of the \ac{NEF} as shown in ~\ref{sec:neural_eng} to 
+We employ the principles of the \ac{NEF} as shown in~\ref{sec:neural_eng} to 
 As with any traditional network, we can have any number of input, output, and hidden neurons, all following this same process.
 The goal here is to provide a simple baseline for comparison to the \ac{LSTM} networks, to see what (if any) performance gain is produced by the more complex network approach.
 However, these simpler networks are unable to process sequential data in the same way as the \ac{LSTM} models.
@@ -314,7 +314,7 @@ Therefore, we will have to slightly adapt our data, especially the semantic vect
 In this section, we take a brief detour on anomaly detection.
 We are further interested in the information encapsulated within our semantic vector representation and if it can be used to detect potentially dangerous driving situations from just the vector representation.
 \acp{VSA} in general already have an intrinsic mechanism of comparing vectors with one another through the measure of similarity $phi$.
-However, it is not clear if simply comparing vectors in terms of similarity to for instance the mean pairwise-similarity of all known vectors, or a subset of vectors considered "normal", will differentiate outliers from the "normal data".
+However, it is not clear if simply comparing vectors in terms of similarity to for instance the mean pairwise-similarity of all known vectors, or a subset of vectors considered \enquote{normal}, will differentiate outliers from the \enquote{normal data}.
 A-prior, it might not even be clear what vectors belong to the baseline set of normal data or how to define vectors to be considered as inliers.
 One option could be to manually define metrics such as the number of vehicles in the scene or a threshold for the distance between the vehicles to detect crowded and potentially dangerous situations.
 However, such an approach suffers from the typical issues of manual engineering such as biases introduced by the human designer as well as poor scaling.
@@ -451,7 +451,7 @@ In this section, we will investigate the \ac{LSTM}-based prediction models.
 
 For the \ac{LSTM}-models, we firstly investigated the composition of the input data to the model to get an idea, what kind of information is useful for the task of motion prediction.
 Therefore, we trained several instantiations of our \ac{LSTM}-network architecture on the \emph{On-board} data-set $D_1$ for different variations of the input data, for \num{8} epochs each.
-Table ~\ref{tab:input_data_setups} summarizes the different setups and shows what kind of data is included in each setup shown in Fig.~\ref{fig:lstm_input_data_analysis}.
+Table~\ref{tab:input_data_setups} summarizes the different setups and shows what kind of data is included in each setup shown in Fig.~\ref{fig:lstm_input_data_analysis}.
 The simplest setting (setup \num{1}) is using only the positional information of the target vehicle as input and its instantaneous velocity as additional information in the embedding without including any information about the ego-vehicle.
 We refer to this setting as the default setting in this section.
 In addition, we also analyze settings where additional information like velocity (setups \num{6}-\num{15}) and acceleration (setups \num{11}-\num{15}) of the target vehicle are available to the system.
@@ -473,7 +473,7 @@ In this evaluation, we include the history of the ego-vehicle's information to t
     \label{fig:lstm_units_layers_analysis}
 \end{figure}
 
-Figure~\ref{fig:lstm_input_data_analysis} depicts the \ac{RMSE} ($y$-axis) for each input data setup given in table ~\ref{tab:input_data_setups} on the $x$-axis at each prediction time step.
+Figure~\ref{fig:lstm_input_data_analysis} depicts the \ac{RMSE} ($y$-axis) for each input data setup given in table~\ref{tab:input_data_setups} on the $x$-axis at each prediction time step.
 Each tick on the $x$-axis corresponds to one input setup, whereas each group of \num{5} ticks from left to right correspond to one fixed setup for the target vehicle.
 The left group contains only the default data about the target vehicle (setups \num{1}-\num{5} in table~\ref{tab:input_data_setups}), the middle group contains the history of the target vehicle's velocity (setups \num{6}-\num{10} in table~\ref{tab:input_data_setups}) and the right group contains additionally the history of the target vehicle's acceleration (setups \num{11}-\num{15} in table~\ref{tab:input_data_setups}).
 Each tick within one group corresponds to one setting for the ego-vehicle, whereas again from left to right the amount of available information increases.
@@ -641,7 +641,7 @@ Figure~\ref{fig:rmse_on_board_all} showed the performance of our \ac{LSTM}-based
 Here, we train models with the exact same neural network architectures and encoding schemes of the input just on different data sets, namely the subset of samples containing a lane change performed by the target vehicle.
 We consider both types of target vehicle lane changes performed during the trajectory history used as input to the models as well as lane changes performed in the future trajectory to be predicted.
 Figure~\ref{fig:rmse_on_board_training_data_variation} shows a comparison of different setups regarding training and evaluation data for our \ac{LSTM}-based trajectory prediction models.
-We also keep the simple linear prediction model based on a constant velocity assumption as reference in the figures, since it is not a data-driven learning model and as such invariant under the changes of the training data.
+We also keep the simple linear prediction model based on a constant velocity assumption for reference in the figures, since it is not a data-driven learning model and is therefore invariant under the changes of the training data.
 Figures figures~\ref{subfig:rmse_large_all},~\ref{subfig:rmse_large_all_lc_only},~\ref{subfig:rmse_large_subset} and~\ref{subfig:rmse_large_subset_lc_only} show the \ac{RMSE} for models trained on the complete data set while figures~\ref{subfig:rmse_large_all_trained_on_lc},~\ref{subfig:rmse_large_all_lc_only_trained_on_lc},~\ref{subfig:rmse_large_subset_trained_on_lc} and~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc} show the same models evaluated on the same samples but trained
 only on data samples including a target vehicle lane change.
 On the other hand, the upper row of figures~\ref{subfig:rmse_large_all} -~\ref{subfig:rmse_large_subset_trained_on_lc} illustrates the performance of the models trained on either the complete data set or on only the lane changes on all data samples, while the lower row of figures~\ref{subfig:rmse_large_all_lc_only} -~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc} show the performance of the models trained on either the complete data set or on only the lane changes only on data samples containing a target vehicle lane change.
@@ -689,7 +689,7 @@ If the models are trained only on lane change samples, the \ac{LSTM} \acs{SPA} \
 
 So far, we have only compared either all models trained on the complete data set or all models trained only on the lane change samples.
 However, we are also interested in how the performance for particular models changes when modifying the training data set.
-Figure~\ref{fig:rmse_on_board_training_all_vs_training_on_lc_only} shows a comparison of the \ac{LSTM}-based models when modifying the training data for the \ac{LSTM} \acs{SPA} \num{3} model (figures ~\ref{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all} - ~\ref{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all}) as well as the \acs{LSTM} numerical model (figures
+Figure~\ref{fig:rmse_on_board_training_all_vs_training_on_lc_only} shows a comparison of the \ac{LSTM}-based models when modifying the training data for the \ac{LSTM} \acs{SPA} \num{3} model (figures~\ref{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all} -~\ref{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all}) as well as the \acs{LSTM} numerical model (figures
 ~\ref{subfig:rmse_large_all_numerical_trained_on_lc_vs_trained_on_all} -~\ref{subfig:rmse_large_subset_lc_only_numerical_trained_on_lc_vs_trained_on_all}).
 In this direct comparison, we observe that there is no significant difference in the performance of the numerical \ac{LSTM} models trained on different samples for both evaluation sets containing either the complete data set or only the target vehicle lane changes.
 For the \ac{LSTM} \acs{SPA} \num{3} model however, we observe significant improvements for the model trained on the lane change samples when evaluated on the lane changes performed by the target vehicle the model trained on all data samples.
@@ -824,7 +824,7 @@ Figure~\ref{subfig:anomalies_on_board_boxplots_other_vehicles} and~\ref{subfig:a
 \end{figure}
 
 We observe a clear difference for both, the evaluation of the distances and the number of other vehicles, between the anomalies detected by our neural network and the complete set of data samples.
-Regarding the distances, the amount of situation with smaller distances from the ego-vehicle and the closest other vehicle to the target is significantly higher for the anomalies than for the complete data set.
+Focusing on the distance information, the number of instances with smaller distances between the ego-vehicle or the closest other vehicle and the target is significantly higher for the anomalies than for the complete data set.
 While the mean distance between the target and closest other vehicle is slightly below \SI{20}{\meter} for the complete data set, the mean distance for the anomalies is \SI{10}{\meter} (cf.\ figure~\ref{subfig:anomalies_on_board_boxplots_distances}) with clear concentration below \SIrange{0}{15}{\meter} (cf.\ figure~\ref{subfig:anomalies_on_board_histograms_distances}).
 We observe a similar distribution for the distance between the target and the ego-vehicle, where the distances are more or less equally distributed around the mean of \SI{40}{\meter} for the complete data set.
 For the anomalies, we observe a concentration of the distances between the target and the ego-vehicle below \SI{40}{\meter} around the mean of \SI{25}{\meter}.
@@ -847,6 +847,12 @@ For the number of other vehicles however, we also observe that the samples detec
 In conclusion, our autoencoder neural network is able to detect a subset of anomalies consistently for both, the \emph{On-board} and \emph{\ac{NGSIM}} data set, which show sufficiently significant differences to the complete data set regarding certain metrics.
 The results indicate, that the anomalies detected by the network have a tendency towards crowded situations with rather small distances between the target vehicle and the other vehicles in its surroundings.
 Since these are the kind of situations, where our prediction models based on the \ac{SPA}-based convolutive power encoding tend to perform better than the other reference models, these results offer interesting directions for future research.
+For instance, we could combine the anomaly detection network based on our vector representation presented in this section with the behavior prediction networks to decide whether the current driving situation is potentially hazardous and needs more accurate predictions than less crowded or dangerous situations. 
+We have already seen in section~\ref{subsec:evaluation_of_the_lstm_based_prediction_models}, that the \ac{LSTM} models employing the convolutive power representation (\ac{LSTM} \ac{SPA} \num{1} and \num{3}) outperform the other models in such situations particularly in lateral direction. 
+Furthermore, one could also imagine to let the outlier detection network guide the training process of the behavior prediction networks.
+That is, we could train prediction models particularly on lane changes, the outliers and a similar amount of \enquote{normal} samples to create a more balanced training data set.
+We have already seen that the networks using semantic vectors benefit from a more focused and specific training data set, since the models trained particularly on lane changes improved especially in lane change situations compared to network variants trained on all samples.
+Finally, we could also investigate other anomaly detection algorithms in addition to the autoencoder models shown here to get a better idea what sort of data samples are actually  outliers by evaluating how different models classify anomalies differently.
 
 \section{Summary}%
 \label{sec:summary_behavior_prediction}
