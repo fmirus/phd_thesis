@@ -288,8 +288,8 @@ We use a similar architecture as the one used for traffic sign classification in
          7 & fully connected & \num{300} neurons & $1 \times 1$ \\
          8 & fully connected & \num{3} neurons & $1 \times 1$ 
     \end{tabular}
-	\label{tab:context_class_cnn_arch}
     \captionof{table}{Layer by layer architecture of our reference \ac{CNN} for driving context classification.}
+	\label{tab:context_class_cnn_arch}
 \end{center}
 This architecture is shown in table~\ref{tab:context_class_cnn_arch} consisting of three consecutive convolutional layers each followed by a max-pooling layer and two fully-connected layers for the final classification.
 The network has two additional dropout layers, one after the convolutional layer part of the network dropping \SI{25}{\percent} of the neurons activity and one before the final classification layer dropping \SI{50}{\percent} activity.
