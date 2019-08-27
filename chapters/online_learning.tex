@@ -45,8 +45,8 @@ We start with two variants of the model: one adapting its weights based solely o
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.8\linewidth]{imgs/mix_context_free_system_arch.eps}
-    \caption{Visualization of the network architecture of the context-free mixture-of-experts online learning system.
-    The weights of the mixture-of-experts model are depends solely on the error $\epsilon$ between the model's prediction and the actual future motion of the target vehicle.}
+    \caption{Visualization of the network architecture of the context-free mixture-of-experts online learning system with yellow boxes indicating the individual components of the model.
+    The weights of the mixture-of-experts model depend solely on the error $\epsilon$ between the model's prediction and the actual future motion of the target vehicle.}
     \label{fig:mix_context_free_system_arch}
 \end{figure}
 Given that we have multiple models $ p_{i}$ for $i=1, \ldots, n$ predicting vehicle positions, we define the set of prediction models as 
@@ -67,7 +67,7 @@ This core weighting algorithm is given by
 where $\mathbf{v}_{ p ,t}$ is the predicted value for time $t$ into the future from offline model $p$, and $\mathbf{W}_{ p ,t}$ is the weight for expert $p$ for a prediction time of $t$.
 Note that this means that the weighting between the expert predictions may be different depending on how far into the future we are predicting.
 That is, in some conditions one expert should be weighted more highly than in other conditions, and we want to adapt this weighting based on experience.
-Figure~\ref{fig:mix_context_free_system_arch} depicts the architecture of the context-free mixture-of-experts model variant.
+Figure~\ref{fig:mix_context_free_system_arch} depicts the architecture of the context-free mixture-of-experts model variant with yellow boxes indicating the individual components of the model.
 
 The weights $ \mathbf{W}_{ p ,t}$ are initialized equally over all predictors $ p$, i.e. $\mathbf{W}_{ p ,t} = 1/N_p$, where $N_p$ is the number of prediction models being combined, and then updated using online learning.
 While any neural network learning algorithm could be used to do this, we adapt the classic delta learning rule, which is the basis of all gradient-descent learning algorithms, for the sake of simplicity and ease of implementation:
@@ -85,7 +85,8 @@ where $\kappa$ is the learning rate and $\nu_{t}$ is a factor to scale the learn
     \centering
     \includegraphics[width=\textwidth]{imgs/mix_system_arch.eps}
     \caption{Visualization of the network architecture of the context-sensitive mixture-of-experts online learning system.
-    The red arrow indicates the learning connection with changing decoder values $d_{p,t,i}$, whereas the dotted green arrow indicates that the error signal $\epsilon$ is temporally delayed and is used to update the decoders $d_{p,t,i}$ of the red connection.}
+    Yellow boxes indicate the individual components of the model, while the solid red line depicts the connection to decode out the weights $ \mathbf{W}_{p,t}$ for the individual expert predictors from the neural population encoding the context $\mathbf{z}$ as indicated by the green circles in the context component.
+    The dotted green arrow indicates that the error signal is used to update the weights of this connection using delta-rule learning.}
     \label{fig:mix_context_sensitive_system_arch}
 \end{figure}
 
@@ -137,8 +138,8 @@ However, rather than applying that change to $\mathbf{W}$ directly, we instead u
   \label{eq:learning2}
 \end{equation}
 Figure~\ref{fig:mix_context_sensitive_system_arch} shows a schematic visualization of our model's architecture.
-The solid red line indicates the connection to decode out the weights $ \mathbf{W}_{p,t}$ for the individual expert predictors from the neural population encoding the context $ \mathbf{z}$.
-The dotted green line indicates the (delayed) error signal $\epsilon_{t}$ used to update the decoders $ \mathbf{d}_{p,t,i}$ of the connection between the context population and the expert weights.
+Yellow boxes indicate the individual components of the model, while the solid red line depicts the connection to decode out the weights $ \mathbf{W}_{p,t}$ for the individual expert predictors from the neural population encoding the context $\mathbf{c}$ as indicated by the green circles in the context component.
+Finally, the dotted green arrow indicates that the error signal is used to update the weights of this connection using delta-rule learning.
 
 \subsection{Temporal spreading of the error signal}%
 \label{subsec:temporal_spreading_of_the_error_signal}
