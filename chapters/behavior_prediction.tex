@@ -60,8 +60,8 @@ Table~\ref{tab:target_data_features} gives an overview and detailed description 
 		LaneCurvature & Information about the lane curvature estimated from fused sensor reading (camera and range sensors) \\ \hline
 		TypeProbability & Probability for the object being a of certain type (e.g. car or truck) estimated from camera sensors \\ \hline
 	\end{tabular}
-	\label{tab:target_data_features}
 	\captionof{table}{Table depicting different features for dynamic objects within the training data}
+	\label{tab:target_data_features}
 \end{center}
 In contrast to the data set used in chapter~\ref{chap:driving_context_classification}, the object-lists of the data set used here contains already preprocessed information as a fusion from the different available sensor sources.
 This fused information about objects is available at a frequency of roughly \SI{5}{\hertz}.
@@ -376,8 +376,8 @@ Thereby, we will identify strengths and weaknesses of each particular model.
             \bottomrule
         \end{tabular}
     }
-	\label{tab:evaluated_models}
 	\captionof{table}{Summary of the evaluated models regarding architecture, input data, encoding and training.}
+	\label{tab:evaluated_models}
 \end{center}
 
 Table~\ref{tab:evaluated_models} summarizes the models evaluated in this section.
@@ -445,8 +445,8 @@ In this section, we will investigate the \ac{LSTM}-based prediction models.
             \bottomrule
         \end{tabular}
     }
-	\label{tab:input_data_setups}
     \captionof{table}{Summary of the input data setups of the different models evaluated in Fig.~\ref{fig:lstm_input_data_analysis}.}
+	\label{tab:input_data_setups}
 \end{center}
 
 For the \ac{LSTM}-models, we firstly investigated the composition of the input data to the model to get an idea, what kind of information is useful for the task of motion prediction.
@@ -567,19 +567,29 @@ Figure~\ref{fig:rmse_on_board_all} visualizes the \ac{RMSE} of all \ac{LSTM}-bas
 Figure~\ref{fig:rmse_on_board_all} \textbf{(A)} shows the performance on the complete validation-set, whereas figure~\ref{fig:rmse_on_board_all} \textbf{(B)} depicts only situations with at least \num{3} other vehicles present, the distance between the target and the ego-vehicle being lower than \SI{20}{\meter} and the distance between the target and the closest other vehicle being less than \SI{10}{\meter}.
 We observe that all approaches yield comparable results with notable differences in certain situations.
 Although the models employing the \ac{SPA}-power encoding schemes tend to perform worst in $x$-direction, we observe that they perform better in $y$-direction in crowded situations with closely driving vehicles with the \acs{LSTM} \acs{SPA} \num{3} model ranking best along the \acs{LSTM} numerical model.
-
 \begin{figure}[t!]
-  \centering
-  \includegraphics[width=0.95\textwidth]{imgs/histogram_on_board_revised.eps}
-  \caption{Metric evaluation specifying situations where the \ac{LSTM} \acs{SPA} \num{3} model outperforms all other approaches regarding the \acs{RMSE} in $y$-direction on the \emph{On-board} data-set $D_1$.}\label{fig:histograms_on_board}
+    \centering
+    \subfloat[\label{subfig:histogram_on_board_1}]{%
+        \includegraphics[width=0.95\linewidth]{imgs/histogram_on_board_1.eps}
+    }\\
+    \subfloat[\label{subfig:histogram_on_board_2}]{%
+        \includegraphics[width=0.95\linewidth]{imgs/histogram_on_board_2.eps}
+    }
+    \caption{Metric evaluation specifying situations where the \ac{LSTM} \acs{SPA} \num{3} model outperforms all other approaches regarding the \acs{RMSE} in $y$-direction on the \emph{On-board} data-set $D_1$.
+      In the upper row~\protect\subref{subfig:histogram_on_board_1}, blue bars illustrate samples where \ac{LSTM} \ac{SPA} \num{3} performs better than all other models while the orange bars depict samples where any other model performs best.
+      From left to right, the plots in ~\protect\subref{subfig:histogram_on_board_1} illustrate the distance between the target vehicle and the closest other vehicle, the distance between the target and the ego-vehicle and the number of vehicles other than the target.
+      The lower row~\protect\subref{subfig:histogram_on_board_2} illustrates the difference between the blue and orange bars in the corresponding figure in~\protect\subref{subfig:histogram_on_board_1}.
+    }
+    \label{fig:histograms_on_board}
 \end{figure}
 
-To further investigate this result, we evaluated certain metrics, chosen to characterize crowded and potentially dangerous situations, for items in the validation-set, where the \acs{LSTM} \acs{SPA} \num{3} model outperforms all other approaches with respect to the \ac{RMSE} in $y$-direction (see figure~\ref{fig:histograms_on_board}).
-We observe that the ratio of situations, where the distance between the target and the ego vehicle and/or the closest other object being small is significantly higher when the \ac{LSTM} \ac{SPA} \num{3} model outperforms all other approaches.
-For samples where the \ac{LSTM} \ac{SPA} \num{3} model performs best, the ratio of samples with a distance less than \SI{20}{\meter} between the target- and ego-vehicle is \SI{50.5}{\percent} higher compared to samples where any of the other models performs best.
-For distances less than \SI{20}{\meter} between the target vehicle and the closest other vehicle, the ratio is still \SI{11.4}{\percent} higher when the \ac{LSTM} \ac{SPA} \num{3} model performs best.
-Finally, the ratio of situations with at least \num{3} other vehicles present is also \SI{7.8}{\percent} higher compared to samples where any other model performs best.
+To further investigate this result, we evaluated certain metrics, chosen to characterize crowded and potentially dangerous situations, for items in the validation set, where the \ac{LSTM} \ac{SPA} \num{3} model outperforms all other approaches with respect to the \ac{RMSE} in $y$-direction (see Fig.~\ref{fig:histograms_on_board}).
+We observe that the number of samples, where the distance between the target and the ego vehicle and/or the closest other object being small is significantly higher when the \ac{LSTM} \ac{SPA} \num{3} model outperforms all other approaches.
+For samples where the \ac{LSTM} \ac{SPA} \num{3} model performs best, the number of samples with a distance less than \SI{20}{\meter} between the target- and ego-vehicle is \SI{50.5}{\percent} higher compared to samples where any of the other models performs best.
+For distances less than \SI{20}{\meter} between the target vehicle and the closest other vehicle, the number of samples is still \SI{11.4}{\percent} higher when the \ac{LSTM} \ac{SPA} \num{3} model performs best.
+Finally, the number of situations with at least \num{3} other vehicles present is also \SI{7.8}{\percent} higher compared to samples where any other model performs best.
 Thus, we consider these characteristics suitable candidates to serve as context variables on which our online-learning mixture-of-experts system could base its weighting decision on.
+However, we aim to investigate more sophisticated options such as clustering methods in future work to uncover other, potentially more meaningful features compared to the ones shown in this paper, distinguishing between situations where \ac{LSTM} \ac{SPA} \num{3} performs best compared to another model showing the best performance.
 
 \begin{figure}[t!]
 	\centering
