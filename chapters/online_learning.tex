@@ -138,7 +138,7 @@ However, rather than applying that change to $\mathbf{W}$ directly, we instead u
   \label{eq:learning2}
 \end{equation}
 Figure~\ref{fig:mix_context_sensitive_system_arch} shows a schematic visualization of our model's architecture.
-Yellow boxes indicate the individual components of the model, while the solid red line depicts the connection to decode out the weights $ \mathbf{W}_{p,t}$ for the individual expert predictors from the neural population encoding the context $\mathbf{c}$ as indicated by the green circles in the context component.
+Yellow boxes indicate the individual components of the model, while the solid red line depicts the connection to decode out the weights $ \mathbf{W}_{p,t}$ for the individual expert predictors from the neural population encoding the context $\mathbf{z}$ as indicated by the green circles in the context component.
 Finally, the dotted green arrow indicates that the error signal is used to update the weights of this connection using delta-rule learning.
 
 \subsection{Temporal spreading of the error signal}%
