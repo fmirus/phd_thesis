@@ -1,2 +1,26 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}  
+
+The race to autonomous driving is currently one of the main forces for pushing research forward in the automotive domain.
+One major reason for this development in recent years is the rapid progress of Artificial Intelligence, especially the success of deep learning, which has shown remarkable results in tasks essential for autonomous driving.
+The focus of the young and emerging research field \emph{neuromorphic engineering} is on biologically inspired computing systems and algorithms, aiming to close the gap in performance and efficiency between biological and artificial computing systems.
+Prototypes of neuromorphic computing hardware, although not technologically mature yet, show promise to be a useful, energy-efficient addition in future automotive applications.
+However, neuromorphic computing approaches are just beginning to draw attention in the automotive domain due to these novel spiking-neuron architectures encapsulating a drastically different computing paradigm and therefore call for alternative algorithmic approaches and new programming substrates.
+
+In this thesis, we present a first step towards a cognitive environment model for automotive applications using distributed representations and a spiking neuron substrate.
+We investigate the use of vector representations, which have been previously used for problems such as cognitive modeling or natural language processing, for knowledge representation and reasoning in automotive context.
+This approach to information encoding is rather generic and can be applied to various different tasks with little modifications to the representation itself.
+Furthermore, such vector-based representations offer to the opportunity to be implemented in a spiking neuron substrate, which supports efficient learning algorithms and deployment on dedicated neuromorphic hardware.
+This also allows us to combine the advantages of symbolization with the benefits of neural networks.
+We investigate varying instantiations of our vector-based scene representation applied to different tasks.
+In a first sample application, we introduce a model, that learns to classify the current driving context based on a distributed representation of the current driving scene. 
+The conceptual focus here is to capture semantics of the scene allowing conclusions about the type of environment the vehicle is currently navigating, but also investigating how varying vector vocabularies and learning architectures influence task performance.
+Another essential ingredient of an environment model especially in automotive context is precise knowledge about the current state and future development of all dynamic objects in the vehicle's surroundings.
+We focus on the task of predicting the behavior, that is, future motion of those other traffic participants around the vehicle based on a vector-based description of the current scene using convolutive vector powers to encode spatial information.
+We hypothesize, that these structured representations have the potential to capture mutual interactions between dynamically moving agents.
+Prediction of other traffic participants' behavior also offers the opportunity to explore different learning approaches.
+For instance, human drivers have acquired comprehension through past experience of how other cars will probably act, but adapt this knowledge continuously when encountering new situations.
+From this inspiration, we learn a generic model of dynamic behavior through offline training and refine this model when perceiving behavior of a particular object through a novel mixture-of-experts model employing online learning.
+To complement these more high-level reasoning tasks with a perspective on motor control, we also introduce a novel neuromorphic control architectures, that can be used to implement generic control algorithms in the language of \acp{SNN}.
+This approach allows to divide larger tasks in small sub-networks combining the advantages of manual programming with neural network learning.
+This allows a first impression of how future neural vehicle control based on our distributed, cognitive environment model could be achieved.
