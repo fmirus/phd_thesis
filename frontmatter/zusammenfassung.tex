@@ -1,2 +1,29 @@
 \chapter*{Zusammenfassung}
 \addcontentsline{toc}{chapter}{Zusammenfassung}
+
+Der Wettlauf in Richtung des ersten vollkommen autonom fahrenden Automobils ist aktuell eine der Hauptursachen f\"ur den rasanten Fortschritt der Forschung im Automobilsektor.
+Ein Hauptgrund f\"ur diese Entwicklung in den letzten Jahren ist der Fortschritt im Bereich der k\"unstlichen Intelligenz und insbesondere von sogenannten tiefen neuronalen Netzen, die au{\ss}ergew\"ohnliche Erfolge in Bereichen erzielt haben, die f\"ur das autonome Fahren von entscheidender Bedeutung sind.
+Der Schwerpunkt des aktuell noch jungen, doch wachsenden Forschungsgebietes \emph{Neuromorphic Computing} liegt hingegen auf biologisch inspirierten Computersystemen und Algorithmen, die darauf abzielen das Gef\"alle zwischen biologischen und k\"unstlichen Systemen hinsichtlich Leistung und Effizienz zu verringern.
+Obwohl neuromorphe Hardware-Prototypen technologisch noch nicht so ausgereift sind wie Ihre konventionellen Gegenst\"ucke, so zeigen sie doch vielversprechendes Potenzial zuk\"unftige Fahrzeuge im Hinblick auf Energieffizienz zu verbessern.
+Allerdings ziehen diese neuromorphen Ans\"atze nur langsam das Interesse der Automobilindustrie auf sich, da diese neuartigen Computerarchitekturen auf sogenannten gepulsten neuronalen Netzen (kurz \acsp{SNN} vom englischen \aclp{SNN}) basieren, welche sich drastisch von klassischen neuronalen Netzen unterscheiden und daher neuartige Paradigmen hinsichtlich Algorithmik und Programmierung ben\"otigen werden.
+
+In dieser Dissertation machen wir einen ersten Schritt in Richtung eines kognitiven Umgebungsmodells f\"ur Anwendungen im Bereich des automatisierten Fahrens unter Verwendund verteilter Darstellungen und gepulster neuronaler Netze.
+Wir untersuchen den Einsatz von Vektor-Darstellungen, die bisher vorrangig f\"ur die Modellierung kognitiver Prozesse oder in der Sprachverarbeitung verwendet wurden, zur Wissensrepr\"asentation im Fahrzeugumfeld.
+Dieser generische Ansatz zur Informationsdarstellung erlaubt den Einsatz in verschiedenen Anwendungsbereichen ohne gro{\ss}e an der Repr\"asentation selbst.
+Dar\"uber hinaus eignet sich eine solche Darstellung f\"ur die Implementierung in der Sprache von gepulsten neuronalen Netzen, welche neuartige, effiziente Lernverfahren sowie die Verwendung mit didizierter neuromorpher Hardware erlaubt.
+Weiterhin lassen sich dadurch die Vorteile symbolischer Darstellungen mit den St\"arken und automatisierten Lernverfahren von neuronalen Netzen kombinieren.
+Wir untersuchen die Eignung unserer vektor-basierten Szenen-Repr\"asentation an Hand von verschiedenen Anwendungsbeispielen.
+In einer ersten Anwendung pr\"asentieren wir ein Modell, welches basierend auf unserer Vektor-Darstellung der Umgebung lernt den aktuellen Fahrkontext zu klassifizieren.
+Der konzeptionelle Fokus liegt dabei darauf, die semantische Bedeutung der aktuellen Fahrsituation in der Darstellung zu erfassen, aber auch den Einfluss unterschiedlicher Faktoren wie beispielsweise des zugrundeliegenden Vektor-Vokabulars oder des verwendeten Lernverfahrens zu untersuchen.
+Ein weiterer wichtiger Bestandteil eines Umgebunsmodells im Automobilbereich ist genaues Wissen \"uber den aktuellen Zustand sowie die Vorhersage aller sich bewegenden Objekte im Umfeld des Fahrzeugs.
+Wir untersuchen die Pr\"adiktion dieser Objekte auf Basis unserer verteilten Repr\"asentation.
+Diese nutzt eine neuartige Vektor-Darstellung r\"aumlicher Informationen unter Verwedung von Vektor-Potenzen, welche auf der zyklischen Faltung basieren.
+Hier untersuchen wir die Hypothese, dass eine solche strukturierte Darstellung in der Lage ist den gegenseitigen Einfluss zwischen den verschiedenen, sich bewegenden Verkehrsteilnehmern zu erfassen.
+Weiterhin erlaubt dieses herausfordernde Anwendungsbeispiel die Untersuchung verschiedener Lernverfahren.
+Ein erfahrener Autofahrer hat im Laufe der Zeit ein umfassendes Verst\"andnis daf\"ur entwickelt, wie sich andere Verkehrsteilnehmer in bestimmten Situationen verhalten werden.
+Gleichzeitig ist er aber auch in der Lage, dieses Vorwissen auf Basis der aktuellen Fahrsituation kontinuierlich anzupassen und sich auf das Verhalten der anderen Fahrer spontan einzustellen.
+Mit dieser Inspiration entwickeln wir ein generisches Modell zur Vorhersage von dynamischen Objekten, welches auf Basis von vorab gesammelten Daten lernt.
+Dieses Modell verfeinern wir durch ein sogenanntes Abstimmen-von-Experten-Modell (englisch mixture-of-experts), welches in der Lage ist die Bewegungsvorhersage zur Laufzeit auf Basis des aktuellen Fahrkontexts anzupassen.
+Erg\"anzend pr\"asentieren wir eine neuartige neuromorphe Steuerungsarchitektur, die die Implementierung von Steuerungsalgorithmen in der Sprache gepulster neuronaler Netze erlaubt.
+Dies erm\"oglicht durch die Aufteilung in kleiner Teilnetze die Vorteile manueller Programmierung mit automatisierten Lernverfahren neuronaler Netze zu kombinieren.
+Dadurch gewinnen wir einen ersten Eindruck, wie eine zuk\"unftige, neuronale Fahrzeugsteuerung auf Basis unseres kognitiven Umgebungsmodells aussehen kann.
