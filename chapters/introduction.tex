@@ -102,14 +102,14 @@ Furthermore, \acp{VSA} offer to the opportunity to be implemented in a spiking n
 This allows us to combine the advantages of symbolization with the benefits of neural networks.
 We investigate varying instantiations of our representation applied to different tasks.
 In a first sample application we introduce a model learning to classify the current driving context based on a distributed representation of the current driving scene. 
-The conceptual focus here is to capture semantics of the scene allowing conclusion about the type of environment the vehicle is currently navigating.
+The conceptual focus here is to capture semantics of the scene allowing conclusions about the type of environment the vehicle is currently navigating.
 Another essential ingredient of an environment model especially in automotive context is precise knowledge about the current state and future development of all dynamic objects in the ego-vehicle's surroundings.
 We focus on the task of predicting the behavior of those other traffic participants around the ego-vehicle based on a vector description of the current scene.
 We hypothesize, that these structured representation have the potential to capture mutual interactions between dynamically moving agents.
 Prediction of other traffic participants behavior also offers the opportunity to explore different learning approaches.
 Human drivers have acquired comprehension through past experience of how other cars will probably act, but adapt this knowledge continuously when encountering new situations.
 From this inspiration, we learn a generic model of dynamic behavior through offline (i.e., batch) training and refine this model when perceiving behavior of a particular object through online learning.
-To complement the more high-level reasoning tasks with a perspective on neuromorphic control, a novel control architectures, that can be used to implement generic control algorithms in the language of \acp{SNN}.
+To complement the more high-level reasoning tasks with a perspective on motor control, we also introduce a novel neuromorphic control architectures, that can be used to implement generic control algorithms in the language of \acp{SNN}.
 This approach allows to divide larger tasks in small sub-networks combining the advantages of manual programming with neural network learning.
 
 \section{Outline of the thesis}%
