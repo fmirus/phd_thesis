@@ -313,10 +313,10 @@ We describe the experimental setup, analyze several adjustable parameters of the
 \begin{figure}[t]
     \centering
     \subfloat[\label{subfig:mix_learning_rates_even_scale_50n}\ac{RMSE} performance for varying learning rates for a fixed number of \num{50} neurons in the context population]{%
-        \includegraphics[width=0.8\linewidth]{imgs/mix_learning_rates_even_scale_50n.eps}
+        \includegraphics[width=0.95\linewidth]{imgs/mix_learning_rates_even_scale_50n.eps}
     }\\
     \subfloat[\label{subfig:mix_fail} Results of an experiment with too low of a learning rate for the mixture models resulting in high errors]{%
-        \includegraphics[width=0.8\linewidth]{imgs/mix_fail.eps}
+        \includegraphics[width=0.95\linewidth]{imgs/mix_fail.eps}
     }
     \caption{Visualization of the \ac{RMSE} performance of our context-sensitive mixture-of-experts model using temporal spreading on \num{30} test vehicles after being trained on \num{5} vehicles for~\protect\subref{subfig:mix_learning_rates_even_scale_50n} different learning rates for all prediction horizons and~\protect\subref{subfig:mix_fail} the result of one evaluation run with too low of a learning rate.}
     \label{fig:mix_parameters1}
