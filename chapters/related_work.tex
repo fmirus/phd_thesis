@@ -15,7 +15,7 @@ However, we aim to cover the most significant results from all areas at least br
 
 To fully understand biological systems like the brain, which evolved over millions of years, is an ongoing yet unsolved challenge in biology and neuroscience.
 Even small animals like insects or rodents show remarkable behavioral flexibility and the ability to constantly adapt to a rapidly changing and noisy world, which is unmatched by modern computing machines.
-Mammals and primates are able to perform more sophisticated behaviors culminating in complex cognitive computations humans are capable of doing like thinking, problem solving, memory, reasoning, decision-making, strategic planning, knowledge representation, learning etc.
+Mammals and primates are able to perform more sophisticated behaviors culminating in complex cognitive computations humans are capable of doing: thinking, problem solving, memory, reasoning, decision-making, strategic planning, knowledge representation, learning etc.
 The \enquote{biological computer} enabling these behaviors and cognitive abilities is the brain consisting of large networks of neural cells (or neurons), which communicate by sending and receiving electric signals via synapses.
 At the same time, brains are comparably small and efficient: the human brain for example consumes only \SI{20}{\watt} of power (equivalent to a compact fluorescent light bulb) and comprises \SI{2}{\percent} of the body weight \parencite[Chap. 2.1]{Eliasmith2013}. 
 
@@ -32,14 +32,14 @@ This biologically inspired, \textit{neuromorphic} approach promises not only to 
 	\caption{A selection of historical milestones in artificial intelligence, neuromorphic engineering and computational neuroscience. There is a significant boost of research and technologies in recent years.}
 	\label{fig:neuro_time}
 \end{figure*}
-The research field of \aclp{ANN} goes back to the 1940s when \textcite{McCulloch1943} introduced artificial neurons as computational units, which embody a simplified model of biological neurons.
+The research field of \acfp{ANN} goes back to the 1940s when \textcite{McCulloch1943} introduced artificial neurons as computational units, which embody a simplified model of biological neurons.
 These first simple networks were able to calculate compositions of basic logic functions \parencite{McCulloch1943, Rojas1996}.
 \textcite{Rosenblatt58} proposed the first neural network, which was capable of learning, by adding numerical weights to the connections of the network with threshold functions as activation functions: the \textit{perceptron}.
-\textcite{Minsky1969} showed, that single-layer perceptrons are not able to calculate an XOR-function or, more generally, are only capable of learning linearly separable patterns.
-This caused a decreased interest in neural networks research until the rediscovery of the backpropagation algorithm \parencite{Werbos1974} in the 1980s, when \textcite{Rumelhart1986} introduced a practically feasible method to optimize the network weights using gradient descent, which led to a resurgence of neural network research.
+\textcite{Minsky1969} showed that single-layer perceptrons are not able to calculate the XOR-function or, more generally, are only capable of learning linearly separable patterns.
+This caused a decreased interest in neural network research until the rediscovery of the backpropagation algorithm \parencite{Werbos1974} in the 1980s, when \textcite{Rumelhart1986} introduced a practically feasible method to optimize the network weights using gradient descent, which led to a resurgence of neural network research.
 %This gradient descent called for continuous activation functions (mostly sigmoid or hyperbolic) instead of threshold-functions as activation functions, which made the so-called second generation \ac{ANN} universal approximators for continuous functions \parencite{Cybenko1989}.
-Since then, various different network architectures like feed-forward, \acp{CNN}, \acp{RNN}, \acp{RBF}, \acp{RBM}, \acp{SOM} and \ac{ART} just to name a few \parencite{Schmidhuber2015} have been proposed for different learning paradigms.
-Although several simpler methods like Boosting \parencite{Freund1997} or \acp{SVM} \parencite{Vapnik1995} have been developed and achieved noteworthy results, the availability of powerful, parallel computing hardware like \acp{GPU} as well as the advent and success  of deep learning (partly achieving better-than-human accuracy) made \acp{ANN} \parencite{Rojas1996} and especially \acp{DNN} \parencite{LeCun2015} the state-of-the-art for several machine learning tasks like visual digit \parencite{Ciresan2012a} and traffic sign \parencite{Ciresan2012} recognition in recent years.
+Since then, various different network architectures such as feed-forward, \acp{CNN}, \acp{RNN}, \acp{RBF}, \acp{RBM}, \acp{SOM} and \ac{ART} just to name a few \parencite{Schmidhuber2015} have been proposed for different learning paradigms.
+Although several simpler methods such as Boosting \parencite{Freund1997} or \acp{SVM} \parencite{Vapnik1995} have been developed and achieved noteworthy results, the availability of powerful, parallel computing hardware like \acp{GPU} as well as the advent and success  of deep learning (partly achieving better-than-human accuracy) made \acp{ANN} \parencite{Rojas1996} and especially \acp{DNN} \parencite{LeCun2015} the state-of-the-art for several machine learning tasks like visual digit \parencite{Ciresan2012a} and traffic sign \parencite{Ciresan2012} recognition in recent years.
 Another great achievement in the field of deep learning was the victory of AlphaGo \parencite{Silver2016} over the world's best Go player Lee Sedol in March 2016, which was considered to be at least a decade away due to the complexity of Go.
 Compared to Deep Blue, the system that beat former chess world champion Garri Kasparov in 1997 \parencite{Hsu2002} with sheer computational power by brute forcing through a large number of possible moves in advance to find the best one, this strategy is not feasible for Go due to its higher complexity (larger board, more options to consider per move).
 In contrast, modern \acp{DNN} trained by a combination of supervised learning from human expert games and reinforcement learning from self-play have been used for the evaluation of board positions and selection of moves to avoid expensive look-ahead search \parencite{Silver2016}.
@@ -57,7 +57,7 @@ Considering the number of scientists, neuromorphic engineering is still a compar
 Although there have been several achievements in the field during the 1990s \parencite{Mead1989, Mahowald1992, Indiveri1997, Cauwenberghs1998} and early 2000s \parencite{Liu2002}, the \ac{FACETS} project \footfullcite{FACETS-proj} and the \ac{BBP} \footfullcite{BlueBrain-proj}, both starting in 2005 and mainly funded by the \ac{EU} under the FP6-\ac{FET} program, were among the first big-budget neuromorphic projects.
 The follow-up project \ac{BrainScaleS} \footfullcite{BrainScaleS-proj} \parencite{Schemmel2010}, which was conducted from \num{2011} until \num{2015} built on and extended the research conducted during the \ac{FACETS} project.
 The main developments of the \ac{FACETS} and \ac{BrainScaleS} projects are the \ac{HICANN} chip \parencite{Schemmel2010} and the Python-based simulator-independent language \ac{PyNN} \parencite{Davison2008} for building neural network models.
-Building on \ac{BBP}, the \ac{BrainScaleS} hardware development is currently continued in the neuromorphic computing platform of the \ac{HBP} \footfullcite{HBP-proj}, a large ten-year research project, which was selected as one of the two \ac{EU}-\ac{FET} flagships in 2013 and is granted around one billion euros funding \parencite{Calimera2013}.
+Building on the \acl{BBP}, the \ac{BrainScaleS} hardware development is currently continued in the neuromorphic computing platform of the \ac{HBP} \footfullcite{HBP-proj}, a large ten-year research project, which was selected as one of the two \ac{EU}-\ac{FET} flagships in 2013 and is granted around one billion euros funding \parencite{Calimera2013}.
 Another project starting in \num{2005}, initially funded by the UK government until 2014 and now also part of the neuromorphic computing platform of \ac{HBP}, is the \ac{SpiNNaker} project \parencite{Furber2014} during which the neuromorphic computing hardware of the same name was developed.
 The \ac{HBP} is organized in thirteen platforms in total, which focus on different research fields related to the brain like for example theoretical neuroscience, neurorobotics, cognitive architectures, high performance computing, brain simulation and the aforementioned neuromorphic computing platform.
 
@@ -82,12 +82,12 @@ Beside these projects, the neuromorphic community is coming together at two annu
 			\includegraphics[height=3cm]{imgs/LIF_Neuron.eps}
 		}
 	}
-    \caption{Visualization of different aspects of neuron models.~\protect\subref{subfig:biological_neuron} depicts the structure and functioning of biological neurons in a schematic visualization. Image source \textcite{Gerstner2002}.~\protect\subref{subfig:lif_neuron_model} visualizes the membrane potential's sub-threshold behavior of a \ac{LIF} neuron model. Image source: \textcite{Masquelier2007}.}
+    \caption{Visualization of different aspects of neuron models.~\protect\subref{subfig:biological_neuron} depicts the structure and functioning of biological neurons in a schematic visualization. Image source: \textcite{Gerstner2002}.~\protect\subref{subfig:lif_neuron_model} visualizes the membrane potential's sub-threshold behavior of a \ac{LIF} neuron model. Image source: \textcite{Masquelier2007}.}
     \label{fig:neuron_models}
 \end{figure}
 
-Fig.~\ref{subfig:biological_neuron} depicts the structure and functioning principles of biological neurons.
-They  exchange information by sending short and sudden pulses, so-called action potentials or spikes via synaptic connections.
+Figure~\ref{subfig:biological_neuron} depicts the structure and functioning principles of biological neurons.
+They exchange information by sending short and sudden pulses, so-called action potentials or spikes, via synaptic connections.
 Whenever the membrane potential of a neuron, which can be increased or decreased by incoming spikes depending on the synaptic weight, reaches a certain threshold, the neuron produces a spike itself and resets its membrane potential afterwards \parencite{Gerstner2002, Paugam2009}.
 Recent neuroscientific research suggests that the exact timing of those spikes encodes information rather than just average firing rates \parencite{Bohte2004}.
 While traditional \acp{ANN} used in machine learning neglect these biological details, \acp{SNN} embody these spike times and are therefore often referred to as the third generation of neural networks \parencite{Maass1997, Paugam2009}.
@@ -99,14 +99,14 @@ The simplest spiking neuron model is the \acf{LIF} model with
 \label{eq:LIF}
 \end{equation}
 describing the sub-threshold behavior of the neuron, where $V$ is the voltage across the membrane, $I(t)$ is the input current, $R$ is the passive membrane resistance and $\tau_{m}$ is the membrane time constant.
-In other words, equation \ref{eq:LIF} states as follows: the membrane voltage increases in the presence of input current $I(t)$ depending on the membrane resistance $R$ while at the same time, especially in the absence of input current ($I(t)=0$), the voltage decreases or \enquote{leaks out} depending on the membrane time constant $\tau_{m}$.
+In other words, equation~\eqref{eq:LIF} states as follows: the membrane voltage increases in the presence of input current $I(t)$ depending on the membrane resistance $R$ while at the same time, especially in the absence of input current ($I(t)=0$), the voltage decreases or \enquote{leaks out} depending on the membrane time constant $\tau_{m}$.
 When the voltage $V(t)$ passes a certain threshold $\vartheta$, the neuron produces a spike and the voltage is reset to a resting state $c$ for a certain refractory time interval $\tau_{ref}$ during which incoming spikes have no impact on the membrane potential.
 Figure \ref{subfig:lif_neuron_model} visualizes the spiking behavior of the \ac{LIF} model.
-It shows an example curve of the membrane potential of one \ac{LIF} neuron based on six incoming spikes whereas only the third, fourth and fifth incoming spike are appearing closely enough for the membrane potential to surpass it threshold and, therefore, cause the neuron to emit a spike itself.
+It shows an example curve of the membrane potential of one \ac{LIF} neuron based on six incoming spikes whereas only the third, fourth and fifth incoming spike are appearing closely enough for the membrane potential to surpass its threshold and, therefore, cause the neuron to emit a spike itself.
 The \ac{LIF} model, despite its biological simplifications, is maybe the most widely used neuron model for simulations due to its simplicity and comparably low computational complexity \parencite{Izhikevich2004}, which allows simulations of large networks of neurons in reasonable time.
-In contrast, the famous \textcite{Hodgkin1952} model with its four differential equations and dozens of (biologically meaningful) parameters is the model of high biological plausibility but also computationally challenging regarding large simulations \parencite{Izhikevich2004}.
-\textcite{Izhikevich2003} proposed a neuron model  as compromise between biological plausibility and computational feasibility.
-In \textcite{Izhikevich2004}, he showed that this simple model, described by two differential equations with four parameters, is able to produce all known spiking behaviors observed in cortical neurons. 
+In contrast, the famous \textcite{Hodgkin1952} model with its four differential equations and dozens of (biologically meaningful) parameters is a model of high biological plausibility but also computationally challenging regarding large simulations \parencite{Izhikevich2004}.
+\textcite{Izhikevich2003} proposed a neuron model as compromise between biological plausibility and computational feasibility.
+In \textcite{Izhikevich2004}, he showed that his simple model, described by two differential equations with four parameters, is able to produce all known spiking behaviors observed in cortical neurons. 
 
 One major hindrance for the widespread adoption of \acp{SNN} has been the problem, that standard learning algorithms for traditional \acp{ANN} like backpropagation \parencite{Werbos1974} can not be directly applied to \acp{SNN}.
 Although an analogon, the so-called SpikeProp algorithm \parencite{Bohte2002} for \acp{SNN} has been developed, the more natural approach is to transfer and mimic biologically inspired learning approaches like Hebbian learning \parencite{Hebb1949} or \ac{STDP} \parencite{Bi2001}.
@@ -117,7 +117,7 @@ Although theoretically superior \parencite{Maass1997}, \acp{SNN} have not yet ou
 
 Beside the aforementioned procedures to solve traditional machine learning tasks with \acp{SNN} and thereby encode artificial functions in spiking neurons, a different approach is to try to understand how complex cognitive behaviors and the underlying neural functions are performed in the brain.
 Therefore, the question how the brain encodes complex information and behavior in trains of spikes and also how to decode these spike trains to reconstruct the encoded information needs to be answered.
-Although modern research has shed some light on this question regarding the neural code, it is still mainly unanswered as we do not fully understand the anatomical and neurophysiological processes within the brain \parencite{Stanley2013}.
+Although modern research has shed some light on this question regarding the neural code, it is still mainly unanswered since we do not fully understand the anatomical and neurophysiological processes within the brain \parencite{Stanley2013}.
 Currently, there exist several approaches to code information as spike trains, which can be summarized by the categories rate coding, temporal coding \parencite[Chap. 7.6]{Gerstner2014}, population coding \parencites[Chap. 1]{Gerstner2002}{Ponulak2011}{Boerlin2011} or sparse coding \parencite{Olshausen1996}.
 Except for the biologically unrealistic rate coding approach, there are cues for all of these coding schemes and even combinations \parencite{Gupta2014} of them to appear in biological systems.
 
@@ -132,7 +132,7 @@ Originally written in Java, \ac{Nengo} was re-implemented in Python \parencite{B
 
 Another Python-based tool is \ac{PyNN} \parencite{Davies2010}, which was developed during the \ac{FACETS} \footfullcite{FACETS-proj} and \ac{BrainScaleS} \footfullcite{BrainScaleS-proj} projects and aims for building \ac{SNN} models independent of actual simulation tools.
 The level of abstraction is lower than \ac{Nengo}, but therefore it allows the creation of arbitrary neuron populations and connections, while the properties and synaptic weights need to be specified by the user or acquired using a learning algorithm.
-\ac{PyNN} implements a number of standard models of neurons like \ac{LIF} or Izhikevich, connection algorithms like \emph{one to one}, \emph{all to all} or connection matrices, static and plastic synapse types as well as several \ac{STDP} rules supported by the simulation and hardware back-ends.
+\ac{PyNN} implements a number of standard neuron models like \ac{LIF} or Izhikevich, connection algorithms like \emph{one-to-one}, \emph{all-to-all} or connection matrices, static and plastic synapse types as well as several \ac{STDP} rules supported by the simulation and hardware back-ends.
 Furthermore, \ac{PyNN} enables the user to implement custom models, connections and learning rules for advanced simulations and thereby extend the neural modeling toolkit.
 \ac{PyNN} currently supports several different simulators such as \ac{NEST} \parencite{Gewaltig2007}, Brian \parencite{Goodman2009} and NEURON  \parencite{Carnevale2009} as well as neuromorphic hardware as back-ends.
 \ac{PyNN} is currently the preferred development environment for the creation of \ac{SNN} models to run on the \ac{SpiNNaker} system \parencite{Furber2014}.
@@ -156,7 +156,7 @@ However, this technology is gradually becoming available to a broader community 
 \subsubsection{Digital Neurochips}
 
 \acp{GPU} provide a \ac{SIMD} architecture, which processes data in parallel at the cost of increased power consumption \parencite{Krichmar2011, Carlson2014} compared to \acp{CPU}.
-Allowing fast matrix and vector multiplication, \acp{GPU} provide an appealing platform for training and executing deep learning techniques \parencite{Schmidhuber2015} on real-time data.
+Allowing fast matrix and vector multiplication, \acp{GPU} provide an appealing platform for training and executing deep learning techniques \parencite{Schmidhuber2015}.
 For specific applications, which take several months of training on a traditional \acp{CPU}, \ac{GPU}-based systems can significantly accelerate processing by several orders of magnitude to decrease the computation time to a number of days \parencite{Edwards2015}.
 A collaboration between NVIDIA and Stanford researchers demonstrated a cluster of \ac{GPU} servers, which was able to train a network with billion parameters (scalable to \num{11} billion using \num{16} machines) on just three computers in two days.
 Each machine contained \num{4} NVIDIA GTX680 \acp{GPU} with \SI{4}{\giga\byte} at \SI{1}{\tera\nothing}\ac{FLOPS} each.
@@ -189,15 +189,15 @@ These limitations restrict the flexibility of analog designs compared to their d
 
 The \ac{HICANN} chip \parencite{Schemmel2008} has the capability to simulate \num{131072} synapses and \num{512} neurons residing inside an \ac{ANC}.
 To simulate large networks, a wafer-scale integration method was used, which allows \num{384} \ac{HICANN} chips to be interconnected on a wafer of \SI{20}{\centi\meter} diameter \parencite{Schemmel2010}.
-The spikes between various \acp{ANC} on a wafer and between interconnected wafers are carried out by a network of horizontal and vertical grid like structure.
+The spikes between various \acp{ANC} on a single wafer and between several interconnected wafers are carried out by a network of horizontal and vertical grid-like structures.
 The horizontal pathway consists of \num{64} bus lines which carry spikes from \num{64} neurons.
 The \num{256} vertical lines collect spikes for all connected \acp{ANC}.
-The spikes are represented as data packet of \SI{6}{\bit} for groups of \num{64} neurons and transmitted using \ac{AER}. 
+The spikes are represented as data packets of \SI{6}{\bit} for groups of \num{64} neurons and transmitted using \ac{AER}. 
 
 The \ac{ROLLS} neuromorphic processor consists of \num{256} neurons and \num{128000} synapses.
 It consumes only \SI{4}{\milli\watt} of power and uses exponential \ac{IF} modeling \parencite{Qiao2015}.
 The latest processor contains different configuration options.
-Each neural circuit is connected to three different types of synaptic circuits: the first is an array of $256\times256$ synapse, which can be excitatory or inhibitory.
+Each neural circuit is connected to three different types of synaptic circuits: the first is an array of $256\times256$ synapses, which can be excitatory or inhibitory.
 The synapses in the second $256\times256$ array offers only excitatory mode.
 In the third array, there are $256\times2$ virtual synapses with weights being configurable as both, excitatory as well as inhibitory.
 The virtual synapses operate in shared mode and occupy less space compared to individual circuits.
@@ -233,19 +233,19 @@ It is designed as one of the first neuromorphic systems to be programmed at a hi
 		\centering
 		\subfloat[]{\label{subfig:DVS_operation_principle}\includegraphics[width=0.9\textwidth]{imgs/DVS_operation_principle.PNG}}
 	\end{minipage}\par\medskip
-	\caption{(a) Space-time representation of the event stream generated by a rotating dot on a spinning disk and a snapshot of the events (b) abstracted pixel core schematic (c) principle operation of single \ac{DVS} pixel. Image source: \textcite{Lichtsteiner2008}}
+	\caption{(a) Space-time representation of the event stream generated by a rotating dot on a spinning disk and a snapshot of the events (b) abstracted pixel core schematic (c) principle operation of a single \ac{DVS} pixel. Image source: \textcite{Lichtsteiner2008}}
 	\label{fig:DVS_with_schem}
 \end{figure}
 To integrate neuromorphic hardware in real-world applications such as neurorobotics, it needs to be able to process sensors signals.
 The neurally inspired, non von-Neumannian architecture requires either a new generation of sensors such as the \ac{DVS} \parencite{Lichtsteiner2008}, \ac{DAVIS} \parencite{Brandli2014} or \ac{DAS} \parencite{Liu2014}, which already embody the spiking neuron signal processing, or a way of translating traditional sensor signals to sequences of spikes.
 Several approaches to encode signals and stimuli with trains of spikes, e.g., by rate coding, temporal coding \parencite[Chap. 7.6]{Gerstner2014} or population coding \parencites[Chap. 1]{Gerstner2002}{Ponulak2011} have been investigated.
-Neuromorphic sensors on the other hand, directly emit a sequence of events without the need of such a translation process.
-The \ac{DVS} for example, unlike traditional frame-based cameras, generates spike events \parencite{Lichtsteiner2008} asynchronously for individual pixels when perceiving relative illumination changes (see Fig. \ref{fig:DVS_with_schem}), which are key features of biological vision.
-This event-based approach offers several advantages compared to conventional frame-based cameras like the ability to perceive very fast movements (sub-millisecond time precision) without the need to wait for the next frame and the time to process it
-Furthermore, the rate of the output data depends on the dynamic content of the scene (Fig. \ref{subfig:DVS_rotationg_dot}) and thus reduces the output of redundant information at a fixed frame-rate.
+Neuromorphic sensors on the other hand directly emit a sequence of events without the need of such a translation process.
+The \ac{DVS} for example, unlike traditional frame-based cameras, generates spike events \parencite{Lichtsteiner2008} asynchronously for individual pixels when perceiving relative illumination changes (see Fig.~\ref{fig:DVS_with_schem}), which are key features of biological vision.
+This event-based approach offers several advantages compared to conventional frame-based cameras like the ability to perceive very fast movements (sub-millisecond time precision) without the need to wait for the next frame and the time to process it.
+Furthermore, the rate of the output data depends on the dynamic content of the scene (Fig.~\ref{subfig:DVS_rotationg_dot}) and thus reduces the output of redundant information at a fixed frame-rate.
 
 The \ac{DVS}-pixels were designed to cover wide dynamic range and to offer low latency and mismatch.
-This is achieved by a fast photoreceptor circuit with logarithmic response whose output is fed into a high precision difference amplifier circuit followed by a two-transistor comparator circuit (see Fig. \ref{subfig:DVS_pixel_core} and \ref{subfig:DVS_operation_principle}).
+This is achieved by a fast photoreceptor circuit with logarithmic response whose output is fed into a high precision difference amplifier circuit followed by a two-transistor comparator circuit (see Fig.~\ref{subfig:DVS_pixel_core} and~\ref{subfig:DVS_operation_principle}).
 %The pixels are arranged in rows and columns which have $x$, $y$-address.
 The comparator circuit produces ON and OFF signals for each pixel, which are passed to the \ac{AER} interface for transmission \parencite{Lichtsteiner2008}.
 On the other hand, the \ac{DAVIS} employs an \ac{APS} circuit to output synchronous global shutter frames, which helps in persevering absolute intensity information needed for classification and object recognition tasks while asynchronous \ac{DVS} events are beneficial for the tracking of fast moving objects \parencite{Brandli2014}.
@@ -253,7 +253,7 @@ On the other hand, the \ac{DAVIS} employs an \ac{APS} circuit to output synchron
 \subsection{Neuromorphic Applications}
 \label{subsec:neuro_applic}
 
-In this section we present some examples of applications of neuromorphic hardware and sensors described in Sec. \ref{sec:neuromorphic_HW}, software, algorithms and neural modeling depicted in Sec. \ref{subsec:SNN} as well as combinations of both.
+In this section we present some examples of applications of neuromorphic hardware and sensors described in Sec.~\ref{sec:neuromorphic_HW}, software, algorithms and neural modeling depicted in Sec.~\ref{subsec:SNN} as well as combinations of both.
 First, we describe applications using either neuromorphic sensors or hardware in combination with traditional computing hardware.
 Then, we focus on purely neuromorphic systems, where the spiking signals of neuromorphic sensors, mainly the \ac{DVS}, is processed by neuromorphic hardware.
 Although there are currently - to the knowledge of the author - no neuromorphic actuators working directly on the basis of spikes, we refer to the robotic systems described here as purely neuromorphic.
@@ -261,16 +261,17 @@ Although there are currently - to the knowledge of the author - no neuromorphic 
 \subsubsection{Mixed systems}
 \label{subsubsec:mixed_sys}
 
-Neuromorphic vision \parencite{Tan2015} is an emerging field of research, which aims to transfer approaches from traditional computer vision and also establish new methods incorporating the characteristics of the \ac{DVS}.
+Neuromorphic vision \parencite{Tan2015, Gallego2019} is an emerging field of research, which aims to transfer approaches from traditional computer vision and also establish new methods incorporating the characteristics of the \ac{DVS}.
 To perform pattern recognition tasks with neuromorphic cameras and at the same time use traditional methods as a benchmark, existing image data bases like the \ac{MNIST} data set \parencite{LeCun1998} are translated to neuromorphic data sets by presenting the images on a computer screen to a \ac{DVS} sensor moving minimally back and forth \parencite{Orchard2015} (mimicking saccade movements of the human eye), which gives better results than moving the images themselves on the screen \parencite{Serrano-Gotarredona2013}.
 
 As the \ac{DVS} naturally captures moving objects when held statically and cues of the ego-motion when moving, tracking of these movements are suitable applications making use of the sensor's characteristics.
-These characteristics along with the \ac{DVS}'s advantages compared to traditional frame-based cameras, which have been described in Sec. \ref{subsubsec:neuro_sensors}, have been demonstrated in applications like pencil balancing \parencite{Conradt2009} and a robotic goalie \parencite{Delbruck2013} interfacing the \ac{DVS} with traditional computing hardware and actuators.
+These characteristics along with the \ac{DVS}'s advantages compared to traditional frame-based cameras, which have been described in Sec.~\ref{subsubsec:neuro_sensors}, have been demonstrated in applications such as pencil balancing \parencite{Conradt2009} and a robotic goalie \parencite{Delbruck2013} interfacing the \ac{DVS} with traditional computing hardware and actuators.
 Keeping track of (geometric) features \parencite{Lagorce2015} and contours \parencite{Barranco2014} observed by the \ac{DVS} lays the foundation for more sophisticated algorithms.
 Researchers recently proposed several approaches for tracking people \parencite{Schraml2010, Piatkowska2012} and other geometric objects \parencite{ReverterValeiras2016} using stationary sensors.
 Especially tracking at high velocities \parencite{Saner2014} benefits largely from the sub-millisecond time precision of the \ac{DVS} even enabling tracking of particles in fluid flows \parencite{Drazen2011}, which would require a high-speed PC, lots of disk space and high-intensity laser strobe lighting to illuminate the fluid in a conventional setting.
 
-A traditional application of computer vision in robotics is the estimation of the ego-motion or odometry based on optical flow (an event-based approach on optical flow can be found in \parencite{Benosman2014}), which can also be obtained by combining traditional cameras with the \ac{DVS} on a small wheeled robot \parencite{Censi2014}.
+A traditional application of computer vision in robotics is the estimation of the ego-motion or odometry based on optical flow.
+An event-based approach to optical flow can be found in \textcite{Benosman2014}, which can also be obtained by combining traditional cameras with the \ac{DVS} on a small wheeled robot \parencite{Censi2014}.
 Another suitable application for the \ac{DVS} is the estimation and tracking of the whole six degree-of-freedom pose of a flying robot, especially when performing high-speed maneuvers, where traditional cameras suffer from motion blur \parencite{Mueggler2014}.
 Another problem in robotics closely related to tracking is self-localization of the robot using a given map of the environment or building a map online and localizing within this map at the same time, which is known as the \ac{SLAM} problem \parencite{Thrun2005}.
 Localization performed within a given map using the \ac{DVS} on ground vehicles and by tracking markers from a flying robot is presented in \textcites{Gallego2015}{Censi2013} respectively.
@@ -280,12 +281,12 @@ Most of the tracking algorithms mentioned here use variations of traditional Bay
 However, due to the asynchronous information processing of the \ac{DVS} or neuromorphic systems in general, these filters need some modifications to work with this event-based approach \parencite{Weikersdorfer2013} like taking several past measurements into account (in contrast to the traditional Markov assumption) or updating only after a certain number of events have occurred to avoid computational overhead.
 
 \textcite{Axenie2015} describe a biologically inspired system for sensor-fusion of several traditional sensors like wheel encoders, magnetometer and gyroscope for ego-motion estimation demonstrated in ground and flying robots.
-Another example for sensor fusion is presented in \textcite{OConnor2013}, where the biologically inspired \ac{DVS} and \ac{DAS} sensors are used to recognize hand-written digits from the \ac{MNIST} data set \parencite{LeCun1998}.
+Another example for sensor fusion is presented in \textcite{OConnor2013}, where the biologically inspired sensors \ac{DVS} and \ac{DAS} are used to recognize hand-written digits from the \ac{MNIST} data set \parencite{LeCun1998}.
 To incorporate the neuromorphic audio sensor, each digit is assigned one tone frequency in the A harmonic minor scale, while the actual fusion is performed by a \ac{DBN} consisting of several, pre-trained (unsupervised) \ac{RBM} layers, which was traditionally trained and afterwards transferred to an event-based network.
 Although the authors state that the actual implementation in \textcite{OConnor2013} is just a proof-of-concept in software, their approach shows promise to translate fully trained \acp{DBN} to \acp{SNN}, deploy them on efficient neuromorphic chips and thereby making this technology available for mobile and/or real-time applications.
 
 To demonstrate the functionality and applicability of their neuromorphic chip TrueNorth, IBM implemented several proof-of-concept applications ranging from virtual robots, game simulations \parencite{Arthur2012}, digit recognition \parencite{Arthur2012, Esser2013} to classical machine learning tasks like object detection \parencite{Akopyan2015}.
-\textcite{Arthur2012} present four example applications of neural algorithms implemented on TrueNorth using the Corelet language: a virtual robot driver aiming to keep the simulated robot on a virtual road based on visual cues, a neural algorithm controlling an autonomous player performing the classical video game pong, a neural implementation recognizing hand-written digits of the \ac{MNIST} data-base using \acp{RBM} as well as a Hopfield network, which performs auto-association.
+\textcite{Arthur2012} present four example applications of neural algorithms implemented on TrueNorth using the Corelet language: a virtual robot driver aiming to keep the simulated robot on a virtual road based on visual cues, a neural algorithm controlling an autonomous player performing the classical video game Pong, a neural implementation recognizing hand-written digits of the \ac{MNIST} data-base using \acp{RBM} as well as a Hopfield network, which performs auto-association.
 Seven example algorithms and applications for TrueNorth are presented in \textcite{Esser2013}: speaker recognition using \acp{CNN} on the \ac{CUAVE} data set \parencite{Patterson2002}, composer recognition distinguishing between classical composers Bach and Beethoven using liquid state machines, recognition of hand-written digits of the \ac{MNIST} data set using population coding and \acp{RBM}, a neural implementation of a \ac{HMM}, collision avoidance using motion extraction and looming detection, optical flow based on \acp{CNN} and eye detection using the \ac{DVS}.
 Most of these algorithms are simplified proof-of-concept implementations showing the general applicability of TrueNorth but are not competitive with traditional machine learning algorithms yet, that is, achieving only \SI{92.34}{\percent} in \textcite{Esser2013} compared to \SI{99.77}{\percent} in \textcite{Ciresan2012a} correct classifications on \ac{MNIST}.
 \textcite{Schmitt2017} demonstrate training and deployment of \acp{DNN} on the \ac{MNIST}-data set using the \ac{BrainScaleS} hardware.
@@ -294,7 +295,7 @@ A more sophisticated application is the multi object detection and classificatio
 The use of the neuromorphic hardware Neurogrid \parencite{Benjamin2014} as computational back-end for \ac{Nengo} and proof-of-concept solution for medical motor-prostheses, which shall be connected to biological neurons and thereby be controlled by the patient's brain, is described in \textcite{Choudhary2012, Dethier2011} respectively.
 The \ac{SpiNNaker} system \parencite{Furber2014} also supports the simulation of neural models created using \ac{PyNN} or \ac{Nengo} \parencite{Mundy2015}.
 Furthermore, several neural network architectures like \acp{CNN} \parencite{Serrano-Gotarredona2015} and pre-trained \acp{DBN} \parencite{Stromatias2015a, Stromatias2015} have also been implemented on the \ac{SpiNNaker} system.
-To enable biologically inspired learning like \ac{STDP} \parencite{Bi2001}, according rules adapting the synaptic weights depending on the timing of the spikes have efficiently been implemented on the \ac{SpiNNaker} in \textcite{Diehl2014} chip as well.
+To enable biologically inspired learning like \ac{STDP} \parencite{Bi2001}, according rules adapting the synaptic weights depending on the timing of the spikes have efficiently been implemented on \ac{SpiNNaker} in \textcite{Diehl2014} chip as well.
 
 \subsubsection{Purely neuromorphic systems}
 \label{subsubsec:neuro_systems}
@@ -306,7 +307,7 @@ To enable biologically inspired learning like \ac{STDP} \parencite{Bi2001}, acco
 	\label{fig:spin_robot}
 \end{figure}
 Some examples of closed-loop systems deployed in small robots are presented in \textcite{Davies2010, Denk2013, Galluppi2014}.
-\textcites{Davies2010, Denk2013} interface two embedded \ac{DVS} cameras directly with a \ac{SpiNNaker} platform mounted on a small robot (see Fig. \ref{fig:spin_robot}).
+\textcites{Davies2010, Denk2013} interface two embedded \ac{DVS} cameras directly with a \ac{SpiNNaker} platform mounted on a small robot (see Fig.~\ref{fig:spin_robot}).
 The implemented neural networks enable simple autonomous behaviors like following a line \parencite{Davies2010} or approaching a light stimulus \parencite{Denk2013}.
 In \textcite{Galluppi2014}, a small robot with a similar setup is able to perform trajectory stabilization using optical flow from the \ac{DVS} cameras as input.
 Another simple task described in \textcite{Galluppi2014} is the recognition and tracking of a light stimulus and keeping the robot at a certain distance and angular orientation with regard to this stimulus.
@@ -314,69 +315,29 @@ The whole processing chain from visual perception over internal processing to mo
 The neural implementation of the latter two applications are done in \ac{PyNN} and \ac{Nengo} respectively.
 
 While the aforementioned sensorimotor behaviors are manually engineered, \textcite{Conradt2014, Stewart2016} present attempts to learn more sophisticated, complex behaviors from simpler basic movements.
-These basic maneuvers are still manually engineered relating sensor cues to simple movements like driving forward with no obstacle in the sensors field of view, turning with an obstacle in in front of the robot or driving backwards when being close to an obstacle.
+These basic maneuvers are still manually engineered relating sensor cues to simple movements like driving forward with no obstacle in the sensors field of view, turning with an obstacle in front of the robot or driving backwards when being close to an obstacle.
 \textcite{Conradt2014} describe a method on learning more sophisticated behaviors from recorded sensorimotor data obtained from driving the robot by remote control as training examples, which can be considered as a supervised learning approach.
 In \textcite{Stewart2016}, the training examples are taken from recording data of the robot driving around without human interference and just labeling those situations as positive examples when the robot performed the desired action by accident, which is considered as reinforcement learning.
 Both approaches are implemented on a small robot with the \ac{DVS} as sensory input using \ac{Nengo} and the \ac{NEF} as well as its interface \parencite{Mundy2015} for running neural networks models on the \ac{SpiNNaker} hardware \parencite{Furber2014}.
-% %----------------------------------------------------------------------------------------------------------
-% \section{\aclp{ANN}}
-% \label{sec:ML_ANN}
-% %----------------------------------------------------------------------------------------------------------
-% Machine learning in general is the science of constructing computer programs, which improve with experience.
-% This is attractive if manually programming a desired functionality is not cost-efficient, intractable or simply impossible.
-% The overall goal of machine learning algorithms is to generalize beyond examples, i.e. to generate models that describe the presented input sufficiently well to make the best possible prediction when confronted with previously unseen data.
-% A formal, widely parencited definition of machine learning has been presented by Thomas M. Mitchell in \parencite{Mitchell1997}:
-% \begin{defn}
-% 	A computer program is said to \textbf{learn} from experience $E$ with respect to some class of tasks $T$ and performance measure $P$ if its performance at tasks in $T$, as measured by $P$, improves with experience $E$.
-% \end{defn}
-% A large body of research has focused on machine learning during the last decades.
-% One major branch of machine learning are \acp{ANN} and \acp{DNN} in particular, which are currently the state-of-the-art of many machine learning tasks.
-% \subsection{A brief history}
-% \subsection{Supervised Learning}
-% \todo[inline]{brief introduction to \acp{DNN} in general, particularly \acp{CNN} for classification, mentioning automotive related applications. Also mention \acp{RNN} and especially \ac{LSTM} as for time-series analysis/prediction as it is related to our behaviour prediction task}
-% \subsection{Unsupervised Learning}
-% \todo[inline]{brief introduction some unsupervised learning strategies. Focus especially on approaches to learn word embeddings like word2vec \parencite{Mikolov2013}, GloVe \parencite{Pennington2014}. Also mention problems of those approaches \parencite{Levy2015}}
-% \subsection{Reinforcement Learning}
-% \todo[inline]{very brief introduction. Not sure yet if we need this secton at all}
-%From the first theoretical considerations concerning artificial neural networks by McCulloc and Pitts(\todo{Citation}) in the 1940s and the first Multilayer-Perceptrons by Rosenblatt (\todo{Citation}) about a decade later, machine learning algorithms started to receive widespread attention with the rediscovery \parencite{Rumelhart1988} of the well-known backpropagation algorithm \parencite{Werbos1974}.
-%Since then, several approaches to machine learning, apart from artificial neural networks, like AdaBoost (\todo{Citation}), Decision Trees (\todo{citation}), Bayesian Networks (\todo{citation}) or \ac{SVM} (\todo{citation Vapnik, V. (1995), The Nature of Statistical Learning Theory. Springer Verlag, Cristianini, N. and Shawe-Taylor, J. (2000). An Introduction to Support Vector Machines and Other Kernel-Based Learning Methods. Cambridge University Press, Cambridge}) have been proposed.
-%These methods vary in representation of the data, the evaluation (or objective) function, the optimization technique and the learning paradigm.
-%Through availability of larger datasets and increased computational power, machine learning has seen significant progress in recent years.
-%The use of deep neural networks \parencite{Schmidhuber2015}, enabled through modern, powerful computing hardware like \ac{GPU}, yielded a significant performance boost in several classification tasks.
-%Today, modern deep learning algorithms can even rival human performance on different visual classification tasks like traffic sign \parencite{Ciresan2012} or digit recognition \parencite{Ciresan2012a}.
-%
-%So-called second generation \ac{ANN} introduced continuous (e.g. sigmoid or hyperbolic) instead of step- or threshold-functions (\todo{Citation}) as activation functions, which made them universal approximators for continuous functions \parencite{Cybenko1989}.
-%The term "neuromorphic" was first introduced by Carver Mead in \parencite{Mead90}, when describing one of the first silicon retinas.
-%For clarity, a first broad definition is provided, which will need some refinement while proceeding in this section:
-%\begin{defn}
-%\label{def:neuromorph}
-%Artificial systems, that share organization principles with biological nervous systems are called \textbf{neuromorphic}.
-%\end{defn}
-%Biologically inspired systems and algorithms have seen significant progress and achieved remarkable results, e.g. in the field of machine learning, despite some simplifications in terms of biological accuracy.
-%So-called first and second generation \ac{ANN} described in \ref{subsec:ML_ANN} are also covered by definition \ref{def:neuromorph} as neuromorphic systems, although they neglect some biological details.
-%\subsection{Spiking Neural Networks}
-%Biological neurons exchange information by sending short and sudden increases in their membrane voltage, so-called action potentials or spikes.
-%Recent neurological research suggests that the exact timing of those spikes encodes information rather than just average firing rates (\todo{Citation}).
-%While \ac{ANN} of the first two generations neglect these biological details, recent neural networks structures, so-called \ac{SNN} \parencite{Paugam2009}, embody these spike times and are therefor often referred to as the third generation of neural networks .
 
 \section{Cognitive Modeling}%
 \label{sec:cognitive_modeling}
 
-Over the last decades, understanding and building cognitive systems has seen extensive research leading to the development of several cognitive architectures.
+Understanding and building cognitive systems has seen extensive research over the last decades leading to the development of several cognitive architectures.
 A cognitive architecture is a \enquote{general proposal about the representation and processes that produce intelligent thought} \parencite{Thagard2012}.
 On the one hand, these architectures are used to explain and better understand important aspects of human behavior and intelligence.
-However, they are also used to design computers and robots mimicking certain cognitive abilities of humans.
-In this respect, cognitive architectures are typically clustered in three main categories, namely symbolism, connectionism and dynamicism \parencite{Eliasmith2013}.
+On the other hand, they are also used to design computers and robots mimicking certain cognitive abilities of humans.
+In this respect, cognitive architectures are typically clustered in three main categories, namely \emph{symbolism}, \emph{connectionism} and \emph{dynamicism} \parencite{Eliasmith2013}.
 We will give a brief overview over symbolic and connectionist approaches in subsequent sections, whereas dynamicism \parencite{Schoener2008} is of lower relevance to the work at hand.
 
 One important aspect of cognitive modeling and, more generally, \ac{AI}, is knowledge representation.
 Any intelligent agent, artificial or biological, that wants to perform reasoning about the world it encounters, needs to be able to build an internal representation of its perceived information.
 This aspect is quite important for subsequent chapters, while a formal definition of what knowledge representation actually is appears to be difficult and thus is often avoided in the literature \parencite{Davis1993}.
-\textcite{Davis1993} describe five defining roles, that such a representation can play.
+\textcite{Davis1993} describe five defining roles that such a representation can play.
 A representation is a surrogate, i.e., an internal substitute for a real-world entity and as such an imperfect approximation.
 Therefore, the choice for each representation implies a set of ontological commitments, which effect the focus of attention of the representation.  
 When the focus of such a representation is to enable some kind of reasoning in intelligent machines or robotic systems, these systems need to be able to manipulate the representation and perform computations with it.
-Finally, as long as the machine needs to interact or communicate with humans in the sense that humans inform the machine about the world by e.g.\ creating a representation, this representation itself also plays the role of a medium of human expression.
+Finally, as long as the machine needs to interact or communicate with humans in the sense that humans inform the machine about the world by, e.g., creating a representation, this representation itself also plays the role of a medium of human expression.
 Therefore, we put emphasis on the different aspects of knowledge representation in the different cognitive modeling architectures presented in this section.
 
 \subsection{Symbolic approaches}%
@@ -387,11 +348,11 @@ Most of the approaches rely on the metaphor of the \emph{mind as computer}, supp
 The corresponding analogue for computers are programming languages.
 The dominant paradigm of such approaches is \enquote{the manipulation of discrete atomic symbols by explicit rules} \parencite{Levy2008}.
 The most prominent approaches in this category are production systems, which typically rely on if-then-rules (or productions) and a control structure.
-One of the first and most influential achievements in this field is a program called the \ac{CogGPS}, which was able to to solve elementary problems in symbolic logic on its own.
+One of the first and most influential achievements in this field is a program called the \ac{CogGPS}, which was able to solve elementary problems in symbolic logic on its own.
 The steps \ac{CogGPS} performed to solve a given problem often matched the steps reported by people solving the same problem.
 This success enabled the development of several other cognitive architectures such as Soar \parencite{Laird1987}, \ac{EPIC} \parencite{Kieras1997} and \ac{ACT} \parencite{Anderson1983} and its successor \ac{ACT-R} \parencite{Anderson1996}, which all employed production systems at their core but adding their own extensions.
-\ac{ACT-R} is the most modern of these architectures and arguably the most successful and thus most widely used cognitive architecture.
-Although \ac{ACT-R} incorporates some connectionist-like mechanism in its memory system, it is widely considered a symbolic architectures as it relies on symbolic representations and a production system as central procedural core.
+\ac{ACT-R} is the most modern of these architectures and arguably the most successful and thus it is the most widely used cognitive architecture.
+Although \ac{ACT-R} incorporates some connectionist-like mechanism in its memory system, it is widely considered a symbolic architecture as it relies on symbolic representations and a production system as central procedural core.
 In general, symbolic approaches to cognitive modeling had the most success when addressing higher-level cognitive tasks, with a rigid set of rules and potential for pre-specified solutions.
 However, these approaches are rarely used when it comes to real-time critic systems such as robots or if the system needs to generalize beyond pre-specified situations.
 
@@ -399,30 +360,30 @@ However, these approaches are rarely used when it comes to real-time critic syst
 \label{subsec:connectionist_approaches}
 
 One of the first theories challenging the paradigm of \ac{GOFAI} was the \enquote{Society of Mind} view of specialized individual agents cooperating to accomplish a certain goal proposed by \textcite{Minsky1986}.
-The strongest challenge however, was the emergence of connectionism \parencite{Rumelhart1986a} (popularly referred to as neural networks), which offered novel learning algorithms such as backpropagation \parencite{Rumelhart1986} to solve a wide variety of problems.
+The strongest challenge however, was the emergence of connectionism \parencite{Rumelhart1986a}, popularly referred to as neural networks, which offered novel learning algorithms such as backpropagation \parencite{Rumelhart1986} to solve a wide variety of problems.
 Connectionism explains cognitive phenomena by constructing models consisting of large networks of interconnected nodes performing rather simple input/output mappings.
 If these nodes, however, are connected to sufficiently large networks, the nodes' activity is able to implement cognitive behavior such as rules or analyzing patterns.
 We already gave a brief historical overview over the research conducted related to \acp{ANN} in section~\ref{subsec:history_neural_nets}. 
 The metaphor behind connectionist approaches to cognitive modeling is that of the \emph{mind as brain}, as the processing employed in connectionism is often referred to as \emph{brain-like} or \emph{brain-inspired}.
 Connectionism has shown remarkable results in diverse applications such as computer vision, pattern recognition, sequential data analysis and language processing just to name a few.
 However, the most serious criticism of connectionist approaches are that they could not exploit systematic, compositional representations or logical reasoning of the form used in \ac{GOFAI}. 
-Furthermore, the nodes in connectionist networks typically simplify the computational and representational properties of biological neurons, which in addition to the biological implausibility of the backpropagation algorithm, concerns cognitive modelers interested in biological realism.
+Furthermore, the nodes in connectionist networks typically simplify the computational and representational properties of biological neurons, which, in addition to the biological implausibility of the backpropagation algorithm, concerns cognitive modelers interested in biological realism.
 Finally, the ability to learn and derive internal representations of features from data, despite being one of the greatest strengths of neural networks approaches, is sometimes criticized for lack of comprehensibility.
 
 \subsection{Vector-based approaches}%
 \label{subsec:vector_based_approaches}
 
 To address some of the concerns regarding both, symbolic and connectionist approaches to cognitive modeling, researchers developed a hybrid approach often referred to as \acf{VSA}, a class of connectionist distributed representations.
-In chapter~\ref{chap:introduction_to_vsas}, we give an in-depth introduction to the theory and mathematical properties of \acp{VSA}, which will be import ingredients for the remainder of the thesis.
+In chapter~\ref{chap:introduction_to_vsas}, we give an in-depth introduction to the theory and mathematical properties of \acp{VSA}, which will be important ingredients for the remainder of this thesis.
 Here, we give a brief overview of the different variants of such architectures, their similarities and differences, related work and some applications.
 All of the modeling approaches presented in this section employ (high-dimensional) vectors as representational units.
 Similar to the representations derived from connectionist approaches, these are distributed representations, which offer nice properties such as robustness to noise and the support of distance metrics.
 Additionally, all of the approaches allow to treat such vectors as \emph{symbol-like} entities, which can be manipulated through the architecture's algebraic operations (see chapter~\ref{chap:introduction_to_vsas} for details).
-The first attempt on structured vector representations proposed by \textcite{Smolensky1990} used the tensor product as multiplication operation to bind two different vector together.
-The tensor product approach already allows for an sufficiently complex embedded structure to do linguistic processing.
+The first attempt on structured vector representations proposed by \textcite{Smolensky1990} used the tensor product as multiplication operation to bind two different vectors together.
+The tensor product approach already allows for a sufficiently complex embedded structure to do linguistic processing.
 However, scaling becomes a problematic issue as each uncompressed tensor product operation of two high-dimensional vectors increases the result's dimension, which quickly becomes impracticable.
 Hence, there are several architectures such as \ac{MAP} \parencite{Gayler1998, Gayler2003}, \acp{BSC} \parencite{Kanerva1988} and \acp{HRR} \parencite{Plate1991, Plate1994}, which propose different compressed multiplication operations replacing the tensor product and resulting in vectors with the same dimension as the input vectors.
-Furthermore, these different \ac{VSA} variants differ in the choice of the numerical space to pick the vectors' elements from, i.e., if they use binary, real- or complex-valued vectors. 
+Furthermore, these different \ac{VSA} variants differ in the choice of the numerical space to pick the vectors' elements from, that is, using binary, real- or complex-valued vectors. 
 The \ac{SPA} \parencite{Eliasmith2013} is built upon \acp{HRR} and extends these architectures, by proposing an efficient mechanism of implementing structured vector representations in populations of spiking neurons using the principles of the \ac{NEF} \parencite{Eliasmith2003} (again, we refer to chapter~\ref{chap:introduction_to_vsas} and especially sections~\ref{sec:neural_eng} and~\ref{subsec:implementation_in_snns} for further details).   
 This architecture has been used in \textcite{Eliasmith2012} to built the currently largest functional model of a brain using a combination of structured vector representations for symbol-like processing and a spiking neuron substrate.
 
@@ -432,23 +393,23 @@ Modern word embedding algorithms such as word2vec \parencite{Mikolov2013, Mikolo
 There are also attempts of using such representations in other domains to, e.g., better explain and quantify how \acp{DNN} learn and derive concepts \parencite{Fong2018} or for embedding low-level vehicle sensor data in an abstract representation \parencite{Hallac2018}.
 
 Another approach employing vector representations is the work of companies such as \textcite{Numenta} and \textcite{Cortialio}.
-They employ binary vector representations similar to \acp{BSC} \textcite{Ahmad2015} refer to as \acp{SDR}, which are the basis and main representation for their downstream cortical models such as \ac{HTM} proposed in \textcite{Cui2017}.
+They employ binary vector representations similar to \acp{BSC}, which \textcite{Ahmad2015} refer to as \acp{SDR}, as the basis and main representation for their downstream cortical models such as \ac{HTM} proposed in \textcite{Cui2017}.
 To create high-dimensional vectors representing words or phrases, a method called semantic folding is applied \parencite{Webber2016}.
 Similar to classical word embedding algorithms, the word vectors are created from large corpora of text.
-After laying out a two-dimensional semantic map of available contexts, for each particular word, the context it appears in is marked as active (resulting in a \num{1} bit in the map) and a sparse, high-dimensional binary vector is created from the map through serialization.
+After laying out a two-dimensional semantic map of available contexts, the context of each particular word is marked as active (resulting in a \num{1} bit in the map) and a sparse, high-dimensional binary vector is created from the map through serialization.
 Despite language processing, such representations in cooperation with \ac{HTM} models have shown to be useful for applications such as anomaly detection \parencite{Ahmad2017} or classification with noisy data \parencite{Ahmad2019}. 
 One key difference to other cognitive architectures like the \ac{SPA} is that the entries of the \ac{SDR} vectors are directly interpreted as neural activity whereas the \ac{SPA} distinguishes between representational and neuronal space.
 
 \section{Automated Driving}
 \label{sec:automated_driving}
 
-\enquote{Robotics is the science of building computer-controlled mechanical devises, which are able to perceive and manipulate the physical world} \parencite{Thrun2005}.
+\enquote{Robotics is the science of building computer-controlled mechanical devices, which are able to perceive and manipulate the physical world} \parencite{Thrun2005}.
 Automated driving in automotive context is a special case of robotics, since an autonomous vehicle can be considered a wheeled mobile robot, which is able to fulfill the transportation capabilities of a traditional car without human input.
 In order to navigate safely to a desired goal, a mobile robot needs to solve several problems like localization (\enquote{where am I?}), path planning (\enquote{how do I get from A to B?}), environment perception (\enquote{where is everyone else?}), knowledge representation and reasoning (\enquote{which decisions to infer from available information?}) as well as motion control (\enquote{how to move my actuators?}).
 In automotive context, an automated vehicle furthermore needs to detect the current state of the driver (\enquote{what is the driver up to?}) to ensure that he can take over control in safety-critical situations or in case of malfunctions.
 The human driver as a fallback option in such situations is of crucial importance, since the level of driving automation is likely to gradually increase instead of a hard transition from manual driving to fully automated driving systems.
 In their J3016 standard \footfullcite{SAE_J3016}, the \ac{SAE} delivers a classification system identifying six different levels of driving automation from \enquote{no automation} to \enquote{full automation}.
-Table \ref{tab:autonomy_levels} gives an overview of the particular automation levels according to the \textcite{SAE_J3016} in more detail.
+Table~\ref{tab:autonomy_levels} gives an overview of the particular automation levels according to the \textcite{SAE_J3016} in more detail.
 
 \begin{center}
 	\begin{tabular}{|c | l | p{10cm}|}
@@ -465,18 +426,18 @@ Table \ref{tab:autonomy_levels} gives an overview of the particular automation l
 	\label{tab:autonomy_levels}
 \end{center}
 
-In this section, we will briefly present the historical developments in automated driving research and present the current state-of-the-art for some selected task in its sub-domains.
+In this section, we will briefly present the historical developments in automated driving research and present the current state-of-the-art for some selected tasks in its sub-domains.
 After reviewing different aspects of knowledge representation with particular focus on automated driving (more general aspects have been discussed in section~\ref{sec:cognitive_modeling}), we present related work in the fields of driving context classification (section~\ref{subsec:driving_context_classification}), object detection and classification (section~\ref{subsec:obj_detect}) and trajectory prediction (section~\ref{subsec:trajectory_prediction}). 
-These tasks are selected based on the applications investigated in subsequent chapters in the remainder of the thesis.
+These tasks are selected based on the applications investigated in subsequent chapters in the remainder of this thesis.
 
 \subsection{A brief history}
 \label{subsec:aut_driving_hist}
 
-On the road to fully automated driving, several \ac{ADAS} have been developed during the last decades and thus made a huge jump by incrementally increasing complexity and therefor the level of autonomy.
-The history of automated driving research goes back to the 1980's, when governmental institutions funded several explorative projects worldwide to research functionalities like automatic vehicle driving and intelligent route planning resulting in early prototypes.
+On the road to fully automated driving, several \acp{ADAS} have been developed during the last decades and thus made a huge jump by incrementally increasing complexity and therefore the level of autonomy.
+The history of automated driving research goes back to the 1980's, when governmental institutions funded several explorative projects all over the world to research functionalities such as automatic vehicle driving and intelligent route planning resulting in early prototypes.
 In 1986, several European research groups and vehicle manufacturers started the \ac{PROMETHEUS} project \parencite{Dickmanns1990} and demonstrated a variety of different approaches to automated driving.
 Another research initiative established during that period is Carnegie Mellon University's Navlab \parencite{Thorpe1988}, which achieved the first completely autonomous drive from Pittsburgh to San Diego.
-After that first explorative phase, the US government established the \ac{NAHSC} in 1995 and shortly shortly followed by the foundation of the \ac{AHSRA} 1996 in Japan.
+After that first explorative phase, the US government established the \ac{NAHSC} in 1995 and shortly followed by the foundation of the \ac{AHSRA} in Japan in 1996.
 The main contribution of this first phase was the identification and deep analysis of problems, that would need to be tackled by researchers, to understand requirements and possible effects of future automated vehicles.
 \textcite{Bertozzi2000} give an overview of the achievements and perspectives obtained in the projects during that period.
 
@@ -484,7 +445,7 @@ A major milestone in the research field of automated driving was the first \ac{D
 Although no participating vehicle successfully finished the race \parencite{Bacha2004} in the first challenge, valuable insights have been gained.
 Using those insights to make significant progress, five teams (out of 23) were able to successfully complete the second \ac{DARPA} Grand Challenge in \num{2005} with Stanford's Stanley robot winning first place \parencite{Thrun2006}.
 After the success of the second Grand Challenge, the \ac{DARPA} organized the Urban Challenge in \num{2007}, switching the focus to automated driving in urban environments \parencite{Buehler2009}.
-In this competition, vehicles had to complete a \SI{97}{\kilo\meter} urban area course autonomously in less than \SI{6}{\hour}, while obeying California state driving laws, avoiding other participating vehicles and other objects using only on-board sensors and \ac{SensGPS}.
+In this competition, vehicles had to complete a \SI{97}{\kilo\meter} urban area course autonomously in less than \SI{6}{\hour}, while obeying California state driving laws and avoiding other participating vehicles as well as other objects using only on-board sensors and \ac{SensGPS}.
 Six vehicles out of the 11 final participants successfully finished the competition, with Carnegie Mellon's Boss robot \parencite{Urmson.2008} being named the winner finishing the course in little over \SI{4}{\hour} with an average speed of approximately \SI[per-mode=symbol]{22.5}{\kilo\meter\per\hour}.
 
 \begin{figure}[t!]
@@ -497,13 +458,13 @@ Six vehicles out of the 11 final participants successfully finished the competit
 			\includegraphics[height=3cm]{imgs/Boss_DARPA_urban_challenge.eps}
 		}
 	}
-	\caption{The winning robots from the 2005 \ac{DARPA} Grand Challenge and 2007 Urban Challenge.~\protect\subref{subfig:stanley} shows Stanford's Stanley at the 2005 \ac{DARPA} Grand Challenge. Image from \textcite{Thrun2006},~\protect\subref{subfig:boss} shows Carnegie Mellon's BOSS at the 2007 \ac{DARPA} Urban Challenge. Image from \textcite{Urmson.2008}.}
+	\caption{The winning robots from the 2005 \ac{DARPA} Grand Challenge and 2007 Urban Challenge.~\protect\subref{subfig:stanley} shows Stanford's Stanley at the 2005 \ac{DARPA} Grand Challenge. Image source: \textcite{Thrun2006}.~\protect\subref{subfig:boss} shows Carnegie Mellon's BOSS at the 2007 \ac{DARPA} Urban Challenge. Image source: \textcite{Urmson.2008}.}
     \label{fig:darpa_chal}
 \end{figure}
 
 The technology developed for the \ac{DARPA} challenges formed the basis for commercial \ac{ADAS}, which have seen rapid progress since then and gradually made their way into series-production vehicles.
-There exists a large variety of commercial systems, like e.g. \ac{ACC} or intelligent parking assistance systems, modern vehicles are already equipped with.
-These systems have the potential to increase comfort and safety in road traffic and, in the long run enable fully autonomous driving (cf. Level \num{5}  in Table \ref{tab:autonomy_levels}).
+There exists a large variety of commercial systems such as \ac{ACC} or intelligent parking assistance systems modern vehicles are already equipped with.
+These systems have the potential to increase comfort and safety in road traffic and, in the long run, enable fully autonomous driving (cf. Level \num{5}  in Table~\ref{tab:autonomy_levels}).
 On the other hand, many research teams and initiatives were spawned or inspired from these competitions and continued their research work after the \ac{DARPA} Challenges.
 Many researchers involved in the winning teams continued their research within Google's self-driving car project, which started in 2009 and evolved into the Spin-Off company Waymo \footfullcite{Waymo} in \num{2016}.
 Another research team continuing their efforts after the \ac{DARPA} challenges is the Annieway team \footfullcite{Annieway}.
@@ -538,7 +499,7 @@ In contrast, the goal of \emph{high-level} sensor fusion is to combine preproces
 
 One of the most widely used representations to combine low-level sensory data in robotics is an occupancy-grid map.
 This representation is widely used for mobile robot localization \parencite{Thrun2005}, but there is also a substantial amount of research regarding occupancy-grids regarding automotive environment modeling  \parencite{Tanzmeister2014, Steyer2018}.
-The left part of fig.~\ref{fig:occupancy-grid} visualizes the principles of occupancy-grids, whereas the right part shows a real world example from automotive context.
+The left part of Fig.~\ref{fig:occupancy-grid} visualizes the principles of occupancy-grids, whereas the right part shows a real world example from automotive context.
 An occupancy-grid divides the represented space in discrete cells, which can take on different occupancy values (e.g., free, occupied or unknown).
 The basic assumptions for this representation are that the world is static at each time step and that each cell can have exactly one occupancy value, i.e., one cell is for example completely occupied or completely free.
 Therefore, an occupancy-grid is a well-suited representation for range sensors such as \ac{RADAR} or \ac{LIDAR} sensors.
@@ -561,7 +522,7 @@ These methods typically differ regarding the amount of knowledge they assume to 
 
 The main advantages of high-level sensor fusion are that the amount of transferred data is lower compared to low-level fusion due to the hierarchical structure of the estimation framework.
 Furthermore, as many sensors already employ on-board processing and provide data only at tracked object level, implementation of high-level fusion often does not require in-depth knowledge of the sensor characteristics.
-This gives a more abstract interface and allows for easier replacement of individual sensor units in case the overall setup changes.
+This allows a more abstract interface between sensors and fusion system and therefore easier replacement of individual sensor units in case the overall setup changes.
 On the other hand, high-level fusion ignores potentially useful information, as it might be discarded at sensor level before the fusion is performed.
 In summary, high-level sensor fusion is arguably the most popular and frequently used approach for combining information from different sensor sources in automated driving.
 The objects are typically represented as \emph{point objects} using a unique identifier and a state vector for dynamic information such as position, velocity and acceleration.
@@ -574,20 +535,20 @@ Therefore, achieving a unified representation across different sensor modalities
 
 Representation approaches other than the aforementioned ones are rather rarely used in an automotive context.
 Although semantic and structured information will grow more important with the advent of numerous and increasingly complex machine learning driven assistant systems, representations that are able to capture and manipulate such information are still hardly used in vehicle context.
-One example of an abstract vector representation in an automotive context called Drive2Vec is presented in \textcite{Hallac2018}: an unsupervised embedding of low-level sensory data to a vector, which is subsequently used to make predictions about the vehicle's state.
-Similar to word embedding approaches, Drive2Vec learns an embedding from a high-dimension vector space (i.e., language or in this case several sensor streams) to a vector representation of comparably low dimension (representational space).
+One example of an abstract vector representation in an automotive context called Drive2Vec is presented in \textcite{Hallac2018}: an unsupervised embedding of low-level sensory data into a vector, which is subsequently used to make predictions about the vehicle's state.
+Similar to word embedding approaches, Drive2Vec learns an embedding from a high-dimensional vector space (i.e., language or in this case several sensor streams) to a vector representation of comparably low dimension (representational space).
 Another example of an alternative knowledge representation approach is the work presented in \textcite{Yamazaki2016}, where the authors use symbolization, a language modeling technique, to obtain semantic descriptions of driving scenes.
 
 \subsection{Driving Context Classification}%
 \label{subsec:driving_context_classification}
 
 Classification of the current driving context, i.e., if the vehicle is currently driving on a highway or in an urban area, has been investigated mainly in the earlier days of \ac{ADAS} research before digital maps were available at a large scale, which could be used in combination with the vehicle's current position measured using \ac{SensGPS} to detect the driving context.
-However, inferring contextual information from on-board sensory data is appealing as either a fallback option in situations when \ac{SensGPS} is not available of if keeping an updated map with driving context information is not feasible.
-Another simple approach is to classify the current driving context based on a set of conditional, logical rules using if-else statements such as \enquote{if the current velocity is greater than \SI{100}{\kilo\meter\per\hour}, then the current context is \emph{highway}}.
+However, inferring contextual information from on-board sensory data is appealing as either a fallback option in situations when \ac{SensGPS} is not available or if keeping an updated map with driving context information is not feasible.
+Another simple approach is to classify the current driving context based on a set of conditional, logical rules using if-else statements such as \enquote{if the current velocity is greater than \SI{100}{\kilo\meter\per\hour}, then the current driving context is \emph{highway}}.
 However, this simple approach suffers from poor scaling and the difficulty to formulate exact definitions of all possible target categories in advance.
-Improving on a logical rule set, the approach proposed in \textcite{Hauptmann1996} employs a combination of a fuzzy-logic system based on the ego-vehicle's dynamics such as velocity, active gear and acceleration and a data-driven feed-forward neural network, which additional uses a front-facing camera.
-\textcite{Engstrom2001} apply statistical pattern recognition and a simple feed-forward neural network using solely the ego-vehicle's dynamics to classify four different different driving context categories.
-More modern approaches tend to focus more on the classification and analysis of particular traffic situations  as in \textcite{Hermann2008} or driving events as in \textcite{Dagostino2013}, which can then be put in relation to the driver's behavior.
+Improving on a logical rule set, the approach proposed in \textcite{Hauptmann1996} employs a combination of a fuzzy-logic system based on the ego-vehicle's dynamics such as velocity, active gear and acceleration and a data-driven feed-forward neural network, which additionally uses a front-facing camera.
+\textcite{Engstrom2001} apply statistical pattern recognition and a simple feed-forward neural network using solely the ego-vehicle's dynamics to classify four different driving context categories.
+Modern approaches tend to focus more on the classification and analysis of particular traffic situations  as in \textcite{Hermann2008} or driving events as in \textcite{Dagostino2013}, which can then be put in relation to the driver's behavior.
 
 \subsection{Object Detection and Classification}
 \label{subsec:obj_detect}
@@ -595,7 +556,7 @@ More modern approaches tend to focus more on the classification and analysis of 
 \begin{figure}[t!]
     \centering
     \includegraphics[width=0.95\linewidth]{imgs/segnet.png}
-    \caption{Illustration of the SegNet \ac{FCN} architecture for semantic segmentation of an image visualizing the input data as well as the output of the network with pixel-wise labels indicating class membership. Image source: \textcite{Badrinarayanan2015}}
+    \caption{Illustration of the SegNet \acf{FCN} architecture for semantic segmentation of an image visualizing the input data as well as the output of the network with pixel-wise labels indicating class membership. Image source: \textcite{Badrinarayanan2015}}
     \label{fig:segnet_achitecture}
 \end{figure}
 
@@ -604,7 +565,7 @@ Knowledge about type, position and behavior of other traffic participants as wel
 The algorithmic choice for detecting dynamic objects depends heavily on the sensor modality used.
 If \ac{LIDAR} sensors are used, typically model-based approaches involving the object's geometry and dynamics are employed \parencite{Petrovskaya2009a, Petrovskaya2009, Darms2008}.
 Classic computer vision approaches employ probabilistic methods combined with information about context, scale or shapes detected using engineered features such as part-based models or \ac{HOG} features to identify cars \parencite{Held2012}, traffic signs \parencite{Li2015} or the road topology \parencite{Alvarez2011, Beyeler2014}.
-Such methods however have been drastically outperformed in recent years through sophisticated \acp{DNN} architectures such as \acp{CNN} with remarkable results on tasks like traffic sign detection \parencite{Ciresan2012, Sermanet2011} achieving partly super-human performance \parencite{Stallkamp2012}.
+Such methods however have been drastically outperformed in recent years through sophisticated \ac{DNN} architectures such as \acp{CNN} with remarkable results on tasks like traffic sign detection \parencite{Ciresan2012, Sermanet2011} achieving partly super-human performance \parencite{Stallkamp2012}.
 Subsequently, \acp{DNN} have been used to segment the road, or more generally, the traversable space \parencite{Mohan2014, Bittel2015} or for semantic segmentation of the complete image, i.e., labeling each pixel in the image with the object class it belongs to (cf. Fig.~\ref{fig:segnet_achitecture}), using \acp{FCN} \parencite{Badrinarayanan2015, Long2015, Chen2018}.
 The approach proposed in \textcite{Li2017} deals with the special case of detecting vulnerable road users, i.e., pedestrians and bicyclists, by incorporating a \ac{CNN} variant for classification and localization.
 \textcite{Huval2015} evaluate general applicability and usability of \acp{CNN} for lane and vehicle detection when deployed on a real-time critic system concluding that powerful \acp{GPU} enable real-time capabilities of such approaches.
@@ -615,7 +576,7 @@ An overview over recent approaches to tackle object detection and semantic segme
 
 \begin{figure*}[t!]
 	\centering
-	\includegraphics[width=0.95\textwidth]{imgs/examples_motion_prediction_models.jpg}
+	\includegraphics[width=0.95\textwidth]{imgs/examples_motion_prediction_models.png}
 	\caption{Examples visualizing different modeling approaches for motion prediction in automotive context. Image source: \textcite{Lefevre2014}}
 	\label{fig:examples_motion_prediction_types}
 \end{figure*}
@@ -628,7 +589,7 @@ Figure~\ref{fig:examples_motion_prediction_types} illustrates the differences be
 Finally the \emph{interaction-aware} approach assumes similar motions as the \emph{maneuver-based} approach whereas the motion of each vehicle is constrained by the traffic rules as well as the relative behavior of the other car.
 
 \emph{Physics-based} approaches represent vehicles as dynamic entities, which obey the laws of physics.
-To predict future motion, such approaches employ dynamic and kinematic models linking control inputs, car properties and external condition to the evolution of the state of the vehicle.
+To predict future motion, such approaches employ dynamic and kinematic models linking control inputs, car properties and external conditions to the evolution of the state of the vehicle.
 Hence, such approaches are well-suited for short term trajectory prediction but suffer from instabilities when predicting longer time-windows into the future and are unable to account for any change in vehicle motion caused by a particular maneuver (e.g., slowing down or performing a turn). 
 \emph{Maneuver-based} approaches are more advanced assuming the vehicle motion is a series  of maneuvers, which are performed independently from the other traffic participants.
 Such approaches rely on early detection of the maneuver the driver intends to perform, which is then assumed to match the future behavior of the vehicle.
@@ -649,7 +610,7 @@ Data-driven approaches to behavior prediction mainly rely on \ac{LSTM} neural ne
 \textcite{Alahi2016} model interactions in the learning network architecture by introducing so-called social-pooling layers to connect several \acp{LSTM} each predicting one agent at a time.
 \textcite{Altche2018} use a \ac{LSTM} network and account for interactions by including distances between the target vehicle and other agents directly in the training data.
 A similar approach is proposed in \textcite{Deo2018}, but the authors combine \ac{LSTM} networks with an additional maneuver classification network to predict future vehicle motion.
-\textcite{Deo2018a} adapted the combination of several \ac{LSTM} networks to encode vehicle trajectories, (convolutional) social-pooling layers to account for interactions between the vehicles, and a maneuver-based \ac{LSTM} decoder to predict vehicle trajectories in highway situations (see figure~\ref{fig:deo_lstm_prediction_arch}).
+\textcite{Deo2018a} adapted the combination of several \ac{LSTM} networks to encode vehicle trajectories, (convolutional) social-pooling layers to account for interactions between the vehicles, and a maneuver-based \ac{LSTM} decoder to predict vehicle trajectories in highway situations (see Fig.~\ref{fig:deo_lstm_prediction_arch}).
 \ac{LSTM}-models are currently considered the most successful approaches and therefore the state-of-the-art regarding trajectory prediction.
 One issue with data-driven approaches to behavior prediction accounting for relations between agents is that the number of other vehicles is variable.
 If information about vehicles other than the target are encapsulated in the input of the neural network, typically a specific number of other vehicles of interest are manually chosen a priori to avoid this issue \parencite{Altche2018, Deo2018}.
@@ -673,7 +634,7 @@ An online learning approach based on \acp{SNN} has been shown in \textcite{DeWol
 \label{subsec:data_sets}
 
 With the advent and success of sophisticated \ac{DNN} architectures and their success in several domains related to automated driving such as object detection (see section~\ref{subsec:obj_detect}) and behavior prediction (see section~\ref{subsec:trajectory_prediction}), the demand for large-scale data sets for training such networks grew significantly in recent years.
-Furthermore, there is an interest in publicly available data sets which not only enable competition between researchers but also allow for transparent benchmarking of approaches against each other.
+Furthermore, there is an interest in publicly available data sets, which not only enable competition between researchers but also allow for transparent benchmarking of approaches against each other.
 Data sets for image classification such as the \ac{MNIST} data set for hand-written digits \parencite{LeCun1998} , the \ac{GTSRB} for traffic sign recognition \parencite{Stallkamp2012} and the ImageNet data set \parencite{Deng2009} provided researchers with large amounts of labeled image data facilitating significant progress in this research field.
 
 One of the first data sets being made publicly available on a larger scale for research in an automotive context and encouraging competition is the KITTI vision benchmark suite \parencite{Geiger2013a}, which was recorded using the Annieway vehicle prototype \footfullcite{Annieway} in urban environments in the region of the German city Karlsruhe.
@@ -683,7 +644,7 @@ It provides high-definition images recorded from a driving vehicle with accurate
 Furthermore, the Cityscapes data set also contains labels for depth information obtained from stereo vision, which for instance allows to train neural networks to provide depth information based only on monocular input. 
 A comparable data set for semantic image segmentation in a broader context (i.e., not restricted to an automotive context) is the 
 \ac{COCO}  data set \parencite{Lin2014}.
-Furthermore, the \ac{COCO} data set is also provides ground truth captions for each images allowing to train neural networks translating visual input to language. 
+Furthermore, the \ac{COCO} data set also provides ground truth captions for each images allowing to train neural networks translating visual input to language. 
 Another more recent data set similar to the KITTI data set is the Apollo Scape data set \parencite{Huang2018}, which is provided by the Chinese company Baidu and contains data and ground truth labels for several automotive applications such as scene parsing, lane segmentation, localization, tracking and trajectory prediction.
 The \ac{NGSIM} US-101 data set \parencite{NGSIM-US101} is a publicly available data set originally intended for driver behavior and traffic flow models \parencite{He2017}, that has been used to train trajectory predictions models in \textcite{Altche2018, Deo2018} as well.
 It was recorded on a segment of approximately \SI{640}{\meter} length with \num{6} lanes on the US-101 freeway in Los Angeles, California  using cameras observing freeway traffic from rooftops with trajectory-data being extracted later from the obtained video footage.
@@ -704,12 +665,12 @@ After showing alternative approaches such as symbolic and connectionist cognitiv
 We have seen, that there is a gap between architectures that are well-suited for modeling higher-level cognitive tasks and lower-level tasks closer to the dynamics of perception and action.
 While the former is most successfully tackled with symbolic modeling architectures, the latter often demands for precise mathematical modeling for dealing with the complexity and dynamics of real-world physics.
 Therefore, little attempts have been made to use cognitive modeling in real robotic systems and if, the investigated tasks are often simplified \parencite{Neubert2016} and still far away from the demands imposed by complex systems like automated vehicles.
-Although we do not attempt to close this gap in our proposed work, we show that structured vector representations are an interesting option for encode automotive scenes in an abstract, unified and sensor independent substrate.
+Although we do not attempt to close this gap in our proposed work, we show that structured vector representations are an interesting option to encode automotive scenes in an abstract, unified and sensor independent substrate.
 Today's sensing and processing hardware is currently not intended to support such a representation.
 However, the full strength of this approach can only unfold once it is possible to employ cognitive modeling and spiking neuron principles in the complete chain from sensing to behavior with dedicated hardware support.
 
 Finally, we summarized the current state-of-the-art in several sub-domains of automated driving related to our work.
-After a brief historical overview, we focused on reviewing the currently used approaches for representing knowledge in an automotive context.
+After a brief historical overview, we focused on reviewing approaches currently used for representing knowledge in an automotive context.
 As stated earlier, the techniques employed here use mainly Bayesian statistics and mathematical modeling to deal with the complexity of the real world.
 Subsequently, we reviewed the state-of-the-art in several selected tasks from sub-domains related to automated driving.
 These tasks mirror the application examples we have chosen as use-cases to investigate our approaches and will be revisited in subsequent chapters (see chapters~\ref{chap:driving_context_classification},~\ref{chap:behav_pred} and~\ref{chap:mix_online_learning}).
