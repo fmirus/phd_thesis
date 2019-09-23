@@ -4,12 +4,12 @@
 %----------------------------------------------------------------------------------------------------------
 
 In this chapter, we present the theoretical background and mathematical formalism needed as basis for later chapters.
-We introduce \acfp{VSA}, describe their most important properties and present proofs where relevant for the thesis.
+We introduce \acfp{VSA}, describe their most important properties and present proofs where relevant for this thesis.
 We proceed with one particular instantiation of \ac{VSA}, the \acf{SPA}, and present more specific properties, which do not necessary hold for all \acp{VSA}.
 Additionally, we give a brief introduction to the theory of the \acf{NEF}, a set of mathematical tools enabling the implementation of the \ac{SPA} in \acp{SNN}.
 Then, we shift our focus to cognitive modeling based on such vector representations keeping it as generic as possible without particular attention on the \ac{SPA}. 
 We show several approaches to generate vector vocabularies, which form the basis of more complex structured representations built from them using the \ac{VSA}'s algebraic operations.
-Bringing all of the presented tools together, we show how the \ac{NEF} can be used to implement vector representation generated using the \ac{SPA} in a spiking neuron substrate.
+Bringing all of the presented tools together, we show how the \ac{NEF} can be used to implement vector representations, which have been generated using the \ac{SPA}, in a spiking neuron substrate.
 
 %----------------------------------------------------------------------------------------------------------
 \section{Mathematical properties of \aclp{VSA}}
@@ -17,8 +17,8 @@ Bringing all of the presented tools together, we show how the \ac{NEF} can be us
 %----------------------------------------------------------------------------------------------------------
 
 The term \acp{VSA} - first coined by \textcite{Gayler2003} - refers to a class of similar approaches for cognitive modeling making use of distributed representations.
-The basic idea behind all of those approaches is to represent structure (e.g.\ cognitive concepts, symbols or language) in a high-dimensional vector space by mapping each entity to be represented to a (possibly random) vector.
-One of the most important properties of high-dimensional vector spaces enabling this kind of representation is the fact, that two high-dimensional random vectors are likely to be dissimilar.
+The basic idea behind all of those approaches is to represent structure, i.e., cognitive concepts, symbols or language, in a high-dimensional vector space by mapping each entity to be represented to a (possibly random) vector.
+One of the most important properties of high-dimensional vector spaces enabling this kind of representation is the fact that two high-dimensional random vectors are likely to be dissimilar.
 In the following, we will show what we mean by fuzzy terms like \emph{dissimilar} or \emph{likely} and provide more precise statements.
 
 One main requirement in the context of cognitive modeling is the ability of the modeling framework to address the binding problem \parencite{Treisman1999}.
@@ -26,16 +26,16 @@ One main requirement in the context of cognitive modeling is the ability of the 
 One strength of \acp{VSA} is that they offer the possibility to manipulate their entities (i.e., vectors) through algebraic operations, usually at least one \emph{addition-like} and \emph{multiplication-like} operation each.
 Typically, the multiplication operation is used for binding different representations into a new vector.
 This operation, depending on the vector representation, is constructed with some desirable properties in mind (see Definition~\ref{def:binding}).
-A first attempt on using a multiplication operation on vectors for binding was done by \textcite{Smolensky1990} using the tensor product.
+A first attempt on using a multiplication operation for binding vectors was done by \textcite{Smolensky1990} using the tensor product.
 The major drawback of this approach is exploding dimensionality of the tensor product.
 For finite dimensional vector spaces  $V$ and $W$ of dimensions $n$ and $m$, the tensor space $V \otimes W$ is a vector space of dimension $n\cdot m$.
 As a consequence, each binding operation $v\otimes w$ for vectors $ \mathbf{v} \in V, \mathbf{w} \in W$ would increase the dimension of the representational space, which is computationally unfeasible and leads to poor scaling.
 This lead researchers to define several slightly different multiplication or binding operations, depending on the underlying numerical structure.
-The most prominent examples are element-wise multiplication in the \ac{MAP}-architecture proposed by \textcite{Gayler1998}, the XOR-operation in \acp{BSC} proposed by \textcite{Kanerva2000, Kanerva2009} as well as circular convolution \acp{HRR} proposed by \textcite{Plate1991, Plate1994}.
+The most prominent examples are element-wise multiplication in the \ac{MAP}-architecture proposed by \textcite{Gayler1998}, the XOR-operation in \acp{BSC} proposed in \textcite{Kanerva2000, Kanerva2009} as well as circular convolution \acp{HRR} proposed in \textcite{Plate1991, Plate1994}.
 
 \begin{defn}
 	\label{def:VSA}
-	Let $N \subseteq K$ be a subset of some number field $K$ (i.e.\ a set of numbers) and $D \in \mathbb{N}$ a natural number.
+	Let $N \subseteq K$ be a subset of some number field $K$ (i.e., a set of numbers) and $D \in \mathbb{N}$ a natural number.
 	Furthermore, let
 	\[V_{D}(N)=\{ \mathbf{x}=\left(x_{0}, \cdots, x_{D-1}\right)  | x_{i} \in N\} \subseteq K^{D}\]
 	be the set of all $D$-tuples with entries in $N$.
@@ -48,7 +48,7 @@ The most prominent examples are element-wise multiplication in the \ac{MAP}-arch
 	\[ \mathbf{u} \varoast ( \mathbf{v} \oplus \mathbf{w}) = \mathbf{u} \varoast \mathbf{v} \oplus \mathbf{u} \varoast \mathbf{w}.\]
 	If there is furthermore a distinct element $\pmb{1} \in V_{D}(N)$ with
 	\[ \mathbf{v} \varoast \pmb{1} = \pmb{1} \varoast \mathbf{v} = \mathbf{v}\]
-	for any $v \in V_{D}(N)$ and a function $\abbil{\phi}{V_{D}(N) \times V_{D}(N)}{\left[-1,1\right]}$, we call $(V_{D}(N), \varoast, \oplus, \phi)$ a \emph{\acrfull{VSA}} of dimension $D$.
+	for any $ \mathbf{v} \in V_{D}(N)$ and a function $\abbil{\phi}{V_{D}(N) \times V_{D}(N)}{\left[-1,1\right]}$, we call $(V_{D}(N), \varoast, \oplus, \phi)$ a \emph{\acrfull{VSA}} of dimension $D$.
 	The function $\phi$ is called a \emph{measure of similarity}.
 	If $N$ is a subset of the real or complex numbers, i.e., $N \subset \mathbb{R}$ or $N \subseteq \mathbb{C}$, we call any \ac{VSA} $\left(V_{D}(N), \varoast, \oplus, \phi\right)$ \emph{continuous}.
 \end{defn}
@@ -79,7 +79,7 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 		\acp{BSC} have some interesting properties compared to other \acp{VSA}:
 		The neutral element for both operations $\varoast$ and $\oplus$ is the vector $\pmb{0} := \left(0, \cdots, 0\right)$, while all vectors are self-inverse regarding the multiplication operation $\varoast$, i.e., $ \mathbf{v} \varoast \mathbf{v} = \pmb{0}$ for any $ \mathbf{v} \in V_{D}(N)$.
 
-		\item The first example of \ac{VSA} in continuous space is the \acrfull{MAP} architecture proposed by \textcite{Gayler1998} with $N \subseteq \mathbb{R}$ and the cosine similarity as measure of similarity
+		\item The first example of a \ac{VSA} in continuous space is the \acrfull{MAP} architecture proposed by \textcite{Gayler1998} with $N \subseteq \mathbb{R}$ and the cosine similarity as measure of similarity
 		\[
 		\phi( \mathbf{v}, \mathbf{w}) = \frac{ \mathbf{v} \cdot \mathbf{w}}{\norm{ \mathbf{v}}\norm{ \mathbf{w}}}=\cos(\theta),
 		\]
@@ -87,17 +87,11 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
 		The operations $\varoast$ and $\oplus$ are simply element-wise multiplication and addition with neutral elements $\pmb{1}=\left(1, \cdots, 1\right)$ and $\pmb{0} := \left(0, \cdots, 0\right)$ respectively.
 
 		\item Another example of a \ac{VSA} in continuous space is \acfl{HRR} proposed by \textcite{Plate1991}.
-		The main difference compared to the \ac{MAP} architecture is, that \textcite{Plate1994} in general allows complex vector values, i.e., $N \subseteq \mathbb{C}$ and uses a different multiplication operation $\varoast$ - namely circular convolution.
+		The main difference compared to the \ac{MAP} architecture is, that \textcite{Plate1994} in general allows complex vector values, i.e., $N \subseteq \mathbb{C}$ and uses a different multiplication operation $\varoast$: circular convolution.
 		For any two vectors $ \mathbf{x}, \mathbf{y} \in V_{D}(N)$, circular convolution $\varoast$ is defined as
 		\begin{align*}
 			\mathbf{z} = \mathbf{x} \varoast \mathbf{y} \qquad \textrm{ with } z_{j} := \sum_{k=0}^{D-1} x_{k}y_{(j-k)\Mod{D}}.
 		\end{align*}
-		%\begin{figure}
-			%\centering
-			%\includegraphics[width=0.85\textwidth]{imgs/circular_convolution_visualization_hor.eps}
-			%\caption{Visualization of circular convolution as compressed outer product for $3$-dimensional vectors. Image source: \textcite{Plate1994a}.}
-			%\label{fig:circ_conv}
-		%\end{figure}
         \begin{figure}[t!]
             \centering
             \begin{tikzpicture}
@@ -146,7 +140,7 @@ Before we proceed in deriving some important properties of \acp{VSA}, we present
         \label{fig:circ_conv}
         \end{figure}
 		The neutral element regarding circular convolution is $\pmb{1} = \left(1, 0, \cdots, 0\right)$.
-		One important property of this operation is the fact, that circular convolution can efficiently be computed using the \ac{DFT}.
+		One important property of this operation is the fact that circular convolution can efficiently be computed using the \ac{DFT}.
 		The \ac{DFT} is defined as the function
         \begin{equation}
         \label{eq:dft}
@@ -180,8 +174,8 @@ We will derive this result in the following Theorem.
     Since binary \acp{VSA} can be associated with a euclidean sphere as well, the same result can be proven for those architectures with similar arguments \parencite[see][for details]{Kanerva1988}.
 	Due to symmetry of the unit sphere $\mathbb{S}^{D-1}$, we can furthermore - again without loss of generality - choose one vector as a unit vector, i.e., $ \mathbf{w}=\left(1, 0 , \cdots, 0\right)$.
 	Thereby, the cosine similarity for $ \mathbf{v}=\left(v_{0}, \cdots, v_{D-1}\right)$ is given by $\phi\left( \mathbf{v}, \mathbf{w}\right) = v_{0}$
-	By fixing one coordinate, we get the constraint $\sum_{i=1}^{D-1} v_{i}^{2} = 1-v_{0}^{2}$ which is equivalent to a lower dimensional sphere $\mathbb{S}^{D-2}$ with radius $\sqrt{1-v_{0}^2}$.
-	Hence the cosine similarity $\phi\left( \mathbf{v}, \mathbf{w}\right)=:x$ is proportional to the surface of a conical frustum constructed from $\mathbb{S}^{D-2}$ with radius $\sqrt{1-x^{2}}$, slope $\frac{1}{\sqrt{1-x^{2}}}$ and some height $h$, i.e., the density function is proportional to
+	By fixing one coordinate, we get the constraint $\sum_{i=1}^{D-1} v_{i}^{2} = 1-v_{0}^{2}$, which is equivalent to a lower dimensional sphere $\mathbb{S}^{D-2}$ with radius $\sqrt{1-v_{0}^2}$.
+	Hence, the cosine similarity $\phi\left( \mathbf{v}, \mathbf{w}\right)=:x$ is proportional to the surface of a conical frustum constructed from $\mathbb{S}^{D-2}$ with radius $\sqrt{1-x^{2}}$, slope $\frac{1}{\sqrt{1-x^{2}}}$ and some height $h$, i.e., the density function is proportional to
 	\[
 	f_{\phi( \mathbf{v}, \mathbf{w})}(x) \propto \frac{\sqrt{1-x^{2}}^{(D-2)}}{\sqrt{1-x^{2}}} h \propto \left(1-x^{2}\right)^{\frac{D-3}{2}}.
 	\]
@@ -195,11 +189,11 @@ We will derive this result in the following Theorem.
 	For $\alpha=\beta=\frac{D-1}{2}$, the mean of the beta distribution is $\tilde{\mu}=\frac{1}{2}$. Applying the substitution, we get the mean of the shifted distribution $\mu = 2\tilde{\mu }-1 = 0$.
     
 	Making use of the simplification that the distribution of similarity is the same as the distribution in the first coordinate, the variance is given by the expected value of the square value of the first coordinate, i.e., $\mathbb{E}(v_{0}^{2})$.
-	Since all coordinate are identically distributed, we get
+	Since all coordinates are identically distributed, we get
 	\[
 	\mathbb{E}(v_{0}) = \frac{1}{D} \sum_{i=0}^{D-1} \mathbb{E}(v_{i}^2)= \frac{1}{D} \underbrace{\mathbb{E}\left(\sum_{i=0}^{D-1} v_{i}^2\right)}_{=:c^2}=\frac{c^2}{D}.
 	\]
-	Hence variance of the distribution of the cosine similarity is $\sigma^2=\frac{c^2}{D}$.
+	Hence, the variance of the distribution of the cosine similarity is $\sigma^2=\frac{c^2}{D}$.
 	In the particular case of the unit sphere $\mathbb{S}^{D-1}$, we get $c^{2}=1$ and a variance of $\sigma^2=\frac{1}{D}$.
     
 	To see the convergence behavior of the standardized distribution, we look at the logarithm of its density function %$f_{\phi(v,w)}\left(\frac{x}{\sqrt{D}}\right)$
@@ -214,7 +208,7 @@ We will derive this result in the following Theorem.
 	\end{align*}
 	Hence, with growing $D$ the standardized distribution of the cosine similarity trends to a normal distribution.
 \end{proof}
-Theorem~\ref{theorem:VSA_cossim_distribution} states, that the probability of finding two random, non-orthogonal vectors in a \ac{VSA} decreases with growing vector dimension.
+Theorem~\ref{theorem:VSA_cossim_distribution} states that the probability of finding two random, non-orthogonal vectors in a \ac{VSA} decreases with growing vector dimension.
 \begin{figure}[t]
     \centering
     \includegraphics[width=1.\linewidth]{imgs/distributions_cosine_sims.eps}
@@ -234,7 +228,7 @@ Furthermore, Theorem~\ref{theorem:VSA_cossim_distribution} allows us to give a m
 	Similar vectors are denoted by $ \mathbf{v} \approx \mathbf{w}$. 
 \end{defn}
 Definition~\ref{def:similar} can also be stated as follows: we consider any two vectors similar, if their similarity is higher than what we would expect from two randomly chosen vectors.
-Therefore, we make use of the fact, that for growing dimension $D$, the cosine similarity follows approximately a normal distribution $\mathcal{N}_{\mu, \sigma}$, with $\mu=0$ and $\sigma=\tfrac{1}{\sqrt{D}}$ and the so-called three-sigma-rule.
+Therefore, we make use of the fact that for growing dimension $D$ the cosine similarity follows approximately a normal distribution $\mathcal{N}_{\mu, \sigma}$, with $\mu=0$ and $\sigma=\tfrac{1}{\sqrt{D}}$ and the so-called three-sigma-rule.
 This rule, which follows from Chebyshev's inequality, states that the probability $\mathbb{P}\left(\mu-3\sigma \leq X \leq \mu+3\sigma \right) \geq 0.95$ for any unimodal distributed random variable $X$.
 For normally distributed $X$, we even have
 \begin{align*}
@@ -242,7 +236,7 @@ For normally distributed $X$, we even have
 	\mathbb{P}\left(\mu-3\sigma \leq X \leq \mu+3\sigma \right) &\approx 0.997.
 \end{align*}
 Given Definition~\ref{def:similar}, the probability of two randomly chosen vectors being similar is below \SI{5}{\percent} for $c=2$ and even below \SI{0.3}{\percent} for $c=3$, while the actual numerical interval $\left[-c\sigma, c\sigma\right]$ only depends on the vector dimension $D$.
-Hence, we denote the weaker version of definition~\ref{def:similar} by $\epsilon_{weak} = \tfrac{2}{\sqrt{D}}$ as \emph{weak similarity threshold} and the stronger version by $\epsilon_{strong} = \tfrac{2}{\sqrt{D}}$ as \emph{strong similarity threshold}.
+Hence, we denote the weaker version of Definition~\ref{def:similar} by $\epsilon_{weak} = \tfrac{2}{\sqrt{D}}$ as \emph{weak similarity threshold} and the stronger version by $\epsilon_{strong} = \tfrac{2}{\sqrt{D}}$ as \emph{strong similarity threshold}.
 For lower \ac{VSA} dimensions such as $D \leq 50$, it can be beneficial to work with the weak similarity threshold, whereas for higher dimensions the stronger version can be used.
 
 Based on the definition of similarity, we derive criteria for \enquote{good} multiplication functions in \acp{VSA}.
@@ -260,7 +254,7 @@ Based on the definition of similarity, we derive criteria for \enquote{good} mul
 		If furthermore $ \mathbf{v} \varoast \bar{\mathbf{v}} = \mathbf{1}$, we call the vector $\bar{\mathbf{v}}$ \emph{exact inverse}.
 	\end{enumerate}
 \end{defn}
-It is worth noting, that all multiplication operations mentioned in example~\ref{ex:VSAs} fulfill the criteria for binding functions as stated in Definition~\ref{def:binding}.
+It is worth noting, that all multiplication operations mentioned in Example~\ref{ex:VSAs} fulfill the criteria for binding functions as stated in Definition~\ref{def:binding}.
 The first criteria is intended to allow structured representations in \acp{VSA}.
 Representations built solely upon an addition function lack a mechanism to impose structure, as the sum of vectors is similar to all summands.
 For continuous \acp{VSA}, this result is straightforward due to the linearity of the dot product, but it holds true for \acp{BSC} as well.
@@ -275,7 +269,7 @@ The existence of a (pseudo-) inverse element allows the retrieval of $ \mathbf{v
 \end{equation}
 In case of exact inverse elements, the right hand side of equation~\eqref{eq:retrieval} becomes an exact equality $\tilde{\mathbf{w}}= \mathbf{w}$.
 In most cases, however, the result $\tilde{\mathbf{w}}$ is not exactly equal to $ \mathbf{w}$, but similar.
-It is this inherent inexactness of most \acp{VSA} what makes them suitable candidates for cognitive modeling \parencite{Eliasmith2013}.
+It is this inherent inexactness of most \acp{VSA} that makes them suitable candidates for cognitive modeling \parencite{Eliasmith2013}.
 On the other hand, it imposes a functional demand for a clean-up memory.
 A clean-up memory is a mechanism, which maps noisy versions of vectors like $\tilde{\mathbf{w}}$ to their exact counterparts, here $ \mathbf{w}$.
 Therefore, we need to have a set of vectors, which represent established concepts or symbols the system has knowledge of.
@@ -301,10 +295,10 @@ Definition~\ref{def:clean-up-mem} states, that the cleaned-up version of a vecto
 %----------------------------------------------------------------------------------------------------------
 
 In this section, we focus on one particular \ac{VSA}, namely the \ac{SPA}, as we will be using it throughout this work.
-The \ac{SPA} is an adoption of Plate's previously mentioned \acp{HRR} (cf.\ example~\ref{ex:VSAs}).
-Revisiting definition~\ref{def:VSA}, the underlying number field of the \ac{SPA} is the field of real numbers, i.e., $N \subseteq \mathbb{R}$, the addition $\oplus$ and multiplication $\varoast$ operations are element-wise addition and circular convolution respectively, and the cosine similarity serves as measure of similarity $\phi$.
+The \ac{SPA} is an adoption of Plate's previously mentioned \acp{HRR} (cf.\ Example~\ref{ex:VSAs}).
+Revisiting Definition~\ref{def:VSA}, the underlying number field of the \ac{SPA} is the field of real numbers, i.e., $N \subseteq \mathbb{R}$, the addition $\oplus$ and multiplication $\varoast$ operations are element-wise addition and circular convolution respectively, and the cosine similarity serves as measure of similarity $\phi$.
 We will use $\mathcal{S}(D)$ as a short notation for the $D$-dimensional \ac{SPA} $(V_{D}(\mathbb{R}), \varoast, \oplus, \phi)$.
-Eliasmith gives an in-depth description of the \ac{SPA} in \textcite{Eliasmith2013}.
+\textcite{Eliasmith2013} gives an in-depth description of the \ac{SPA}.
 However, we recapitulate some important properties, which will be used later in this work.
 \begin{figure}[t!]
 	\centering
@@ -318,7 +312,7 @@ However, we recapitulate some important properties, which will be used later in 
 	The vector $\bar{\mathbf{v}}=\left(v_0, v_{D-1}, \ldots, v_{1}\right)$ is a pseudo-inverse element of $ \mathbf{v}$ with respect to circular convolution, i.e., $ \mathbf{v} \varoast \bar{\mathbf{v}} \approx \mathbf{1}$.
 \end{lemma}
 Here, we skip an explicit proof for this lemma but rather point to \textcite[Section 3.1.2 and 3.1.3]{Plate1994} for a in-depth derivation.
-However, we visualize the similarity $\phi\left(\mathbf{1}, \mathbf{v} \varoast \bar{\mathbf{v}}\right)$ between the neutral element $\mathbf{1}$ and the result of applying the pseudo-inverse $ \mathbf{v} \varoast \bar{\mathbf{v}}$ compared to the similarity threshold $\epsilon$ (weak and strong version) in figure~\ref{fig:pseudo_inv}.
+However, we visualize the similarity $\phi\left(\mathbf{1}, \mathbf{v} \varoast \bar{\mathbf{v}}\right)$ between the neutral element $\mathbf{1}$ and the result of applying the pseudo-inverse $ \mathbf{v} \varoast \bar{\mathbf{v}}$ compared to the similarity threshold $\epsilon$ (weak and strong version) in Fig.~\ref{fig:pseudo_inv}.
 Therefore, we randomly chose \num{100} sample vectors for various dimensions, convolved them with their pseudo-inverse and compared the result to the neutral element $\mathbf{1}$.
 We observe, that this similarity remains almost constant slightly above \num{0.7} and already for low vector dimensions ($D > 20$) way above the strong similarity threshold of $\epsilon=\frac{3}{\sqrt{D}}$.
 
@@ -344,7 +338,7 @@ By denoting the $j$-th element of the Fourier Vector $\ac{DFT}( \mathbf{v})$ wit
 If we express $\ac{DFT}_{j}( \mathbf{v}) \in \mathbb{C}$ in polar coordinates, i.e., $\ac{DFT}_{j}( \mathbf{v}) = r_j \exp\left(i\varphi_j\right)$, we directly get from equation~\eqref{eq:inv_elemtwise_fourier} that $\ac{DFT}_{j}( \mathbf{v}^{-1}) = \frac{1}{r_j} \exp\left(-i\varphi_j\right)$.
 By using the symmetry property of the real-valued \ac{DFT}, we can see that the transform $\ac{DFT}_j(\bar{\mathbf{v}})$ of the pseudo-inverse element $\bar{\mathbf{v}}$ from Lemma~\ref{lemma:spa_pseudo_inv} is the complex conjugate of $\ac{DFT}_j( \mathbf{v})$, i.e., we can write $\ac{DFT}_j(\bar{\mathbf{v}}) = r_j \exp\left(-i\varphi\right)$ in polar coordinates.
 From those equations, we can see that the pseudo-inverse $\bar{\mathbf{v}}$ has the same norm as the original vector $ \mathbf{v}$, i.e., $\norm{ \mathbf{v}} = \norm{\bar{\mathbf{v}}}$, whereas the norm of the exact inverse $ \mathbf{v}^{-1}$ can become significantly larger than the norm of $ \mathbf{v}$ in some cases.
-This is due to the fact, that elements of the transform of the pseudo-inverse have the same lengths $r_j$ as the original vector, whereas the transformed elements of the exact inverse have lengths $\frac{1}{r_j}$, which can become significantly large when $r_j$ is close to $0$.
+This is due to the fact that elements of the transform of the pseudo-inverse have the same lengths $r_j$ as the original vector, whereas the transformed elements of the exact inverse have lengths $\frac{1}{r_j}$, which can become significantly large when $r_j$ is close to $0$.
 The relation between the vector norm and the magnitudes in the frequency domain is given by Parseval's theorem  \parencite[also known as Rayleigh's theorem, see][Chap. 6]{Bracewell2000}, which states
 \begin{equation}
 \label{eq:parseval}
@@ -374,17 +368,17 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
  	\begin{enumerate}[label=\roman*]
 		\item All elements of $\mathcal{U}$ have unit length, i.e., we have $\norm{\mathbf{u}} = 1$ for any vector $ \mathbf{u} \in \mathcal{U}$.
 		\item $\mathcal{U}$ is closed under convolutive exponentiation, i.e., $ \mathbf{u}^{p} \in \mathcal{U}$ for any $ \mathbf{u} \in \mathcal{U}$ and $p \in \mathbb{R}$.
-        \item The product under circular convolution of two unitary vectors is unitary, i.e.\ $ \mathbf{u}_{1} \varoast \mathbf{u}_{2} \in \mathcal{U} $ for $ \mathbf{u}_{1}, \mathbf{u}_{2} \in mathcal{U}.$
+        \item The product under circular convolution of two unitary vectors is unitary, i.e.\ $ \mathbf{u}_{1} \varoast \mathbf{u}_{2} \in \mathcal{U} $ for $ \mathbf{u}_{1}, \mathbf{u}_{2} \in \mathcal{U}.$
 		\item Convolution with unitary vectors preserves the norm, i.e., $\norm{\mathbf{v}} = \norm{ \mathbf{v} \varoast \mathbf{u}}$ for any $ \mathbf{v} \in \mathcal{S}(D), \mathbf{u} \in \mathcal{U}$.
 	\end{enumerate}
 \end{lemma}
 \begin{proof}
-	To show, that unitary vectors have unit length, we directly calculate the first component of convolution $ \mathbf{z} := \mathbf{u} \varoast \bar{ \mathbf{u}}$ between a unitary vector $ \mathbf{u}$ and its pseudo-inverse $\bar{ \mathbf{u}}$:
+	To show that unitary vectors have unit length, we directly calculate the first component of convolution $ \mathbf{z} := \mathbf{u} \varoast \bar{ \mathbf{u}}$ between a unitary vector $ \mathbf{u}$ and its pseudo-inverse $\bar{ \mathbf{u}}$:
 	\[
 	z_{0} = \sum_{k=0}^{D-1} u_{k} \bar{u}_{-k \Mod{D}} = \sum_{k=0}^{D-1} u_{k}^{2} = \norm{ \mathbf{u}}^{2}.
 	\]
-	As $ \mathbf{u}$ is a unitary vector, we have $ \mathbf{u}^{-1} = \bar{ \mathbf{u}}$ and therefore $ \mathbf{u}\varoast \bar{ \mathbf{u}} = \mathbf{1}$.
-	Thus, we have for the first component of $ \mathbf{z} := \mathbf{u} \varoast \bar{ \mathbf{u}}$
+	Since $ \mathbf{u}$ is a unitary vector, we have $ \mathbf{u}^{-1} = \bar{ \mathbf{u}}$ and therefore $ \mathbf{u}\varoast \bar{ \mathbf{u}} = \mathbf{1}$.
+	Thus, for the first component of $ \mathbf{z} := \mathbf{u} \varoast \bar{ \mathbf{u}}$, we have 
 	\[
 	1 = z_{0} = \norm{ \mathbf{u}}^{2},
 	\]
@@ -392,7 +386,7 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
     
 	To show that the set of unitary vectors $\mathcal{U}$ is closed under convolutive exponentiation, we write each component of $\ac{DFT}( \mathbf{u})$ for $ \mathbf{u} \in \mathcal{U}$ in polar coordinates, i.e., $\ac{DFT}_j( \mathbf{u}) = r_j\exp\left(\varphi_j\right)$.
 	From previous considerations, we know that $\ac{DFT}_j( \mathbf{u}^{-1}) = \frac{1}{r_j}\exp\left(-\varphi_j\right)$ and $\ac{DFT}_j(\bar{ \mathbf{u}}) = r_j\exp\left(-\varphi_j\right)$, which gives $r_j=1$ for $j=0, \ldots, D-1$ because $ \mathbf{u}$ is a unitary vector.
-	Thus, we have for any $p \in \mathbb{R}$
+	Thus, for any $p \in \mathbb{R}$, we have 
 	\[
 	\ac{DFT}_j\left( \mathbf{u}^{p}\right) = \ac{DFT}_j\left( \mathbf{u}\right)^{p} = r_j^{p}\exp\left(ip\varphi\right) = 1^{p} \cdot \exp\left(ip\varphi\right),
 	\]
@@ -416,7 +410,7 @@ Unitary vectors take a special role in the \ac{SPA} as they have some interestin
 	\label{eq:norm_parseval}
 	\norm{ \mathbf{v} \varoast \mathbf{u}}^{2} = \sum_{k=0}^{D-1} \left|z_{k}\right|^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|\ac{DFT}_{k}( \mathbf{z})\right|^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|\ac{DFT}_{k}( \mathbf{v}) \cdot \ac{DFT}_{k}( \mathbf{u})\right|^{2}.
 	\end{equation}
-	Writing $\ac{DFT}_{k}( \mathbf{v}) = r_{vk}\exp\left(i\varphi_{vk}\right)$ and $\ac{DFT}_{k}( \mathbf{u}) = r_{uk}\exp\left(i\varphi_{uk}\right)$ in polar coordinates with $r_{uk} = 1$ for $k=0, \ldots, D-1$ as $u$ is unitary, equation~\eqref{eq:norm_parseval} transforms to
+	Writing $\ac{DFT}_{k}( \mathbf{v}) = r_{vk}\exp\left(i\varphi_{vk}\right)$ and $\ac{DFT}_{k}( \mathbf{u}) = r_{uk}\exp\left(i\varphi_{uk}\right)$ in polar coordinates, with $r_{uk} = 1$ for $k=0, \ldots, D-1$ as $ \mathbf{u}$ is unitary, equation~\eqref{eq:norm_parseval} transforms to
 	\begin{equation*}
 	\norm{ \mathbf{v} \varoast \mathbf{u}}^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|r_{vk} \exp\left(i\left(\varphi_{vk} + \varphi_{uk}\right)\right)\right|^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|r_{vk}\right|^{2} = \frac{1}{D} \sum_{k=0}^{D-1} \left|\ac{DFT}_k\left( \mathbf{v}\right)\right|^{2} = \norm{ \mathbf{v}}^{2}.
 	\end{equation*}
@@ -432,7 +426,7 @@ The \ac{NEF} \parencite{Eliasmith2003} is a mathematical theory, which provides 
 These methods can be divided into the three main principles of the \ac{NEF}: \emph{representation}, \emph{transformation} and \emph{dynamics}.
 The \ac{Nengo} \footfullcite{Nengo} software suite is a python library, which implements the \ac{NEF}'s principles \parencite{Bekolay2014}.
 \ac{Nengo} has been used to build a variety of neural models, e.g., models of the Basal Ganglia system \parencite{Stewart2010, Stewart2012} and \acf{Spaun}, a large-scale, functional model of the brain, which is able to perform eight cognitive tasks \parencite{Eliasmith2012}.
-Furthermore, \ac{Nengo} has been used to interface neural models with physical, neuromorphic hardware systems and robots \parencites{Conradt2014, Stewart2016, Mirus2018a}.
+Furthermore, \ac{Nengo} has been used to interface neural models with physical, neuromorphic hardware systems and robots \parencites{Conradt2014, Stewart2016}.
 Here, we give a brief introduction to the \ac{NEF}'s principles and refer to \textcite{Eliasmith2003, Eliasmith2013, Bekolay2014} for more details.
 \subsection{Representation}
 \label{subsec:nef_representation}
@@ -469,7 +463,7 @@ where $G_{i}$ is the spiking neural non-linearity, $\alpha_{i}$ is the gain of t
 Notably, the current flowing into the cell is completely determined by $c$, whereas the spiking behavior of the neuron model is represented by the non-linear function $G_{i}$.
 The input current $c$ and therefore the \ac{NEF}'s encoding process is independent of particular spiking neuron models.
 
-To decode the input values $\mathbf{x}(t)$ back out of the neural population $A$, the spike train is convolved with an exponentially decaying filter $\abbil{h}{\mathbb{R}}{\mathbb{R}}$ to simulate the process of neurons generating post-synaptic current after spiking (cf.\ figure~\ref{subfig:nef_rep_spike_filtered}) resulting in
+To decode the input values $\mathbf{x}(t)$ back out of the neural population $A$, the spike train is convolved with an exponentially decaying filter $\abbil{h}{\mathbb{R}}{\mathbb{R}}$ to simulate the process of neurons generating post-synaptic current after spiking (cf.\ Fig.~\ref{subfig:nef_rep_spike_filtered}) resulting in
 \begin{equation}
 \tilde{a}_{i}\left(\mathbf{x}(t)\right) = \sum_{j=1}^{m_{i}} h(t) \ast \delta(t - t_{j}) = \sum_{j=1}^{m_{i}} h(t - t_{j}).
 \label{eq:nef_filtered_activity}
@@ -488,9 +482,9 @@ E = \int \left( \mathbf{x}(t) - \sum_{i=1}^{N} \tilde{a}_{i}\left(\mathbf{x}(t)\
 \ac{Nengo} solves for the decoders $\mathbf{d}_{i}$ by default using least squares optimization \parencite{Eliasmith2013}[Appendix B1].
 Figure~\ref{fig:nef_representation} visualizes this encoding process for $V = \left[ -1, 1\right] \subset \mathbb{R}$ and a population of $8$ neurons.
 Figure~\ref{subfig:nef_rep_tuning_curves} shows the tuning curves of individual neurons, which define how these neurons respond to specific input values.
-Equation~\eqref{eq:nef_encoding} is depicted in figure~\ref{subfig:nef_rep_spike_raster}, which shows a raster plot of the neurons' spike times based on the input signal shown in figure~\ref{subfig:nef_rep_decoded}.
-Figure~\ref{subfig:nef_rep_spike_filtered}, which shows the filtered neural activity for each neuron, visualizes equation~\eqref{eq:nef_filtered_activity}.
-Finally, figure~\ref{subfig:nef_rep_decoded} depicts the original input value as well as the estimated output of the neural populations' activity (cf.\ equation~\eqref{eq:nef_decoding}).
+Equation~\eqref{eq:nef_encoding} is depicted in Fig.~\ref{subfig:nef_rep_spike_raster}, which shows a raster plot of the neurons' spike times based on the input signal shown in Fig.~\ref{subfig:nef_rep_decoded}.
+Figure~\ref{subfig:nef_rep_spike_filtered}, which shows the filtered neural activity for each neuron, visualizes Equation~\eqref{eq:nef_filtered_activity}.
+Finally, Fig.~\ref{subfig:nef_rep_decoded} depicts the original input value as well as the estimated output of the neural populations' activity (cf.\ Equation~\eqref{eq:nef_decoding}).
 Note, that the neural population's decoded output is only a noisy approximation of the original input value, whose accuracy can be improved by increasing the number of neurons in the population.
 \subsection{Transformation}
 \begin{figure}[t]
@@ -513,8 +507,8 @@ w_{ij} = \alpha_{j}^{B} \mathbf{d}_{i}^{f} L \mathbf{e}_{j}^{B} \quad \textrm{fo
 \end{equation}
 where $L$ is a $M \times N$ linear operator.
 Here, the \ac{NEF} makes the assumption, that connection weights can be factored into encoders, decoders and a linear transform.
-Figure~\ref{fig:nef_transformation} visualizes this \ac{NEF}'s transformation principle for $V = W = \left[ -1, 1\right] \subset \mathbb{R}$, two neural populations $A$, $B$ containing $30$ neurons each.
-The left and right panel of plots shows the populations' decoded outputs and the neurons' spike times respectively.
+Figure~\ref{fig:nef_transformation} visualizes the \ac{NEF}'s transformation principle for $V = W = \left[ -1, 1\right] \subset \mathbb{R}$, two neural populations $A$, $B$ containing $30$ neurons each.
+The left panel of plots shows the populations' decoded outputs whereas the right panel depicts the neurons' spike times.
 Population $A$ uses the representation principle to encode a sine function, whereas the transformation principle was used to calculate the function $\abb{f}{V}{W}{x}{f(x)=x^{2}}$ across the connection from $A$ to $B$.
 
 \subsection{Dynamics}
@@ -564,19 +558,19 @@ circ/.style={
 %\todo[inline]{check if figure~\ref{fig:nef_dynamics} can be beautified}
 
 The third main principle of the \ac{NEF}, \emph{dynamics}, provides a set of mathematical tools to implement dynamical systems in neural populations through recurrent connections.
-Let $A$ be a population of neurons with an incoming connection approximating the function $\abbil{f}{V}{W \subset \mathbb{R}^{m}}$ and a recurrent connection approximating the function $\abbil{g}{W}{W}$ (cf.\ figure~\ref{fig:nef_dynamics}).
+Let $A$ be a population of neurons with an incoming connection approximating the function $\abbil{f}{V}{W \subset \mathbb{R}^{m}}$ and a recurrent connection approximating the function $\abbil{g}{W}{W}$ (cf.\ Fig.~\ref{fig:nef_dynamics}).
 Thus, the overall function the population is approximating is
 \begin{equation}
 \mathbf{y}(t) = h(t) \ast \left(f(\mathbf{x}(t)) + g(\mathbf{y}(t))\right)
 \label{eq:nef_dyn}
 \end{equation}
 with exponential decaying filter function $\abb{h}{\mathbb{R}}{\mathbb{R}}{t}{e^{\sfrac{-t}{\tau}}}$.
-By applying the Laplace transform to equation~\eqref{eq:nef_dyn}, we get
+By applying the Laplace transform to Equation~\eqref{eq:nef_dyn}, we get
 \begin{equation}
 \label{eq:nef_dyn_laplace}
 \mathbf{Y}(s) = \frac{1}{1 + s\tau}\left(F(\mathbf{X}(s)) + G(\mathbf{Y}(s))\right).
 \end{equation}
-We can rearrange equation~\eqref{eq:nef_dyn_laplace} to
+We can rearrange Equation~\eqref{eq:nef_dyn_laplace} to
 \begin{equation}
 s\mathbf{Y}(s) = \frac{G(\mathbf{Y}(s))-\mathbf{Y}(s)}{\tau} + \frac{F(\mathbf{X}(s))}{\tau}.
 \end{equation}
@@ -589,8 +583,8 @@ Thus, to construct a neural model approximating a differential equation of the f
 \frac{\mathbf{y}(t)}{\partial t} = a(\mathbf{y}(t)) + b(\mathbf{x}(t))
 \label{eq:nef_dyn_diffeq}
 \end{equation}
-with functions $\abbil{a}{W}{W}$ and $\abbil{b}{V}{W}$, the first two principles of the \ac{NEF} can be used to create a neural population of the form as shown in figure~\ref{fig:nef_dynamics}.
-By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)$ and $f(\mathbf{x}(t))=\tau b(\mathbf{x}(t))$, we obtain a neural model approximating the desired dynamical system described by the differential equation~\eqref{eq:nef_dyn_diffeq}.
+with functions $\abbil{a}{W}{W}$ and $\abbil{b}{V}{W}$, the first two principles of the \ac{NEF} can be used to create a neural population of the form as shown in Fig.~\ref{fig:nef_dynamics}.
+By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)$ and $f(\mathbf{x}(t))=\tau b(\mathbf{x}(t))$, we obtain a neural model approximating the desired dynamical system described by the differential Equation~\eqref{eq:nef_dyn_diffeq}.
 
 \section{Cognitive Modeling with \aclp{VSA}}%
 \label{sec:cognitive_modelling_with_vsa}
@@ -598,7 +592,7 @@ By setting the functions $g(\mathbf{y}(t))=\tau a(\mathbf{y}(t)) + \mathbf{y}(t)
 In this section, we give a brief introduction of how we can use the theory shown in sections~\ref{sec:math_prop_vsas} and~\ref{sec:spa} to represent (structured) information using \acp{VSA}.
 We give a general overview of different ways to establish vocabularies containing atomic vectors and how we can build more complex representations from those elementary ingredients.
 \textcite{Gallant2013} refer to these two steps as the first two of three stages for generating structured vector representations: the \emph{pre-processing stage} (generating a vocabulary; see also section~\ref{sec:preprocessing_stage_generating_a_vocabulary}) and the \emph{representation generation stage} (building structured representations from the vocabulary; see also~\ref{sec:representation_generation_stage}).
-Furthermore, we will see how these representations can be implemented in \acp{SNN} using the principles of the \ac{NEF} described in~\ref{sec:neural_eng}.
+Furthermore, we will see how these representations can be implemented in \acp{SNN} using the principles of the \ac{NEF} described in section~\ref{sec:neural_eng}.
 
 \subsection{Vocabularies}
 \label{subsec:vocabs}
@@ -611,11 +605,11 @@ Furthermore, we will see how these representations can be implemented in \acp{SN
 	\subfloat[\label{subfig:constructed_vocab_sims}]{%
 		\includegraphics[width=0.45\textwidth]{imgs/SPA_constructed_vocab_sim.eps}
 	}
-	\caption{Aspects of vector vocabularies:~\ref{subfig:conceptual_golfball} \enquote{Conceptual golf ball} depicting the idea of semantic vectors. Image source: \textcite{Eliasmith2013}.~\ref{subfig:constructed_vocab_sims} Cosine similarities in a small, manually engineered vector vocabulary of dimension $256$.}
+	\caption{Aspects of vector vocabularies:~\protect\subref{subfig:conceptual_golfball} \enquote{Conceptual golf ball} depicting the idea of semantic vectors. Image source: \textcite{Eliasmith2013}.~\protect\subref{subfig:constructed_vocab_sims} Cosine similarities in a small, manually engineered vector vocabulary of dimension $256$.}
     \label{fig:vector vocabs}
 \end{figure}
 
-Let $\vartheta \subset \mathcal{S}(D)$ be a vocabulary in the $D$-dimensional \ac{SPA}, where each vector $v \in \vartheta$ represents one item (i.e., a symbol, word or concept) in the representational space.
+Let $\vartheta \subset \mathcal{S}(D)$ be a vocabulary in the $D$-dimensional \ac{SPA}, where each vector $v \in \vartheta$ represents one item, i.e., a symbol, word or concept, in the representational space.
 The content and size, i.e., the items of interest to be represented in such a vocabulary and their number as well as the way the representing vectors are established is highly task-dependent.
 In its simplest form, all vectors in the vocabulary are chosen at random.
 This approach is feasible due to the properties of high-dimensional vector spaces (cf. Theorem~\ref{theorem:VSA_cossim_distribution} in section~\ref{sec:math_prop_vsas}) that the probability of randomly chosen vectors being dissimilar grows with vector dimension.
@@ -636,14 +630,14 @@ A simple structured vocabulary could be constructed in the following way
 with $\mathbf{DRIVE}$, $\mathbf{MUSCLE}$, $\mathbf{MOTOR}$, $\mathbf{ACTUATOR}$, $\mathbf{LEG}$, $\mathbf{WHEEL}$, $\mathbf{TWO}$ and $\mathbf{FOUR} \in \mathcal{S}(D)$ all being atomic vectors chosen at random.
 Figure~\ref{subfig:constructed_vocab_sims} shows the similarities in an example vocabulary in $\mathcal{S}(256)$ constructed in the aforementioned way.
 This vocabulary is designed to map simple motion properties into a vector representation.
-Thus, this manually engineered vocabulary yields the desired property that vulnerable road users (in this case pedestrians and bicyclists) are more similar to each other that motor vehicles, whereas there is also similarity between different types of cyclists.
-This approach allows the engineer to encapsulate almost any desired kind of similarity without loosing transparency during the encoding process, meaning that the reason for certain similarity artifacts is traceable.
+Thus, this manually engineered vocabulary yields the desired property that vulnerable road users (in this case pedestrians and bicyclists) are more similar to each other than motor vehicles, whereas there is also similarity between different types of cyclists.
+This approach allows the engineer to encapsulate almost any desired kind of similarity without losing transparency during the encoding process, meaning that the reason for certain similarity artifacts is traceable.
 However, not only does this approach become impracticable with increasing number of items in the vocabulary, it is also prone to biases imposed by the preferences of the human engineer.
 
 A more sophisticated way to create a vector vocabulary is to learn it automatically from data.
 In contrast to purely random vocabularies, the idea here is that the learning system is able to capture the intrinsic similarity between objects in the vector representation.
-Again, the choice of learning paradigm (supervised vs.\ unsupervised) and architecture (e.g. \acp{CNN} or \acp{SOM}) depends not only on the given task, but also on the kind of similarity the vectors should encapsulate.
-This can be visual similarity (e.g., items or objects that \enquote{look} similar), auditory similarity (e.g.\ objects producing similar sound), semantic similarity (e.g.\ words with similar meaning) or similarity in characteristics (e.g.\ similar motion characteristics).
+Again, the choice of learning paradigm (supervised vs.\ unsupervised) and architecture, e.g., \acp{CNN} or \acp{SOM}, depends not only on the given task, but also on the kind of similarity the vectors should encapsulate.
+This can be visual similarity (e.g., items or objects that \enquote{look} similar), auditory similarity (e.g., objects producing similar sound), semantic similarity (e.g., words with similar meaning) or similarity in characteristics (e.g., similar motion characteristics).
 
 \begin{figure}[t]
 	\centering
@@ -685,23 +679,23 @@ This can be visual similarity (e.g., items or objects that \enquote{look} simila
 	\label{fig:cnn_arch}
 \end{figure}
 
-A similar approach to derive vectors representing digits from $0$ to $9$ was used \textcite{Eliasmith2012} for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model, which was derived by training a \ac{DBN} consisting of four \acl{RBM} layers.
-This approach of using the activity of the second to last layer to generate a atomic representational vectors can be generalized to any neural network for classification with dense layers at the end.
+A similar approach to derive vectors representing digits from $0$ to $9$ was used in \textcite{Eliasmith2012} for the network performing the visual digit recognition task as part of the larger \ac{Spaun} model, which was derived by training a \ac{DBN} consisting of four \acl{RBM} layers.
+This approach of using the activity of the second to last layer to generate atomic representational vectors can be generalized to any neural network for classification with dense layers at the end.
 A typical way of learning a vocabulary whose vectors conserve visual similarity in supervised fashion are \acp{CNN}.
 These network architectures are inspired by the human visual cortex and compress high-dimensional visual input to lower dimensional representations.
-They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf.\ figure~\ref{fig:cnn_arch}).
+They usually consist of a series of convolutional and pooling layers followed by one or more fully connected layers, where the last layer provides the classification result (cf.\ Fig.~\ref{fig:cnn_arch}).
 The activity of the second to last layer (the last fully-connected one before the actual classification) for each known class in the data set can be considered a representational vector for the current visual input.
 A simple way of getting a representative vector for each class is simply calculating the element-wise, normalized mean over all examples in the test set.
 We employ this approach in section~\ref{subsec:visual_vocabularies} to generate vocabularies encapsulating the visual similarity of traffic signs and traffic participants.
 
 The aforementioned approach to create vector vocabularies encapsulating similarity by using neural networks, which are trained in supervised fashion, is suitable for capturing visual or auditory similarity structure in a vectors.
-The generation of representational vectors for related or similar words or more generally semantic similarity in language is a problem often referred to as word embedding, which is a research question related to computational \acl{NLP}.
+The generation of representational vectors for related or similar words or, more generally, semantic similarity in language is a problem often referred to as word embedding, which is a research question related to computational \acf{NLP}.
 The most successful approaches such as \textit{word2vec} \parencite{Mikolov2013a, Mikolov2013} or \textit{\ac{GloVe}} \parencite{Pennington2014} typically use large corpora of text as input data and are trained in unsupervised fashion based on co-occurrence statistics of words.
-The objective of those procedures aims at maximizing the dot product of word vectors that appear often in similar contexts while minimizing it for negative samples (which do not occur in the training data and are sampled at random).
-For a given sentence $S=\left\{w_1, \ldots, w_n\right\}$ a context $C(w)$ of a word $w=w_i$ of size $k$ is a dynamic window of the form $C(w) = \left\{ w_{i-k}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+k}\right\}$.
-The underlying assumption is that words sharing many contexts are similar to each other, such that automated training with the aforementioned objective will produce a good word embedding.
+The objective of those procedures aims at maximizing the dot product of word vectors that appear often in similar contexts while minimizing it for negative samples, which do not occur in the training data and thus are sampled at random.
+For a given sentence $S=\left\{w_1, \ldots, w_n\right\}$, a context $C(w)$ of a word $w=w_i$ of size $k$ is a dynamic window of the form $C(w) = \left\{ w_{i-k}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+k}\right\}$.
+The underlying assumption is that words sharing many contexts are similar to each other such that automated training with the aforementioned objective will produce a good word embedding.
 Surprisingly, these learning procedures lead to linguistic regularities and algebraic relations between word vectors \parencite{Mikolov2013b}.
-A common example is visualized in figure~\ref{fig:word2vec}: subtracting the vector representing $\mathbf{MAN}$ from the one representing $\mathbf{KING}$ and adding the vector representing $\mathbf{WOMAN}$ results in a vector most similar to the one representing $\mathbf{QUEEN}$, i.e., $\mathbf{KING} - \mathbf{MAN} + \mathbf{WOMAN} \approx \mathbf{QUEEN}$.
+A common example is visualized in Fig.~\ref{fig:word2vec}: subtracting the vector representing $\mathbf{MAN}$ from the one representing $\mathbf{KING}$ and adding the vector representing $\mathbf{WOMAN}$ results in a vector most similar to the one representing $\mathbf{QUEEN}$, i.e., $\mathbf{KING} - \mathbf{MAN} + \mathbf{WOMAN} \approx \mathbf{QUEEN}$.
 \begin{figure}[t]
 	\centering
 	\begin{tikzpicture}[%
@@ -739,8 +733,8 @@ However, \textcite{Goldberg2014, Levy2015} point out that the formal reasons for
 \subsection{Encoding structure}
 \label{subsec:encoding_struct}
 
-In section~\ref{subsec:vocabs}, we have already seen that there are many ways to create vector vocabularies that encode different types of similarity.
-However, the strength of \acp{VSA} lies in the possibility to build up structured representations from atomic vectors.
+In section~\ref{subsec:vocabs}, we have already seen that there are many ways to create vector vocabularies, that encode different types of similarity.
+However, the strength of \acp{VSA} lies in the possibility to build structured representations from atomic vectors.
 Unordered sets can be represented by simply adding up atomic vectors.
 Through the properties of the similarity measure, the sum is similar to each vector contained in the sum.
 The most common approach to incorporate structure is to use so-called role-filler pairs \parencite{Gayler2003}.
@@ -779,16 +773,16 @@ They implement these vectors as well as their inductive learning system in a \ac
 \label{subsec:implementation_in_snns}
 
 In this section, we show how \acp{VSA} and in particular the \ac{SPA} can be implemented in \acp{SNN}.
-In section~\ref{subsec:nef_representation}, we have already discussed the representation principle of the \ac{NEF}, that allows to encode time-varying vectors in the activity of populations of spiking neurons using equation~\eqref{eq:nef_encoding}.
-Given that all representations of entities in the \ac{SPA} are vectors, we can directly apply equation~\eqref{eq:nef_encoding} to encode any vector representation generated using the principles and algebraic operations of the \ac{SPA}.
-Similarly, we can employ equation~\eqref{eq:nef_decoding} to decode back out the original vector from the neurons' activities.
+In section~\ref{subsec:nef_representation}, we have already discussed the representation principle of the \ac{NEF}, that allows to encode time-varying vectors in the activity of populations of spiking neurons using Equation~\eqref{eq:nef_encoding}.
+Given that all representations of entities in the \ac{SPA} are vectors, we can directly apply Equation~\eqref{eq:nef_encoding} to encode any vector representation generated using the principles and algebraic operations of the \ac{SPA}.
+Similarly, we can employ Equation~\eqref{eq:nef_decoding} to decode back out the original vector from the neurons' activities.
 However, to manipulate the encoded vectors into structured representations using the \ac{SPA}'s algebraic operations, we also need to be able to implement these operations in networks of spiking neurons.
 Again, the tools of the \ac{SPA} allow this implementation.
-The implementation of element-wise addition of vectors is straightforward: assuming we have created a neural populations $A$ and $B$ encoding the vectors $ \mathbf{v}$ and $ \mathbf{w}$ respectively using equation~\eqref{eq:nef_encoding}, we can now use the transformation principle and equation~\eqref{eq:nef_transformation} to connect \emph{both} populations $A$ and $B$ to a third population $C$ with both connections approximating the identity function.
+The implementation of element-wise addition of vectors is straightforward: assuming we have created populations $A$ and $B$ encoding the vectors $ \mathbf{v}$ and $ \mathbf{w}$ respectively using Equation~\eqref{eq:nef_encoding}, we can now use the transformation principle and Equation~\eqref{eq:nef_transformation} to connect \emph{both} populations $A$ and $B$ to a third population $C$ with both connections approximating the identity function.
 The population $C$ receiving input from both populations $A$ and $B$ will end up representing an approximation of the sum $ \mathbf{v}+ \mathbf{w}$.
 
 Similarly, we can use the \ac{NEF}'s principles to implement the \ac{SPA}'s binding operation, circular convolution, in a network of spiking neurons.
-Revisiting equation~\eqref{eq:conv_with_dft}, we can write the circular convolution of two vectors $ \mathbf{z} = \mathbf{v}, \mathbf{w}$ as
+Revisiting Equation~\eqref{eq:conv_with_dft}, we can write the circular convolution of two vectors $ \mathbf{z} = \mathbf{v}, \mathbf{w}$ as
 
 \begin{equation}
     \mathbf{z} = \mathbf{v} \varoast \mathbf{w} = \ac{IDFT}\left(\ac{DFT}( \mathbf{v}) \odot \ac{DFT}( \mathbf{w}) \right). \tag{\ref{eq:conv_with_dft} revisited}
@@ -798,7 +792,7 @@ We can consider the \ac{DFT} and \ac{IDFT} as linear functions given by the matr
 
 \begin{equation}
 \label{eq:dft_mat}
-W = \frac{1}{ \sqrt{D-1}} \left(\zeta_{D} ^{i\cdot j}\right)_{i,j=0}^{D-1} \qquad
+W = \frac{1}{ \sqrt{D-1}} \left(\zeta_{D} ^{i\cdot j}\right)_{i,j=0}^{D-1}, \qquad
 W^{-1} = \frac{1}{ \sqrt{D-1}} \left(\zeta_{D} ^{-i\cdot j}\right)_{i,j=0}^{D-1}
 \end{equation}
 and thus write circular convolution as matrix multiplication
@@ -808,7 +802,7 @@ and thus write circular convolution as matrix multiplication
 \mathbf{z} = \mathbf{v} \varoast \mathbf{w} = W^{-1} \left( \left(W \mathbf{v}\right) \cdot \left(W \mathbf{w}\right)\right).
 \end{equation}
 Applying the \ac{NEF}'s transformation principle, we can implement circular convolution in a spiking neuron substrate.
-To finally be able to unbind vectors, i.e., calculate $ \mathbf{v} = \mathbf{z} \varoast \bar{\mathbf{w}}$ using the pseudo-inverse element $ \bar{ \mathbf{w}} = \left(w_0, w_{D-1}, w_{D-2}, \ldots, w_{1}\right)$ (cf.\ Lemma~\ref{lemma:spa_pseudo_inv}), we can adapt equation~\eqref{eq:circ_conv_mat}.
+To finally be able to unbind vectors, i.e., calculate $ \mathbf{v} = \mathbf{z} \varoast \bar{\mathbf{w}}$ using the pseudo-inverse element $ \bar{ \mathbf{w}} = \left(w_0, w_{D-1}, w_{D-2}, \ldots, w_{1}\right)$ (cf.\ Lemma~\ref{lemma:spa_pseudo_inv}), we can adapt Equation~\eqref{eq:circ_conv_mat}.
 The function transforming a vector into its pseudo-inverse element is a simple permutation of elements given by the matrix 
 \begin{equation}
 \label{eq:mat}
@@ -822,7 +816,7 @@ C_{pinv} = \left(
     \end{matrix}
 \right),
 \end{equation}
-which allows us to transform equation~\eqref{eq:circ_conv_mat} into
+which allows us to transform Equation~\eqref{eq:circ_conv_mat} into
 \begin{equation}
 \label{eq:unbind_mat}
 \mathbf{v} \approx \mathbf{z} \varoast \bar{ \mathbf{w}} = W^{-1} \left( \left(W \mathbf{z}\right) \cdot \left(W \cdot C_{pinv} \mathbf{w}\right)\right).
@@ -830,7 +824,7 @@ which allows us to transform equation~\eqref{eq:circ_conv_mat} into
 The implementation of a \ac{SNN} performing a biologically plausible version of a cleanup memory employing the \ac{NEF} is shown in \textcite{Stewart2011}.
 Thus, applying the principles of the \ac{NEF}, we can represent the representational vectors of the \ac{SPA} in the activity of populations of spiking neurons and implement its algebraic operations in networks of spiking neuron populations.
 A subtle detail worth noting with regard to implementing \acp{VSA} in \acp{SNN} is that the vectors used for representing concepts or entities of interest are \emph{not} vectors of neural activity.
-That is, there are two distinct representational vector spaces: the space of neural activities (i.e., measurable properties like spike patterns) and the vector space used to generate the vocabulary and structured representations vectors which in turn are represented by the activities of populations in the neural space \parencite[see][for further details]{Eliasmith2013}.
+That is, there are two distinct representational vector spaces: the space of neural activities (i.e., measurable properties like spike patterns) and the vector space used to generate the vocabulary and structured representations vectors, which in turn are represented by the activities of populations in the neural space \parencite[see][for further details]{Eliasmith2013}.
 
 There are several reasons for implementing cognitive architectures like the \ac{SPA} in a spiking neuron substrate.
 Regarding the application of vector-based representations in cognitive modeling, it makes sense to consider an implementation in neural activity, since the biological systems able to perform cognitive tasks are also systems of neural networks.
@@ -839,13 +833,13 @@ Such a comparison enables more detailed model analysis and improvements by allow
 Considering applications of the \ac{SPA} in domains such as automated driving as proposed in later chapters~\ref{chap:driving_context_classification},~\ref{chap:behav_pred} and~\ref{chap:mix_online_learning}, the possibility of implementation in a spiking neuron substrate is particularly interesting in terms of energy-efficiency.
 As discussed in section~\ref{sec:neuromorphic_HW}, there exists a growing number of neuromorphic hardware devices dedicated to efficiently processing networks of spiking neurons.
 Such dedicated computing hardware allows to run \acp{SNN} more efficiently than traditional computing hardware, which often requires several orders of magnitude less energy \parencite{Hunsberger2016}.
-This is particularly interesting in mobile applications such as robotic systems or, more particularly, automated driving which poses increasingly strong restrictions on the energy-budget of individual components due to growing setups of both, on-board sensors and computing hardware.
+This is particularly interesting in mobile applications such as robotic systems or, more particularly, automated driving, which poses increasingly strong restrictions on the energy-budget of individual components due to growing setups of both, on-board sensors and computing hardware.
 Since these novel computing devices are not yet available as commercial products but rather prototypes developed in academic research, the deployment of the models developed in this thesis on neuromorphic computing hardware integrated into a vehicle's architecture is unfortunately out of scope of this thesis. 
 
 \section{Summary}
 In this chapter, we have introduced the theoretical background and mathematical properties of \aclp{VSA}, which is the basis for subsequent chapters.
 Furthermore, we established a formal, mathematical notion for \acp{VSA} in general (section~\ref{sec:math_prop_vsas}), which, to the best or our knowledge, is not available in the literature except for treatments of particular instantiations of \acp{VSA} such as in \textcites{Plate1994}{Gayler1998}{Kanerva2009}.
-The we shifted our focus to one particular \ac{VSA}, the \ac{SPA}, presenting its most important aspects and properties with respect to subsequent chapters of the thesis.
+Then, we shifted our focus to one particular \ac{VSA}, the \ac{SPA}, presenting its most important aspects and properties with respect to subsequent chapters of this thesis.
 Furthermore, we gave a brief description of the \acl{NEF}, which is typically used to implement large-scale neural models of spiking neurons such as the one presented in \textcite{Eliasmith2012}.
 Finally, we have introduced the basic principles of cognitive modeling using \acp{VSA} in general and the \ac{SPA} in particular.
 We showed several general approaches to generate vocabularies of atomic vectors, which form the basis of more complex structured representations built from them using the \ac{VSA}'s algebraic operations.
