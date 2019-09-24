@@ -2,7 +2,7 @@
 \label{chap:closed_loop_neuromorphic_control_systems}
 
 In this chapter, we present a first step towards a neuromorphic control architecture, that can be used to implement generic control algorithms in the language of \acp{SNN}.
-This offers the advantage, that the overall task can be divided into several sub-networks.
+This offers the advantage that the overall task can be divided into several sub-networks.
 We develop two sample instantiations of neurally-inspired control algorithms, namely for mobile robot manipulation and vehicle trajectory control based on reinforcement learning.
 Here, we partly depart from the application of automated driving using real-world data, which is an intentional choice.
 As mentioned earlier, control of an automated vehicle is an extremely safety-critical task.
@@ -38,7 +38,7 @@ The proposed system describes a unified design approach that links low-level sen
 \subsubsection{Hardware setup}%
 \label{ssubsec:hardware_setup}
 
-The mobile manipulator used in this project is comprised of a custom developed omni-directional mobile platform, depicted in Figure \ref{fig:omniarmbot}, with embedded low-level motor control and elementary sensory acquisition. 
+The mobile manipulator used in this project is comprised of a custom developed omni-directional mobile platform, depicted in Figure~\ref{fig:omniarmbot}, with embedded low-level motor control and elementary sensory acquisition. 
 The on-board ARM7 micro-controller receives desired motion commands and continuously adapts three PID motor control signals to achieve desired velocities. 
 The robot's integrated sensors include wheel encoders for estimating odometry, a $9$ degrees of freedom \ac{IMU}, a bump-sensor ring which triggers binary contact switches, upon contact with objects in the environment and three silicon retinas providing visual sensor input. 
 Two of these cameras are fixed on the mobile base, while one retina is attached to the end-effector to monitor the workspace of the robotic arm. 
@@ -60,8 +60,8 @@ The mobile platform contains an on-board battery of \SI{12}{\volt} @ \SI{30}{\am
 \label{ssubsec:software_setup}
 
 The overall software architecture is based on a modular design allowing the extension of the current sensorimotor capabilities of the robotic platform by adding more sensors and actuators. 
-The software architecture is comprised of an embedded sensorimotor platform running on-board the robot and a neurocomputing platform suitable to run on various computing backends like \ac{CPU}, \ac{GPU} and \ac{NPU}, as shown in Figure \ref{fig:neurocomputing_platform}. 
-The embedded platform is responsible with the low-level sensory perception, low-level motor control, and the bi-directional communication (i.e., outgoing data streaming and incoming commands) with the neurocomputing platform. 
+The software architecture is comprised of an embedded sensorimotor platform running on-board the robot and a neurocomputing platform suitable to run on various computing backends like \ac{CPU}, \ac{GPU} and \ac{NPU}, as shown in Figure~\ref{fig:neurocomputing_platform}. 
+The embedded platform is responsible for the low-level sensory perception, low-level motor control, and the bi-directional communication (i.e., outgoing data streaming and incoming commands) with the neurocomputing platform. 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.8\linewidth]{imgs/neurocomputing_platform.eps}
@@ -139,7 +139,7 @@ Our long-term research goal is to apply these learning systems to the programmed
 \end{figure}
 
 In order to build larger systems with complex algorithms, we can combine multiple neural networks together.
-For example, Figure \ref{subfig:combined_net} shows a system where we not only have $y=f(x)$, but we also have $z=g(w)$, and our final output is a function of the outputs of both of the other two networks, $m=h(y, z)$.
+For example, Figure~\ref{subfig:combined_net} shows a system where we not only have $y=f(x)$, but we also have $z=g(w)$, and our final output is a function of the outputs of both of the other two networks, $m=h(y, z)$.
 By creating networks to compute these intermediate functions and then combining them together, we can implement complex computations. 
 One crucial question, however, is what advantage do we get by breaking this complex function down into smaller, simpler functions. 
 After all, it would have been possible to just make one single network that directly approximates the desired function.
@@ -147,7 +147,7 @@ The primary reason not to combine functions together is that of scaling.
 As algorithms become more complex, it becomes harder and harder for neural networks to approximate them. 
 The traditional solutions are to either increase the number of neurons in the middle layer, or to add more layers. 
 Both of these approaches make it harder for the learning algorithms to find the connection weights that best approximate the function, and make the network require more neurons, and thus more computational resources are needed.
-Importantly, one can think of Figure \ref{subfig:combined_net} as the result of starting with Figure \ref{subfig:direct_net}, adding in more hidden layers, and adjusting the connectivity. 
+Importantly, one can think of Figure~\ref{subfig:combined_net} as the result of starting with Figure~\ref{subfig:direct_net}, adding in more hidden layers, and adjusting the connectivity. 
 In other words, by building a complex network out of smaller networks, we are imposing structure on the network. 
 We are specifically indicating that $y$ and $z$ are useful intermediate results that the network should find as an intermediate step before computing $m$. 
 If we, as programmers, are correct in our decisions about this intermediate structure, then we can greatly simplify the process of creating these networks.
@@ -159,8 +159,8 @@ In order to do this, we have to take our desired algorithm and break it into sma
 \label{subsec:neural_task_implementation}
 
 Even the simplest behaviors are exploiting relations (i.e., functions) between sensory streams and motor commands. 
-In order to design a neural controller able to adaptively switch control policies it is natural to extract such functions in a reliable way, given the variability and uncertainty in the sensorimotor streams. 
-The relatively complex and nonlinear interactions among the sensors on the robot and it’s actuators, makes the derivation of analytical forms of such functions hard. 
+In order to design a neural controller able to adaptively switch control policies, it is natural to extract such functions in a reliable way, given the variability and uncertainty in the sensorimotor streams. 
+The relatively complex and nonlinear interactions among the sensors on the robot and its actuators, makes the derivation of analytical forms of such functions hard. 
 Alleviating the need for such precise and task-dependent modeling, neural networks are able to approximate such functions just from observations of the available sensorimotor streams. 
 Moreover, using learning mechanisms, such systems can ultimately autonomously extract such functions from the data. 
 In general, adaptive behavior is regarded as autonomous when the actions performed by the agent result from the interaction between its internal dynamics and the environment. 
@@ -246,13 +246,13 @@ This behavior simply moves the arm from its holding position to a position suita
 This network computes the object to manipulate and serves as basis for all following behaviors built on top of it. 
 Assuming the objects' blinking frequencies are given in descending order, this network detects if one frequency does not fit the assumed order, indicates the corresponding object as target and keeps this object's information in a memory. 
 Furthermore, the network detects those frequencies, which should be the neighbors of our detected target if in correct order and keeps their information in a memory as well.
-Figure \ref{subfig:omni_bot_out_of_order_net} gives a schematic visualization of the network and its individual components.
+Figure~\ref{subfig:omni_bot_out_of_order_net} gives a schematic visualization of the network and its individual components.
 The $x$-values ensemble encodes $x$-positions of stimuli in \ac{DVS}-image, the diff ensemble encodes pairwise differences between $x$-positions, the negative-min ensemble indicates if the minimal difference is negative, odd encodes the frequency, which is out of order (inhibited by negative min when all differences are positive), the evidence networks integrate evidence for the target object and the neighbor frequencies if in correct order.
-Figure \ref{subfig:omni_bot_out_of_order_net_behavior} shows an example of actual \ac{DVS} input data from the embedded tracking algorithm as well as the decoded output of the network’s sub-components activity: during the first \SI{5}{\second} the stimuli are in correct descending order from left to right in the \ac{DVS}-image (first plot in the left column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}), so the minimum pairwise difference is non-negative ( second and third
-plots in the left column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}). 
-In the interval \SIrange{5}{15}{\second}, the \SI{250}{\hertz} stimulus is put between the \SI{150}{\hertz} and \SI{200}{\hertz} stimuli, so now the sequence is out of order and the \SI{250}{\hertz} frequency is detected by the odd ensemble (last row in the left column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}) while the evidence networks integrate accordingly (second to last row in the right column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}). 
-Starting from around \SI{15}{\second} the \SI{250}{\hertz} and \SI{350}{\hertz} stimuli are interchanged and the network's outputs change accordingly (left column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}).
-However, the evidence networks - as desired - still keep the information about the old target until a forget mechanism (first row of the right column in Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}) is triggered in the interval \SIrange{20}{25}{\second} allowing the evidence networks to recover for new input (right column of Fig. \ref{subfig:omni_bot_out_of_order_net_behavior}).
+Figure~\ref{subfig:omni_bot_out_of_order_net_behavior} shows an example of actual \ac{DVS} input data from the embedded tracking algorithm as well as the decoded output of the network’s sub-components activity: during the first \SI{5}{\second} the stimuli are in correct descending order from left to right in the \ac{DVS}-image (first plot in the left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}), so the minimum pairwise difference is non-negative ( second and third
+plots in the left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}). 
+In the interval \SIrange{5}{15}{\second}, the \SI{250}{\hertz} stimulus is put between the \SI{150}{\hertz} and \SI{200}{\hertz} stimuli, so now the sequence is out of order and the \SI{250}{\hertz} frequency is detected by the odd ensemble (last row in the left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}) while the evidence networks integrate accordingly (second to last row in the right column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}). 
+Starting from around \SI{15}{\second} the \SI{250}{\hertz} and \SI{350}{\hertz} stimuli are interchanged and the network's outputs change accordingly (left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}).
+However, the evidence networks - as desired - still keep the information about the old target until a forget mechanism (first row of the right column in Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}) is triggered in the interval \SIrange{20}{25}{\second} allowing the evidence networks to recover for new input (right column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}).
 
 \paragraph{Perform Grasping Action} 
 \label{grasp}
@@ -271,30 +271,29 @@ However, the evidence networks - as desired - still keep the information about t
 \end{figure}
 
 This is a high-level behavior that uses the low-level behaviors.
-The idea here is to find the object. If the robot can't see it in both cameras, then it backs up until it can. 
-Move forward and backward until the robot is at the right distance. 
-If the robot can see the object with the arm camera, then it uses the arm camera for orientation, otherwise it uses all three. 
-Also, if the robot can't see the object with the arm camera, then it backs up. 
+The idea here is to find the object. If the robot is unable to see it in both cameras, then it backs up until it can and moves forward and backward until the robot is at the right distance. 
+If the robot can see the object with the arm camera, then it uses the arm camera for orientation, otherwise it uses all three cameras.
+Also, if the robot is unable to detect the object with the arm camera, then it backs up. 
 Note that the \emph{MoveBack} behavior and the \emph{Orientation} behaviors both move the robot forward and backward, so when they are both active the robot will end up achieving a position farther away from the object than when just \emph{Orientation} behavior is active (the motor commands are summed). 
 This positions the robot such that it can move forward and grab the object. 
-Finally, if the robot is at the correct distance from the object (as measured by binocular disparity), and it's right in front of it, then it closes the gripper. 
+Finally, if the robot is at the correct distance from the object (as measured by binocular disparity), and it is right in front of it, then it closes the gripper. 
 This combination of actions serves to successfully grab the object. 
-Figure \ref{subfig:omni_bot_grab_net} gives a schematic visualization of this network.
+Figure~\ref{subfig:omni_bot_grab_net} gives a schematic visualization of this network.
 The \emph{TargetInfo} ensemble encodes sensory information ($x$- and $y$-position in the image, as well as radius and track-certainty for each \ac{DVS}) of the target object (coming from the \emph{evidence} sub-network in the out of order network), which serves as input for the low-level behaviors.
 The \emph{has-grabbed} ensemble keeps the information once the object was grabbed in memory to indicate this task finished successfully.
-Figure \ref{subfig:omni_bot_grab_net_behavior} shows the activation levels of the high- and low-level behaviors (first two rows of Fig. \ref{subfig:omni_bot_grab_net_behavior}) as well as the sensory information the behaviors make use of, namely tracking certainty and disparity and $x$-position of the target object in the arm retina (last two rows in Fig. \ref{subfig:omni_bot_grab_net_behavior}). 
+Figure~\ref{subfig:omni_bot_grab_net_behavior} shows the activation levels of the high- and low-level behaviors (first two rows of Fig.~\ref{subfig:omni_bot_grab_net_behavior}) as well as the sensory information the behaviors make use of, namely tracking certainty and disparity and $x$-position of the target object in the arm retina (last two rows in Fig.~\ref{subfig:omni_bot_grab_net_behavior}). 
 
 \paragraph{Hold Object and Move To Goal Position} 
 \label{holdmoveside}
 This behavior combines holding an object by keeping the gripper closed while moving to the goal position at the same time. 
 Here, we make use of the stored information about the target object`s neighbors to calculate the goal position. 
 Therefore, we use the mean value of the lateral positions of the left neighbor in the left base camera and the right neighbor in the right base camera as an estimation of the middle between the neighbor objects, which is where we want to place our target object. 
-This value is used to control sideways and rotation motion of the base to navigate the robot to the correct position for putting down the target object (see Fig. \ref{subfig:omni_bot_hold_and_move_behavior} in the interval from \SIrange{28}{37}{\second}). 
-Figure \ref{subfig:omni_bot_hold_and_move_net} gives a schematic visualization of this network. 
+This value is used to control sideways and rotation motion of the base to navigate the robot to the correct position for putting down the target object (see Fig.~\ref{subfig:omni_bot_hold_and_move_behavior} in the interval from \SIrange{28}{37}{\second}). 
+Figure~\ref{subfig:omni_bot_hold_and_move_net} gives a schematic visualization of this network. 
 The Left/Right \emph{TargetInfo} ensembles encode sensory information ($x$- and $y$-position in the image, as well as radius and track-certainty for each \ac{DVS}) of the neighbor objects (coming from the left/right evidence networks in the out of order network), which serves as input for the low-level behaviors.
 The \emph{MoveSideways} behavior uses the mean value of the lateral positions of the left and right neighbor in the left and right base camera respectively as an estimation of the middle between the neighbor objects and moves the base to this position, while the \emph{Grip} behavior keeps the gripper closed.
 The \emph{Reached position} ensemble serves as a memory integrating evidence once the goal position is reached to indicate that this sub-tasks finished successfully.
-Figure \ref{subfig:omni_bot_grab_and_sort_net_behavior} shows the activation levels of the high- and low-level behaviors.
+Figure~\ref{subfig:omni_bot_grab_and_sort_net_behavior} shows the activation levels of the high- and low-level behaviors.
 
 \begin{figure}[t]
     \centering
@@ -346,15 +345,16 @@ Initially, \emph{Perform Grasping Action} is enabled.
 Once the robot picked up the target object and built up sufficient evidence, the Basal Ganglia network activates the behavior to hold the (target) object and navigate the robot to the goal position. 
 As soon as the robot reached its goal position between the neighbor objects and the according network built sufficient evidence, the \emph{PutDown} behavior to put down the target object is activated. 
 As soon as this behavior is completed, the whole sequence is wrapped up by activating the \emph{Finish} behavior. 
-Figure \ref{subfig:omni_bot_grab_and_sort_net} gives a schematic visualization of the network. 
-Figure \ref{fig:omni_bot_example_run} illustrates the most important stages of one example run while Figure \ref{subfig:omni_bot_grab_and_sort_net_behavior} gives a visualization of the decoded output of the network’s components: once the \emph{Out of Order} network detected the target object (roughly the first \SI{5}{\second}), the \emph{Grab} behavior is activated to find and grasp the target object (Fig. \ref{fig:omni_bot_example_run} a-c, Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}, t = 8s - 26s). 
+Figure~\ref{subfig:omni_bot_grab_and_sort_net} gives a schematic visualization of the network. 
+Figure~\ref{fig:omni_bot_example_run} illustrates the most important stages of one example run while Figure~\ref{subfig:omni_bot_grab_and_sort_net_behavior} gives a visualization of the decoded output of the network’s components: once the \emph{Out of Order} network detected the target object (roughly the first \SI{5}{\second}), the \emph{Grab} behavior is activated to find and grasp the target object (Fig.~\ref{fig:omni_bot_example_run} a-c,
+Fig.~\ref{subfig:omni_bot_grab_and_sort_net_behavior}, $t=$\SIrange{8}{26}{\second}). 
 The different low-level behaviors for orientation and navigation are enabled based on the certainty and disparity of the tracked stimuli. 
-Once the robot grabbed the target object, the \emph{Basal Ganglia} activates the \emph{HoldAndMoveSide} behavior (Fig. \ref{fig:omni_bot_example_run}d-e, Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}, t = 26s - 39s). 
+Once the robot grabbed the target object, the \emph{Basal Ganglia} activates the \emph{HoldAndMoveSide} behavior (Fig.~\ref{fig:omni_bot_example_run}d-e, Fig.~\ref{subfig:omni_bot_grab_and_sort_net_behavior}, $t=$\SIrange{26}{39}{\second}). 
 
-The main sensory input in this phase is the $x$-position of the neighbor objects (last row in Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}). 
-A clear indicator for successful pick-up is the decrease of certainty in the base-retinas (forth row in Fig. \ref{subfig:omni_bot_grab_and_sort_net_behavior}). 
-Once the robot reached its goal position between the neighboring objects, the \emph{PutDown} behavior is activated (Fig. \ref{fig:omni_bot_example_run} f-g). 
-Finally the whole task is wrapped up by the Finish behavior and all other behaviors are deactivated (Fig. \ref{fig:omni_bot_example_run} h) to put the robot back into resting position.
+The main sensory input in this phase is the $x$-position of the neighbor objects (last row in Fig.~\ref{subfig:omni_bot_grab_and_sort_net_behavior}). 
+A clear indicator for successful pick-up is the decrease of certainty in the base-retinas (forth row in Fig.~\ref{subfig:omni_bot_grab_and_sort_net_behavior}). 
+Once the robot reached its goal position between the neighboring objects, the \emph{PutDown} behavior is activated (Fig.~\ref{fig:omni_bot_example_run} f-g). 
+Finally the whole task is wrapped up by the Finish behavior and all other behaviors are deactivated (Fig.~\ref{fig:omni_bot_example_run} h) to put the robot back into resting position.
 
 \begin{figure}[t!]
     \centering
@@ -368,7 +368,7 @@ Finally the whole task is wrapped up by the Finish behavior and all other behavi
 In this section, we have shown a mobile robotic manipulator capable of solving a pick-and-place task, with algorithmic components completely implemented in the framework of \aclp{SNN}. 
 This makes our approach not only suitable to expand its functionality with supervised and unsupervised learning methods but also highly scalable. 
 The underlying \ac{Nengo}-based neural compiler supports the use of dedicated neuromorphic hardware systems, which allows to run even large-scale neural networks in real-time. 
-The possibility to introduce learning will eventually enable such systems to adapt its control policies and decision making to unpredictable changes in the environment. 
+The possibility to introduce learning will eventually enable such systems to adapt their control policies and decision making to unpredictable changes in the environment. 
 Furthermore, the neural implementation is beneficial in terms of allowing to combine networks “hand-programmed” by experts/engineers with learning networks that improve themselves over time with increasing data/experience. 
 Here, our ultimate goal is to design systems that are capable of adapting to new task during operation time while at the same time using experience from previous tasks and expert knowledge.
 
@@ -377,11 +377,11 @@ Here, our ultimate goal is to design systems that are capable of adapting to new
 
 The current algorithmic implementation has some inherent limitations. 
 For now, the network is only able to detect one object not fitting in the sequence of frequencies. 
-To overcome this limitation, the Out of Order network \ref{outoforder} could be enhanced to solve the sorting-problem in a neural fashion. 
+To overcome this limitation, the \emph{Out of Order} network could be enhanced to solve the sorting-problem in a neural fashion. 
 An intermediate workaround could be to repeat the current simple task and thereby solve the sorting problem incrementally. 
 Another obvious limitation of the current implementation is the need for neighbor objects to find the goal position for put-down. 
 This makes it impossible to solve the task for those objects blinking at a maximum or a minimum frequency. 
-As for the first limitation, the Out of Order network needs to become more sophisticated to detect the goal position in these edge-cases when a border-object needs to be manipulated. 
+As for the first limitation, the \emph{Out of Order} network needs to become more sophisticated to detect the goal position in these edge-cases when a border-object needs to be manipulated. 
 One possibility could be detect one neighbor and to use the maximum of the pairwise differences as distance estimation for the offset. 
 %Another technical improvement focuses on the embedded tracking algorithm. The efficient frameless tracking algorithm has the disadvantage that the arm retina gets over-flooded with events, when the distance to the target object decreases, which can corrupt the grab-task. 
 
@@ -389,7 +389,7 @@ One possibility could be detect one neighbor and to use the maximum of the pairw
 \label{ssubsec:outlook}
 
 A long-term goal is to use the current implementation as a starting point for self-improving learning systems. 
-As the current implementation is built in the framework of \acrlong{SNN} it naturally supports learning. 
+As the current implementation is built in the framework of \acfp{SNN}, it naturally supports learning. 
 One direction for future research could be to use the current low-level behaviors for initialization and to let the system learn and improve them incrementally by experience. 
 For instance, one problem in learning robotic systems such as policy search for motor control \parencite{Levine2015}, is the acquisition of sufficiently large training data sets. 
 Recording large amounts of training data by repeating one specific task with real robotic systems is time-consuming and often infeasible, while training-data from simulation is usually not realistic enough to capture the complexity of noisy real-world data. 
@@ -417,14 +417,14 @@ Furthermore, \ac{TORCS} offers an advanced vehicle physics simulation as well as
 \end{figure}
 
 The architecture of our proposed system is visualized in Fig.~\ref{fig:architecture}.
-Interactions with the \ac{TORCS} environment (for detailed information on the sensor and actuator setup \parencite[see][]{Loiacono2010}) are channeled over several \ac{ROS} nodes used for the gateway communication.
+Interactions with the \ac{TORCS} environment \parencite[see][for detailed information on the sensor and actuator setup]{Loiacono2010} are channeled over several \ac{ROS} nodes used for the gateway communication.
 For evaluation and training purposes, a controller using the global position and orientation of the vehicle is implemented in \ac{ROS} to determine control signals to follow a given trajectory or the roadways centerline at a fixed speed\footnote{The \ac{TORCS}-to-\ac{ROS} interface can be found at \url{https://github.com/fmirus/torcs_ros}.
 The Nengo and \ac{ROS} implementation of the trajectory selection module and the framework that is built upon it can be found at \url{https://github.com/fmirus/torcs_neural_trajectory_ctrl}}.\par
 
 The proposed architecture for a learnable and energy-efficient vehicle control system is a holistic neuromorphic approach for determining steering, gas and brake pedal as well as gear signals.
 It is a distributed system in that these signals are calculated separately in different modules.
 In addition, it is a hierarchical system as several intermediate values have to be calculated and different modules and subsystems are dependent upon each other.
-The modules' vertical alignments within Fig. \ref{fig:architecture} indicate the distinction of three core subsystems, each responsible for one of the control signals (\emph{gear selection}, \emph{breaking/acceleration} and \emph{steering}).
+The modules' vertical alignments within Fig.~\ref{fig:architecture} indicate the distinction of three core subsystems, each responsible for one of the control signals (\emph{gear selection}, \emph{breaking/acceleration} and \emph{steering}).
 We envision each of these sub-modules to be learnable either by supervised or reinforcement learning.
 Some of the depicted modules are heavily dependent on each other and will have to be trained in parallel rather than independently. 
 
@@ -450,21 +450,21 @@ Accordingly, the \emph{trajectory selection} module is an action selection modul
 \label{ssubsec:trajectory_selection_module}
 
 We focus on the \emph{trajectory selection} module isolated from the other modules.
-Therefore, we use a classical controller to steer the vehicle along the chosen trajectories at a fixed velocity of \SI{34}{\kilo\metre\per\hour} with the trajectories' end points' longitudinal component set to \SI{20}{\metre} which emulates a simplified version of \emph{trajectory following}. \par
-We implemented a set of \num{15} trajectories to describe varying degrees of different behaviors (see Fig. \ref{fig:trajectories}).
+Therefore, we use a classical controller to steer the vehicle along the chosen trajectories at a fixed velocity of \SI[per-mode=symbol]{34}{\kilo\metre\per\hour} with the trajectories' end points' longitudinal component set to \SI{20}{\metre} which emulates a simplified version of \emph{trajectory following}. \par
+We implemented a set of \num{15} trajectories to describe varying degrees of different behaviors (see Fig.~\ref{fig:trajectories}).
 We use straight lines to emulate lane following, cubic splines (with their derivative set to \num{0} at the extremities) to model lane change maneuvers and quadratic interpolations between a start and end point to perform a change in orientation.
 The latter trajectories are intended for driving curves or to correct slight misalignments between the vehicle and the road.
 
 \subsection{Reinforcement Learning}%
 \label{subsec:reinforcement_learning_network}
 
-The core of this work is the learning \acl{SNN} for \emph{trajectory selection}, which  is visualized in Fig. \ref{fig:snn} and consists of two sub-networks.
+The core of this work is the learning \acl{SNN} for \emph{trajectory selection}, which  is visualized in Fig.~\ref{fig:snn} and consists of two sub-networks.
 It was built using the Nengo neural simulator \parencite{Bekolay2013}, which implements the principles of the \ac{NEF} \parencite{Eliasmith2003}.
-The first sub-network $A$ (yellow components in Fig. \ref{fig:snn}) encodes the current state in a neural population.
+The first sub-network $A$ (yellow components in Fig.~\ref{fig:snn}) encodes the current state in a neural population.
 This population feeds its output to an array of downstream populations, each representing the utility value $Q$ associated to one of the possible actions.
 Unless an exploration step is enforced, the highest filtered utility value determines the next action to be performed.
 As we want to adapt the mapping between input (state) and utility values by learning the respective connection weights, their decoders are initialized to a fixed value. 
-The second sub-network $B$ (cyan components in Fig. \ref{fig:snn}) encodes the reward received from the environment (cf.\ equation \eqref{eq:reward}).
+The second sub-network $B$ (cyan components in Fig.~\ref{fig:snn}) encodes the reward received from the environment (cf.\ Equation \eqref{eq:reward}).
 From this reward, the offset to the current utility values is calculated, which in turn is used to adapt the weights of sub-network $A$'s learning connection.
 
 \subsubsection{Learning rule}%
@@ -510,7 +510,8 @@ Our goal, however, is to show general feasibility of our approach which is why w
 \subsubsection{Training procedure}%
 \label{ssubsec:training_procedure}
 
-In order to evaluate the derived policy's performance, we chose one training and one validation track (Fig. \ref{fig:tracks}) that show similar characteristics in road width and occurring curvatures. They, therefore, show comparable features while being distinct enough to identify if a straight mapping to the training track were to happen.
+In order to evaluate the derived policy's performance, we chose one training and one validation track (Fig.~\ref{fig:tracks}) that show similar characteristics in road width and occurring curvatures. 
+Therefore, they show comparable features while being distinct enough to identify if a straight mapping to the training track were to happen.
 Whenever the vehicle leaves the track during training, the simulation is reset and a reward of \num{0} is awarded as the track sensors become unreliable in such a scenario.
 After every five training runs, three runs until the vehicle goes off-track are driven on the validation course without updating any weights. This process constitutes one training/validation episode.
 
@@ -528,7 +529,7 @@ During training, a linearly decaying epsilon exploration is utilized.
   \includegraphics[width=0.95\textwidth]{imgs/CG1-val-updated.eps}
 \caption{Results (mean reward and lap completion) for three validation runs per episode \label{fig:results}}
 \end{figure}
-Fig. \ref{fig:results} visualizes the performance of the derived control policy on the validation track after each episode.
+Figure~\ref{fig:results} visualizes the performance of the derived control policy on the validation track after each episode.
 The average performance tends to increase, indicating an overall improvement of the policy given the state values approximated by the \ac{SNN}.
 The neuromorphic controller is able to reliably complete the validation lap after roughly \num{35} episodes without having performed any training on it.
 This indicates that the \ac{SNN} is able to learn a meaningful policy and to generalize beyond the training track given the sensors' uncertainties.
@@ -556,9 +557,9 @@ These modules could be trained separately or jointly to evaluate applicability o
 In this chapter, we have presented a first step towards a neuromorphic control architecture.
 Due to the absence of a suitable vehicle demonstrator, lacking integration of neuromorphic prototypes into current vehicle hardware architectures and finally due to safety considerations, we have demonstrated the general feasibility of such a neuromorphic control architecture in two sample instantiation.
 First, we presented a proof-of-concept implementation of a non-trivial mobile robot manipulation tasks in the substrate of \acp{SNN}.
-We showed, that our architecture can be used to induce human expert knowledge into neural task implementations.
+We showed that our architecture can be used to induce human expert knowledge into neural task implementations.
 Such manually designed networks can either be used to complement other, decoupled learning networks or serve as a basis to bootstrap learning to avoid starting the training procedure from a completely blank state.
-The second proof-of-concept implementation combines manual designed and automatically learned networks in the context of short-term vehicle trajectory planning.
+The second proof-of-concept implementation combines manually designed and automatically learned networks in the context of short-term vehicle trajectory planning.
 We use reinforcement learning in \acp{SNN} to select trajectories for a classical controller, which is decoupled from the learning network.
 Thereby, we demonstrate that neuromorphic principles can be used in the context of vehicle control.
 However, today's vehicle architectures are not designed yet to integrate neuromorphic hardware, which on the other hand have not reached the technical and commercial maturity to be integrated in such architectures.
