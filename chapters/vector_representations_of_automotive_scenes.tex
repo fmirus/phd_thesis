@@ -740,7 +740,7 @@ Hence, our capacity analysis not only has to cover the amount of objects encoded
 
 Therefore, we conduct the following experiment: assuming we want to encode $n$ spatial entities, i.e., objects $o_{i}$ with two-dimensional location information $ \left(x_{i}, y_{i}\right)$ for $i=1, \ldots, n$ as shown in Fig.~\ref{fig:spa_power_encoding} for $n=1$ (Fig.~\ref{subfig:spa_power_representation_one_item}) and $n=2$ (Fig.~\ref{subfig:spa_power_representation_two_items}), into a single representation vector $ \mathbf{s}$, we generate a vocabulary of random vectors $
 \mathbf{v}_{i}$ for $i=1, \ldots, n$ encoding object class labels and random unitary vectors $ \mathbf{X}, \mathbf{Y}$ to encode the units of the spatial information.
-In contrast to the previous experiment, where we simply summed up a certain number of random vectors, we are interest in a more specific analysis, since there are several possibilities to distribute the positional values $ \left(x_{i}, y_{i}\right)$ over the available object class vectors $ \mathbf{v}_{i}$.
+In contrast to the previous experiment, where we simply summed up a certain number of random vectors, we are interested in a more specific analysis, since there are several possibilities to distribute the positional values $ \left(x_{i}, y_{i}\right)$ over the available object class vectors $ \mathbf{v}_{i}$.
 For instance, for a total number of two superpositions, i.e., $n=2$, there are two possibilities to generate our representation vector, namely
 \begin{align}
     \mathbf{s}_{1} &= \mathbf{v}_{1} \varoast \mathbf{X}^{x_{1}} \varoast \mathbf{Y}^{y_{1}} + \mathbf{v}_{1} \varoast \mathbf{X}^{x_{2}} \varoast \mathbf{Y}^{y_{2}}, \label{eq:spa_power_exp_v1} \\
