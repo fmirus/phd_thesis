@@ -136,7 +136,7 @@ For the \emph{On-board} data set, we have information about the current lane as 
 The \emph{\ac{NGSIM}} data set contains information about the current lane for each vehicle extracted from the external camera's video footage.
 Thus, the selection process for the examples containing a lane change is straightforward for both data sets.
 Figure~\ref{fig:on_board_lane_change_example_with_imgs} shows one data sample from the \emph{On-board} data set containing a lane change performed by the target vehicle in its future motion to be predicted.
-Comparing this example to the one shown in Fig.~\ref{fig:on_board_data_example}, which shows mainly straight driving for all vehicles present in the scene, we observe, as expected, that a lane change mainly influences the vehicle's motion in lateral ($y$) direction.
+Comparing this example to the one shown in Fig.~\ref{fig:on_board_data_example}, which shows mainly straight driving for all vehicles present in the scene, we observe that a lane change mainly influences the vehicle's motion in lateral ($y$) direction.
 
 \begin{figure}[t]
     \centering
@@ -146,12 +146,12 @@ Comparing this example to the one shown in Fig.~\ref{fig:on_board_data_example},
 \end{figure}
 
 Figure~\ref{fig:data_set_lane_change_distribution} shows the amount of situations where the target vehicle performs a lane change in comparison to the amount of situations where no such behavior occurs for both, the \emph{On-board} and \emph{\ac{NGSIM}} data set.
-For the \emph{On-board} data set, in \SI{86.1}{\percent} of all data samples the target vehicle does not perform a lane, i.e., only \SI{13.8}{\percent} of all data samples contain a lane change performed by the target vehicle.
+For the \emph{On-board} data set, in \SI{86.1}{\percent} of all data samples the target vehicle does not perform a lane change, i.e., only \SI{13.8}{\percent} of all data samples contain a lane change performed by the target vehicle.
 We further distinguish between lane changes performed during the trajectory history, i.e., the past \SI{5}{\second} before the current time step (labeled as \emph{past} in Fig.~\ref{fig:data_set_lane_change_distribution}) and lane changes that are performed in the future, i.e., during the future \SI{5}{\second} from the current time step (labeled as \emph{future} in Fig.~\ref{fig:data_set_lane_change_distribution}).
 We consider the lane changes in the future part of data samples to be the most interesting and challenging ones, since any model making predictions about the future trajectory needs to be able to anticipate these lane changes.
 For the \emph{On-board} data set, \SI{7}{\percent} of all data samples contain a lane change in the trajectory history, while \SI{8.2}{\percent} of the samples contain a future lane change performed by the target vehicle.
 In comparison to the \SI{86.1}{\percent} of data samples not containing a lane change, the amount of samples with interesting behavior other than straight driving within the data set is significantly less present.
-For the \emph{\ac{NGSIM}} data set, the discrepancy between the amount of samples without the target vehicle performing lane change and the number of samples containing a lane change is even more significant.
+For the \emph{\ac{NGSIM}} data set, the discrepancy between the amount of samples without the target vehicle performing a lane change and the number of samples containing a lane change is even more significant.
 The percentage of samples without a target vehicle lane change is \SI{95.1}{\percent} while only \SI{4.9}{\percent} of the samples contain a lane change performed by the target vehicle at all.
 The amount of samples containing a future lane change performed by the target vehicle is only \SI{2.6}{\percent} of all samples in the \emph{\ac{NGSIM}} data set.
 Hence, there is a significant imbalance in both data sets between examples containing mainly straight driving by the target vehicle, namely \SI{86.1}{\percent} and \SI{95.1}{\percent} of all samples in the \emph{On-board} and \emph{\ac{NGSIM}} data set respectively, where most likely already simple prediction approaches are able to achieve reasonable results.
@@ -608,6 +608,7 @@ For \num{1024}-dimensional vectors, \ac{LSTM} \ac{SPA} \num{1} even slightly out
 
 \paragraph{Evaluation of models trained on data set variations}%
 \label{par:evaluation_of_models_trained_on_data_set_variations}
+\todo[inline]{check figure references}
 
 \begin{figure}[th!]
     \centering
@@ -652,7 +653,8 @@ Figure~\ref{fig:rmse_on_board_training_data_variation} shows a comparison of dif
 We also keep the simple linear prediction model based on a constant velocity assumption for reference in the figures, since it is not a data-driven learning model and is therefore invariant under the changes of the training data.
 Figures~\ref{subfig:rmse_large_all},~\ref{subfig:rmse_large_all_lc_only},~\ref{subfig:rmse_large_subset} and~\ref{subfig:rmse_large_subset_lc_only} show the \ac{RMSE} for models trained on the complete data set while Fig.~\ref{subfig:rmse_large_all_trained_on_lc},~\ref{subfig:rmse_large_all_lc_only_trained_on_lc},~\ref{subfig:rmse_large_subset_trained_on_lc} and~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc} show the same models evaluated on the same samples but trained
 only on data samples including a target vehicle lane change.
-On the other hand, the upper row of Fig.~\ref{subfig:rmse_large_all} -~\ref{subfig:rmse_large_subset_trained_on_lc} illustrates the performance of the models trained on either the complete data set or on only the lane changes in all data samples, while the lower row of Fig.~\ref{subfig:rmse_large_all_lc_only} -~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc} shows the performance of the models trained on either the complete data set or only on data samples containing a target vehicle lane change.
+On the other hand, the upper row of Fig.~\ref{fig:rmse_on_board_training_data_variation}, i.e., Fig.~\ref{subfig:rmse_large_all} -~\ref{subfig:rmse_large_all_lc_only_trained_on_lc}, illustrates the performance of the models evaluated on either the complete data set or only on the lane changes in all data samples, while the lower row of Fig.~\ref{fig:rmse_on_board_training_data_variation}, i.e., Fig.~\ref{subfig:rmse_large_subset} -~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc}, shows the performance
+of the models evaluated on samples containing crowded driving situations or crowded situations containing even a target vehicle lane change.
 
 \begin{figure}[t!]
     \centering
@@ -687,9 +689,9 @@ On the other hand, the upper row of Fig.~\ref{subfig:rmse_large_all} -~\ref{subf
     \label{fig:rmse_on_board_training_all_vs_training_on_lc_only}
 \end{figure}
 
-We observe that the models that have been trained only on samples containing a lane change performed by the target vehicle tend to achieve worse results than the models trained on the complete data set, when being evaluated on the entirety of all data samples (Fig.~\ref{subfig:rmse_large_all},~\ref{subfig:rmse_large_subset},~\ref{subfig:rmse_large_all_lc_only} and~\ref{subfig:rmse_large_subset_lc_only}).
+We observe that the models that have been trained only on samples containing a lane change performed by the target vehicle tend to achieve worse results than the models trained on the complete data set, when being evaluated on the entirety of all data samples (Fig.~\ref{subfig:rmse_large_all},,~\ref{subfig:rmse_large_all_lc_only},~\ref{subfig:rmse_large_subset} and~\ref{subfig:rmse_large_subset_lc_only}).
 Interestingly, the performance of the models based on the convolutive power encoding scheme (\acs{LSTM} \acs{SPA} \num{1} and \num{3}) deteriorates more significantly compared to the other data-driven models, especially in lateral ($y$) direction.
-However, if we evaluate the same models only on the samples containing a target vehicle lane change, their performance changes significantly (Fig.~\ref{subfig:rmse_large_all_lc_only} -~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc}).
+However, if we evaluate the same models only on the samples containing a target vehicle lane change, their performance changes significantly (Fig.~\ref{subfig:rmse_large_all_trained_on_lc},~\ref{subfig:rmse_large_all_lc_only_trained_on_lc},~\ref{subfig:rmse_large_subset_trained_on_lc},~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc}).
 We recapitulate the findings of section~\ref{subsec:data_set_peculiarities} that lane changes influence the lateral ($y$) position values more severely than the longitudinal ($x$) position compared to straight driving samples.
 Therefore, the performance difference between the models trained on lane changes only and models trained on the complete data set, as we would expect, is also not that significant in longitudinal direction.
 Considering the lateral ($y$) direction however, we observe a significant change between both model and evaluation variants.
@@ -740,17 +742,6 @@ The neural weights are calculated using \acs{Nengo}'s default least-squares-opti
 Here, we adapt the input data such that for the numerical \ac{NEF}-model, we use the vector $(x_{t_{0}}, \ldots, x_{t_{N}}, y_{t_{0}}, \ldots, y_{t_{N}}, v)$ as input with $v$ denoting the instantaneous velocity of the target vehicle.
 For the \ac{SPA}-power encoding schemes, instead of flattening the whole sequence of vectors into one giant single vector, we created a single semantic vector by summing the first, middle and last element of the original vector sequences
 
-\begin{equation}
-  \hat{\mathbf{S}} =  \mathbf{S}_{t_0} \oplus \mathbf{S}_{t_{\nicefrac{N}{2}}} \oplus \mathbf{S}_{t_N} = (\hat{s}_0, \ldots, \hat{s}_{D-1}).
-\end{equation}
-We only sum up these vectors instead of the whole sequence $(\mathbf{S}_{t})_{t_0}^{t_N}$ to avoid the accumulation of noise in the vector representation.
-Note that thereby the \ac{NEF} model using the \ac{SPA}-power representation does not use the full trajectory history but only selected time steps, namely those visualized in Fig.~\ref{fig:spa_power}.
-We also include the instantaneous velocity $v$ of the target vehicle as an additional vector element, which yields $(\hat{s}_0, \ldots, \hat{s}_{D-1}, v)$ as input of our model.
-To make these simpler models as comparable as possible to the \ac{LSTM} models in terms of information available to the network, we add the instantaneously velocity of the target vehicle as an additional element to the input, since there is no intermediate embedding vector here where it could be included.
-
-\subsubsection{Evaluation}%
-\label{ssubsec:evaluation_nef}
-
 \begin{figure}[t!]
 	\centering
     \subfloat[\label{subfig:nef_rmse_512_onboard}]{%
@@ -763,6 +754,17 @@ To make these simpler models as comparable as possible to the \ac{LSTM} models i
 
 \end{figure}
 
+\begin{equation}
+  \hat{\mathbf{S}} =  \mathbf{S}_{t_0} \oplus \mathbf{S}_{t_{\nicefrac{N}{2}}} \oplus \mathbf{S}_{t_N} = (\hat{s}_0, \ldots, \hat{s}_{D-1}).
+\end{equation}
+We only sum up these vectors instead of the whole sequence $(\mathbf{S}_{t})_{t_0}^{t_N}$ to avoid the accumulation of noise in the vector representation.
+Note that thereby the \ac{NEF} model using the \ac{SPA}-power representation does not use the full trajectory history but only selected time steps, namely those visualized in Fig.~\ref{fig:spa_power}.
+We also include the instantaneous velocity $v$ of the target vehicle as an additional vector element, which yields $(\hat{s}_0, \ldots, \hat{s}_{D-1}, v)$ as input of our model.
+To make these simpler models as comparable as possible to the \ac{LSTM} models in terms of information available to the network, we add the instantaneously velocity of the target vehicle as an additional element to the input, since there is no intermediate embedding vector here where it could be included.
+
+\subsubsection{Evaluation}%
+\label{ssubsec:evaluation_nef}
+
 Figure~\ref{fig:rmse_nef_nets} visualizes the \ac{RMSE} of our \ac{NEF}-network models on both data sets.
 The \ac{NEF}-network using the \ac{SPA}-power encoding schemes processes \num{512}-dimensional for the \emph{On-board} (\ac{NEF} \ac{SPA} \num{1}) and \num{1024}-dimensional vectors for the \emph{\ac{NGSIM}} data set (\ac{NEF} \ac{SPA} \num{2}).
 For reference, we included the performance of the most relevant \ac{LSTM} models, namely \ac{LSTM} \ac{SPA} \num{1} and \num{3} for the \emph{\ac{NGSIM}} and \emph{On-board} data set respectively as well as \ac{LSTM} numerical, in Fig.~\ref{fig:rmse_nef_nets} as well.
@@ -772,6 +774,34 @@ In this case, the \ac{NEF}-model is not only simpler, but also has access to les
 
 \subsection{Evaluation of the unsupervised anomaly detection}%
 \label{subsec:evaluation_of_the_unsupervised_anomaly_detection}
+
+\begin{figure}[t]
+	\centering
+	\resizebox{.8\textwidth}{!}{%
+	\begin{tikzpicture}[%
+	auto,
+	multilayer,
+	]
+    \Vertices{data/autoenc_vertices.csv}
+    \Edges{data/autoenc_edges.csv}
+    \draw (-4.0,-1.6)--(-4.0,-1.6) node[below, text width=2.5cm]{input \\layer};
+    \draw (-3.0,0.5)--(-3.0,0.5) node[below, text width=2.5cm]{enc layer \num{1}\\ \num{64} neurons};
+    \draw (-2.0,3)--(-2.0,3) node[below, text width=2.5cm]{enc layer \num{2}\\ \num{32} neurons};
+    \draw (-2.0,5.5)--(-2.0,5.5) node[below, text width=2.5cm]{dec layer \num{1}\\ \num{32} neurons};
+    \draw (-3.0,8)--(-3.0,8) node[below, text width=2.5cm]{dec layer \num{2}\\ \num{64} neurons};
+    \draw (-4.0,10.5)--(-4.0,10.5) node[below, text width=2.5cm]{reconstruct\\layer};
+    \draw (-4.0,-1.6)--(-4.0,-1.6) node[below, text width=2.5cm]{input \\layer};
+    \end{tikzpicture}
+	}
+    \caption{A schematic visualization of our autoencoder neural network architecture.} 
+    \label{fig:autoenc_arch}
+\end{figure}
+
+In this section, we analyze and evaluate the results of the performance of the anomaly detection network introduced in section~\ref{subsec:excursion_on_unsupervised_anomaly_detection}.
+We train a fully-connected autoencoder neural network with \num{4} hidden layers consisting of \num{64}, \num{32}, \num{32} and \num{64} neurons in unsupervised fashion to generate replicates of the original vectors used as input to the network.
+Figure~\ref{fig:autoenc_arch} shows a schematic visualization of the network's architecture.
+We use the reconstruction error between the original vectors and the replicates generated by the neural network as anomaly score and calculate a threshold for the error to detect outliers based on the percentage of anomalies we expect in the data set.
+For this evaluation, we use \SI{10}{\percent} for the amount of expected outliers within the data set and trained the network for \num{100} epochs on the vectors encoding the current scene using the convolutive power representation as described in section~\ref{ssubsec:convolutive_power_representation}.
 
 \begin{figure}[t]
     \centering
@@ -793,11 +823,6 @@ In this case, the \ac{NEF}-model is not only simpler, but also has access to les
 }
     \label{fig:anomaly_on_board}
 \end{figure}
-
-In this section, we analyze and evaluate the results of the performance of the anomaly detection network introduced in section~\ref{subsec:excursion_on_unsupervised_anomaly_detection}.
-We train a fully-connected autoencoder neural network with \num{4} hidden layers consisting of \num{64}, \num{32}, \num{32} and \num{64} neurons in unsupervised fashion to generate replicates of the original vectors used as input to the network.
-We use the reconstruction error between the original vectors and the replicates generated by the neural network as anomaly score and calculate a threshold for the error to detect outliers based on the percentage of anomalies we expect in the data set.
-For this evaluation, we use \SI{10}{\percent} for the amount of expected outliers within the data set and trained the network for \num{100} epochs on the vectors encoding the current scene using the convolutive power representation as described in section~\ref{ssubsec:convolutive_power_representation}.
 
 Since the data we are using to train the network is unlabeled, i.e., we do not have any information available which vectors belong to unusual or atypical situations, we have no way of comparing the results produced by the neural network with actual ground truth data.
 Hence, our only option is to analyze the anomalies detected by our neural network with respect to certain characteristic values describing the driving situation and compare them to the values of the complete data set.
