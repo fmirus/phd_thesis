@@ -40,7 +40,7 @@ However, we were able to demonstrate that the models using the convolutive power
 Furthermore, the model was able to predict lane change situations better than all other models when trained on a subset of the training data consisting these particular situations, whereas the other models did not show a similar adaptation behavior.
 Hence, we expect the models to improve with a more balanced data set since the data sets used in this work show a strong imbalance towards straight driving compared to lane change maneuvers.
 Finally, we observed when training an unsupervised learning algorithm for detecting anomalies on the convolutive vector representation, that it tended to label crowded situations with a higher number of vehicles driving closely to the target as outliers.
-Therefore, we conclude, that the encoding the scene in semantic vectors is able to capture the essential semantics of the spatial information of the driving scene.
+Therefore, we conclude, that the encoding of the scene in semantic vectors is able to capture the essential semantics of the spatial information of the driving scene.
 Additionally, we compared the \ac{LSTM} models to simpler single-layer \acp{SNN}, which achieved results slightly worse, but comparable to the more complex networks.
 
 In chapter~\ref{chap:mix_online_learning}, we extended our work on vehicle trajectory prediction by developing a novel, mixture-of-experts online learning model trained at run time to refine the anticipations of several individual prediction models using delta rule learning and spiking neurons.
