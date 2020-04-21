@@ -405,6 +405,20 @@ In this section, we will investigate the \ac{LSTM}-based prediction models.
   \label{fig:lstm_input_data_analysis}
 \end{figure}
 
+For the \ac{LSTM}-models, we firstly investigated the composition of the input data to the model to get an idea, what kind of information is useful for the task of motion prediction.
+Therefore, we trained several instantiations of our \ac{LSTM}-network architecture on the \emph{On-board} data set $D_1$ for different variations of the input data, for \num{8} epochs each.
+Table~\ref{tab:input_data_setups} summarizes the different setups and shows what kind of data is included in each setup shown in Fig.~\ref{fig:lstm_input_data_analysis}.
+The simplest setting (setup \num{1}) is using only the positional information of the target vehicle as input and its instantaneous velocity as additional information in the embedding without including any information about the ego-vehicle.
+We refer to this setting as the default setting in this section.
+In addition, we also analyze settings, where additional information like velocity (setups \num{6}-\num{15}) and acceleration (setups \num{11}-\num{15}) of the target vehicle are available to the system.
+Furthermore, if all dynamic information is available relative to the ego-vehicle, there are other features that could be useful for motion prediction such as the current curvature of the road or the current velocity or steering values of the ego-vehicle itself.
+For instance, if the ego-vehicle performs a lane change or the road bends, this will influence the relative motion of all other vehicles while this information most likely will not be available from just the positions of the target vehicle. 
+On the other hand, if such information is available to the system, it would improve the model's capability of abstracting and inferring correlations between the available information in such situations.
+In this evaluation, we include the history of the ego-vehicle's information to the input data and future values to the embedding, whereas we include additional information about the target vehicle to the input data only. 
+
+Figure~\ref{fig:lstm_input_data_analysis} depicts the \ac{RMSE} ($y$-axis) for each input data setup given in table~\ref{tab:input_data_setups} on the $x$-axis at each prediction time step.
+Each tick on the $x$-axis corresponds to one input setup, whereas each group of \num{5} ticks from left to right corresponds to one fixed setup for the target vehicle.
+The left group contains only the default data about the target vehicle (setups \num{1}-\num{5} in table~\ref{tab:input_data_setups}), the middle group contains the history of the target vehicle's velocity (setups \num{6}-\num{10} in table~\ref{tab:input_data_setups}) and the right group contains additionally the history of the target vehicle's acceleration (setups \num{11}-\num{15} in table~\ref{tab:input_data_setups}).
 \begin{center}
     \resizebox{\textwidth}{!}{%
         \begin{tabular}{cccccccc}
@@ -448,18 +462,12 @@ In this section, we will investigate the \ac{LSTM}-based prediction models.
     \captionof{table}{Summary of the input data setups of the different models evaluated in Fig.~\ref{fig:lstm_input_data_analysis}.}
 	\label{tab:input_data_setups}
 \end{center}
-
-For the \ac{LSTM}-models, we firstly investigated the composition of the input data to the model to get an idea, what kind of information is useful for the task of motion prediction.
-Therefore, we trained several instantiations of our \ac{LSTM}-network architecture on the \emph{On-board} data set $D_1$ for different variations of the input data, for \num{8} epochs each.
-Table~\ref{tab:input_data_setups} summarizes the different setups and shows what kind of data is included in each setup shown in Fig.~\ref{fig:lstm_input_data_analysis}.
-The simplest setting (setup \num{1}) is using only the positional information of the target vehicle as input and its instantaneous velocity as additional information in the embedding without including any information about the ego-vehicle.
-We refer to this setting as the default setting in this section.
-In addition, we also analyze settings, where additional information like velocity (setups \num{6}-\num{15}) and acceleration (setups \num{11}-\num{15}) of the target vehicle are available to the system.
-Furthermore, if all dynamic information is available relative to the ego-vehicle, there are other features that could be useful for motion prediction such as the current curvature of the road or the current velocity or steering values of the ego-vehicle itself.
-For instance, if the ego-vehicle performs a lane change or the road bends, this will influence the relative motion of all other vehicles while this information most likely will not be available from just the positions of the target vehicle. 
-On the other hand, if such information is available to the system, it would improve the model's capability of abstracting and inferring correlations between the available information in such situations.
-In this evaluation, we include the history of the ego-vehicle's information to the input data and future values to the embedding, whereas we include additional information about the target vehicle to the input data only. 
-
+Each tick within one group corresponds to one setting for the ego-vehicle, whereas again from left to right the amount of available information increases.
+Therefore, the rightmost tick contains information about the ego-vehicle's acceleration, distance to the lane border as well as the curvature of the current lane and its current steering values (setup \num{15} in table~\ref{tab:input_data_setups}). 
+We observe that adding more information about both, the ego- and target vehicle, indeed improves prediction accuracy significantly: the difference between the best and worst setting is more than \SI{1}{\meter} in $x$-direction and more than \SI{0.1}{\meter} in $y$-direction.
+For both dimensions, setup \num{15} using all available information outperforms the simpler setups.
+However, there are some interesting peculiarities visible in this analysis that are worth noting.
+For instance, the input information improving performance in $x$-direction the most appears to be the target vehicle's velocity (setups \num{1}-\num{5} vs. setups \num{6}-\num{10}). 
 \begin{figure}[t!]
 	\centering
     \subfloat[\label{subfig:lstm_units_analysis}]{%
@@ -472,16 +480,6 @@ In this evaluation, we include the history of the ego-vehicle's information to t
     \caption{Visualization of the \ac{RMSE} for different parameter tests of our \ac{LSTM}-model trained on the \emph{On-board} data set for \num{8} epochs:~\protect\subref{subfig:lstm_units_analysis} depicts the \ac{RMSE} when varying the number of dimensions in each \ac{LSTM} cell~\protect\subref{subfig:lstm_layers_analysis} visualizes the \ac{RMSE} when varying the number of layers, i.e., the number of encoder and decoder \ac{LSTM} cells are used in the network.}
     \label{fig:lstm_units_layers_analysis}
 \end{figure}
-
-Figure~\ref{fig:lstm_input_data_analysis} depicts the \ac{RMSE} ($y$-axis) for each input data setup given in table~\ref{tab:input_data_setups} on the $x$-axis at each prediction time step.
-Each tick on the $x$-axis corresponds to one input setup, whereas each group of \num{5} ticks from left to right corresponds to one fixed setup for the target vehicle.
-The left group contains only the default data about the target vehicle (setups \num{1}-\num{5} in table~\ref{tab:input_data_setups}), the middle group contains the history of the target vehicle's velocity (setups \num{6}-\num{10} in table~\ref{tab:input_data_setups}) and the right group contains additionally the history of the target vehicle's acceleration (setups \num{11}-\num{15} in table~\ref{tab:input_data_setups}).
-Each tick within one group corresponds to one setting for the ego-vehicle, whereas again from left to right the amount of available information increases.
-Therefore, the rightmost tick contains information about the ego-vehicle's acceleration, distance to the lane border as well as the curvature of the current lane and its current steering values (setup \num{15} in table~\ref{tab:input_data_setups}). 
-We observe that adding more information about both, the ego- and target vehicle, indeed improves prediction accuracy significantly: the difference between the best and worst setting is more than \SI{1}{\meter} in $x$-direction and more than \SI{0.1}{\meter} in $y$-direction.
-For both dimensions, setup \num{15} using all available information outperforms the simpler setups.
-However, there are some interesting peculiarities visible in this analysis that are worth noting.
-For instance, the input information improving performance in $x$-direction the most appears to be the target vehicle's velocity (setups \num{1}-\num{5} vs. setups \num{6}-\num{10}). 
 Furthermore, the target vehicle's acceleration does not yield further significant improvements given its velocity is available.
 Interestingly, setup \num{6} using only the target vehicle's velocity as additional information is closely behind the best setting in $x$-direction.
 Furthermore, the performance boost of the setting using all available information (setup \num{15} or the rightmost tick) over the prior setting comes from the ego-vehicle's steering, which only appears when its acceleration information is also available.
@@ -608,32 +606,40 @@ For \num{1024}-dimensional vectors, \ac{LSTM} \ac{SPA} \num{1} even slightly out
 
 \paragraph{Evaluation of models trained on data set variations}%
 \label{par:evaluation_of_models_trained_on_data_set_variations}
-\todo[inline]{check figure references}
+%\todo[inline]{check figure references}
 
 \begin{figure}[th!]
     \centering
-    \subfloat[\label{subfig:rmse_large_all}Trained and evaluated on complete data set]{%
+    %\subfloat[\label{subfig:rmse_large_all}Trained and evaluated on complete data set]{%
+    \subfloat[\label{subfig:rmse_large_all}]{%
         \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_trained_on_all.eps}
     }
-    \subfloat[\label{subfig:rmse_large_all_trained_on_lc}Trained on lane change samples, evaluated on complete data set]{%
+    %\subfloat[\label{subfig:rmse_large_all_trained_on_lc}Trained on lane change samples, evaluated on complete data set]{%
+    \subfloat[\label{subfig:rmse_large_all_trained_on_lc}]{%
         \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_trained_on_lc.eps}
     }
-    \subfloat[\label{subfig:rmse_large_all_lc_only}Trained on complete data set, evaluated on lane changes samples]{%
+    %\subfloat[\label{subfig:rmse_large_all_lc_only}Trained on complete data set, evaluated on lane changes samples]{%
+    \subfloat[\label{subfig:rmse_large_all_lc_only}]{%
         \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_trained_on_all_evaluated_on_lc.eps}
     }
-    \subfloat[\label{subfig:rmse_large_all_lc_only_trained_on_lc}Trained and evaluated on lane change samples ]{%
+    %\subfloat[\label{subfig:rmse_large_all_lc_only_trained_on_lc}Trained and evaluated on lane change samples ]{%
+    \subfloat[\label{subfig:rmse_large_all_lc_only_trained_on_lc}]{%
         \includegraphics[width=0.25\linewidth]{imgs/rmse_large_all_trained_on_lc_evaluated_on_lc.eps}
     }\\
-    \subfloat[\label{subfig:rmse_large_subset}Trained on complete data set, evaluated on crowded situations]{%
+    %\subfloat[\label{subfig:rmse_large_subset}Trained on complete data set, evaluated on crowded situations]{%
+    \subfloat[\label{subfig:rmse_large_subset}]{%
         \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_trained_on_all.eps}
     }
-    \subfloat[\label{subfig:rmse_large_subset_trained_on_lc}Trained on lane change samples, evaluated on crowded situations]{%
+    %\subfloat[\label{subfig:rmse_large_subset_trained_on_lc}Trained on lane change samples, evaluated on crowded situations]{%
+    \subfloat[\label{subfig:rmse_large_subset_trained_on_lc}]{%
         \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_trained_on_lc.eps}
     }
-    \subfloat[\label{subfig:rmse_large_subset_lc_only}Trained on complete data set, evaluated on crowded situations with lane changes]{%
+    %\subfloat[\label{subfig:rmse_large_subset_lc_only}Trained on complete data set, evaluated on crowded situations with lane changes]{%
+    \subfloat[\label{subfig:rmse_large_subset_lc_only}]{%
         \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_trained_on_all_evaluated_on_lc.eps}
     }
-    \subfloat[\label{subfig:rmse_large_subset_lc_only_trained_on_lc}Trained on lane change samples, evaluated on crowded situations with lane changes]{%
+    %\subfloat[\label{subfig:rmse_large_subset_lc_only_trained_on_lc}Trained on lane change samples, evaluated on crowded situations with lane changes]{%
+    \subfloat[\label{subfig:rmse_large_subset_lc_only_trained_on_lc}]{%
         \includegraphics[width=0.25\linewidth]{imgs/rmse_large_subset_trained_on_lc_evaluated_on_lc.eps}
     }
     \caption{Visualization of the \ac{RMSE} performance of our \ac{LSTM} models for different data setups.
@@ -641,6 +647,7 @@ For \num{1024}-dimensional vectors, \ac{LSTM} \ac{SPA} \num{1} even slightly out
 Fig.~\protect\subref{subfig:rmse_large_all_trained_on_lc},~\protect\subref{subfig:rmse_large_all_lc_only_trained_on_lc},~\protect\subref{subfig:rmse_large_subset_trained_on_lc},~\protect\subref{subfig:rmse_large_subset_lc_only_trained_on_lc} show the same models evaluated on the same samples but trained only on the samples including a target vehicle lane change.}
     \label{fig:rmse_on_board_training_data_variation}
 \end{figure}
+
 
 In section~\ref{subsec:data_set_peculiarities}, we have already seen that our prediction models using neural networks have to deal with imbalanced data sets containing significantly more straight driving than lane changes performed by the target vehicle.
 Hence, training any learning system on all the samples of both our data sets will expose the system to a significantly higher amount of data, in which most likely already a simple linear prediction model performs reasonably well. 
@@ -694,6 +701,25 @@ Interestingly, the performance of the models based on the convolutive power enco
 However, if we evaluate the same models only on the samples containing a target vehicle lane change, their performance changes significantly (Fig.~\ref{subfig:rmse_large_all_trained_on_lc},~\ref{subfig:rmse_large_all_lc_only_trained_on_lc},~\ref{subfig:rmse_large_subset_trained_on_lc},~\ref{subfig:rmse_large_subset_lc_only_trained_on_lc}).
 We recapitulate the findings of section~\ref{subsec:data_set_peculiarities} that lane changes influence the lateral ($y$) position values more severely than the longitudinal ($x$) position compared to straight driving samples.
 Therefore, the performance difference between the models trained on lane changes only and models trained on the complete data set, as we would expect, is also not that significant in longitudinal direction.
+\begin{wraptable}{r}{8cm}
+    %\captionof{table}{Summary of the data samples used for the evaluations shown in individual sub-figures of Fig.~\ref{fig:rmse_on_board_training_data_variation}.}
+    \resizebox{0.5\textwidth}{!}{%
+        \begin{tabular}{|ccc|}
+            \hline
+            \thead{Setup ID} & \thead{Training set} & \thead{Evaluation set} \\ \hline
+            (a) & \makecell{all samples} & \makecell{all samples} \\ \hline
+            (b) & \makecell{lane change samples} & \makecell{all samples} \\ \hline
+            (c) & \makecell{all samples} & \makecell{lane change samples} \\ \hline
+            (d) & \makecell{lane change samples} & \makecell{lane change samples} \\ \hline
+            (e) & \makecell{all samples} & \makecell{crowded samples} \\ \hline
+            (f) & \makecell{lane change samples} & \makecell{crowded samples} \\ \hline
+            (g) & \makecell{all samples} & \makecell{crowded lane change samples} \\ \hline
+            (h) & \makecell{lane change samples} & \makecell{crowded lane change samples} \\ \hline
+        \end{tabular}
+    }
+    \caption{Summary of the data samples used for the evaluations shown in individual sub-figures of Fig.~\ref{fig:rmse_on_board_training_data_variation}.}
+	\label{tab:eval_setups}
+\end{wraptable}
 Considering the lateral ($y$) direction however, we observe a significant change between both model and evaluation variants.
 If the models are trained only on lane change samples, the \ac{LSTM} \acs{SPA} \num{1} and \num{3} models outperform all other models in lateral direction when evaluated only on the data samples containing a lane change while their performance in longitudinal direction does not change significantly compared to the models trained on the complete data set.
 
