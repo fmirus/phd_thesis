@@ -183,6 +183,7 @@ The network achieves competitive results with \SI{98}{\percent} classification a
     \includegraphics[width=1.0\linewidth]{imgs/Visual_vocab_traffic_signs_similarity_with_representative_vecs.eps}
     \caption{Boxplots depicting the cosine similarities between the representative (mean) vector for each traffic sign class and all individual vector samples it has been created from.}
     \label{fig:visual_vocab_traffic_signs_similarity_with_representative_vecs}
+    \vspace{-0.4cm}
 \end{figure}
 
 To generate our vocabulary vectors, we cut off the classification layer with softmax activation and use the previous \num{300}-dimensional, fully connected layer as output.
@@ -201,6 +202,7 @@ As expected, we observe high similarity values close to the maximum value of \nu
     \includegraphics[width=1.0\linewidth]{imgs/visual_vocab_traffic_signs_internal_similarities.eps}
     \caption{Pairwise similarities between representative vectors encoding traffic signs in a visual vector vocabulary.}
     \label{fig:visual_vocab_traffic_signs_internal_similarities}
+    \vspace{-0.5cm}
 \end{figure}
 
 Furthermore, we expect these representative vectors, which are now our vocabulary vectors encoding the respective traffic signs, to resemble the visual similarity structure of the image classes. 
@@ -214,15 +216,6 @@ Consequently, we conclude that it is possible to encode visual similarity with a
 
 \subsubsection{Traffic participants}%
 \label{ssubsec:traffic_participants}
-\begin{center}
-	\begin{tabular}{|c|c|c|c|c|c|}
-		\hline
-		 & BICYCLE & CAR & MOTORCYCLE & PERSON & TRUCK\\ \hline
-        Classification accuracy & \SI{94.3}{\percent} & \SI{76}{\percent} & \SI{55}{\percent} & \SI{82.6}{\percent}& \SI{99}{\percent}\\ \hline
-	\end{tabular}
-	\captionof{table}{Classification accuracy of the adapted VGG19 network for our selected \num{5} classes of traffic participants.}
-	\label{tab:traffic_participant_visual_accuracy}
-\end{center}
 
 To encode the object categories for traffic participants \emph{Bicycle}, \emph{Car}, \emph{Motorcycle}, \emph{Pedestrian}, \emph{Truck} necessary to properly represent dynamic automotive scenes in visual vectors, we employ an approach similar to the one used for traffic signs.
 We adopt a general purpose image data set, the Imagenet data set \parencite{Deng2009}, which includes suitable categories for all of these classes.
@@ -230,6 +223,7 @@ As an additional advantage, Imagenet is a widely used data set, so there already
 Concretely, we employ the following categories as they appear visually most suitable for the objects categories we want to encode:
 We use the original labels 'SAFETY BICYCLE' to learn visual vectors for \emph{Bicycle}, 'USED CAR' for \emph{Car} (other car categories include ambulances and many sports / racing cars), 'MOTORCYCLE', 'PERSON' for \emph{Pedestrian} (since there is no special category for people in the vicinity of roads) and 'TRUCK'.
 For each category, there are at least \num{1200} images available in the data set.
+
 
 \begin{figure}[t]
     \centering
@@ -244,6 +238,7 @@ For each category, there are at least \num{1200} images available in the data se
     \caption{Similarity plots for the visual vocabulary vectors representing traffic participants.~\protect\subref{subfig:visual_vocab_traffic_participants_similarity_with_representative_vecs} Boxplots depicting the cosine similarities between the representative (mean) vector for each traffic participant class and all individual vector samples it has been created from.~\protect\subref{subfig:visual_vocab_traffic_participants_internal_similarities} Pairwise similarities between representative
     vectors encoding traffic participants in our visual vector vocabulary.}
     \label{fig:visual_vocab_traffic_participants}
+    \vspace{-0.6cm}
 \end{figure}
 
 While there is a number of state-of-the-art classification networks available achieving good results on the Imagenet data set, we are looking for a network with only moderately complex structure for the sake of implementation simplicity and ease of adaptation, while performance is of secondary priority.
@@ -265,6 +260,15 @@ As expected, visually similar classes such as \enquote{BICYCLE} and \enquote{MOT
 Less similar, but still significantly higher than the similarity thresholds, are traffic participants sharing the visual features of persons such as \enquote{PERSON} and \enquote{BICYCLE}, \enquote{PERSON} and \enquote{MOTORCYCLE} as well as \enquote{BICYCLE} and \enquote{MOTORCYCLE}.
 All other pairs have similarity values in the order of magnitude or below the similarity thresholds and are therefore considered dissimilar while we do not attach the greatest importance to the actual (low) numbers.
 Consequently, we can conclude, that we are able to encode visual similarity of traffic signs as well as traffic participants in a visual vector vocabulary.
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		 & BICYCLE & CAR & MOTORCYCLE & PERSON & TRUCK\\ \hline
+        Classification accuracy & \SI{94.3}{\percent} & \SI{76}{\percent} & \SI{55}{\percent} & \SI{82.6}{\percent}& \SI{99}{\percent}\\ \hline
+	\end{tabular}
+	\captionof{table}{Classification accuracy of the adapted VGG19 network for our selected \num{5} classes of traffic participants.}
+	\label{tab:traffic_participant_visual_accuracy}
+\end{center}
 
 \subsection{Semantic vocabularies}%
 \label{subsec:semantic_vocabularies}
