@@ -119,16 +119,16 @@ This section provides a brief overview of the thesis structure as well as a shor
 Chapter~\ref{chap:research_context} summarizes the state-of-the-art in several areas related to the core of the thesis at hand spanning from biologically inspired hardware and software over cognitive modeling techniques to automated driving research.
 We give an overview over all of these sub-topics providing a detailed description where necessary while putting these details in context of a bigger picture.
 
-Chapter~\ref{chap:introduction_to_vsas} introduces the key ingredients for the models developed in later chapter, distributed representations and \acp{SNN}, and establishes the mathematical apparatus and the essential theoretical properties of these ingredients.
+Chapter~\ref{chap:introduction_to_vsas} introduces the key ingredients for the models developed in later chapters, distributed representations and \acp{SNN}, and establishes the mathematical apparatus and the essential theoretical properties of these ingredients.
 After proposing a more rigorous mathematical formalism to describe the general theory of \acp{VSA}, we proceed to the \ac{SPA} as a special case of \acp{VSA} with additional features and theory to be presented.
 Furthermore, we give an introduction to the general ideas for cognitive modeling based on \acp{VSA} like vocabularies and structured representation generation.
 Furthermore, we present a brief description of the \ac{NEF} and how it can be used to implement cognitive architectures based on vector representations in a spiking neuron substrate.
 
 In chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes}, we proceed to present the general approach to encode automotive scenes in semantic vectors as representational substrate.
-We show different approaches to generate vector vocabularies, which are the basic ingredients to built more complex, structured representations from them.
+We show different approaches to generate vector vocabularies, which are the basic ingredients to built more complex, structured representations from.
 We demonstrate successful embedding of several similarity structures into vector vocabularies designed for automotive applications.
 Additionally, we present several approaches to representing numerical values in our vector substrate introducing a novel approach based on a convolutive power, generalizing exponentiation to circular convolution.
-We conclude the chapter with a thorough analysis regarding the systematic limitations regarding the vectors capacity, i.e., amount of information such vector representations can effectively store.
+We conclude the chapter with a thorough analysis regarding the systematic limitations regarding the vectors' capacity, i.e., amount of information such vector representations can effectively store.
 
 Chapter~\ref{chap:driving_context_classification} introduces the first sample instantiation of our vector representation applied to the task of driving context classification based on a scene vector encapsulating the current driving situation.
 We establish the vector-based scene representation for the context classification task and use it as input data to a learning model implemented in a spiking neuron substrate.
@@ -166,9 +166,9 @@ We conclude the thesis by proposing a series of extensions and improvements, whi
 \section{Contributions of and to this thesis}%
 \label{sec:contributions_of_and_to_this_thesis}
 
-This thesis presents a first step towards a cognitive environment model for automated vehicles and thereby a provides a novel perspective to knowledge representation in automotive context.
+This thesis presents a first step towards a cognitive environment model for automated vehicles and thereby provides a novel perspective to knowledge representation in automotive context.
 The two key ingredients for our approach are distributed representations and \acp{SNN}, which in combination offer a promising modeling substrate for cognitive tasks as shown in \textcite{Eliasmith2013, Eliasmith2012}. 
-The possibility to implement distributed representations in a spiking neuron substrate offers the potential to combine symbol-like processing with the strength of neural network learning.
+The possibility to implement distributed representations in a spiking neuron substrate offers the potential to combine symbol-like processing with the strengths of neural network learning.
 Additionally, \acp{SNN} are one option to tackle increasing energy-efficiency requirements in future automated vehicles equipped with a plethora of sensors and computing systems.
 This thesis presents a strict mathematical formalism regarding the theory of distributed representations, summarizing their key features in a generic framework.
 Thereby, we lay the foundation for our novel approach to build structured representations of automotive scenes.
@@ -204,6 +204,7 @@ Beside published articles, we also list submitted or already accepted manuscript
 
 \subsubsection{Published peer-reviewed conference papers}
 \begin{enumerate}
+	\item \printpublication{Mirus2020}
 	\item \printpublication{Mirus2020a}
 	\item \printpublication{Mirus2020b}
     \item \printpublication{Mirus2019c}
@@ -211,9 +212,3 @@ Beside published articles, we also list submitted or already accepted manuscript
 	\item \printpublication{Mirus2019a}
 	\item \printpublication{Mirus2018}
 \end{enumerate}
-
-\subsubsection{Accepted peer-reviewed conference papers}
-\begin{enumerate}
-	\item \printpublication{Mirus2020}
-\end{enumerate}
-
