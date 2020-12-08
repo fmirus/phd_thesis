@@ -295,7 +295,7 @@ A more sophisticated application is the multi object detection and classificatio
 The use of the neuromorphic hardware Neurogrid \parencite{Benjamin2014} as computational back-end for \ac{Nengo} and proof-of-concept solution for medical motor-prostheses, which shall be connected to biological neurons and thereby be controlled by the patient's brain, is described in \textcite{Choudhary2012, Dethier2011} respectively.
 The \ac{SpiNNaker} system \parencite{Furber2014} also supports the simulation of neural models created using \ac{PyNN} or \ac{Nengo} \parencite{Mundy2015}.
 Furthermore, several neural network architectures like \acp{CNN} \parencite{Serrano-Gotarredona2015} and pre-trained \acp{DBN} \parencite{Stromatias2015a, Stromatias2015} have also been implemented on the \ac{SpiNNaker} system.
-To enable biologically inspired learning like \ac{STDP} \parencite{Bi2001}, according rules adapting the synaptic weights depending on the timing of the spikes have efficiently been implemented on \ac{SpiNNaker} in \textcite{Diehl2014} chip as well.
+To enable biologically inspired learning like \ac{STDP} \parencite{Bi2001}, according rules adapting the synaptic weights depending on the timing of the spikes have efficiently been implemented on \ac{SpiNNaker} in \textcite{Diehl2014} as well.
 
 \subsubsection{Purely neuromorphic systems}
 \label{subsubsec:neuro_systems}
@@ -376,7 +376,7 @@ Finally, the ability to learn and derive internal representations of features fr
 To address some of the concerns regarding both, symbolic and connectionist approaches to cognitive modeling, researchers developed a hybrid approach often referred to as \acf{VSA}, a class of connectionist distributed representations.
 In chapter~\ref{chap:introduction_to_vsas}, we give an in-depth introduction to the theory and mathematical properties of \acp{VSA}, which will be important ingredients for the remainder of this thesis.
 Here, we give a brief overview of the different variants of such architectures, their similarities and differences, related work and some applications.
-All of the modeling approaches presented in this section employ (high-dimensional) vectors as representational units.
+All of the modeling approaches presented in this section employ (high-dimensional) vectors as representational substrate.
 Similar to the representations derived from connectionist approaches, these are distributed representations, which offer nice properties such as robustness to noise and the support of distance metrics.
 Additionally, all of the approaches allow to treat such vectors as \emph{symbol-like} entities, which can be manipulated through the architecture's algebraic operations (see chapter~\ref{chap:introduction_to_vsas} for details).
 The first attempt on structured vector representations proposed by \textcite{Smolensky1990} used the tensor product as multiplication operation to bind two different vectors together.
@@ -635,7 +635,7 @@ An online learning approach based on \acp{SNN} has been shown in \textcite{DeWol
 
 With the advent and success of sophisticated \ac{DNN} architectures and their success in several domains related to automated driving such as object detection (see section~\ref{subsec:obj_detect}) and behavior prediction (see section~\ref{subsec:trajectory_prediction}), the demand for large-scale data sets for training such networks grew significantly in recent years.
 Furthermore, there is an interest in publicly available data sets, which not only enable competition between researchers but also allow for transparent benchmarking of approaches against each other.
-Data sets for image classification such as the \ac{MNIST} data set for hand-written digits \parencite{LeCun1998} , the \ac{GTSRB} for traffic sign recognition \parencite{Stallkamp2012} and the ImageNet data set \parencite{Deng2009} provided researchers with large amounts of labeled image data facilitating significant progress in this research field.
+Data sets for image classification such as the \ac{MNIST} data set for hand-written digits \parencite{LeCun1998}, the \ac{GTSRB} for traffic sign recognition \parencite{Stallkamp2012} and the ImageNet data set \parencite{Deng2009} provided researchers with large amounts of labeled image data facilitating significant progress in this research field.
 
 One of the first data sets being made publicly available on a larger scale for research in an automotive context and encouraging competition is the KITTI vision benchmark suite \parencite{Geiger2013a}, which was recorded using the Annieway vehicle prototype \footfullcite{Annieway} in urban environments in the region of the German city Karlsruhe.
 The KITTI data set offers raw sensory data for different sensor modalities such as \ac{LIDAR} and vision alongside ground truth labels and benchmarks for several tasks such as road detection, object detection, optical flow and tracking.
