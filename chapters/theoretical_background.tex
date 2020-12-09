@@ -580,7 +580,7 @@ Transforming back leads to the differential equation
 \end{equation}
 Thus, to construct a neural model approximating a differential equation of the form
 \begin{equation}
-\frac{\mathbf{y}(t)}{\partial t} = a(\mathbf{y}(t)) + b(\mathbf{x}(t))
+\frac{\partial \mathbf{y}(t)}{\partial t} = a(\mathbf{y}(t)) + b(\mathbf{x}(t))
 \label{eq:nef_dyn_diffeq}
 \end{equation}
 with functions $\abbil{a}{W}{W}$ and $\abbil{b}{V}{W}$, the first two principles of the \ac{NEF} can be used to create a neural population of the form as shown in Fig.~\ref{fig:nef_dynamics}.
@@ -777,12 +777,12 @@ In section~\ref{subsec:nef_representation}, we have already discussed the repres
 Given that all representations of entities in the \ac{SPA} are vectors, we can directly apply Equation~\eqref{eq:nef_encoding} to encode any vector representation generated using the principles and algebraic operations of the \ac{SPA}.
 Similarly, we can employ Equation~\eqref{eq:nef_decoding} to decode back out the original vector from the neurons' activities.
 However, to manipulate the encoded vectors into structured representations using the \ac{SPA}'s algebraic operations, we also need to be able to implement these operations in networks of spiking neurons.
-Again, the tools of the \ac{SPA} allow this implementation.
+Again, the tools of the \ac{NEF} allow this implementation.
 The implementation of element-wise addition of vectors is straightforward: assuming we have created populations $A$ and $B$ encoding the vectors $ \mathbf{v}$ and $ \mathbf{w}$ respectively using Equation~\eqref{eq:nef_encoding}, we can now use the transformation principle and Equation~\eqref{eq:nef_transformation} to connect \emph{both} populations $A$ and $B$ to a third population $C$ with both connections approximating the identity function.
 The population $C$ receiving input from both populations $A$ and $B$ will end up representing an approximation of the sum $ \mathbf{v}+ \mathbf{w}$.
 
 Similarly, we can use the \ac{NEF}'s principles to implement the \ac{SPA}'s binding operation, circular convolution, in a network of spiking neurons.
-Revisiting Equation~\eqref{eq:conv_with_dft}, we can write the circular convolution of two vectors $ \mathbf{z} = \mathbf{v}, \mathbf{w}$ as
+Revisiting Equation~\eqref{eq:conv_with_dft}, we can write the circular convolution $ \mathbf{z} = \mathbf{v} \varoast \mathbf{w}$ of two vectors $\mathbf{v},\mathbf{w}$ as
 
 \begin{equation}
     \mathbf{z} = \mathbf{v} \varoast \mathbf{w} = \ac{IDFT}\left(\ac{DFT}( \mathbf{v}) \odot \ac{DFT}( \mathbf{w}) \right). \tag{\ref{eq:conv_with_dft} revisited}
@@ -842,6 +842,6 @@ Furthermore, we established a formal, mathematical notion for \acp{VSA} in gener
 Then, we shifted our focus to one particular \ac{VSA}, the \ac{SPA}, presenting its most important aspects and properties with respect to subsequent chapters of this thesis.
 Furthermore, we gave a brief description of the \acl{NEF}, which is typically used to implement large-scale neural models of spiking neurons such as the one presented in \textcite{Eliasmith2012}.
 Finally, we have introduced the basic principles of cognitive modeling using \acp{VSA} in general and the \ac{SPA} in particular.
-We showed several general approaches to generate vocabularies of atomic vectors, which form the basis of more complex structured representations built from them using the \ac{VSA}'s algebraic operations.
+We showed several general approaches to generate vocabularies of atomic vectors, which form the basis of more complex structured representations, which are built from the vocabulary using the \ac{VSA}'s algebraic operations.
 Finally, we connected the mathematical description and theory of both, the \acp{VSA} and the \ac{NEF} by depicting how the \ac{NEF} can be used to implement the \ac{SPA} in a spiking neuron substrate, which offers interesting possibilities regarding energy-efficiency in mobile applications such as automated driving.
 We will use the theory and findings shown here in subsequent chapters to derive vector-based representations of automotive data measured and collected in actual driving situations to tackle tasks like classifying the current driving context or prediction the future development of the scene based on past observations.
