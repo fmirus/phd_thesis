@@ -181,7 +181,7 @@ To encode the current scene vector in the activity $ \mathbf{a}_{i}$ of the $N$ 
 where $ \mathbf{G}$ is the non-linearity of the neuron model and $\mathbf{e}_{i,j}$ and $\beta_i$ are randomly generated to produce a uniformly distributed range of maximum firing rates and intercepts.
 To decode the classification of the current driving context from the neurons' activity $ \mathbf{a}_{i}$, we employ
 \begin{equation}
-  \mathbf{c} = \sum_{i} \mathbf{d}_{i}\mathbf{a}_i
+    \mathbf{c} = \sum_{i=1}^{N} \mathbf{d}_{i}\mathbf{a}_i
   \label{eq:context_class_decoding}
 \end{equation}
 We leave $\mathbf{e}_{i,j}$ and $\beta_i$ at their randomly initialized values and use \ac{Nengo}'s default least-squares optimization to calculate the optimal decoder values $ \mathbf{d}_{i}$.
@@ -430,7 +430,7 @@ For the most pronounced example, accuracy decreases in all three classes with a 
 
 In conclusion, encapsulating visual semantic structure produces a measurable effect on the model's classification performance for several vocabularies and improves average results compared to the vocabularies encoding individual parts of the structure (i.e., only visual or semantic).
 We observe a difference in classification accuracy of up to \SI{7}{\percent}.
-However, the impact varies depending on the underlying original vocabulary: for some vocabularies, accuracy decreases over all classes, in others it decreases.
+However, the impact varies depending on the underlying original vocabulary: for some vocabularies, accuracy decreases over all classes, in others it increases.
 On the other hand, since this average is only based on \num{10} vocabularies (due to computational limitations), this visual-semantic structure does not perform significantly better than the baseline vocabulary.
 Furthermore, there is no  clear pattern observable such as an increase in accuracy especially for vocabularies that underperformed without additional structure, or a decrease for vocabularies that performed well using the original randomly generated vectors.
 
