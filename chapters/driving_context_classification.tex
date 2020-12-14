@@ -1,11 +1,11 @@
 \chapter{Instantiating a cognitive model for driving context classification}
 \label{chap:driving_context_classification}
 
-In this chapter, we describe the first application task or our driving scene representation based on semantic vectors: the classification of the current driving context.
+In this chapter, we describe the first application task of our driving scene representation based on semantic vectors: the classification of the current driving context.
 We use the tools of the \ac{SPA} and the representation approaches shown in section~\ref{subsec:structured_representations} to generate semantic vectors describing the current scene.
 Given this representation of the driving situation, we aim to classify the current driving context, i.e., if we are currently driving on a highway, in a city or on an interurban road.
 We have already discussed in section~\ref{subsec:driving_context_classification}, that high-accuracy digital maps could be used in combination with the vehicle's current position measured using \ac{SensGPS} to detect the driving context, which is probably the most accurate approach to driving context classification.
-However, inferring contextual information from on-board sensory data is appealing as either a fallback option in situations when \ac{SensGPS} is not available of if keeping an updated map with driving context information is not feasible.
+However, inferring contextual information from on-board sensory data is appealing as either a fallback option in situations when \ac{SensGPS} is not available or if keeping an updated map with driving context information is not feasible.
 Furthermore, it is an interesting option and a good candidate to firstly investigate our vector representation for automotive scenes, as it seems to be a moderately complex task in the context of automated driving, yet still challenging enough, since we need to combine symbol-like processing with numerical data.
 
 Fig.~\ref{subfig:system_overview_horizontal} shows a schematic overview of our approach to driving context classification  and the general flow of information within the system.
@@ -58,7 +58,7 @@ This manual labeling process yields \SIlist{53.6;18.9;27.5}{\percent} of the sam
 \section{Representation and models}%
 \label{sec:representation_and_modelsi_context_classification}
 
-In this section, we describe our approach to encode driving situations in semantic vectors to classify the current driving context from them.
+In this section, we describe our approach to encode driving situations in semantic vectors and to classify the current driving context from these vectors.
 We present the different types of information we encode in the vector representation using several underlying vocabularies to evaluate their impact on the model classification performance.
 Finally, we describe the models trained to produce the actual context classification.
 
@@ -198,7 +198,7 @@ Furthermore, we analyze the influence of variations in the underlying vector voc
 
 To get a better understanding of the quality the driving context classification model achieves based on our vector representation, we compare it to several other performance baselines.
 In this section, we describe these reference models and the kind of data they use in comparison to the information encoded within our vector representation of the driving scene.
-We use three baselines to compare our models performance to: human performance, a multi-layer neural network implemented using the Keras library \parencite{Chollet2015keras} using our vector representation as input data and a \ac{CNN} using raw images to classify the current driving context.
+We use three baselines to compare our models' performance to: human performance, a multi-layer neural network implemented using the Keras library \parencite{Chollet2015keras} using our vector representation as input data and a \ac{CNN} using raw images to classify the current driving context.
 
 \subsubsection{Human performance}%
 \label{ssubsec:human_performance}
@@ -230,7 +230,7 @@ These results indicate that an overall classification performance of roughly \SI
 
 The first reference model to compare our spiking neuron based driving context classification model to is a more traditional feed-forward, multi-layer neural networks of rate neurons.
 This model also uses our vector representation of the current driving scene as input and is trained in supervised fashion to classify the current driving context.
-Here, we use a network consisting of several fully-connected hidden layers followed by a classification layer producing the models predictions.
+Here, we use a network consisting of several fully-connected hidden layers followed by a classification layer producing the model's predictions.
 This model is quite similar to our classification network with the most significant differences being the neuron models, i.e., \ac{ReLU} in contrast to the spiking \ac{LIF} neuron model in the \ac{Nengo} network version and the training procedure.
 Both models employ supervised learning techniques and while the \ac{Nengo} model employs simple least squares optimization, the multi-layer Keras-model employs the classical backpropagation algorithm using gradient descent.
 
@@ -408,7 +408,7 @@ Hence, we use the classification performance on the \num{300}-dimensional random
 
 In this section, we analyze the impact of encapsulating a similarity structure within the vocabulary of atomic vectors used to generate the scene representation vectors.
 We hypothesize, that encapsulating a similarity structure within the vocabulary of atomic vectors is beneficial in terms of performance for our driving context classification model based on the scene representation built upon these vocabularies.
-We use the different vocabularies presented in section~\ref{sec:preprocessing_stage_generating_a_vocabulary} to impose different similarity structures to the vocabulary, namely a manually generated semantic vocabulary (see section~\ref{subsec:semantic_vocabularies}), a learned visual vocabulary (see section~\ref{subsec:visual_vocabularies}) as well as a fused visual-semantic vocabulary combining the visual and semantic similarity structures in one vocabulary (see section
+We use the different vocabularies presented in section~\ref{sec:preprocessing_stage_generating_a_vocabulary} to impose different similarity structures, namely a manually generated semantic vocabulary (see section~\ref{subsec:semantic_vocabularies}), a learned visual vocabulary (see section~\ref{subsec:visual_vocabularies}) as well as a fused visual-semantic vocabulary combining the visual and semantic similarity structures in one vocabulary (see section
 ~\ref{subsec:visual_semantic_vocabularies}).
 However, the aforementioned structured vocabularies do not contain all entities encoded in the random vocabularies.
 For instance, the \ac{GTSRB} data set, which was used to generate the visual vocabulary for traffic signs, contains only \num{42} traffic sign classes, which covers only $\frac{1}{6}$ of the traffic signs the ego-vehicle's camera system is able to detect.
@@ -428,7 +428,7 @@ In the most extreme case, we observe an unchanged \SI{96}{\percent} prediction a
 On the other hand, there are also vocabularies without substantial changes and, in some cases, even decreased classification performance.
 For the most pronounced example, accuracy decreases in all three classes with a deterioration of \num{1} and \num{2} percentage points for \emph{city} and \emph{highway} respectively and even \num{5} percentage points for the \emph{interurban} category.
 
-In conclusion, encapsulating visual semantic structure produces a measurable effect on the model's classification performance for several vocabularies and improves average results compared to the vocabularies encoding individual parts of the structure (i.e., only visual or semantic).
+In conclusion, encapsulating visual-semantic structure produces a measurable effect on the model's classification performance for several vocabularies and improves average results compared to the vocabularies encoding individual parts of the structure (i.e., only visual or semantic).
 We observe a difference in classification accuracy of up to \SI{7}{\percent}.
 However, the impact varies depending on the underlying original vocabulary: for some vocabularies, accuracy decreases over all classes, in others it increases.
 On the other hand, since this average is only based on \num{10} vocabularies (due to computational limitations), this visual-semantic structure does not perform significantly better than the baseline vocabulary.
@@ -449,14 +449,14 @@ Thus, we conclude that on the one hand, our data set is too small and too limite
 On the other hand, we assume that a larger and more balanced data set will improve the performance of all models (including the \ac{CNN}). 
 However, there are also general issues regarding the process of encoding the current driving scene into a vector representation.
 For instance, while we encode many traffic signs (\num{243} of the total \num{258} atomic entities), the great majority of them is not that useful for driving context classification, as they occur rather rarely.
-Although our implementation of a traffic sign memory partially absorbs this effect, there is still a significant amount of traffic signs which are not memorized and furthermore are not that informative regarding the current driving context.
+Although our implementation of a traffic sign memory partially absorbs this effect, there is still a significant amount of traffic signs, which are not memorized and furthermore are not that informative regarding the current driving context.
 Considering this fact, we are left with a very small vocabulary since only \num{5} classes of traffic participants are encoded.
 Therefore, we might want to include more categories such as the number of lanes or road markings.
 Another method could be to try to encode at a higher level directly, for instance, entities with motion properties such as a vector for a pedestrian that will cross the road or for a \emph{fast car driving towards us}.
 
 Regarding the impact of structured vocabularies on the model's classification accuracy, we achieved a partial success.
 We showed that a visual-semantic structure can be successfully encoded and, in principle, be learned given suitable data.
-We were able to show that different vocabularies do have a measurable effect on the resulting classification accuracy.
+We were able to show that different vocabularies have a measurable effect on the resulting classification accuracy.
 However, we could not find a guiding principle to generally improve results such as using visual-semantic vocabularies improves classification accuracy over all random vocabularies by a certain margin.
 The reasons for these results are manifold:
 While we do argue that knowledge about visual similarity might improve scene classification, this kind of information alone is rather limited especially with the current implementation.
