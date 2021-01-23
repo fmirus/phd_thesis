@@ -1,8 +1,6 @@
 \chapter{Instantiating a cognitive model for predicting vehicle behavior}
 \label{chap:behav_pred}
 
-%\todo[inline]{check behavior prediction chapter for consistency}
-
 Predicting future behavior and positions of other traffic participants from observations is a key problem, that needs to be solved by human drivers and automated vehicles alike to safely navigate their environment and to reach their desired goal.
 Therefore, we picked behavior prediction as another task for investigating the potential of vector representations in automotive context.
 In contrast to the task of classifying the current driving context presented in chapter~\ref{chap:driving_context_classification}, predicting future positions of vehicles is a regression problem, i.e., we are predicting continuous values such as spatial positions instead of discrete class labels.
@@ -57,7 +55,7 @@ Table~\ref{tab:target_data_features} gives an overview and detailed description 
 		Lane & Information about the lane relative to the ego-vehicle estimated from fused sensor reading (camera and range sensors) \\ \hline
 		LaneBorderDistance & Distance to left/right border of the current lane estimated from fused sensor reading (camera and range sensors) \\ \hline
 		LaneCurvature & Information about the lane curvature estimated from fused sensor reading (camera and range sensors) \\ \hline
-		TypeProbability & Probability for the object being a of certain type (e.g. car or truck) estimated from camera sensors \\ \hline
+		TypeProbability & Probability for the object being a of certain type (e.g., car or truck) estimated from camera sensors \\ \hline
 	\end{tabular}
 	\captionof{table}{Table depicting different features for dynamic objects within the training data}
 	\label{tab:target_data_features}
@@ -192,7 +190,7 @@ The dashed green line illustrates predictions from a simple linear model based o
 This example illustrates the general trend we observe for both data sets used in this chapter that already simple linear prediction models achieve solid prediction accuracy, especially in $x$-direction.
 This makes sense as both data sets almost exclusively contain highway driving situations, which in turn consists of significantly more straight driving and rather rare lane-change maneuvers as analyzed in section~\ref{subsec:data_set_peculiarities}.
 For straight driving, linear prediction based on a constant velocity assumption is already a solid prediction approach, especially if all dynamic information (position, velocity etc.) is given relative to an already moving ego-vehicle like with the \emph{On-board} data set $D_1$.
-Hence, we use these linear prediction models based on a constant velocity assumption as the simplest baseline models to compare our neural models using our distributed vector representations as input.
+Hence, we use these linear prediction models based on a constant velocity assumption as the simplest baseline models to compare our neural models using our distributed vector representations as input to.
 
 The analysis of related research on trajectory prediction in automotive context given in section~\ref{subsec:trajectory_prediction} suggests, that the most successful current state-of-the-art approaches rely mainly on \ac{LSTM}-based neural network architectures.
 They are typically combined with other neural networks such as convolutional layers or classification networks \parencite{Deo2018a} to improve model performance.
@@ -233,7 +231,7 @@ We also apply two other encoding schemes using the scalar multiplication encodin
 
 In this section, we investigate the expressive power of encoding the spatial positions of multiple vehicles using the convolutive vector-power introduced in Definition~\ref{def:conv_power}.
 Given the results of section~\ref{subsec:the_influence_of_varying_vocabularies} that the impact of similarity structures in rather small vocabularies is neglectable, we create a random vocabulary $V$ of atomic vectors here.
-We assign a random real-valued vector from the unit sphere to each category of dynamic objects (e.g.\ car, motorcycle, truck) as well as random unitary vectors (c.f.\ Definition~\ref{def:unitary_vec}) $\mathbf{X}$ and $\mathbf{Y}$ to encode the units of spatial positions in vectors.
+We assign a random real-valued vector from the unit sphere to each category of dynamic objects (e.g., car, motorcycle, truck) as well as random unitary vectors (c.f.\ Definition~\ref{def:unitary_vec}) $\mathbf{X}$ and $\mathbf{Y}$ to encode the units of spatial positions in vectors.
 We use unitary vectors $\mathbf{X}$ and $\mathbf{Y}$ since they have unit length and are closed under convolutive exponentiation as shown in Lemma~\ref{lemma:unitary_vec}.
 Therefore, by encoding spatial positions with powers of unitary vectors, we avoid exploding lengths of our final scene vectors, which would lead to additional noise and unwanted behavior when using them as input for neural networks.
 Furthermore, we use additional random ID-vectors $\mathbf{TARGET}$ and $\mathbf{EGO}$ representing the target object to be predicted and, if applicable, the ego-vehicle.
@@ -573,7 +571,7 @@ Although the models employing the \ac{SPA}-power encoding schemes tend to perfor
         \includegraphics[width=0.95\linewidth]{imgs/histogram_on_board_2.eps}
     }
     \caption{Metric evaluation specifying situations where the \ac{LSTM} \acs{SPA} \num{3} model outperforms all other approaches regarding the \acs{RMSE} in $y$-direction on the \emph{On-board} data set $D_1$.
-      In the upper row~\protect\subref{subfig:histogram_on_board_1}, blue bars illustrate samples where \ac{LSTM} \ac{SPA} \num{3} performs better than all other models while the orange bars depict samples where any other model performs best.
+      In the upper row~\protect\subref{subfig:histogram_on_board_1}, blue bars illustrate samples where \ac{LSTM} \ac{SPA} \num{3} performs better than all other models while the orange bars depict samples where one of the other models performs best.
       From left to right, the plots in ~\protect\subref{subfig:histogram_on_board_1} illustrate the distance between the target vehicle and the closest other vehicle, the distance between the target and the ego-vehicle and the number of vehicles other than the target.
       The lower row~\protect\subref{subfig:histogram_on_board_2} illustrates the difference between the blue and orange bars in the corresponding plot in~\protect\subref{subfig:histogram_on_board_1}.
     }
@@ -582,10 +580,10 @@ Although the models employing the \ac{SPA}-power encoding schemes tend to perfor
 
 To further investigate this result, we evaluated certain metrics, chosen to characterize crowded and potentially dangerous situations, for items in the validation set, where the \ac{LSTM} \ac{SPA} \num{3} model outperforms all other approaches with respect to the \ac{RMSE} in $y$-direction (see Fig.~\ref{fig:histograms_on_board}).
 We observe that the number of samples, where the distance between the target and the ego-vehicle and/or the closest other object being small is significantly higher when the \ac{LSTM} \ac{SPA} \num{3} model outperforms all other approaches.
-For samples where the \ac{LSTM} \ac{SPA} \num{3} model performs best, the number of samples with a distance less than \SI{20}{\meter} between the target and ego-vehicle is \SI{50.5}{\percent} higher compared to samples where any of the other models performs best.
+For samples where the \ac{LSTM} \ac{SPA} \num{3} model performs best, the number of samples with a distance less than \SI{20}{\meter} between the target and ego-vehicle is \SI{50.5}{\percent} higher compared to samples where one of the other models performs best.
 For distances less than \SI{20}{\meter} between the target vehicle and the closest other vehicle, the number of samples is still \SI{11.4}{\percent} higher when the \ac{LSTM} \ac{SPA} \num{3} model performs best.
-Finally, the number of situations with at least \num{3} other vehicles present is also \SI{7.8}{\percent} higher compared to samples where any other model performs best.
-However, we aim to investigate more sophisticated options such as clustering methods in future work to uncover other, potentially more meaningful features compared to the ones shown in this paper, distinguishing between situations where \ac{LSTM} \ac{SPA} \num{3} performs best compared to another model showing the best performance.
+Finally, the number of situations with at least \num{3} other vehicles present is also \SI{7.8}{\percent} higher compared to samples where one of the  other models performs best.
+However, we aim to investigate more sophisticated options such as clustering methods in future work to uncover other, potentially more meaningful features compared to the ones shown here, distinguishing between situations where \ac{LSTM} \ac{SPA} \num{3} performs best compared to another model showing the best performance.
 
 \begin{figure}[t!]
 	\centering
@@ -725,10 +723,10 @@ If the models are trained only on lane change samples, the \ac{LSTM} \acs{SPA} \
 
 So far, we have only compared either all models trained on the complete data set or all models trained only on the lane change samples.
 However, we are also interested in how the performance for particular models changes when modifying the training data set.
-Figure~\ref{fig:rmse_on_board_training_all_vs_training_on_lc_only} shows a comparison of the \ac{LSTM}-based models when modifying the training data for the \ac{LSTM} \acs{SPA} \num{3} model (Fig.~\ref{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all} -~\ref{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all}) as well as the \acs{LSTM} numerical model (Fig.
-~\ref{subfig:rmse_large_all_numerical_trained_on_lc_vs_trained_on_all} -~\ref{subfig:rmse_large_subset_lc_only_numerical_trained_on_lc_vs_trained_on_all}).
+Figure~\ref{fig:rmse_on_board_training_all_vs_training_on_lc_only} shows a direct comparison of the \ac{LSTM} \acs{SPA} \num{3} model (Fig.~\ref{subfig:rmse_large_all_spa_power_trained_on_lc_vs_trained_on_all} -~\ref{subfig:rmse_large_subset_lc_only_spa_power_trained_on_lc_vs_trained_on_all}) as well as the \acs{LSTM} numerical model (Fig.
+~\ref{subfig:rmse_large_all_numerical_trained_on_lc_vs_trained_on_all} -~\ref{subfig:rmse_large_subset_lc_only_numerical_trained_on_lc_vs_trained_on_all}) with different training data sets.
 In this direct comparison, we observe that there is no significant difference in the performance of the numerical \ac{LSTM} models trained on different samples for both evaluation sets containing either the complete data set or only the target vehicle lane changes.
-For the \ac{LSTM} \acs{SPA} \num{3} model however, we observe significant improvements for the model trained on the lane change samples when evaluated on the lane changes performed by the target vehicle the model trained on all data samples.
+For the \ac{LSTM} \acs{SPA} \num{3} model however, we observe significant improvements for the model trained on the lane change samples when evaluated on the lane changes performed by the target vehicle compared to the model trained on all data samples.
 This result indicates that either the numerical model trained on all samples generalizes sufficiently well to all possible situations compared to the convolutive power based model.
 However, we have already seen, that both trajectory data sets show a significant imbalance towards straight driving compared to lane change maneuvers (cf.\ section~\ref{subsec:data_set_peculiarities}), which is the same for all models.
 On the other hand, the results shown here could also hint, that the convolutive power model encapsulating the prior motion not only of the target vehicle but also other vehicles in its surroundings is better suited to predict lane change maneuvers given a more balanced data set.
@@ -884,7 +882,7 @@ Figure~\ref{subfig:anomalies_on_board_boxplots_other_vehicles} and~\ref{subfig:a
 
 We observe a clear difference for both, the evaluation of the distances and the number of other vehicles, between the anomalies detected by our neural network and the complete set of data samples.
 Focusing on the distance information, the number of instances with smaller distances between the ego-vehicle or the closest other vehicle and the target is significantly higher for the anomalies than for the complete data set.
-While the mean distance between the target and closest other vehicle is slightly below \SI{20}{\meter} for the complete data set, the mean distance for the anomalies is \SI{10}{\meter} (cf.\ Fig.~\ref{subfig:anomalies_on_board_boxplots_distances}) with clear concentration below \SIrange{0}{15}{\meter} (cf.\ Fig.~\ref{subfig:anomalies_on_board_histograms_distances}).
+While the mean distance between the target and closest other vehicle is slightly below \SI{20}{\meter} for the complete data set, the mean distance for the anomalies is \SI{10}{\meter} (cf.\ Fig.~\ref{subfig:anomalies_on_board_boxplots_distances}) with clear concentration between \SIrange{0}{15}{\meter} (cf.\ Fig.~\ref{subfig:anomalies_on_board_histograms_distances}).
 We observe a similar distribution for the distance between the target and the ego-vehicle, where the distances are more or less equally distributed around the mean of \SI{40}{\meter} for the complete data set.
 For the anomalies, we observe a concentration of the distances between the target and the ego-vehicle below \SI{40}{\meter} around the mean of \SI{25}{\meter}.
 Regarding the number of other vehicles, the difference between the complete data set and the anomalies detected by our neural network is even clearer.
@@ -901,7 +899,7 @@ Hence, we only analyze the distance between the target vehicle and the closest o
 Furthermore, since the external cameras record highway traffic on \num{6} lanes on a segment of \SI{640}{\meter} length for the \emph{\ac{NGSIM}} data set, we needed to reduce the number of vehicles to be included in our vector representation to the ones most relevant for the prediction task.
 Therefore, we focus on vehicles within a distance of \SI{40}{\meter} on lanes adjacent to the target vehicle's lane for the analysis of our anomaly detection network here as well (see Fig.~\ref{subfig:anomalies_ngsim_boxplot_other_vehicles} and~\ref{subfig:anomalies_ngsim_histogram_other_vehicles}).
 While the differences between anomalies and the complete data set regarding the distance between the target and the closest other vehicle is not as significant for the \emph{\ac{NGSIM}} data set in comparison to the \emph{On-board} data set, we still observe a similar tendency for the anomalies to capture situations with smaller distances between the target and the closest other vehicle.
-For the number of other vehicles however, we also observe that the samples detected as anomalies by our autoencoder network tend to have more vehicles in the target vehicle's surroundings present than for all the samples within the \emph{\ac{NGSIM}} data set.
+For the number of other vehicles however, we also observe that the samples detected as anomalies by our autoencoder network tend to have more vehicles in the target vehicle's surroundings present than all the samples within the \emph{\ac{NGSIM}} data set.
 
 In conclusion, our autoencoder neural network is able to detect a subset of anomalies consistently for both, the \emph{On-board} and \emph{\ac{NGSIM}} data set, which show sufficiently significant differences to the complete data set regarding certain metrics.
 The results indicate, that the anomalies detected by the network have a tendency towards crowded situations with rather small distances between the target vehicle and the other vehicles in its surroundings.
