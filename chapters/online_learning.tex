@@ -15,8 +15,8 @@ This enables the mixture model to either use several similar prediction models o
 One of the advantages of such an approach is that instead of starting the model from a completely blank state, the individual predictors used as inputs for the mixture model already learned a consistent prior during their offline training.
 Furthermore, the possibility of the offline models being validated in advance and serving as a fallback option in case the online model fails during deployment, is an additional advantage in a safety-critical domain such as automated driving.
 Finally, the implementation of our approach employing the classic delta rule as well as the possibility to use spiking neuron models allows future deployment on dedicated neuromorphic hardware, which offers interesting possibilities regarding energy efficiency, especially in mobile applications and automotive context.
-We investigate two different online learning systems differing in the information the model uses to optimize its weights.
-In its simplest form, such a model adjusts its weights only based on the prediction error, i.e.\ the difference between its own prediction and the actual motion of the target vehicle.
+We investigate two variants of our online learning system differing in the information the model uses to optimize its weights.
+In its simplest form, such a model adjusts its weights only based on the prediction error, i.e., the difference between its own prediction and the actual motion of the target vehicle.
 However, we have seen in section~\ref{subsec:evaluation_of_the_lstm_based_prediction_models} that the performance of the individual models heavily depend on the current driving situation.
 Therefore, we also investigate online learning models, that adjust their predictions based on some sort of contextual information.
 We use the findings from section~\ref{subsec:evaluation_of_the_lstm_based_prediction_models} as a first hint regarding potential context information.
@@ -27,7 +27,7 @@ The temporally delayed error signal potentially introduces long lags between the
 Therefore, we need to find a mechanism to propagate the error between the actual future motion of the target vehicle and the model's prediction back in time to update the weights correctly.
 In this chapter, we address this issue through a temporal spreading of the error signal, i.e., we use the error of earlier prediction steps to update the weights of predictions further into the future.
 Furthermore, we need to deal with the problem of over-fitting meaning that the model could just learn to predict the current vehicle particularly well but when switching to another vehicle with a potentially very different situational context and/or dynamics, the model's performance could deteriorate due to over-fitting the previous vehicle.
-We evaluate our online learning model on real-world driving data and show, that the model is able to improve over the individual offline models already after being presented just a few vehicles.
+We evaluate our online learning model on real-world driving data and show, that the model is able to improve over the individual offline models already after being trained with just a few vehicles.
 Finally, while the type of online learning approach presented here has been shown to be successful in adaptive robot arm control \parencite{DeWolf2016}, to the best of our knowledge, our approach is the first trajectory prediction model to be trained during deployment for choosing from several pre-trained prediction models to achieve the best possible forecast.  
 
 
@@ -69,7 +69,7 @@ Note that this means that the weighting between the expert predictions may be di
 That is, in some conditions one expert should be weighted more highly than in other conditions, and we want to adapt this weighting based on experience.
 Figure~\ref{fig:mix_context_free_system_arch} depicts the architecture of the context-free mixture-of-experts model variant with yellow boxes indicating the individual components of the model.
 
-The weights $ \mathbf{W}_{ p ,t}$ are initialized equally over all predictors $ p$, i.e. $\mathbf{W}_{ p ,t} = 1/N_p$, where $N_p$ is the number of prediction models being combined, and then updated using online learning.
+The weights $ \mathbf{W}_{ p ,t}$ are initialized equally over all predictors $ p$, i.e., $\mathbf{W}_{ p ,t} = 1/N_p$, where $N_p$ is the number of prediction models being combined, and then updated using online learning.
 While any neural network learning algorithm could be used to do this, we adapt the classic delta learning rule, which is the basis of all gradient-descent learning algorithms, for the sake of simplicity and ease of implementation:
 
 \begin{equation}
@@ -90,7 +90,7 @@ where $\kappa$ is the learning rate and $\nu_{t}$ is a factor to scale the learn
     \label{fig:mix_context_sensitive_system_arch}
 \end{figure}
 
-The above model attempts to find the best weighting of the individual prediction models based solely on the prediction error or the mixture-of-experts model.
+The above model attempts to find the best weighting of the individual prediction models based solely on the prediction error of the mixture-of-experts model.
 However, we believe that the ideal weights will crucially depend on some aspects of the current situation (i.e., the current context).
 That is, instead of learning $ \mathbf{W}$, we can learn the function $f_{ \mathbf{W}}( \mathbf{z})= \mathbf{W}$, where $\mathbf{z}$ is some currently available sensor information.
 Indeed, the context-free version shown in section~\ref{subsec:a_context_free_mixture_of_experts_online_learning_model} is equivalent to the context-sensitive models shown here if the context is kept constant.
@@ -120,7 +120,7 @@ Given the neural activity $\mathbf{a}_i$ generated in Equation~\eqref{eq:mix_enc
   \label{eq:mix_decoding}
 \end{equation}
 to decode the $\mathbf{W}$ values for the current context $\mathbf{z}$. 
-As with the context-free version of the model, we initialize the weights, i.e., here the $\mathbf{d}$ values such that there is an equal weighting across all the expert predictions, i.e., $\mathbf{W}_{p,t} = 1/N_p$ where $N_p$ is the number of prediction models being combined, for all context $\mathbf{z}$.
+As with the context-free version of the model, we initialize the weights, i.e., here the $\mathbf{d}$ values such that there is an equal weighting across all the expert predictions, i.e., $\mathbf{W}_{p,t} = 1/N_p$, where $N_p$ is the number of prediction models being combined, for all context $\mathbf{z}$.
 The $\mathbf{d}$ values achieving this equal weighting are found using least-squares minimization.
 
 Now that we have this system for generating context-dependent weights, we can use online learning to adjust $\mathbf{d}$ to change the weights $\mathbf{W}$ based on the accuracy of the predictions. 
@@ -196,7 +196,7 @@ Spiking neurons are of considerable interest for automotive applications due to 
     \caption{One example from the \emph{On-board} data set depicting a particular driving situation as well as the predictions made by each individual offline model used as input for our mixture-of-experts model.
         The upper row shows images of the ego-vehicle's on-board cameras.
         The middle row shows the trajectory data where the dots indicate the position of the vehicles and color-code the vehicle type (red=motorcycle, green=car, blue=truck, black=ego-vehicle), the solid blue and orange line show past and future motion of the target vehicle, the other colored lines visualize the predictions of the offline models whereas gray lines depict the other vehicles' motion.
-        Finally, the lower row shows the absolute error between each offline model's prediction and the actual positions of the target vehicle.
+        Finally, the lower row shows the absolute error between each offline models' prediction and the actual positions of the target vehicle.
     }
     \label{fig:mix_individual_predictors_example}
 \end{figure}
@@ -226,8 +226,8 @@ In contrast to the anticipated positions predicted by each offline model we use 
 While the context information used for the context-sensitive model variants could be described in many different ways, we use the following three pieces of information:
 
 \begin{itemize}
-    \item{$\mathbf{z}_1$: the current distance from the car to the ego-vehicle if available (note that there is no ego-vehicle the \ac{NGSIM} data set. See section~\ref{subsec:ngsim-dataset})}
-\item{$\mathbf{z}_2$: the current distance from the car to the nearest other car (including
+    \item{$\mathbf{z}_1$: the current distance from the target to the ego-vehicle if available (note that there is no ego-vehicle the \ac{NGSIM} data set. See section~\ref{subsec:ngsim-dataset})}
+\item{$\mathbf{z}_2$: the current distance from the target to the nearest other car (including
     the ego-vehicle if available)}
 \item{$\mathbf{z}_3$: the number of cars currently visible within a certain distance to the target vehicle}
 \end{itemize}
@@ -429,11 +429,11 @@ Figure~\ref{fig:mix_vs_other_approaches_over_objects} shows the \ac{RMSE} perfor
 \label{sec:online_learn_summ}
 
 In this chapter, we have extended our work on vehicle trajectory prediction presented in chapter~\ref{chap:behav_pred}.
-We have introduced a novel mixture-of-experts online learning model implemented in a spiking neuron substrate employing a simple delta learning rule to learn to weight different predictor, which have been previously trained offline, at run time.
-We presented two variants of this model: one adapting its neural weights simply based on the error between the models predictions and the target vehicle's actual motion and a more advanced version anticipating future motion based on contextual information.
+We have introduced a novel mixture-of-experts online learning model implemented in a spiking neuron substrate employing a simple delta learning rule to learn to weight different predictors, which have been previously trained offline, at run time.
+We presented two variants of this model: one adapting its neural weights simply based on the error between the model's predictions and the target vehicle's actual motion and a more advanced version anticipating future motion using contextual information in addition to the error signal.
 An evaluation of a simplified model variant having access to the error signal, which in a realistic scenario lies in the future, at prediction time showed that the model using contextual information clearly outperforms the context-free version.
 Additionally, this simplified model served as an upper bound for the improvement that can be expected from the model having to deal with temporally delayed error signals.
-To tackle this issue of delayed error signals, we propose an approach to spread the error signal of earlier prediction times to later time steps.
+To tackle this issue of delayed error signals, we proposed an approach to spread the error signal of earlier prediction times to later time steps.
 Our evaluation of this advanced model on real world driving data showed that our approach is able to achieve improvements over the individual offline models already after being presented with only a few example vehicles.
 However, the performance gain is not as significant as expected from the experiments with the simplified model variant.
 Therefore, there is room for improvement for future work by, for instance, evaluating how much the model at hand can be further improved by increasing the number of neurons in the context population.
