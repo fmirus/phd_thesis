@@ -1,18 +1,18 @@
 \chapter{Closed-loop neuromorphic control systems}%
 \label{chap:closed_loop_neuromorphic_control_systems}
 
-In this chapter, we present a first step towards a neuromorphic control architecture, that can be used to implement generic control algorithms in the language of \acp{SNN}.
+In this chapter, we present a first step towards a neuromorphic control architecture, that can be used to implement generic control algorithms in the language of \acfp{SNN}.
 This offers the advantage that the overall task can be divided into several sub-networks.
 We develop two sample instantiations of neurally-inspired control algorithms, namely for mobile robot manipulation and vehicle trajectory control based on reinforcement learning.
 Here, we partly depart from the application of automated driving using real-world data, which is an intentional choice.
 As mentioned earlier, control of an automated vehicle is an extremely safety-critical task.
 Furthermore, current vehicle hardware architectures are designed neither to include neuromorphic hardware nor to efficiently process \acp{SNN}.
 Therefore, we demonstrate the general feasibility of this neuromorphic control architecture on the task of bringing order in a sequence of unordered visual stimuli detected using a neuromorphic vision sensor, the \ac{DVS} (section~\ref{sec:sensorimotor_adaptation_for_mobile_robotic_manipulation}). 
-The second demonstration scenario is closer to automotive context, presenting a system employing reinforcement learning for short-term vehicle trajectory planning evaluated in the simulated environment of the \acf{TORCS} \parencite{TORCS}.
+The second demonstration scenario is closer to automotive context, presenting a system employing reinforcement learning for short-term vehicle trajectory planning evaluated in the simulated environment of \acf{TORCS} \parencite{TORCS}.
 Both applications demonstrate certain aspects of the control architecture: the mobile manipulation tasks shows how the principles of neural engineering can be used to manually program non-trivial tasks in a spiking neural substrate.
 This can be useful, to either bootstrap learning to improve task performance without having to start the process from an initial blank state or to complement learning networks with manually designed networks involving human expert knowledge.
 The second task presents such a combination in an instantiation of the neuromorphic control architecture, with a trajectory selection module employing reinforcement learning while all other modules are manually designed for simplicity.
-This also allows to train and validate learning system solving certain sub-tasks decoupled from the rest of the system.
+This also allows to train and validate learning systems solving certain sub-tasks decoupled from the rest of the system.
 
 
 \section{Sensorimotor adaptation for mobile robotic manipulation}%
@@ -40,7 +40,7 @@ The proposed system describes a unified design approach that links low-level sen
 
 The mobile manipulator used in this project is comprised of a custom developed omni-directional mobile platform, depicted in Figure~\ref{fig:omniarmbot}, with embedded low-level motor control and elementary sensory acquisition. 
 The on-board ARM7 micro-controller receives desired motion commands and continuously adapts three PID motor control signals to achieve desired velocities. 
-The robot's integrated sensors include wheel encoders for estimating odometry, a $9$ degrees of freedom \ac{IMU}, a bump-sensor ring which triggers binary contact switches, upon contact with objects in the environment and three silicon retinas providing visual sensor input. 
+The robot's integrated sensors include wheel encoders for estimating odometry, a $9$ degrees of freedom \ac{IMU}, a bump-sensor ring, which triggers binary contact switches upon contact with objects in the environment, and three silicon retinas providing visual sensor input. 
 Two of these cameras are fixed on the mobile base, while one retina is attached to the end-effector to monitor the workspace of the robotic arm. 
 The silicon retinas are \acp{eDVS} and provide discrete events as response to temporal contrast. 
 All $128 \times 128$ pixels of the \ac{DVS} operate asynchronously and illumination changes are signaled within a few microseconds after occurrence (without having to wait for a frame to send information). 
@@ -72,7 +72,7 @@ Decoupling low-level sensorimotor control from the high level behavior, the neur
 This is achieved by separating the representation of the sensorimotor streams, the transformation to be applied on these streams and the actual dynamics of the algorithm. 
 Using such a decoupling and a high-level description of the task, the neurocomputing platform acts as a neural compiler. 
 Such a neural compiler is able to encode real-world sensorimotor streams in spiking activity over populations of neurons. 
-This representation is highly informative and can support efficient computation and learning needed in closed-loop robotic applications where data uncertainty, noise and unstructured environments yield adaptive behavior. 
+This representation is highly informative and can support efficient computation and learning needed in closed-loop robotic applications, where data uncertainty, noise and unstructured environments yield adaptive behavior. 
 Supporting intrinsically parallelizable processing mechanisms (i.e., neural networks) the neurocomputing platform can accelerate computation by natively mapping the neural controller on parallel computing hardware.
 
 \subsubsection{Interface infrastructure}%
@@ -167,7 +167,7 @@ In general, adaptive behavior is regarded as autonomous when the actions perform
 Following such a perspective, our system is able to incrementally build up complex behaviors by superimposing more simple, basic behaviors.
 
 In the current instantiation of our framework, we want to solve a non-trivial mobile manipulation task. 
-Using our mobile platform the task is to manipulate objects with LED stimuli blinking at different frequencies to bring them in order. 
+Using our mobile platform, the task is to manipulate objects with LED stimuli blinking at different frequencies to bring them in order. 
 More precisely, the task can be seen as a grasp and sort task, in which the robot will select a certain control policy depending on the current sensory streams (mainly visual input) to find the misplaced stimulus and place it in the correct location. 
 Action selection is performed using a model of a biologically plausible neural circuit, namely the Basal Ganglia. 
 The Basal Ganglia, according to \textcite{Stewart2010}, is an action selector that chooses whatever action has the best \enquote{salience} or \enquote{goodness}. 
@@ -248,7 +248,7 @@ Assuming the objects' blinking frequencies are given in descending order, this n
 Furthermore, the network detects those frequencies, which should be the neighbors of our detected target if in correct order and keeps their information in a memory as well.
 Figure~\ref{subfig:omni_bot_out_of_order_net} gives a schematic visualization of the network and its individual components.
 The $x$-values ensemble encodes $x$-positions of stimuli in \ac{DVS}-image, the diff ensemble encodes pairwise differences between $x$-positions, the negative-min ensemble indicates if the minimal difference is negative, odd encodes the frequency, which is out of order (inhibited by negative min when all differences are positive), the evidence networks integrate evidence for the target object and the neighbor frequencies if in correct order.
-Figure~\ref{subfig:omni_bot_out_of_order_net_behavior} shows an example of actual \ac{DVS} input data from the embedded tracking algorithm as well as the decoded output of the network’s sub-components activity: during the first \SI{5}{\second} the stimuli are in correct descending order from left to right in the \ac{DVS}-image (first plot in the left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}), so the minimum pairwise difference is non-negative ( second and third
+Figure~\ref{subfig:omni_bot_out_of_order_net_behavior} shows an example of actual \ac{DVS} input data from the embedded tracking algorithm as well as the decoded output of the network’s sub-components activity: during the first \SI{5}{\second} the stimuli are in correct descending order from left to right in the \ac{DVS}-image (first plot in the left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}), so the minimum pairwise difference is non-negative (second and third
 plots in the left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}). 
 In the interval \SIrange{5}{15}{\second}, the \SI{250}{\hertz} stimulus is put between the \SI{150}{\hertz} and \SI{200}{\hertz} stimuli, so now the sequence is out of order and the \SI{250}{\hertz} frequency is detected by the odd ensemble (last row in the left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}) while the evidence networks integrate accordingly (second to last row in the right column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}). 
 Starting from around \SI{15}{\second} the \SI{250}{\hertz} and \SI{350}{\hertz} stimuli are interchanged and the network's outputs change accordingly (left column of Fig.~\ref{subfig:omni_bot_out_of_order_net_behavior}).
@@ -383,7 +383,6 @@ Another obvious limitation of the current implementation is the need for neighbo
 This makes it impossible to solve the task for those objects blinking at a maximum or a minimum frequency. 
 As for the first limitation, the \emph{Out of Order} network needs to become more sophisticated to detect the goal position in these edge-cases when a border-object needs to be manipulated. 
 One possibility could be detect one neighbor and to use the maximum of the pairwise differences as distance estimation for the offset. 
-%Another technical improvement focuses on the embedded tracking algorithm. The efficient frameless tracking algorithm has the disadvantage that the arm retina gets over-flooded with events, when the distance to the target object decreases, which can corrupt the grab-task. 
 
 \subsubsection{Outlook}%
 \label{ssubsec:outlook}
@@ -422,14 +421,14 @@ For evaluation and training purposes, a controller using the global position and
 The Nengo and \ac{ROS} implementation of the trajectory selection module and the framework that is built upon it can be found at \url{https://github.com/fmirus/torcs_neural_trajectory_ctrl}}.\par
 
 The proposed architecture for a learnable and energy-efficient vehicle control system is a holistic neuromorphic approach for determining steering, gas and brake pedal as well as gear signals.
-It is a distributed system in that these signals are calculated separately in different modules.
+It is a distributed system in the sense that these signals are calculated separately in different modules.
 In addition, it is a hierarchical system as several intermediate values have to be calculated and different modules and subsystems are dependent upon each other.
 The modules' vertical alignments within Fig.~\ref{fig:architecture} indicate the distinction of three core subsystems, each responsible for one of the control signals (\emph{gear selection}, \emph{breaking/acceleration} and \emph{steering}).
 We envision each of these sub-modules to be learnable either by supervised or reinforcement learning.
 Some of the depicted modules are heavily dependent on each other and will have to be trained in parallel rather than independently. 
 
 Here, we focus on the \emph{trajectory selection} module to be the only learning module for simplicity.
-Therefore, gear selection and acceleration are determined from the engine's rpm and a desired velocity set to a fixed value for now.
+Therefore, gear selection and acceleration are determined from the engine's \ac{VehRPM} and a desired velocity set to a fixed value for now.
 The \emph{trajectory following} module determines the control values for steering from the chosen trajectory.
 % Implicitly,  \emph{trajectory selection} and \emph{trajectory following} achieve a similar goal to the sweep for a trajectory's lateral and longitudinal characteristics in \textcite{Werling2010}.
 We envision the \emph{time horizon} module to estimate the time window for the next trajectory to be followed.
@@ -450,7 +449,7 @@ Accordingly, the \emph{trajectory selection} module is an action selection modul
 \label{ssubsec:trajectory_selection_module}
 
 We focus on the \emph{trajectory selection} module isolated from the other modules.
-Therefore, we use a classical controller to steer the vehicle along the chosen trajectories at a fixed velocity of \SI[per-mode=symbol]{34}{\kilo\metre\per\hour} with the trajectories' end points' longitudinal component set to \SI{20}{\metre} which emulates a simplified version of \emph{trajectory following}. \par
+Therefore, we use a classical controller to steer the vehicle along the chosen trajectories at a fixed velocity of \SI[per-mode=symbol]{34}{\kilo\metre\per\hour} with the trajectories' end points' longitudinal component set to \SI{20}{\metre}, which emulates a simplified version of \emph{trajectory following}. \par
 We implemented a set of \num{15} trajectories to describe varying degrees of different behaviors (see Fig.~\ref{fig:trajectories}).
 We use straight lines to emulate lane following, cubic splines (with their derivative set to \num{0} at the extremities) to model lane change maneuvers and quadratic interpolations between a start and end point to perform a change in orientation.
 The latter trajectories are intended for driving curves or to correct slight misalignments between the vehicle and the road.
@@ -458,7 +457,7 @@ The latter trajectories are intended for driving curves or to correct slight mis
 \subsection{Reinforcement Learning}%
 \label{subsec:reinforcement_learning_network}
 
-The core of this work is the learning \acl{SNN} for \emph{trajectory selection}, which  is visualized in Fig.~\ref{fig:snn} and consists of two sub-networks.
+The core of this section is the learning \acl{SNN} for \emph{trajectory selection}, which  is visualized in Fig.~\ref{fig:snn} and consists of two sub-networks.
 It was built using the Nengo neural simulator \parencite{Bekolay2013}, which implements the principles of the \ac{NEF} \parencite{Eliasmith2003}.
 The first sub-network $A$ (yellow components in Fig.~\ref{fig:snn}) encodes the current state in a neural population.
 This population feeds its output to an array of downstream populations, each representing the utility value $Q$ associated to one of the possible actions.
