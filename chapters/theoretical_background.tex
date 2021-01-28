@@ -765,8 +765,8 @@ Combining several examples
 yields a transition vector, which gives $ M \varoast m \left(\mathbf{X}, \mathbf{Y} \right) \approx p \left(\mathbf{X}, \mathbf{Y} \right)$ for unseen examples $\mathbf{X}$ and $\mathbf{Y}$.
 However, this approach is based on the self-cancellation property (i.e., $\mathbf{X} \varoast \mathbf{X} = \pmb{1}$) in certain \acp{VSA} (in particular  \acp{BSC}), as it leads to $M$ containing the vector $\mathbf{motherof} \varoast \mathbf{parentof} + \mathbf{mother} \varoast \mathbf{parent} + \mathbf{child} \varoast \mathbf{offspring}$ \parencite[see][for details]{Kanerva2000}.
 A similar approach was used in \textcite{Kleyko2015a} for a prototype of concept learning.
-\textcite{Rasmussen2011} employ a similar approach to encode a rule for inductive learning in a transition vector using the \ac{VSA}'s algebraic operations to solve \acp{RPM}.
-The authors represent consecutive cells in an \ac{RPM} and encode the transition from one cell to another in a particular transition vector and, from a sequence of those, iteratively create a general transition vector encapsulating the general rule for going to the next cell in the matrix.
+\textcite{Rasmussen2011} employ a similar approach to encode a rule for inductive learning in a transition vector using the \ac{VSA}'s algebraic operations to solve \acp{CogRPM}.
+The authors represent consecutive cells in an \ac{CogRPM} and encode the transition from one cell to another in a particular transition vector and, from a sequence of those, iteratively create a general transition vector encapsulating the general rule for going to the next cell in the matrix.
 They implement these vectors as well as their inductive learning system in a \ac{SNN} model, a process we will also briefly discuss in the next section,
 
 \subsection{Implementation in \aclp{SNN}}%
@@ -828,7 +828,7 @@ That is, there are two distinct representational vector spaces: the space of neu
 
 There are several reasons for implementing cognitive architectures like the \ac{SPA} in a spiking neuron substrate.
 Regarding the application of vector-based representations in cognitive modeling, it makes sense to consider an implementation in neural activity, since the biological systems able to perform cognitive tasks are also systems of neural networks.
-Hence, when generating models of some cognitive function or behavior such as the model for inductive rule generation applied to \acp{RPM} in \textcite{Rasmussen2011}, implementation in a spiking neuron substrate allows to compare the model's neural activity with neural activity measured in the brain of human subjects performing a similar task.
+Hence, when generating models of some cognitive function or behavior such as the model for inductive rule generation applied to \acp{CogRPM} in \textcite{Rasmussen2011}, implementation in a spiking neuron substrate allows to compare the model's neural activity with neural activity measured in the brain of human subjects performing a similar task.
 Such a comparison enables more detailed model analysis and improvements by allowing researchers to draw inspirations from actual biological systems.
 Considering applications of the \ac{SPA} in domains such as automated driving as proposed in later chapters~\ref{chap:driving_context_classification},~\ref{chap:behav_pred} and~\ref{chap:mix_online_learning}, the possibility of implementation in a spiking neuron substrate is particularly interesting in terms of energy-efficiency.
 As discussed in section~\ref{sec:neuromorphic_HW}, there exists a growing number of neuromorphic hardware devices dedicated to efficiently processing networks of spiking neurons.
