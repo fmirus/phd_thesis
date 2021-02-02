@@ -22,7 +22,6 @@ In this section, we propose a novel neural controller for a mobile manipulator p
 Although the structure of the task is invariant, the scene changes. 
 Our algorithm is not dedicated to solving a single scene, rather is able to robustly accommodate changes in it without any prior knowledge about the changes. 
 Such behavior is a fundamental aspect in sensorimotor control. 
-%Lessons from neuroscience taught us that learning curves during the learning of a new sensorimotor control task exhibit a fast phase (accounting for all the performance gains) and a slow phase (with modest improvement of proficiency). 
 We propose a system which uses a spiking neural substrate for representation and computation, that allows the system to approximate sensorimotor correlations for both basic and complex motion and grasping scenarios. 
 Constructing such a system entirely with simulated neurons gives us two unique advantages.
 First, the resulting system can be run on energy-efficient neuromorphic hardware.
@@ -30,7 +29,6 @@ Second, we can use the network that we design here as the starting point for lea
 Such a processing substrate supports learning and allows the system to adapt during operation to unforeseen changes in the task. 
 However, in order to generate an initial functioning neural network model that could be used to bootstrap learning, we need a way to program such a network using something similar to traditional engineering programming methods.
 The proposed system describes a unified design approach that links low-level sensorimotor data representation with high-level reasoning using a generic computational substrate.
-%Being presented examples of task execution, such a system will adapt to closely match the task structure and learns local correlations among sensorimotor streams that yield global consistent behavior.
 
 \subsection{Neuromorphic system architecture}%
 \label{subsec:neuromorphic_system_architecture}
@@ -39,7 +37,7 @@ The proposed system describes a unified design approach that links low-level sen
 \label{ssubsec:hardware_setup}
 
 The mobile manipulator used in this project is comprised of a custom developed omni-directional mobile platform, depicted in Figure~\ref{fig:omniarmbot}, with embedded low-level motor control and elementary sensory acquisition. 
-The on-board ARM7 micro-controller receives desired motion commands and continuously adapts three PID motor control signals to achieve desired velocities. 
+The on-board ARM7 micro-controller receives desired motion commands and continuously adapts three \ac{PID} motor control signals to achieve desired velocities. 
 The robot's integrated sensors include wheel encoders for estimating odometry, a $9$ degrees of freedom \ac{IMU}, a bump-sensor ring, which triggers binary contact switches upon contact with objects in the environment, and three silicon retinas providing visual sensor input. 
 Two of these cameras are fixed on the mobile base, while one retina is attached to the end-effector to monitor the workspace of the robotic arm. 
 The silicon retinas are \acp{eDVS} and provide discrete events as response to temporal contrast. 

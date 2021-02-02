@@ -106,7 +106,7 @@ To achieve the encoding of all dynamics of the ego-vehicle, we sum up the vector
 The camera-based classification system is able to distinguish five different traffic participant categories, namely \emph{bicycle}, \emph{car}, \emph{motorcycle}, \emph{pedestrian} and \emph{truck}.
 Furthermore, there are additional categories \emph{stationary} for stationary objects and \emph{unknown} for objects, where none of the aforementioned labels can be assigned to.
 We generate vocabulary vectors for each traffic participant class.
-In the simplest form of a vector representation, we could simply add the vocabulary vector once for each appearence of the corresponding object in the scene to the current representation vector. 
+In the simplest form of a vector representation, we could simply add the vocabulary vector once for each appearance of the corresponding object in the scene to the current representation vector. 
 However, this representation just encodes that there are certain objects present somewhere in the current scene without any additional information.
 To encode a more detailed representation of the current scene with additional information on each traffic participants position, we use the function $\lambda$ from Equation~\eqref{eq:cosin_2d_enc} again to map each dynamic object's position $(p_x, p_y)$ in longitudinal ($x$) and lateral ($y$) direction relative to the ego-vehicle's coordinate system to vector form $ \lambda(p_x, p_y)$.
 Subsequently, we bind the resulting vector encoding the object's position to the vector representing the object's category.
@@ -257,7 +257,7 @@ However, in order to generate the optimal decoders for the complete training set
 By default, this results in a matrix $A = \left( \mathbf{a}_{i,j}\right)$ for $i=0, \ldots, N$ and $j=0, \ldots, M$, with $N$ being the number of neurons in the population encoding the current scene vector and $M$ being the number of samples in the training set, which in our case is roughly \num{350000} samples.
 Hence, in order to solve for the optimal decoders, \ac{Nengo} needs to generate a giant matrix $A$ of neural activities and store it in the system's memory in addition to the high-dimensional vectors in the training set.
 That results in high memory requirements for the training process, which imposes restrictions on the computational hardware and could thus be prohibitive.
-Therefore, we also implemented a variant of the training process, that calculates the matrix $A$ in blocks for subsets of the training samples of size $b < M$ and thus solves iteratively for the decoders $ \mathbf{d}_{i}$ for $i=0, \ldots, b-1$ and then for the next block $i=b, \ldots, 2b-1$ until we have calculated all decoders.
+Therefore, we also implemented a variant of the training process, that calculates the matrix $A$ in blocks for subsets of the training samples of size $b < M$ and thus solves for the decoders $ \mathbf{d}_{i}$ for $i=0, \ldots, b-1$ and then for the next block $i=b, \ldots, 2b-1$ until we have calculated all decoders.
 That slight adjustment is mathematically equivalent to the default least squares optimization process to solve for the decoders, but only consumes memory resources in the order of $ \mathcal{O}\left(N\cdot b\right)$ instead of $ \mathcal{O}\left(N \cdot M\right)$.
 The only other difference is that we use regularization in the default least squares optimization method.
 This is typically used to impose a certain amount of noise to make the learning population generalize better.

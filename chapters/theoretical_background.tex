@@ -766,7 +766,7 @@ yields a transition vector, which gives $ M \varoast m \left(\mathbf{X}, \mathbf
 However, this approach is based on the self-cancellation property (i.e., $\mathbf{X} \varoast \mathbf{X} = \pmb{1}$) in certain \acp{VSA} (in particular  \acp{BSC}), as it leads to $M$ containing the vector $\mathbf{motherof} \varoast \mathbf{parentof} + \mathbf{mother} \varoast \mathbf{parent} + \mathbf{child} \varoast \mathbf{offspring}$ \parencite[see][for details]{Kanerva2000}.
 A similar approach was used in \textcite{Kleyko2015a} for a prototype of concept learning.
 \textcite{Rasmussen2011} employ a similar approach to encode a rule for inductive learning in a transition vector using the \ac{VSA}'s algebraic operations to solve \acp{CogRPM}.
-The authors represent consecutive cells in an \ac{CogRPM} and encode the transition from one cell to another in a particular transition vector and, from a sequence of those, iteratively create a general transition vector encapsulating the general rule for going to the next cell in the matrix.
+The authors represent consecutive cells in an \ac{CogRPM} and encode the transition from one cell to another in a particular transition vector and, from a sequence of those, create a general transition vector encapsulating the general rule for going to the next cell in the matrix.
 They implement these vectors as well as their inductive learning system in a \ac{SNN} model, a process we will also briefly discuss in the next section,
 
 \subsection{Implementation in \aclp{SNN}}%
