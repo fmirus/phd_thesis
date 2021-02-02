@@ -8,7 +8,7 @@ In this coherence, such a description is not available in the literature except 
 We proceeded to describe the theory of the \ac{SPA}, a special case of the general construct of \acp{VSA}.
 We presented essential features like circular convolution, unitary vectors and convolutive powers, which form the basis of structured representations used in later chapters.
 Following \textcite{Eliasmith2003}, we presented a brief introduction to the \ac{NEF} and showed how its principles can be applied to implement the \ac{SPA} in a spiking neuron substrate.
-Finally, we introduced established approaches to generate structured representations to build cognitive models from them to be used in later chapters.
+Finally, we introduced established approaches to generate structured representations to build cognitive models from to be used in later chapters.
 
 In chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes}, we established our general approach to represent automotive scenes in the representational substrate of the \ac{SPA}.
 Following the workflow of \textcite{Gallant2013}, we first presented different options to generate vocabularies of atomic vectors and secondly, how to generate structured representations from them. 
@@ -34,7 +34,7 @@ Proceeding to another essential task in automotive context in chapter~\ref{chap:
 We trained several learning models to predict the future trajectory of one target vehicle based on that vector representation.
 On the one hand, we employed traditional deep learning models based on \ac{LSTM} cells to predict the future trajectory based on a sequence of semantic vectors.
 We compared these models to similar networks making predictions based on other, reference encoding schemes of the input data and a simple linear predictor.
-Evaluating these systems on two real-world driving data sets, we observed subtle performance nuances without any model clearly outperforming the others while simple linear prediction already offered solid prediction accuracy especially for short term horizons.
+Evaluating these systems on two real-world driving data sets, we observed subtle performance nuances without one model clearly outperforming the others while simple linear prediction already offered solid prediction accuracy especially for short term horizons.
 The main reason for this result is the composition of both data sets with straight driving constituting the majority of the samples compared to more challenging maneuvers such as lane changes.
 However, we were able to demonstrate that the models using the convolutive power representation tended to perform better in situations where the target vehicle drives closely to other vehicles in crowded situations.
 Furthermore, this model was also able to predict lane change situations better than all other models when trained on a subset of the training data consisting of these particular situations, whereas the other models did not show a similar adaptation behavior.
@@ -47,7 +47,7 @@ In chapter~\ref{chap:mix_online_learning}, we extended our work on vehicle traje
 We tackled the issue of delayed error signals introducing potentially long lags into the learning process through a temporal spreading of the error signal.
 That is, the model delays the error signal of earlier prediction steps to later prediction steps assuming that the general direction of the error is the same for earlier and further prediction horizons.
 We presented a context-free model variant updating its weights simply based on the prediction error as well as a model incorporating the current driving context.
-We used the indicators for crowded situations identified in chapter~\ref{chap:a_cognitive_approach_to_represent_automotive_scenes} as description for this context.
+We used the indicators for crowded situations identified in chapter~\ref{chap:behav_pred} as description for this context.
 We conducted a thorough analysis and showed, that this context-sensitive model performs significantly better than the context-free version.
 Furthermore, we showed that the model employing temporal spreading is successful in learning to predict trajectories already after being presented with a small number of vehicles.
 
@@ -99,7 +99,7 @@ However, the issue of composition of data sets is rather rarely investigated.
 We found for the particular task of vehicle trajectory prediction, that both our data sets consist predominantly of straight driving with rather rarely occurring samples containing a lane change of the target vehicle.
 We demonstrated significant changes in the models' performance when trained solely on the samples containing a lane change of the target vehicle.
 This supports the hypothesis that a more balanced data set would most likely improve the learning models' performance on critical data samples that can not be predicted using simple linear regression.
-However, we expect that the prediction of lane change maneuvers could even be further improved when incorporating additional information such as lane information (which lane are the vehicles driving, how large is the distance to the lane border) or dynamical information such as velocity or acceleration.
+However, we expect that the prediction of lane change maneuvers could even be further improved when incorporating additional information such as lane information (Which lane are the vehicles driving? How large is the distance to the lane border?) or dynamical information such as velocity or acceleration.
 The imbalanced composition of the data, however, was somewhat expected, since both data sets mainly consist of highway driving, which reveals a second issue: although our models learned to reasonably predict vehicle behavior based on the presented training data, the same models would most likely show weaker performance when presented with data consisting of interurban or inner-city driving.
 Hence, we would either have to train on even larger data sets containing a well-balanced mix of city, interurban and highway driving with all of these sub-categories being more balanced as the current data sets or we could also train separate models for each driving context category and select at run time the best suitable model variant.
 The latter approach would offer the interesting possibility to combine all models presented in this thesis: a driving context classification model predicting the current context, which in turn could be used as contextual information for an online learning model, that decides for the most suitable prediction model in the current situation.
