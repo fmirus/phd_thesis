@@ -428,7 +428,6 @@ Some of the depicted modules are heavily dependent on each other and will have t
 Here, we focus on the \emph{trajectory selection} module to be the only learning module for simplicity.
 Therefore, gear selection and acceleration are determined from the engine's \ac{VehRPM} and a desired velocity set to a fixed value for now.
 The \emph{trajectory following} module determines the control values for steering from the chosen trajectory.
-% Implicitly,  \emph{trajectory selection} and \emph{trajectory following} achieve a similar goal to the sweep for a trajectory's lateral and longitudinal characteristics in \textcite{Werling2010}.
 We envision the \emph{time horizon} module to estimate the time window for the next trajectory to be followed.
 Assuming a perfect control algorithm and the desired speed to be the actual speed, this equates to determining the trajectory's end point's longitudinal position.
 Accordingly, the \emph{trajectory selection} module is an action selection module for the agent to choose a trajectory type as well as the lateral component of the trajectory's end point from a set of predefined options.
@@ -437,7 +436,6 @@ Accordingly, the \emph{trajectory selection} module is an action selection modul
 \centering
 \subfloat[Simplified visualization of the \ac{SNN} for \textit{trajectory selection}. The yellow ($A$) resp. cyan networks ($B$) implement action selection resp. weight optimization for three exemplary trajectory choices \label{fig:snn}]{
   \includegraphics[width=0.65\textwidth]{imgs/SNN.eps}}
-% \resizebox{0.65\textwidth}{!}{\input{imgs/SNN.eps_tex}}}
 \hfill
 \subfloat[Visualization of a set of exemplary trajectories.\label{fig:trajectories}]{\includegraphics[width=0.3\textwidth]{imgs/trajectories.eps}}
 \caption{\ac{SNN} for \emph{trajectory selection} and exemplary set of trajectories}

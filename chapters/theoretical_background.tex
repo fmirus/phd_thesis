@@ -53,7 +53,6 @@ The most prominent examples are element-wise multiplication in the \ac{MAP}-arch
 	If $N$ is a subset of the real or complex numbers, i.e., $N \subset \mathbb{R}$ or $N \subseteq \mathbb{C}$, we call any \ac{VSA} $\left(V_{D}(N), \varoast, \oplus, \phi\right)$ \emph{continuous}.
 \end{defn}
 Although the set $V_{D}(N)$ might not be a vector space in the strict mathematical sense (in most cases it is at least a subset of a vector space), we will refer to its elements as \emph{vectors}.
-%The metric in definition~\ref{def:VSA} is needed as measure of similarity between vectors.
 Before we proceed in deriving some important properties of \acp{VSA}, we present some of the most prominent examples.
 
 \begin{ex} \aclp{VSA}
@@ -517,7 +516,6 @@ Population $A$ uses the representation principle to encode a sine function, wher
 	\centering
 \begin{tikzpicture}[%
 auto,
-%scale=3,
 block/.style={
 	rectangle,
 	draw=blue,
@@ -554,8 +552,6 @@ circ/.style={
 \caption{The dynamics principle of the \ac{NEF} for recurrent connections.}
 \label{fig:nef_dynamics}
 \end{figure}
-
-%\todo[inline]{check if figure~\ref{fig:nef_dynamics} can be beautified}
 
 The third main principle of the \ac{NEF}, \emph{dynamics}, provides a set of mathematical tools to implement dynamical systems in neural populations through recurrent connections.
 Let $A$ be a population of neurons with an incoming connection approximating the function $\abbil{f}{V}{W \subset \mathbb{R}^{m}}$ and a recurrent connection approximating the function $\abbil{g}{W}{W}$ (cf.\ Fig.~\ref{fig:nef_dynamics}).
@@ -646,17 +642,12 @@ This can be visual similarity (e.g., items or objects that \enquote{look} simila
 	auto,
 	multilayer,
 	]
-	% \Plane[x=0, y=0, width=5, height=2, opacity=1, style={dashed, color=red}, NoFill]
 	\node[line width=1mm] (input) at (0,-6)
 	{\includegraphics[width=.15\textwidth]{imgs/mnist.png}};
 	\draw[thick] (0,-5) -- (0.75, -3);
 	\draw[thick] (0,-5) -- (0.25, -2.8);
 	\draw[thick] (0,-5) -- (-0.25, -2.6);
 	\draw[thick] (0,-5) -- (-0.75, -2.4);
-	% \begin{Layer}[layer=1]
-	% 	\draw[very thick] (0,0) rectangle (5,2);
-	% 	\node at (-.5,-.5)[below right]{Layer 1};
-	% \end{Layer}
 	\Vertices{data/cnn_vertices.csv};
 	\Vertices[Pseudo]{data/last_cnn_vertices.csv};
 	\Edges{data/cnn_edges.csv}
@@ -712,7 +703,6 @@ A common example is visualized in Fig.~\ref{fig:word2vec}: subtracting the vecto
 	every node/.style={color=black}
 	]
 	% Draw axes
-	% axis
 	\draw[axis] (-0.5,0)  -- (1.2,0) node(xline){};
 	\draw[axis] (0,-0.1) -- (0,1.1) node(yline){};
 	\draw[red line] (0,0) -- (0.3, 0.8) node(King) [above right] {$\mathbf{KING}$};
